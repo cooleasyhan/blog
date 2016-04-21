@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Yi's Blog  -  Do. Or do not. There is no try</title>
+  <meta name="author" content="YiHan">
+
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="http://www.yilaguan.cc/favicon.png" rel="icon">
+
+  <link href="http://www.yilaguan.cc/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://www.yilaguan.cc/">Yi's Blog  -  Do. Or do not. There is no try</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+</ul>
+
+
+<ul class="main-navigation">
+    <li><a href="/">Home</a></li>
+    <li><a href="/archives.html">Archives</a></li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/java.html">Java</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/linux.html">Linux</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/mysql.html">Mysql</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/python.html">Python</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/reading.html">Reading</a>
+      </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div class="blog-index">
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Pandas</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-03-20T00:00:00+08:00" pubdate>日 20 三月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>简单操作</h2>
+<div class="highlight"><pre><span></span># 设置索引
+basic = basic.set_index(&#39;code&#39;)
+
+#左连接
+rst = basic.join(max, how=&#39;left&#39;)
+
+#多次左连接，设置右边前缀
+rst = rst.join(min, how=&#39;left&#39;, rsuffix=&#39;min&#39;)
+
+#简单计算
+rst[&#39;grow&#39;] = rst[&#39;high&#39;] / rst[&#39;lowmin&#39;]
+
+#四舍五入
+rst[&#39;round_grow&#39;] = rst[&#39;grow&#39;].apply(numpy.round)
+
+# 选择列
+rst = rst[[&#39;name&#39;, &#39;grow&#39;,&#39;round_grow&#39;]]
+
+#排序
+rst = rst.sort_values(&#39;grow&#39;)
+
+#to_csv ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/03/20/programming.html">Programming</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-03-20T00:00:00+08:00" pubdate>日 20 三月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>初始化python字典</h2>
+<div class="highlight"><pre><span></span>fields = (&#39;name&#39;,&#39;job&#39;)
+record = dict.fromkeys(fields, &#39;?&#39;) 
+</pre></div>
+
+
+<h2>zip dict list 互换</h2>
+<div class="highlight"><pre><span></span>values = [&#39;jone&#39;,&#39;coding&#39;]
+_list = zip(fields, values)
+_dict = dict(_list)
+</pre></div></div>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html">工具</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-02-04T00:00:00+08:00" pubdate>四 04 二月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>安装mysql clint tora</h2>
+<div class="highlight"><pre><span></span>#sudo apt-get install tora
+#tora
+
+
+error: no avaliable connection provider
+使用命令：
+#sudo apt-get install libqt4-sql-mysql
+会问要不要覆盖坏准文件，选择n
+</pre></div></div>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html">xtrabackup 小结</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-13T00:00:00+08:00" pubdate>日 13 十二月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>安装</h2>
+<p>官网下载相关rpm 包, 此处为 percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm， 其中5.1版本的mysql只能使用 2.0版本的xtrabackup</p>
+<div class="highlight"><pre><span></span>rpm -ivh xxx.rpm
+</pre></div>
+
+
+<h2>使用要点</h2>
+<ol>
+<li>正常备份会锁表，可以使用 </li>
+</ol>
+<h2>备份脚本</h2>
+<p>写了一个脚本，用于每周日全备，其他时候增量备份</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25 ...</pre></div></td></tr></table></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/07/mysql_ibdata.html">mysql ibdata 太大</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-07T00:00:00+08:00" pubdate>一 07 十二月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><p>ibdata 太大无法缩小</p>
+<ol>
+<li>Do a mysqldump of all databases, procedures, triggers etc except the mysql and performance_schema databases</li>
+<li>Drop all databases except the above 2 databases
+<code>drop schema xxxxx</code></li>
+<li>Stop mysql
+<code>service mysqld stop</code></li>
+<li>Delete ibdata1 and ib_log files</li>
+<li>Start mysql
+<code>service mysqld start</code></li>
+<li>Restore from dump</li>
+</ol></div>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/03/redhat6-sftp-setup.html">redhat6 sftp 设置</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-03T00:00:00+08:00" pubdate>四 03 十二月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>创建用户组</h2>
+<p>用于与sftp设置进行匹配</p>
+<div class="highlight"><pre><span></span>groupadd  sftp_users
+</pre></div>
+
+
+<h2>设置sftp</h2>
+<div class="highlight"><pre><span></span># Subsystem sftp    /usr/libexec/openssh/sftp-server
+Subsystem       sftp    internal-sftp
+Match Group sftp_users
+        X11Forwarding no
+        AllowTcpForwarding no
+        ChrootDirectory %h
+        ForceCommand internal-sftp
+</pre></div>
+
+
+<ul>
+<li>Match Group sftp_users – 匹配sftp_users组中的用户</li>
+<li>ChrootDirectory %h – 该参数指定用户验证后用于chroot环境的路径，用户登录后只能查看到该目录下内容，此处设置成你home目录</li>
+<li>ForceCommand internal-sftp – 该参数强制执行内部sftp</li>
+</ul>
+<h2>添加sftp用户</h2>
+<p>写了一个小脚本，  <br />
+需要注意的是root dirctory onwer 必须是root， 权限必须是755<br />
+有问题可以查看日志：/var/log/syslog and /var ...</p></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/03/redhat6-sftp-setup.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/02/graph.html">无向图</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-02T00:00:00+08:00" pubdate>三 02 十二月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>基本概念</h2>
+<p>图是由一组顶点(vertex)和一组能够将两个顶点相连的边(edge)组成的  </p>
+<p>图种类： 自环，平行边， 简单图<br />
+这里主要关注简单图</p>
+<h3>术语表</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>相邻</td>
+<td></td>
+</tr>
+<tr>
+<td>依附</td>
+<td></td>
+</tr>
+<tr>
+<td>度数</td>
+<td></td>
+</tr>
+<tr>
+<td>子图</td>
+<td>识别子图是核心问题之一，尤其是那些能够顺序连接一系列顶点的边所组成的子图</td>
+</tr>
+<tr>
+<td>路径</td>
+<td></td>
+</tr>
+<tr>
+<td>简单路径</td>
+<td>一条没有重复顶点的路径</td>
+</tr>
+<tr>
+<td>环</td>
+<td></td>
+</tr>
+<tr>
+<td>简单环</td>
+<td></td>
+</tr>
+<tr>
+<td>路径，环的长度</td>
+<td></td>
+</tr>
+<tr>
+<td>连通</td>
+<td>两个顶点存在路径</td>
+</tr>
+<tr>
+<td>连通图</td>
+<td></td>
+</tr>
+<tr>
+<td>极大连通子图</td>
+<td></td>
+</tr>
+<tr>
+<td>无环图</td>
+<td></td>
+</tr>
+<tr>
+<td>树</td>
+<td></td>
+</tr>
+<tr>
+<td>森林</td>
+<td></td>
+</tr>
+<tr>
+<td>生成树</td>
+<td></td>
+</tr>
+<tr>
+<td>生成树森林</td>
+<td></td>
+</tr>
+<tr>
+<td>稠密图</td>
+<td></td>
+</tr>
+<tr>
+<td>稀疏图</td>
+<td></td>
+</tr>
+<tr>
+<td>二分图</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>一颗树条件</h3>
+<p>一幅含有V个节点的图G满足下列5个条件之一，它就是一棵树  </p>
+<div class="highlight"><pre><span></span>- G 有V-1条边且不含有环
+- G 有V-1条边且是连通的
+- G 是连通的， 但删除任意一条边度会使它不再联通
+- G ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/02/graph.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html">利用nginx 转发 EBS</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-02T00:00:00+08:00" pubdate>三 02 十二月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>需求</h2>
+<p>EBS 服务器搭建在内网上， 需要开放给外网使用。 <br />
+实现： EBS 设置单一网络入口点，  外网服务器上配置nginx 转发至内网服务器。</p>
+<h2>配置EBS</h2>
+<h3>修改host文件， 在EBS app 服务器上添加相关host</h3>
+<div class="highlight"><pre><span></span>110.10.10.10 prod.xxx.xxx.xxx prod
+</pre></div>
+
+
+<h3>修改 $CONTEXT_FILE , 配置EBS单一网络入口</h3>
+<p>http://app01.domain.name:8000  ===&gt;   http://prod.domain.name:80<br />
+修改前后比对</p>
+<div class="highlight"><pre><span></span>[applprod@app01 admin]$ diff PROD_app01.xml PROD_app01.xml.bak 
+123c123
+<span class="err">&lt;</span>          <span class="nt">&lt;chronosURL</span> <span class="na">oa_var=</span><span class="s">&quot;s_chronosURL ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html">AR 设置数据data fix</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-01T00:00:00+08:00" pubdate>二 01 十二月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>通知单行：</h2>
+<div class="highlight"><pre><span></span>--1.备份数据
+CREATE TABLE Ar_Memo_Lines_All_Tl_0529 AS
+  SELECT * FROM Ar_Memo_Lines_All_Tl;
+
+--2. 创建临时表
+CREATE TABLE Cux_Ar_Memo_Lines_Df_0529(Memo_Line_Id NUMBER, Ou_Name VARCHAR2(240), NAME VARCHAR2(50), Description VARCHAR2(80), New_Name VARCHAR2(52), New_Description VARCHAR2(90))
+
+--3. 修正临时表中数据
+UPDATE Cux_Ar_Memo_Lines_Df_0529 d SET(Memo_Line_Id, New_Name, New_Description) = (
+  SELECT Tl.Memo_Line_Id, d.Name || &#39;_O&#39;, d.Description || &#39;-历史 ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">定位autoconfig模板文件</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><p>1、定位模版文件<br />
+$AD_TOP/bin/adtmplreport.sh contextfile=$CONTEXT_FILE target=$FORMS_WEB_CONFIG_FILE
+以上命令，通过查看报表日志，可分别得到如下模版结果：
+$FND_TOP/admin/template/forms_web_1012_cfg.tmp</p>
+<p>2、创建custom目录<br />
+mkdir $FND_TOP/admin/template/custom</p>
+<p>3、把上述文件拷贝到custom目录<br />
+cp -i $FND_TOP/admin/template/forms_web_1012_cfg.tmp $FND_TOP/admin/template/custom/forms_web_1012_cfg.tmp</p>
+<p>4、编辑custom目录下的模版文件<br />
+forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
+<p>添加金税的jar包<br />
+  archive2=,/OA_JAVA/hand/hand ...</p></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+<div class="pagination">
+    <a class="prev" href="http://www.yilaguan.cc/index2.html">&larr; Older</a>
+
+  <br />
+</div></div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Pandas</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/03/20/programming.html">Programming</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html">工具</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html">xtrabackup 小结</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2015/12/07/mysql_ibdata.html">mysql ibdata 太大</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
+        <li><a href="http://www.yilaguan.cc/category/documents.html">Documents</a></li>
+        <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
+        <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
+        <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
+        <li><a href="http://www.yilaguan.cc/category/mysql.html">mysql</a></li>
+        <li><a href="http://www.yilaguan.cc/category/python.html">python</a></li>
+        <li><a href="http://www.yilaguan.cc/category/reading.html">Reading</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/program.html">Program</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://www.yilaguan.cc/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'cooleasyhan',
+              count: 5,
+              skip_forks: false,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://www.yilaguan.cc/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="http://cooleasyhan.github.io" target="_blank">github 个人页</a></li>
+        </ul>
+    </section>
+    <section>
+        <h1>Blogroll</h1>
+        <ul>
+            <li><a href="https://rhettinger.wordpress.com/" target="_blank">rhettinger</a></li>
+            <li><a href="http://www.dongwm.com/" target="_blank">小明明</a></li>
+            <li><a href="http://www.keakon.net/" target="_blank">keakon的涂鸦馆</a></li>
+            <li><a href="http://zheng-ji.info/" target="_blank">织网</a></li>
+        </ul>
+    </section>
+
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+  <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/ender.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var disqus_shortname = 'yilaguan';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+  </script>
+</body>
+</html>

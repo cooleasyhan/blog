@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/linux.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-02-04T00:00:00+08:00</updated><entry><title>工具</title><link href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html" rel="alternate"></link><published>2016-02-04T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-02-04:posts/2016/02/04/gong-ju.html</id><summary type="html">&lt;h2&gt;安装mysql clint tora&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#sudo apt-get install tora
+#tora
+
+
+error: no avaliable connection provider
+使用命令：
+#sudo apt-get install libqt4-sql-mysql
+会问要不要覆盖坏准文件，选择n
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="shell"></category></entry><entry><title>redhat6 sftp 设置</title><link href="http://www.yilaguan.cc/posts/2015/12/03/redhat6-sftp-setup.html" rel="alternate"></link><published>2015-12-03T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-03:posts/2015/12/03/redhat6-sftp-setup.html</id><summary type="html">&lt;h2&gt;创建用户组&lt;/h2&gt;
+&lt;p&gt;用于与sftp设置进行匹配&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;groupadd  sftp_users
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;设置sftp&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# Subsystem sftp    /usr/libexec/openssh/sftp-server
+Subsystem       sftp    internal-sftp
+Match Group sftp_users
+        X11Forwarding no
+        AllowTcpForwarding no
+        ChrootDirectory %h
+        ForceCommand internal-sftp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Match Group sftp_users – 匹配sftp_users组中的用户&lt;/li&gt;
+&lt;li&gt;ChrootDirectory %h – 该参数指定用户验证后用于chroot环境的路径，用户登录后只能查看到该目录下内容，此处设置成你home目录&lt;/li&gt;
+&lt;li&gt;ForceCommand internal-sftp – 该参数强制执行内部sftp&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;添加sftp用户&lt;/h2&gt;
+&lt;p&gt;写了一个小脚本，  &lt;br /&gt;
+需要注意的是root dirctory onwer 必须是root， 权限必须是755&lt;br /&gt;
+有问题可以查看日志：/var/log/syslog and /var/log/auth.log&lt;br /&gt;
+或者sftp -vvv user@host 显示详细的日志&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="nb"&gt;read&lt;/span&gt; -p &lt;span class="s2"&gt;&amp;quot;enter the user name: &amp;quot;&lt;/span&gt; USER_NAME
+
+&lt;span class="nv"&gt;BASE_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/sftp
+mkdir -p &lt;span class="nv"&gt;$BASE_DIR&lt;/span&gt;
+
+&lt;span class="nv"&gt;HOME_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$BASE_DIR&lt;/span&gt;/&lt;span class="nv"&gt;$USER_NAME&lt;/span&gt;
+&lt;span class="nv"&gt;DEFAULT_DATA_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HOME_DIR&lt;/span&gt;/data
+
+useradd  -G sftp_users  -s /sbin/nologin  &lt;span class="nv"&gt;$USER_NAME&lt;/span&gt; -d &lt;span class="nv"&gt;$HOME_DIR&lt;/span&gt;
+chmod &lt;span class="m"&gt;755&lt;/span&gt; &lt;span class="nv"&gt;$HOME_DIR&lt;/span&gt;
+chown root &lt;span class="nv"&gt;$HOME_DIR&lt;/span&gt;
+chgrp -R sftp_users &lt;span class="nv"&gt;$HOME_DIR&lt;/span&gt;
+
+mkdir &lt;span class="nv"&gt;$DEFAULT_DATA_DIR&lt;/span&gt;
+chown &lt;span class="nv"&gt;$USER_NAME&lt;/span&gt; &lt;span class="nv"&gt;$DEFAULT_DATA_DIR&lt;/span&gt;
+
+passwd &lt;span class="nv"&gt;$USER_NAME&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><category term="redhat"></category><category term="sftp"></category><category term="linux"></category></entry><entry><title>shell 比较</title><link href="http://www.yilaguan.cc/posts/2015/11/30/shell-bi-jiao.html" rel="alternate"></link><published>2015-11-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-30:posts/2015/11/30/shell-bi-jiao.html</id><summary type="html">&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;运算符&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;文件比较运算符&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;-e filename&lt;/td&gt;
+&lt;td&gt;如果 filename 存在，则为真&lt;/td&gt;
+&lt;td&gt;[ -e /var/log/syslog ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;-d filename&lt;/td&gt;
+&lt;td&gt;如果 filename 为目录，则为真&lt;/td&gt;
+&lt;td&gt;[ -d /tmp/mydir ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;-f filename&lt;/td&gt;
+&lt;td&gt;如果 filename 为常规文件，则为真&lt;/td&gt;
+&lt;td&gt;[ -f /usr/bin/grep ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;-L filename&lt;/td&gt;
+&lt;td&gt;如果 filename 为符号链接，则为真&lt;/td&gt;
+&lt;td&gt;[ -L /usr/bin/grep ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;-r filename&lt;/td&gt;
+&lt;td&gt;如果 filename 可读，则为真&lt;/td&gt;
+&lt;td&gt;[ -r /var/log/syslog ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;-w filename&lt;/td&gt;
+&lt;td&gt;如果 filename 可写，则为真&lt;/td&gt;
+&lt;td&gt;[ -w /var/mytmp.txt ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;-x filename&lt;/td&gt;
+&lt;td&gt;如果 filename 可执行，则为真&lt;/td&gt;
+&lt;td&gt;[ -L /usr/bin/grep ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;filename1 -nt filename2&lt;/td&gt;
+&lt;td&gt;如果 filename1 比 filename2 新，则为真&lt;/td&gt;
+&lt;td&gt;[ /tmp/install/etc/services -nt /etc/services ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;filename1 -ot filename2&lt;/td&gt;
+&lt;td&gt;如果 filename1 比 filename2 旧，则为真&lt;/td&gt;
+&lt;td&gt;[ /boot/bzImage -ot arch/i386/boot/bzImage ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;字符串比较运算符 （请注意引号的使用，这是防止空格扰乱代码的好方法）&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;-z string&lt;/td&gt;
+&lt;td&gt;如果 string 长度为零，则为真&lt;/td&gt;
+&lt;td&gt;[ -z "$myvar" ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;-n string&lt;/td&gt;
+&lt;td&gt;如果 string 长度非零，则为真&lt;/td&gt;
+&lt;td&gt;[ -n "$myvar" ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;string1 = string2&lt;/td&gt;
+&lt;td&gt;如果 string1 与 string2 相同，则为真&lt;/td&gt;
+&lt;td&gt;[ "$myvar" = "one two three" ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;string1 != string2&lt;/td&gt;
+&lt;td&gt;如果 string1 与 string2 不同，则为真&lt;/td&gt;
+&lt;td&gt;[ "$myvar" != "one two three" ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;算术比较运算符&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;num1 -eq num2&lt;/td&gt;
+&lt;td&gt;等于&lt;/td&gt;
+&lt;td&gt;[ 3 -eq $mynum ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;num1 -ne num2&lt;/td&gt;
+&lt;td&gt;不等于&lt;/td&gt;
+&lt;td&gt;[ 3 -ne $mynum ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;num1 -lt num2&lt;/td&gt;
+&lt;td&gt;小于&lt;/td&gt;
+&lt;td&gt;[ 3 -lt $mynum ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;num1 -le num2&lt;/td&gt;
+&lt;td&gt;小于或等于&lt;/td&gt;
+&lt;td&gt;[ 3 -le $mynum ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;num1 -gt num2&lt;/td&gt;
+&lt;td&gt;大于&lt;/td&gt;
+&lt;td&gt;[ 3 -gt $mynum ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;num1 -ge num2&lt;/td&gt;
+&lt;td&gt;大于或等于&lt;/td&gt;
+&lt;td&gt;[ 3 -ge $mynum ]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;浮点数比较&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;float &amp;gt; 0.05&lt;/td&gt;
+&lt;td&gt;大于&lt;/td&gt;
+&lt;td&gt;[ $(echo "$per &amp;gt; 0.05"&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;</summary><category term="linux"></category><category term="shell"></category></entry><entry><title>shell脚本片段</title><link href="http://www.yilaguan.cc/posts/2015/11/30/shelljiao-ben-pian-duan.html" rel="alternate"></link><published>2015-11-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-30:posts/2015/11/30/shelljiao-ben-pian-duan.html</id><summary type="html">&lt;h2&gt;read user enter&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;read -p &amp;quot;Read rows CNT[W]: &amp;quot; ROWS_CNT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;获取文件行数&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;ROW=`wc -l &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;DATA_FILE&lt;/span&gt;&lt;span class="x"&gt; | awk &amp;#39;&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;print &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="x"&gt;1}&amp;#39;`&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;浮点数计算&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;per=`awk &amp;#39;BEGIN&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;printf &amp;quot;%.2f\n&amp;quot;,&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;wcnt&lt;/span&gt;&lt;span class="x"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;scnt&lt;/span&gt;&lt;span class="x"&gt;&amp;#39;}&amp;#39;`&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;string=&amp;gt;list&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;list=&amp;quot;a,
+b,
+c,
+d
+&amp;quot;
+
+arr=(&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="cp"&gt;}&lt;/span&gt;)
+
+echo &amp;quot;====count====&amp;quot;
+
+for v in &lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;arr&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;
+do
+    i=`echo &lt;span class="nv"&gt;$v&lt;/span&gt;`
+    echo i
+done
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;ubuntu命令行多线程断点续传下载工具-axel&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;axel -n 10 xxxx.tar.gz
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category><category term="Shell"></category></entry><entry><title>Nginx, Php-fpm</title><link href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html" rel="alternate"></link><published>2015-11-26T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-26:posts/2015/11/26/nginx-php-fpm.html</id><summary type="html">&lt;h2&gt;安装php&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum install libxml2-devel bzip2-devel libcurl-devel libjpeg-devel libpng-devel freetype-devel openssl-devel  
+./configure --prefix=/usr/local/php-5.6 --with-config-file-path=/usr/local/php-5.6/etc --with-bz2 --with-curl --enable-ftp --enable-sockets --disable-ipv6 --with-gd --with-freetype-dir=/usr/local --enable-gd-native-ttf --with-iconv-dir=/usr/local --enable-mbstring --enable-calendar --with-gettext --with-libxml-dir=/usr/local --with-zlib --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql=mysqlnd --enable-dom --enable-xml --with-libdir=lib64 --with-openssl --enable-pdo --enable-fpm --enable-bcmath  
+
+make
+make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;安装Nginx&lt;/h2&gt;
+&lt;p&gt;下载pcre, nginx&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget http://jaist.dl.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.bz2
+wget http://nginx.org/download/nginx-1.8.0.tar.gz
+
+tar -xvf ......
+
+cd /path_to_nginx_src
+./configure --prefix=/usr/local/nginx --with-pcre=/path_to_pcre_src
+make
+make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;配置php-fpm&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cp /usr/local/php-5.6/etc/php-fpm.conf.default /usr/local/php-5.6/et/php-fpm.conf
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;例子1&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[global]&lt;/span&gt;
+&lt;span class="na"&gt;pid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/var/run/php-fpm.pid&lt;/span&gt;
+&lt;span class="na"&gt;error_log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/data/php/log/php-fpm.log&lt;/span&gt;
+&lt;span class="na"&gt;log_level&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;warning&lt;/span&gt;
+&lt;span class="na"&gt;emergency_restart_interval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;24h&lt;/span&gt;
+&lt;span class="na"&gt;process_control_timeout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;5s&lt;/span&gt;
+&lt;span class="na"&gt;daemonize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;yes&lt;/span&gt;
+
+&lt;span class="na"&gt;rlimit_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;10240&lt;/span&gt;
+
+&lt;span class="k"&gt;[www]&lt;/span&gt;
+&lt;span class="na"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;nobody&lt;/span&gt;
+&lt;span class="na"&gt;group&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;nobody&lt;/span&gt;
+&lt;span class="na"&gt;listen&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;127.0.0.1:9000&lt;/span&gt;
+&lt;span class="na"&gt;listen.owner&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;nobody&lt;/span&gt;
+&lt;span class="na"&gt;listen.group&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;nobody&lt;/span&gt;
+&lt;span class="na"&gt;listen.mode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;0660&lt;/span&gt;
+
+&lt;span class="na"&gt;listen.allowed_clients&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;127.0.0.1&lt;/span&gt;
+&lt;span class="na"&gt;pm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;dynamic&lt;/span&gt;
+&lt;span class="na"&gt;pm.max_children&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;256&lt;/span&gt;
+&lt;span class="na"&gt;pm.start_servers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;64&lt;/span&gt;
+&lt;span class="na"&gt;pm.min_spare_servers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;32&lt;/span&gt;
+&lt;span class="na"&gt;pm.max_spare_servers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;128&lt;/span&gt;
+
+&lt;span class="na"&gt;pm.max_requests&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;51200&lt;/span&gt;
+&lt;span class="na"&gt;pm.status_path&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/status&lt;/span&gt;
+
+
+&lt;span class="na"&gt;slowlog&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/data/php/log/$pool.log.slow&lt;/span&gt;
+
+&lt;span class="na"&gt;request_slowlog_timeout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;10&lt;/span&gt;
+
+
+&lt;span class="na"&gt;rlimit_files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;10240&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;启动php-fpm&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/usr/local/php-5-6/sbin/php-fpm
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;配置nginx&lt;/h2&gt;
+&lt;h3&gt;简单配置&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;listen&lt;/span&gt;       &lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;server_name&lt;/span&gt;  &lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
+    &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;root&lt;/span&gt;   &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;u01&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;index&lt;/span&gt;  &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="nc"&gt;.php&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;u01&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;fastcgi_pass&lt;/span&gt;   &lt;span class="m"&gt;127&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;9000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_index&lt;/span&gt;  &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;include&lt;/span&gt;        &lt;span class="n"&gt;fastcgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;ThinkPhp 框架配置,兼容4种url模式&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;listen&lt;/span&gt;       &lt;span class="m"&gt;81&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;server_name&lt;/span&gt;  &lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;u01&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opsfnd&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;index&lt;/span&gt;  &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;htm&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;error_page&lt;/span&gt;  &lt;span class="m"&gt;404&lt;/span&gt;              &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;404&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;404&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="m"&gt;404&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Sorry, File not Found!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="nt"&gt;error_page&lt;/span&gt;  &lt;span class="nt"&gt;500&lt;/span&gt; &lt;span class="nt"&gt;502&lt;/span&gt; &lt;span class="nt"&gt;503&lt;/span&gt; &lt;span class="nt"&gt;504&lt;/span&gt;  &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;50x&lt;/span&gt;&lt;span class="nc"&gt;.html&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;50x&lt;/span&gt;&lt;span class="nc"&gt;.html&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;root&lt;/span&gt;   &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;windows&lt;/span&gt;&lt;span class="err"&gt;用户替换这个目录&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;try_files&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;uri&lt;/span&gt; &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="n"&gt;rewrite&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="k"&gt;@rewrite&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nt"&gt;set&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;static&lt;/span&gt; &lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="nt"&gt;if&lt;/span&gt;  &lt;span class="o"&gt;($&lt;/span&gt;&lt;span class="nt"&gt;uri&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;.(&lt;/span&gt;&lt;span class="nt"&gt;css&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;js&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;jpg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;jpeg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;png&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;gif&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;ico&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;woff&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;eot&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;svg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;css&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nc"&gt;.map&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;min&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nc"&gt;.map&lt;/span&gt;&lt;span class="o"&gt;)$)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="nb"&gt;static&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="nt"&gt;if&lt;/span&gt; &lt;span class="o"&gt;($&lt;/span&gt;&lt;span class="nt"&gt;static&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;rewrite&lt;/span&gt; &lt;span class="o"&gt;^/&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;.*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;Uploads&lt;/span&gt;&lt;span class="o"&gt;/.*&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nc"&gt;.php&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;deny&lt;/span&gt; &lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nc"&gt;.php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+       &lt;span class="n"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;request_uri&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="o"&gt;^&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;.+&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="o"&gt;/.+?&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+       &lt;span class="nt"&gt;fastcgi_pass&lt;/span&gt; &lt;span class="nt"&gt;127&lt;/span&gt;&lt;span class="nc"&gt;.0.0.1&lt;/span&gt;&lt;span class="nd"&gt;:9000&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+       &lt;span class="nt"&gt;include&lt;/span&gt; &lt;span class="nt"&gt;fastcgi_params&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+       &lt;span class="nt"&gt;fastcgi_param&lt;/span&gt; &lt;span class="nt"&gt;SCRIPT_NAME&lt;/span&gt;     &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+       &lt;span class="nt"&gt;fastcgi_param&lt;/span&gt; &lt;span class="nt"&gt;PATH_INFO&lt;/span&gt;       &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;2&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+       &lt;span class="nt"&gt;fastcgi_param&lt;/span&gt; &lt;span class="nt"&gt;SCRIPT_FILENAME&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;document_root&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;}&lt;/span&gt;
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nc"&gt;.php&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;fastcgi_pass&lt;/span&gt; &lt;span class="m"&gt;127&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;9000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SCRIPT_FILENAME&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;document_root&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;fastcgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nc"&gt;.ht&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;deny&lt;/span&gt;  &lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+ &lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://www.thinkphp.cn/topic/34380.html"&gt;http://www.thinkphp.cn/topic/34380.html&lt;/a&gt;&lt;/p&gt;</summary></entry><entry><title>iptables 小结</title><link href="http://www.yilaguan.cc/posts/2015/11/18/iptables-xiao-jie.html" rel="alternate"></link><published>2015-11-18T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-18:posts/2015/11/18/iptables-xiao-jie.html</id><summary type="html">&lt;h2&gt;规则顺序&lt;/h2&gt;
+&lt;p&gt;iptables 按照设定顺序比对规则内容，如果封包资料与规则一致则执行操作：ACCEPT，DROP，REJECT， LOG。 LOG只会记录信息到/var/log/messages中，该封包还是会继续下面的规则比对&lt;br /&gt;
+所以顺序很重要,错误的顺序错误的结果&lt;br /&gt;
+其中内网限制建议REJECT， drop并不会知会client端，client会等待直到timeout&lt;/p&gt;
+&lt;h2&gt;封包政策， Policy&lt;/h2&gt;
+&lt;p&gt;Policy 如果不是ACCEPT，务必小心，很可能会把自己挡住，务必开放自己的ssh 22端口权限&lt;/p&gt;
+&lt;h2&gt;table 和 chain&lt;/h2&gt;
+&lt;p&gt;fileter&lt;br /&gt;
+mangle&lt;br /&gt;
+nat&lt;br /&gt;
+一般控制本机资源的访问，只要设置 filter中的INPUT 和 OUTPUT 就可以了&lt;br /&gt;
+&lt;img alt="链路图" src="/images/iptables_chain.gif" /&gt;&lt;/p&gt;
+&lt;h2&gt;查看设置&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -L -n -v -t tables
+-t 默认为filter
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用iptables-save 可以看到更有价值的信息，这部分内容也可以直接作为/etc/sysconfig/iptables 的配置文件内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables-save
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;清除设置&lt;/h2&gt;
+&lt;p&gt;先清除设置后加入需要设置是推荐做法&lt;br /&gt;
+下面操作不会更改policy， 如果policy为DROP，要非常小心，远程登陆的话自己就进不去了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables [-t tables] [-FXZ]
+iptables -F #默认清除filter 删除所有规则
+iptables -X #清除所有自定义的chain，tables
+iptables -Z # 计数清零
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;设置预设政策&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables [-t nat] -P [INPUT, OUTPUT, FORWARD] [ACCEPT, DROP]
+
+iptables -P INPUT DROP
+iptables -P OUTPUT ACCEPT
+iptables -p FORWARD ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;IP, 网域， 借口装置【网卡】&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#接受所有本地lo网卡的所有封包
+iptables -A INPUT -i lo -j ACCEPT
+
+#接受所有来自特定ip和网段的封包,-i 可指定网卡
+iptables -A INPUT -s 192.168.100.0/24 -i -eth1 -j ACCEPT
+iptables -A INPUT -s 123.12.1.12/32 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;tcp， udp 端口&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#-i 网卡 -p tcp udp --dport 目标端口 --sport 来源端口 -s 来源ip
+# -d 目标ip【本机不常用】
+# 上面参数可以各种组合使用
+# --syn tcp 建立tcpip连接时握手信号，经常利用防火墙防御syn攻击，DDos攻击的一种
+iptables -A INPUT -i eth0 -p tcp --dport 21 -j DROP
+iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --sport 1:1022 --dport 1:1023 --syn -j DROP
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;封包状态&lt;/h2&gt;
+&lt;p&gt;如果状态为响应状态，则接受&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;例子&lt;/h2&gt;
+&lt;p&gt;clint 端常用，开放22端口用于ssh&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -F
+iptables -X
+iptables -Z
+iptables -P INPUT DROP
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;语法&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[root@www ~]# iptables [-t tables] [-L] [-nv]&lt;/span&gt;
+&lt;span class="err"&gt;选项与参数：&lt;/span&gt;
+&lt;span class="err"&gt;-t&lt;/span&gt; &lt;span class="err"&gt;：后面接&lt;/span&gt; &lt;span class="err"&gt;table&lt;/span&gt; &lt;span class="err"&gt;，例如&lt;/span&gt; &lt;span class="err"&gt;nat&lt;/span&gt; &lt;span class="err"&gt;或&lt;/span&gt; &lt;span class="err"&gt;filter&lt;/span&gt; &lt;span class="err"&gt;，若省略此项目，则使用默认的&lt;/span&gt; &lt;span class="err"&gt;filter&lt;/span&gt;
+&lt;span class="err"&gt;-L&lt;/span&gt; &lt;span class="err"&gt;：列出目前的&lt;/span&gt; &lt;span class="err"&gt;table&lt;/span&gt; &lt;span class="err"&gt;的规则&lt;/span&gt;
+&lt;span class="err"&gt;-n&lt;/span&gt; &lt;span class="err"&gt;：不进行&lt;/span&gt; &lt;span class="err"&gt;IP&lt;/span&gt; &lt;span class="err"&gt;与&lt;/span&gt; &lt;span class="err"&gt;HOSTNAME&lt;/span&gt; &lt;span class="err"&gt;的反查，显示讯息的速度会快很多！&lt;/span&gt;
+&lt;span class="err"&gt;-v&lt;/span&gt; &lt;span class="err"&gt;：列出更多的信息，包括通过该规则的封包总位数、相关的网络接口等&lt;/span&gt;
+
+
+
+&lt;span class="k"&gt;[root@www ~]# iptables-save [-t table]&lt;/span&gt;
+&lt;span class="err"&gt;选项与参数：&lt;/span&gt;
+&lt;span class="err"&gt;-t&lt;/span&gt; &lt;span class="err"&gt;：可以仅针对某些表格来输出，例如仅针对&lt;/span&gt; &lt;span class="err"&gt;nat&lt;/span&gt; &lt;span class="err"&gt;或&lt;/span&gt; &lt;span class="err"&gt;filter&lt;/span&gt; &lt;span class="err"&gt;等等&lt;/span&gt;
+
+
+&lt;span class="k"&gt;[root@www ~]# iptables [-t tables] [-FXZ]&lt;/span&gt;
+&lt;span class="err"&gt;选项与参数：&lt;/span&gt;
+&lt;span class="err"&gt;-F&lt;/span&gt; &lt;span class="err"&gt;：清除所有的已订定的规则；&lt;/span&gt;
+&lt;span class="err"&gt;-X&lt;/span&gt; &lt;span class="err"&gt;：杀掉所有使用者&lt;/span&gt; &lt;span class="err"&gt;&amp;quot;自定义&amp;quot;&lt;/span&gt; &lt;span class="err"&gt;的&lt;/span&gt; &lt;span class="err"&gt;chain&lt;/span&gt; &lt;span class="err"&gt;(应该说的是&lt;/span&gt; &lt;span class="err"&gt;tables&lt;/span&gt; &lt;span class="err"&gt;）啰；&lt;/span&gt;
+&lt;span class="err"&gt;-Z&lt;/span&gt; &lt;span class="err"&gt;：将所有的&lt;/span&gt; &lt;span class="err"&gt;chain&lt;/span&gt; &lt;span class="err"&gt;的计数与流量统计都归零&lt;/span&gt;
+
+
+&lt;span class="k"&gt;[root@www ~]# iptables [-t nat] -P [INPUT,OUTPUT,FORWARD] [ACCEPT,DROP]&lt;/span&gt;
+&lt;span class="err"&gt;选项与参数：&lt;/span&gt;
+&lt;span class="err"&gt;-P&lt;/span&gt; &lt;span class="err"&gt;：定义政策(&lt;/span&gt; &lt;span class="err"&gt;Policy&lt;/span&gt; &lt;span class="err"&gt;)。注意，这个&lt;/span&gt; &lt;span class="err"&gt;P&lt;/span&gt; &lt;span class="err"&gt;为大写啊！&lt;/span&gt;
+&lt;span class="err"&gt;ACCEPT&lt;/span&gt; &lt;span class="err"&gt;：该封包可接受&lt;/span&gt;
+&lt;span class="err"&gt;DROP&lt;/span&gt;   &lt;span class="err"&gt;：该封包直接丢弃，不会让&lt;/span&gt; &lt;span class="err"&gt;client&lt;/span&gt; &lt;span class="err"&gt;端知道为何被丢弃。&lt;/span&gt;
+
+
+&lt;span class="err"&gt;[root@www&lt;/span&gt; &lt;span class="err"&gt;~]&lt;/span&gt;&lt;span class="c1"&gt;# iptables [-AI 链名] [-io 网络接口] [-p 协议] \&lt;/span&gt;
+&lt;span class="err"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;[-s 来源IP/网域] [-d 目标IP/网域] -j [ACCEPT|DROP|REJECT|LOG]&lt;/span&gt;
+&lt;span class="err"&gt;选项与参数：&lt;/span&gt;
+&lt;span class="err"&gt;-AI&lt;/span&gt; &lt;span class="err"&gt;链名：针对某的链进行规则的&lt;/span&gt; &lt;span class="err"&gt;&amp;quot;插入&amp;quot;&lt;/span&gt; &lt;span class="err"&gt;或&lt;/span&gt; &lt;span class="err"&gt;&amp;quot;累加&amp;quot;&lt;/span&gt;
+    &lt;span class="err"&gt;-A&lt;/span&gt; &lt;span class="err"&gt;：新增加一条规则，该规则增加在原本规则的最后面。例如原本已经有四条规则，&lt;/span&gt;
+         &lt;span class="err"&gt;使用&lt;/span&gt; &lt;span class="err"&gt;-A&lt;/span&gt; &lt;span class="err"&gt;就可以加上第五条规则！&lt;/span&gt;
+    &lt;span class="err"&gt;-I&lt;/span&gt; &lt;span class="err"&gt;：插入一条规则。如果没有指定此规则的顺序，默认是插入变成第一条规则。&lt;/span&gt;
+         &lt;span class="err"&gt;例如原本有四条规则，使用&lt;/span&gt; &lt;span class="err"&gt;-I&lt;/span&gt; &lt;span class="err"&gt;则该规则变成第一条，而原本四条变成&lt;/span&gt; &lt;span class="err"&gt;2~5&lt;/span&gt; &lt;span class="err"&gt;号&lt;/span&gt;
+    &lt;span class="err"&gt;链&lt;/span&gt; &lt;span class="err"&gt;：有&lt;/span&gt; &lt;span class="err"&gt;INPUT,&lt;/span&gt; &lt;span class="err"&gt;OUTPUT,&lt;/span&gt; &lt;span class="err"&gt;FORWARD&lt;/span&gt; &lt;span class="err"&gt;等，此链名称又与&lt;/span&gt; &lt;span class="err"&gt;-io&lt;/span&gt; &lt;span class="err"&gt;有关，请看底下。&lt;/span&gt;
+
+&lt;span class="err"&gt;-io&lt;/span&gt; &lt;span class="err"&gt;网络接口：设定封包进出的接口规范&lt;/span&gt;
+    &lt;span class="err"&gt;-i&lt;/span&gt; &lt;span class="err"&gt;：封包所进入的那个网络接口，例如&lt;/span&gt; &lt;span class="err"&gt;eth0,&lt;/span&gt; &lt;span class="err"&gt;lo&lt;/span&gt; &lt;span class="err"&gt;等接口。需与&lt;/span&gt; &lt;span class="err"&gt;INPUT&lt;/span&gt; &lt;span class="err"&gt;链配合；&lt;/span&gt;
+    &lt;span class="err"&gt;-o&lt;/span&gt; &lt;span class="err"&gt;：封包所传出的那个网络接口，需与&lt;/span&gt; &lt;span class="err"&gt;OUTPUT&lt;/span&gt; &lt;span class="err"&gt;链配合；&lt;/span&gt;
+
+&lt;span class="err"&gt;-p&lt;/span&gt; &lt;span class="err"&gt;协定：设定此规则适用于哪种封包格式&lt;/span&gt;
+   &lt;span class="err"&gt;主要的封包格式有：&lt;/span&gt; &lt;span class="err"&gt;tcp,&lt;/span&gt; &lt;span class="err"&gt;udp,&lt;/span&gt; &lt;span class="err"&gt;icmp&lt;/span&gt; &lt;span class="err"&gt;及&lt;/span&gt; &lt;span class="err"&gt;all&lt;/span&gt; &lt;span class="err"&gt;。&lt;/span&gt;
+
+&lt;span class="err"&gt;-s&lt;/span&gt; &lt;span class="err"&gt;来源&lt;/span&gt; &lt;span class="err"&gt;IP/网域：设定此规则之封包的来源项目，可指定单纯的&lt;/span&gt; &lt;span class="err"&gt;IP&lt;/span&gt; &lt;span class="err"&gt;或包括网域，例如：&lt;/span&gt;
+   &lt;span class="err"&gt;IP&lt;/span&gt;  &lt;span class="err"&gt;：192.168.0.100&lt;/span&gt;
+   &lt;span class="err"&gt;网域：192.168.0.0/24,&lt;/span&gt; &lt;span class="err"&gt;192.168.0.0/255.255.255.0&lt;/span&gt; &lt;span class="err"&gt;均可。&lt;/span&gt;
+   &lt;span class="err"&gt;若规范为『不许』时，则加上&lt;/span&gt; &lt;span class="err"&gt;!&lt;/span&gt; &lt;span class="err"&gt;即可，例如：&lt;/span&gt;
+   &lt;span class="err"&gt;-s&lt;/span&gt; &lt;span class="err"&gt;!&lt;/span&gt; &lt;span class="err"&gt;192.168.100.0/24&lt;/span&gt; &lt;span class="err"&gt;表示不许&lt;/span&gt; &lt;span class="err"&gt;192.168.100.0/24&lt;/span&gt; &lt;span class="err"&gt;之封包来源；&lt;/span&gt;
+
+&lt;span class="err"&gt;-d&lt;/span&gt; &lt;span class="err"&gt;目标&lt;/span&gt; &lt;span class="err"&gt;IP/网域：同&lt;/span&gt; &lt;span class="err"&gt;-s&lt;/span&gt; &lt;span class="err"&gt;，只不过这里指的是目标的&lt;/span&gt; &lt;span class="err"&gt;IP&lt;/span&gt; &lt;span class="err"&gt;或网域。&lt;/span&gt;
+
+&lt;span class="err"&gt;-j&lt;/span&gt; &lt;span class="err"&gt;：后面接动作，主要的动作有接受(ACCEPT)、丢弃(DROP)、拒绝(REJECT)及记录(LOG)&lt;/span&gt;
+
+
+
+&lt;span class="k"&gt;[root@www ~]# iptables -A INPUT [-m state] [--state 状态]&lt;/span&gt;
+&lt;span class="err"&gt;选项与参数：&lt;/span&gt;
+&lt;span class="err"&gt;-m&lt;/span&gt; &lt;span class="err"&gt;：一些&lt;/span&gt; &lt;span class="err"&gt;iptables&lt;/span&gt; &lt;span class="err"&gt;的外挂模块，主要常见的有：&lt;/span&gt;
+     &lt;span class="err"&gt;state&lt;/span&gt; &lt;span class="err"&gt;：状态模块&lt;/span&gt;
+     &lt;span class="err"&gt;mac&lt;/span&gt;   &lt;span class="err"&gt;：网络卡硬件地址&lt;/span&gt; &lt;span class="err"&gt;(hardware&lt;/span&gt; &lt;span class="err"&gt;address)&lt;/span&gt;
+&lt;span class="err"&gt;--state&lt;/span&gt; &lt;span class="err"&gt;：一些封包的状态，主要有：&lt;/span&gt;
+     &lt;span class="err"&gt;INVALID&lt;/span&gt;    &lt;span class="err"&gt;：无效的封包，例如数据破损的封包状态&lt;/span&gt;
+     &lt;span class="err"&gt;ESTABLISHED：已经联机成功的联机状态；&lt;/span&gt;
+     &lt;span class="err"&gt;NEW&lt;/span&gt;        &lt;span class="err"&gt;：想要新建立联机的封包状态；&lt;/span&gt;
+     &lt;span class="err"&gt;RELATED&lt;/span&gt;    &lt;span class="err"&gt;：这个最常用！表示这个封包是与我们主机发送出去的封包有关&lt;/span&gt;
+
+
+
+&lt;span class="err"&gt;[root@www&lt;/span&gt; &lt;span class="err"&gt;~]&lt;/span&gt;&lt;span class="c1"&gt;# iptables -A INPUT [-p icmp] [--icmp-type 类型] -j ACCEPT&lt;/span&gt;
+&lt;span class="err"&gt;选项与参数：&lt;/span&gt;
+&lt;span class="err"&gt;--icmp-type&lt;/span&gt; &lt;span class="err"&gt;：后面必须要接&lt;/span&gt; &lt;span class="err"&gt;ICMP&lt;/span&gt; &lt;span class="err"&gt;的封包类型，也可以使用代号，&lt;/span&gt;
+              &lt;span class="err"&gt;例如&lt;/span&gt; &lt;span class="err"&gt;8&lt;/span&gt;  &lt;span class="err"&gt;代表&lt;/span&gt; &lt;span class="err"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;request&lt;/span&gt; &lt;span class="err"&gt;的意思。&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://vbird.dic.ksu.edu.tw/linux_server/0250simple_firewall_3.php"&gt;鸟哥私房菜&lt;/a&gt;&lt;/p&gt;</summary><category term="Linux"></category><category term="iptables"></category></entry><entry><title>Kibana elasticsearch logstash</title><link href="http://www.yilaguan.cc/posts/2015/11/09/kibana-elasticsearch-logstash.html" rel="alternate"></link><published>2015-11-09T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-09:posts/2015/11/09/kibana-elasticsearch-logstash.html</id><summary type="html">&lt;h2&gt;Kibana elasticsearch logstash 日志系统搭建&lt;/h2&gt;
+&lt;h3&gt;安装&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;yum install ruby rubygems&lt;/li&gt;
+&lt;li&gt;/usr/bin/gem install bundler &lt;/li&gt;
+&lt;li&gt;yum install java-1.7.0-openjdk&lt;/li&gt;
+&lt;li&gt;yum install redis.x86_64   （存储日志信息）&lt;/li&gt;
+&lt;li&gt;启动redis: redis-server /etc/redis.conf&lt;/li&gt;
+&lt;li&gt;Kibana elasticsearch logstash 下载&lt;ul&gt;
+&lt;li&gt;https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.3.zip&lt;/li&gt;
+&lt;li&gt;https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz&lt;/li&gt;
+&lt;li&gt;https://download.elastic.co/logstash/logstash/logstash-1.5.5.zip&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;生成logstash 测试配置文件 stdin.conf&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;input {
+stdin {}
+}
+
+output { 
+    elasticsearch { 
+        embedded =&amp;gt; true 
+    }
+} 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;运行logstash&lt;/h3&gt;
+&lt;p&gt;/path_to_logstash/bin/logstash -f stdin.conf
+http://logstashhost:9200
+显示下面结果则为正常&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{
+
+    status: 200,
+    name: &amp;quot;Blue Marvel&amp;quot;,
+    cluster_name: &amp;quot;elasticsearch&amp;quot;,
+    version: {
+        number: &amp;quot;1.7.0&amp;quot;,
+        build_hash: &amp;quot;929b9739cae115e73c346cb5f9a6f24ba735a743&amp;quot;,
+        build_timestamp: &amp;quot;2015-07-16T14:31:07Z&amp;quot;,
+        build_snapshot: false,
+        lucene_version: &amp;quot;4.10.4&amp;quot;
+    },
+    tagline: &amp;quot;You Know, for Search&amp;quot;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在当前窗口输入相关数据用作测试&lt;/p&gt;
+&lt;h3&gt;运行kibana&lt;/h3&gt;
+&lt;p&gt;/path_to_kibana/bin/kibana&lt;/p&gt;
+&lt;p&gt;http://kibanahost:5601/ &lt;/p&gt;
+&lt;p&gt;选择Index Patterns&lt;/p&gt;
+&lt;h2&gt;logstash 配置文件&lt;/h2&gt;
+&lt;h3&gt;Use Case 1&lt;/h3&gt;
+&lt;p&gt;使用外部elasticsearch需要默认logstash模板，可以通过下面方式设置，也可以在logstash上设置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPUT localhost:9200/_template/logstash -d &amp;#39;{
+
+        &amp;quot;order&amp;quot;:0,
+        &amp;quot;template&amp;quot;:&amp;quot;logstash-*&amp;quot;,
+        &amp;quot;settings&amp;quot;:{
+            &amp;quot;index.refresh_interval&amp;quot;:&amp;quot;5s&amp;quot;
+        },
+        &amp;quot;mappings&amp;quot;:{
+            &amp;quot;_default_&amp;quot;:{
+                &amp;quot;dynamic_templates&amp;quot;:[
+                    {
+                        &amp;quot;message_field&amp;quot;:{
+                            &amp;quot;mapping&amp;quot;:{
+                                &amp;quot;index&amp;quot;:&amp;quot;analyzed&amp;quot;,
+                                &amp;quot;omit_norms&amp;quot;:true,
+                                &amp;quot;type&amp;quot;:&amp;quot;string&amp;quot;
+                            },
+                            &amp;quot;match_mapping_type&amp;quot;:&amp;quot;string&amp;quot;,
+                            &amp;quot;match&amp;quot;:&amp;quot;message&amp;quot;
+                        }
+                    },
+                    {
+                        &amp;quot;string_fields&amp;quot;:{
+                            &amp;quot;mapping&amp;quot;:{
+                                &amp;quot;index&amp;quot;:&amp;quot;analyzed&amp;quot;,
+                                &amp;quot;omit_norms&amp;quot;:true,
+                                &amp;quot;type&amp;quot;:&amp;quot;string&amp;quot;,
+                                &amp;quot;fields&amp;quot;:{
+                                    &amp;quot;raw&amp;quot;:{
+                                        &amp;quot;index&amp;quot;:&amp;quot;not_analyzed&amp;quot;,
+                                        &amp;quot;ignore_above&amp;quot;:256,
+                                        &amp;quot;type&amp;quot;:&amp;quot;string&amp;quot;
+                                        }
+                                    }
+                                },
+                            &amp;quot;match_mapping_type&amp;quot;:&amp;quot;string&amp;quot;,
+                            &amp;quot;match&amp;quot;:&amp;quot;*&amp;quot;
+                        }
+                    }
+                ],
+                &amp;quot;properties&amp;quot;:{
+                    &amp;quot;geoip&amp;quot;:{
+                        &amp;quot;dynamic&amp;quot;:true,
+                        &amp;quot;properties&amp;quot;:{
+                            &amp;quot;location&amp;quot;:{
+                                &amp;quot;type&amp;quot;:&amp;quot;geo_point&amp;quot;
+                                }
+                            },
+                            &amp;quot;type&amp;quot;:&amp;quot;object&amp;quot;
+                        },
+                        &amp;quot;@version&amp;quot;:{
+                            &amp;quot;index&amp;quot;:&amp;quot;not_analyzed&amp;quot;,
+                            &amp;quot;type&amp;quot;:&amp;quot;string&amp;quot;
+                            }
+                        },
+                        &amp;quot;_all&amp;quot;:{
+                            &amp;quot;enabled&amp;quot;:true,
+                            &amp;quot;omit_norms&amp;quot;:true
+                        }
+                    }
+                },
+                &amp;quot;aliases&amp;quot;:{}
+            }&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Use Case 2&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;错误日志通过 redis 中转
+收集所有非INFO的日志，发送至&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;input { 
+    file { 
+    path =&amp;gt; &amp;quot;/home/yihan/access.log&amp;quot; 
+    } 
+} 
+filter { 
+if [message] =~ /INFO/ {
+     drop{}
+}
+
+} 
+output { 
+      redis { 
+      host =&amp;gt; &amp;#39;xx.xx.xx.xx&amp;#39; 
+      data_type =&amp;gt; &amp;#39;list&amp;#39; 
+      key =&amp;gt; &amp;#39;logstash&amp;#39; 
+       } 
+} 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;从redis获取日志发送到elasticsearch&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;input {
+redis {
+                        host =&amp;gt; &amp;quot;localhost&amp;quot;
+                        type =&amp;gt; &amp;quot;redis-input&amp;quot;
+                        data_type =&amp;gt; &amp;quot;list&amp;quot;
+                        key =&amp;gt; &amp;quot;logstash&amp;quot;
+                }
+}  
+
+output {
+    elasticsearch {
+    host=&amp;gt;&amp;quot;10.115.132.149:9200&amp;quot;
+     protocol =&amp;gt; http
+  }
+
+
+}
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category><category term="Kibana"></category><category term="elasticsearch"></category><category term="logstash"></category><category term="Log"></category></entry><entry><title>命令-赶紧的</title><link href="http://www.yilaguan.cc/posts/2015/10/29/Linux.html" rel="alternate"></link><published>2015-10-29T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-29:posts/2015/10/29/Linux.html</id><summary type="html">&lt;h2&gt;查看端口的占用情况&lt;/h2&gt;
+&lt;p&gt;netstat -tln&lt;/p&gt;
+&lt;h2&gt;查看32,64位系统&lt;/h2&gt;
+&lt;p&gt;getconf LONG_BIT&lt;/p&gt;
+&lt;h2&gt;去除注释，空行&lt;/h2&gt;
+&lt;p&gt;more php-fpm.conf | grep -v ^\; | grep -v ^$;&lt;/p&gt;</summary><category term="Linux"></category></entry></feed>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/mysql.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2015-12-13T00:00:00+08:00</updated><entry><title>xtrabackup 小结</title><link href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html" rel="alternate"></link><published>2015-12-13T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-13:posts/2015/12/13/xtrabackup.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;官网下载相关rpm 包, 此处为 percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm， 其中5.1版本的mysql只能使用 2.0版本的xtrabackup&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;rpm -ivh xxx.rpm
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;使用要点&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;正常备份会锁表，可以使用 &lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;备份脚本&lt;/h2&gt;
+&lt;p&gt;写了一个脚本，用于每周日全备，其他时候增量备份&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;#author: yihan&lt;/span&gt;
+&lt;span class="c1"&gt;#date: 2015-12-13&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#创建用户&lt;/span&gt;
+&lt;span class="c1"&gt;#mysql&amp;gt; CREATE USER &amp;#39;bkpuser&amp;#39;@&amp;#39;localhost&amp;#39; IDENTIFIED BY &amp;#39;bkpuserpassword123&amp;#39;;&lt;/span&gt;
+&lt;span class="c1"&gt;#mysql&amp;gt; REVOKE ALL PRIVILEGES, GRANT OPTION FROM &amp;#39;bkpuser&amp;#39;@&amp;#39;localhost&amp;#39;;&lt;/span&gt;
+&lt;span class="c1"&gt;#mysql&amp;gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO &amp;#39;bkpuser&amp;#39;@&amp;#39;localhost&amp;#39;;&lt;/span&gt;
+&lt;span class="c1"&gt;#mysql&amp;gt; FLUSH PRIVILEGES;&lt;/span&gt;
+
+
+&lt;span class="nv"&gt;weekday&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;date +%w&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="nv"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3306
+&lt;span class="nv"&gt;ip&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;localhost
+&lt;span class="nv"&gt;base_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/bakup
+&lt;span class="nv"&gt;back_dir_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;mysql
+&lt;span class="nv"&gt;back_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$base_dir&lt;/span&gt;/&lt;span class="nv"&gt;$back_dir_name&lt;/span&gt;
+&lt;span class="nv"&gt;file_cnf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/etc/my.cnf
+&lt;span class="nv"&gt;user_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;bkpuser
+&lt;span class="nv"&gt;password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;bkpuserpassword123
+
+
+&lt;span class="nv"&gt;timestamp&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;date +&lt;span class="s2"&gt;&amp;quot;%Y%m%d%H%M%S&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="nv"&gt;Xtrabackup_log&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$back_dir&lt;/span&gt;/Xtrabackup_log_&lt;span class="nv"&gt;$timestamp&lt;/span&gt;.out
+&lt;span class="nv"&gt;shell_log&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$base_dir&lt;/span&gt;/backup.log
+
+
+&lt;span class="k"&gt;function&lt;/span&gt; log
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nv"&gt;t&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;date +&lt;span class="s2"&gt;&amp;quot;%Y-%m-%d %H:%M:%S&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[&lt;/span&gt;&lt;span class="nv"&gt;$t&lt;/span&gt;&lt;span class="s2"&gt;] &lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; &lt;span class="nv"&gt;$shell_log&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;function&lt;/span&gt; full_backup
+&lt;span class="o"&gt;{&lt;/span&gt;
+    log &lt;span class="s2"&gt;&amp;quot;full_backup begin, paras: &lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class="nv"&gt;target_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;
+    innobackupex --defaults-file&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$file_cnf&lt;/span&gt; --no-timestamp&lt;span class="se"&gt;\&lt;/span&gt;
+      --user&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$user_name&lt;/span&gt; --password&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$password&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+      --host&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$ip&lt;/span&gt; --port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$port&lt;/span&gt;  &lt;span class="nv"&gt;$back_dir&lt;/span&gt;/&lt;span class="nv"&gt;$target_dir&lt;/span&gt; 1&amp;gt; &lt;span class="nv"&gt;$Xtrabackup_log&lt;/span&gt; 2&amp;gt;&lt;span class="nv"&gt;$Xtrabackup_log&lt;/span&gt;
+    log &lt;span class="s2"&gt;&amp;quot;full_backup end&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+
+&lt;span class="k"&gt;function&lt;/span&gt; incremental_bakup
+&lt;span class="o"&gt;{&lt;/span&gt;
+    log &lt;span class="s2"&gt;&amp;quot;incremental_bakup begin paras: &lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;, &lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+    &lt;span class="nv"&gt;xtra_base_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;
+    &lt;span class="nv"&gt;xtra_target_dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;
+    innobackupex --defaults-file&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$file_cnf&lt;/span&gt; --no-timestamp &lt;span class="se"&gt;\&lt;/span&gt;
+    --user&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$user_name&lt;/span&gt; --password&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$password&lt;/span&gt;  --host&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$ip&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    --port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$port&lt;/span&gt; --incremental --incremental-basedir&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$back_dir&lt;/span&gt;/&lt;span class="nv"&gt;$xtra_base_dir&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+    &lt;span class="nv"&gt;$back_dir&lt;/span&gt;/&lt;span class="nv"&gt;$xtra_target_dir&lt;/span&gt; 1&amp;gt; &lt;span class="nv"&gt;$Xtrabackup_log&lt;/span&gt; 2&amp;gt;&lt;span class="nv"&gt;$Xtrabackup_log&lt;/span&gt;
+    log &lt;span class="s2"&gt;&amp;quot;incremental_bakup end&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;function&lt;/span&gt; back_up_dir
+&lt;span class="o"&gt;{&lt;/span&gt;
+    mv &lt;span class="nv"&gt;$back_dir&lt;/span&gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;back_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;_bak_&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;timestamp&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;function&lt;/span&gt; delete_old_backup
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -d &lt;span class="nv"&gt;$base_dir&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$back_dir&lt;/span&gt;
+        find &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;back_dir_name&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;_bak_* -mtime +30 &lt;span class="p"&gt;|&lt;/span&gt; xargs rm -f
+    &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;####################main###############&lt;/span&gt;
+mkdir -p &lt;span class="nv"&gt;$back_dir&lt;/span&gt;
+log &lt;span class="s2"&gt;&amp;quot;++++++++++++++++++++++++++++++++++++++++++++++++++&amp;quot;&lt;/span&gt;
+log &lt;span class="s2"&gt;&amp;quot;weekday:&lt;/span&gt;&lt;span class="nv"&gt;$weekday&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; -eq &lt;span class="nv"&gt;$weekday&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+    back_up_dir
+    mkdir -p &lt;span class="nv"&gt;$back_dir&lt;/span&gt;
+    full_backup backup0
+&lt;span class="k"&gt;else&lt;/span&gt;
+    &lt;span class="nb"&gt;let&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;last_day = &lt;/span&gt;&lt;span class="nv"&gt;$weekday&lt;/span&gt;&lt;span class="s2"&gt; - 1&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -d &lt;span class="nv"&gt;$back_dir&lt;/span&gt;/backup&lt;span class="nv"&gt;$last_day&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+      incremental_bakup backup&lt;span class="nv"&gt;$last_day&lt;/span&gt; backup&lt;span class="nv"&gt;$weekday&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;
+      full_backup backup&lt;span class="nv"&gt;$weekday&lt;/span&gt;
+    &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+
+log &lt;span class="s2"&gt;&amp;quot;delete old backup&amp;quot;&lt;/span&gt;
+delete_old_backup
+
+
+log &lt;span class="s2"&gt;&amp;quot;--------------------------------------------------&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;h2&gt;恢复脚本&lt;/h2&gt;
+&lt;p&gt;后续&lt;/p&gt;</summary></entry><entry><title>mysql ibdata 太大</title><link href="http://www.yilaguan.cc/posts/2015/12/07/mysql_ibdata.html" rel="alternate"></link><published>2015-12-07T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-07:posts/2015/12/07/mysql_ibdata.html</id><summary type="html">&lt;p&gt;ibdata 太大无法缩小&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Do a mysqldump of all databases, procedures, triggers etc except the mysql and performance_schema databases&lt;/li&gt;
+&lt;li&gt;Drop all databases except the above 2 databases
+&lt;code&gt;drop schema xxxxx&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Stop mysql
+&lt;code&gt;service mysqld stop&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Delete ibdata1 and ib_log files&lt;/li&gt;
+&lt;li&gt;Start mysql
+&lt;code&gt;service mysqld start&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Restore from dump&lt;/li&gt;
+&lt;/ol&gt;</summary></entry></feed>

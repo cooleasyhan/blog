@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/java.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2015-10-30T00:00:00+08:00</updated><entry><title>有用的代码</title><link href="http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-dai-ma.html" rel="alternate"></link><published>2015-10-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-30:posts/2015/10/30/you-yong-de-dai-ma.html</id><summary type="html">&lt;ol&gt;
+&lt;li&gt;&lt;a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/eventusermodel/XLSX2CSV.java"&gt;turn an big excel file into a CSV&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="Java"></category><category term="Excel"></category></entry></feed>

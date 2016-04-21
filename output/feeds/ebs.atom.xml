@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/ebs.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2015-12-02T00:00:00+08:00</updated><entry><title>利用nginx 转发 EBS</title><link href="http://www.yilaguan.cc/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html" rel="alternate"></link><published>2015-12-02T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-02:posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html</id><summary type="html">&lt;h2&gt;需求&lt;/h2&gt;
+&lt;p&gt;EBS 服务器搭建在内网上， 需要开放给外网使用。 &lt;br /&gt;
+实现： EBS 设置单一网络入口点，  外网服务器上配置nginx 转发至内网服务器。&lt;/p&gt;
+&lt;h2&gt;配置EBS&lt;/h2&gt;
+&lt;h3&gt;修改host文件， 在EBS app 服务器上添加相关host&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;110.10.10.10 prod.xxx.xxx.xxx prod
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;修改 $CONTEXT_FILE , 配置EBS单一网络入口&lt;/h3&gt;
+&lt;p&gt;http://app01.domain.name:8000  ===&amp;gt;   http://prod.domain.name:80&lt;br /&gt;
+修改前后比对&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[applprod@app01 admin]$ diff PROD_app01.xml PROD_app01.xml.bak 
+123c123
+&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;          &lt;span class="nt"&gt;&amp;lt;chronosURL&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_chronosURL&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;customized=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;http://prod.domain.name:80/oracle_smp_chronos/oracle_smp_chronos_sdk.gif&lt;span class="nt"&gt;&amp;lt;/chronosURL&amp;gt;&lt;/span&gt;
+---
+&amp;gt;          &lt;span class="nt"&gt;&amp;lt;chronosURL&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_chronosURL&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;http://app01.domain.name:8000/oracle_smp_chronos/oracle_smp_chronos_sdk.gif&lt;span class="nt"&gt;&amp;lt;/chronosURL&amp;gt;&lt;/span&gt;
+125c125
+&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;          &lt;span class="nt"&gt;&amp;lt;EndUserMonitoringURL&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_endUserMonitoringURL&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;customized=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;http://prod.domain.name:80/oracle_smp_chronos/oracle_smp_chronos_sdk.gif&lt;span class="nt"&gt;&amp;lt;/EndUserMonitoringURL&amp;gt;&lt;/span&gt;
+---
+&amp;gt;          &lt;span class="nt"&gt;&amp;lt;EndUserMonitoringURL&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_endUserMonitoringURL&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;http://app01.domain.name:8000/oracle_smp_chronos/oracle_smp_chronos_sdk.gif&lt;span class="nt"&gt;&amp;lt;/EndUserMonitoringURL&amp;gt;&lt;/span&gt;
+184c184
+&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;          &lt;span class="nt"&gt;&amp;lt;externURL&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_external_url&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;customized=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;http://prod.domain.name:80&lt;span class="nt"&gt;&amp;lt;/externURL&amp;gt;&lt;/span&gt;
+---
+&amp;gt;          &lt;span class="nt"&gt;&amp;lt;externURL&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_external_url&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;http://app01.domain.name:8000&lt;span class="nt"&gt;&amp;lt;/externURL&amp;gt;&lt;/span&gt;
+186,187c186,187
+&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;          &lt;span class="nt"&gt;&amp;lt;webentryhost&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_webentryhost&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;customized=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;prod&lt;span class="nt"&gt;&amp;lt;/webentryhost&amp;gt;&lt;/span&gt;
+&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;          &lt;span class="nt"&gt;&amp;lt;webentrydomain&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_webentrydomain&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;customized=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;domain.name&lt;span class="nt"&gt;&amp;lt;/webentrydomain&amp;gt;&lt;/span&gt;
+---
+&amp;gt;          &lt;span class="nt"&gt;&amp;lt;webentryhost&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_webentryhost&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;app01&lt;span class="nt"&gt;&amp;lt;/webentryhost&amp;gt;&lt;/span&gt;
+&amp;gt;          &lt;span class="nt"&gt;&amp;lt;webentrydomain&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_webentrydomain&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;domain.name&lt;span class="nt"&gt;&amp;lt;/webentrydomain&amp;gt;&lt;/span&gt;
+228c228
+&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;          &lt;span class="nt"&gt;&amp;lt;login_page&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_login_page&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;customized=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;http://prod.domain.name:80/OA_HTML/AppsLogin&lt;span class="nt"&gt;&amp;lt;/login_page&amp;gt;&lt;/span&gt;
+---
+&amp;gt;          &lt;span class="nt"&gt;&amp;lt;login_page&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_login_page&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;http://app01.domain.name:8000/OA_HTML/AppsLogin&lt;span class="nt"&gt;&amp;lt;/login_page&amp;gt;&lt;/span&gt;
+764c764
+&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;       &lt;span class="nt"&gt;&amp;lt;activewebport&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_active_webport&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;oa_type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;DUP_PORT&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;base=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;8000&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;step=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;range=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;-1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;label=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Active Web Port&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;80&lt;span class="nt"&gt;&amp;lt;/activewebport&amp;gt;&lt;/span&gt;
+---
+&amp;gt;       &lt;span class="nt"&gt;&amp;lt;activewebport&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_active_webport&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;oa_type=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;DUP_PORT&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;base=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;8000&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;step=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;range=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;-1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;label=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Active Web Port&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;8000&lt;span class="nt"&gt;&amp;lt;/activewebport&amp;gt;&lt;/span&gt;
+994d993
+&lt;span class="err"&gt;&amp;lt;&lt;/span&gt;    &lt;span class="nt"&gt;&amp;lt;oa_customized/&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;执行 autoconfig&lt;/h3&gt;
+&lt;h3&gt;重启app 服务&lt;/h3&gt;
+&lt;h2&gt;配置nginx 服务&lt;/h2&gt;
+&lt;h3&gt;修改Host&lt;/h3&gt;
+&lt;p&gt;同app服务器&lt;/p&gt;
+&lt;h3&gt;安装nginx&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html"&gt;Nginx, Php-fpm 安装&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;配置nginx&lt;/h3&gt;
+&lt;p&gt;nginx.conf&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;#user&lt;/span&gt;  &lt;span class="nt"&gt;nobody&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="nt"&gt;worker_processes&lt;/span&gt;  &lt;span class="nt"&gt;6&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="nt"&gt;error_log&lt;/span&gt;  &lt;span class="nt"&gt;logs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;error&lt;/span&gt;&lt;span class="nc"&gt;.log&lt;/span&gt;  &lt;span class="nt"&gt;info&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="nt"&gt;pid&lt;/span&gt;        &lt;span class="nt"&gt;logs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;nginx&lt;/span&gt;&lt;span class="nc"&gt;.pid&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+
+&lt;span class="nt"&gt;events&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;worker_connections&lt;/span&gt;  &lt;span class="m"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+
+&lt;span class="nt"&gt;http&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;include&lt;/span&gt;       &lt;span class="n"&gt;mime&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;types&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;default_type&lt;/span&gt;  &lt;span class="n"&gt;application&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;octet&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;sendfile&lt;/span&gt;                    &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;tcp_nopush&lt;/span&gt;                  &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;tcp_nodelay&lt;/span&gt;                 &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;client_body_buffer_size&lt;/span&gt;     &lt;span class="m"&gt;1024&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="m"&gt;#cache&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_connect_timeout&lt;/span&gt;       &lt;span class="m"&gt;600&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_read_timeout&lt;/span&gt;          &lt;span class="m"&gt;600&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_send_timeout&lt;/span&gt;          &lt;span class="m"&gt;600&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_buffer_size&lt;/span&gt;           &lt;span class="m"&gt;16&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_buffers&lt;/span&gt;               &lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="m"&gt;64&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_busy_buffers_size&lt;/span&gt;     &lt;span class="m"&gt;128&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_temp_file_write_size&lt;/span&gt;  &lt;span class="m"&gt;1024&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_temp_path&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;new_app01_temp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_cache_path&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt; &lt;span class="n"&gt;levels&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="n"&gt;keys_zone&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;new_app01_cache&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;200&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;inactive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="n"&gt;max_size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;30&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="m"&gt;#end&lt;/span&gt;
+
+    &lt;span class="m"&gt;#keepal&lt;/span&gt;&lt;span class="n"&gt;ive_timeout&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;keepalive_timeout&lt;/span&gt;  &lt;span class="m"&gt;300s&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="err"&gt;##&lt;/span&gt; &lt;span class="n"&gt;gzip&lt;/span&gt; &lt;span class="n"&gt;setting&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+    &lt;span class="n"&gt;gzip&lt;/span&gt;                &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;gzip_min_length&lt;/span&gt;     &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;gzip_buffers&lt;/span&gt;        &lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="m"&gt;16&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;gzip_http_version&lt;/span&gt;   &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;gzip_comp_level&lt;/span&gt;     &lt;span class="m"&gt;9&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;gzip_vary&lt;/span&gt;           &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;gzip_types&lt;/span&gt;          &lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;plain&lt;/span&gt; &lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;javascript&lt;/span&gt; &lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;css&lt;/span&gt; &lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;##&lt;/span&gt; &lt;span class="n"&gt;gzip&lt;/span&gt; &lt;span class="n"&gt;setting&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+
+    &lt;span class="n"&gt;output_buffers&lt;/span&gt;      &lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="m"&gt;32&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;postpone_output&lt;/span&gt;     &lt;span class="m"&gt;1460&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;client_header_buffer_size&lt;/span&gt;       &lt;span class="m"&gt;128&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;large_client_header_buffers&lt;/span&gt;     &lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="m"&gt;256&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;log_format&lt;/span&gt;  &lt;span class="n"&gt;log_info&lt;/span&gt;  &lt;span class="s1"&gt;&amp;#39;$remote_addr - $remote_user &lt;/span&gt;&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;$time_local&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="s1"&gt; -DIRECT $upstream_addr  $request &amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;$status&amp;quot; $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;$http_user_agent&amp;quot; &amp;quot;$http_x_forwarded_for&amp;quot;&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;$request_time $upstream_cache_status&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;access_log&lt;/span&gt;  &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;logs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;app01&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;  &lt;span class="n"&gt;log_info&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="o"&gt;/*/&lt;/span&gt;&lt;span class="n"&gt;vhost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;vhost.conf&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;listen&lt;/span&gt;       &lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;server_name&lt;/span&gt;  &lt;span class="n"&gt;prod&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="m"&gt;#charse&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="n"&gt;koi8&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="m"&gt;#access&lt;/span&gt;&lt;span class="n"&gt;_log&lt;/span&gt;  &lt;span class="n"&gt;logs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;access&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;  &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+     &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="o"&gt;.*&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gif&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;jpg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;png&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;htm&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;css&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;js&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;flv&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;ico&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;swf&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="o"&gt;.*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="err"&gt;##&lt;/span&gt; &lt;span class="n"&gt;proxy_next_upstream&lt;/span&gt; &lt;span class="n"&gt;http_500&lt;/span&gt; &lt;span class="n"&gt;http_502&lt;/span&gt; &lt;span class="n"&gt;http_503&lt;/span&gt; &lt;span class="n"&gt;http_504&lt;/span&gt; &lt;span class="n"&gt;error&lt;/span&gt; &lt;span class="n"&gt;timeout&lt;/span&gt; &lt;span class="n"&gt;invalid_header&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_next_upstream&lt;/span&gt; &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_pass&lt;/span&gt;     &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;8000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="m"&gt;#proxy&lt;/span&gt;&lt;span class="n"&gt;_redirect&lt;/span&gt;     &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;Host&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Real&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;IP&lt;/span&gt;  &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Forwarded&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;For&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_cache&lt;/span&gt;    &lt;span class="n"&gt;new_app01_cache&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_cache_valid&lt;/span&gt;  &lt;span class="m"&gt;200&lt;/span&gt; &lt;span class="m"&gt;302&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_cache_valid&lt;/span&gt;  &lt;span class="m"&gt;301&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_cache_valid&lt;/span&gt;  &lt;span class="n"&gt;any&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;proxy_cache_key&lt;/span&gt;    &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;uri&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;is_args&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+         &lt;span class="n"&gt;expires&lt;/span&gt;        &lt;span class="m"&gt;-1&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="o"&gt;^/&lt;/span&gt;&lt;span class="nt"&gt;status&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+       &lt;span class="n"&gt;stub_status&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+       &lt;span class="n"&gt;access_log&lt;/span&gt; &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+     &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;purge&lt;/span&gt;&lt;span class="o"&gt;(/.*)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;proxy_cache_purge&lt;/span&gt; &lt;span class="n"&gt;new_app01_cache&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;is_args&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;allow&lt;/span&gt; &lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+       &lt;span class="m"&gt;#proxy&lt;/span&gt;&lt;span class="n"&gt;_redirect&lt;/span&gt; &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+       &lt;span class="n"&gt;proxy_pass&lt;/span&gt;    &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;8000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+       &lt;span class="n"&gt;proxy_next_upstream&lt;/span&gt; &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+       &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;Host&lt;/span&gt;         &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+       &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Real&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;IP&lt;/span&gt;    &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+       &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Forwarded&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;For&lt;/span&gt;  &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;proxy_add_x_forwarded_for&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+       &lt;span class="n"&gt;proxy_set_header&lt;/span&gt; &lt;span class="n"&gt;REMOTE&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;HOST&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nt"&gt;error_page&lt;/span&gt;   &lt;span class="nt"&gt;500&lt;/span&gt; &lt;span class="nt"&gt;502&lt;/span&gt; &lt;span class="nt"&gt;503&lt;/span&gt; &lt;span class="nt"&gt;504&lt;/span&gt;  &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;50x&lt;/span&gt;&lt;span class="nc"&gt;.html&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;50x&lt;/span&gt;&lt;span class="nc"&gt;.html&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;root&lt;/span&gt;   &lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Reference&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://www.nginx.com/wp-content/uploads/2015/11/oracle-ebusiness-suite-deployment-guide-v1.pdf"&gt;https://www.nginx.com/wp-content/uploads/2015/11/oracle-ebusiness-suite-deployment-guide-v1.pdf&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=351925156011594&amp;amp;id=387859.1&amp;amp;_afrWindowMode=0&amp;amp;_adf.ctrl-state=j2tyjckww_63"&gt;Doc ID 387859.1&lt;/a&gt;&lt;/p&gt;</summary><category term="ebs"></category><category term="nginx"></category></entry><entry><title>AR 设置数据data fix</title><link href="http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html" rel="alternate"></link><published>2015-12-01T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-01:posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html</id><summary type="html">&lt;h2&gt;通知单行：&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;--1.备份数据
+CREATE TABLE Ar_Memo_Lines_All_Tl_0529 AS
+  SELECT * FROM Ar_Memo_Lines_All_Tl;
+
+--2. 创建临时表
+CREATE TABLE Cux_Ar_Memo_Lines_Df_0529(Memo_Line_Id NUMBER, Ou_Name VARCHAR2(240), NAME VARCHAR2(50), Description VARCHAR2(80), New_Name VARCHAR2(52), New_Description VARCHAR2(90))
+
+--3. 修正临时表中数据
+UPDATE Cux_Ar_Memo_Lines_Df_0529 d SET(Memo_Line_Id, New_Name, New_Description) = (
+  SELECT Tl.Memo_Line_Id, d.Name || &amp;#39;_O&amp;#39;, d.Description || &amp;#39;-历史&amp;#39;
+    FROM Ar_Memo_Lines_All_Tl Tl, Hr_Operating_Units Ou
+   WHERE Tl.Org_Id = Ou.Organization_Id
+     AND Ou.Name = d.Ou_Name
+     AND Tl.Name = d.Name
+     AND Tl.Description = d.Description
+     AND Tl.Language = &amp;#39;ZHS&amp;#39;);
+
+--4手工将cux_ar_memo_lines_df_0529中 合作方分成中转-第三方平台-联运手游 改为 合作方分成中转-第三方平台-联运手_O
+
+--5 do udpate
+UPDATE Ar_Memo_Lines_All_Tl Tl
+   SET (NAME, Description) =
+       (SELECT New_Name, New_Description
+          FROM Cux_Ar_Memo_Lines_Df_0529 d
+         WHERE d.Memo_Line_Id = Tl.Memo_Line_Id)
+WHERE EXISTS (SELECT 1
+          FROM Cux_Ar_Memo_Lines_Df_0529 d
+         WHERE d.Memo_Line_Id = Tl.Memo_Line_Id);
+
+--6 check
+SELECT *
+  FROM Ar_Memo_Lines_All_Tl t, Cux_Ar_Memo_Lines_Df_0529 d
+WHERE t.Memo_Line_Id = d.Memo_Line_Id
+   AND (t.Name &amp;lt;&amp;gt; d.New_Name OR t.Description &amp;lt;&amp;gt; d.New_Description);
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;事务处理类型:&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;--1.备份数据
+CREATE TABLE Ra_Cust_Trx_Types_All_0528 AS
+  SELECT * FROM Ra_Cust_Trx_Types_All;
+--2. 创建临时表
+CREATE TABLE Cux_Ra_Cust_Trx_Df_0528(Cust_Trx_Type_Id NUMBER,
+                                     Ou_Name VARCHAR2(240),
+                                     NAME VARCHAR2(20),
+                                     New_Name VARCHAR2(20),
+                                     New_Description VARCHAR2(80));
+--3. 修正临时表中数据
+UPDATE Cux_Ra_Cust_Trx_Df_0528 d
+   SET Cust_Trx_Type_Id =
+       (SELECT Cust_Trx_Type_Id
+          FROM Hr_Operating_Units Ou, Ra_Cust_Trx_Types_All t
+         WHERE Ou.Organization_Id = t.Org_Id
+           AND Ou.Name = d.Ou_Name
+           AND t.Name = d.Name);
+
+--4 do udpate
+UPDATE Ra_Cust_Trx_Types_All t
+   SET (t.Name, t.Description) =
+       (SELECT New_Name, New_Description
+          FROM Cux_Ra_Cust_Trx_Df_0528 d, Hr_Operating_Units Ou
+         WHERE d.Ou_Name = Ou.Name
+           AND d.Cust_Trx_Type_Id = t.Cust_Trx_Type_Id
+           AND d.Name = t.Name
+           AND Ou.Organization_Id = t.Org_Id)
+WHERE EXISTS (SELECT 1
+          FROM Cux_Ra_Cust_Trx_Df_0528 d, Hr_Operating_Units Ou
+         WHERE d.Ou_Name = Ou.Name
+           AND d.Cust_Trx_Type_Id = t.Cust_Trx_Type_Id
+           AND d.Name = t.Name
+           AND Ou.Organization_Id = t.Org_Id);
+--5 check
+SELECT a.Name, a.Description, d.New_Name, d.New_Description
+  FROM Ra_Cust_Trx_Types_All a, Cux_Ra_Cust_Trx_Df_0528 d
+WHERE a.Cust_Trx_Type_Id = d.Cust_Trx_Type_Id
+   AND (a.Name &amp;lt;&amp;gt; d.New_Name OR a.Description &amp;lt;&amp;gt; d.New_Description)
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="ebs"></category></entry><entry><title>定位autoconfig模板文件</title><link href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html" rel="alternate"></link><published>2015-11-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-30:posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html</id><summary type="html">&lt;p&gt;1、定位模版文件&lt;br /&gt;
+$AD_TOP/bin/adtmplreport.sh contextfile=$CONTEXT_FILE target=$FORMS_WEB_CONFIG_FILE
+以上命令，通过查看报表日志，可分别得到如下模版结果：
+$FND_TOP/admin/template/forms_web_1012_cfg.tmp&lt;/p&gt;
+&lt;p&gt;2、创建custom目录&lt;br /&gt;
+mkdir $FND_TOP/admin/template/custom&lt;/p&gt;
+&lt;p&gt;3、把上述文件拷贝到custom目录&lt;br /&gt;
+cp -i $FND_TOP/admin/template/forms_web_1012_cfg.tmp $FND_TOP/admin/template/custom/forms_web_1012_cfg.tmp&lt;/p&gt;
+&lt;p&gt;4、编辑custom目录下的模版文件&lt;br /&gt;
+forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：&lt;/p&gt;
+&lt;p&gt;添加金税的jar包&lt;br /&gt;
+  archive2=,/OA_JAVA/hand/hand.jar&lt;/p&gt;
+&lt;p&gt;5、在测试模式运行autoconfig &lt;br /&gt;
+$AD_TOP/bin/adchkcfg.sh contextfile=$CONTEXT_FILE&lt;/p&gt;
+&lt;p&gt;6、正式运行autoconfig&lt;br /&gt;
+$AD_TOP/bin/adconfig.sh contextfile=$CONTEXT_FILE&lt;/p&gt;
+&lt;p&gt;metalink参考:270519.1&lt;/p&gt;</summary><category term="ebs"></category></entry><entry><title>AR 的事务处理接口</title><link href="http://www.yilaguan.cc/posts/2015/11/14/ar-de-shi-wu-chu-li-jie-kou.html" rel="alternate"></link><published>2015-11-14T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-14:posts/2015/11/14/ar-de-shi-wu-chu-li-jie-kou.html</id><summary type="html">&lt;p&gt;最近由于会有大量的接口开发，重构了现有AR 的事务处理接口，将其作为后续所有事务处理接口的统一入口。在后期的项目中看看效果，如果效果OK， 考虑把收款接口，核销接口也用类似方法重构下，从测试脚本来看，使用还是比较简单的，就是感觉方法的调用会不会多了点，不过个人挺习惯和喜欢这种无脑的调用方法，后面会贴出来一个精简版的测试脚本&lt;/p&gt;
+&lt;p&gt;结构如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用一个第三方的表作为借口表，如 Cux_Ar_Trx_Imp_t_Pub， 数据通过INTERFACE_RUN_ID 进行分组&lt;/li&gt;
+&lt;li&gt;该表中有所有AR TRX api 所需的字段，后期随业务增加可以添加&lt;/li&gt;
+&lt;li&gt;创建 PACKAGE Cux_Ar_Trx_Imp_Pub, 提供两个入口方法， #主要参数为INTERFACE_RUN_ID&lt;ul&gt;
+&lt;li&gt;Validate_Main&lt;/li&gt;
+&lt;li&gt;Import_Main&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;为了方便使用这个接口包 Cux_Ar_Trx_Imp_Pub ， 对insert 数据到Cux_Ar_Trx_Imp_t_Pub做了一层封装， 包： Cux_Ar_Trx_Imp_Pub_Wrap， 主要思想为对创建事务处理所需要的参数进行拆分方便使用和修改。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;利用record进行数据拆分：&lt;/li&gt;
+&lt;li&gt;主要提供几类方法：&lt;ul&gt;
+&lt;li&gt;init : 生成interface_run_id， 初始化变量&lt;/li&gt;
+&lt;li&gt;build 方法, build 方法帮忙生成上述record记录&lt;/li&gt;
+&lt;li&gt;Add_Header, Add_Line 利用生成的record， 添加header line 进入到接口表&lt;ul&gt;
+&lt;li&gt;如果需要一次生成多个发票，Add_Trx_Header与Add_Trx_Line交替执行即可。 &lt;/li&gt;
+&lt;li&gt;其中记录会根据g_Type_Trx_Header_Feilds_Rec.Trx_Group_Identify 和g_Type_Trx_Header_Feilds_Rec.Trx_Number 进行分组。&lt;/li&gt;
+&lt;li&gt;Trx_Number为空时根据Trx_Group_Identify进行分组 &lt;/li&gt;
+&lt;li&gt;每添加一个行时需要制定一个source_id， 用于后期获取错误信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Run_Validate ， 执行校验操作&lt;/li&gt;
+&lt;li&gt;Run_Import ， 执行导入操作&lt;/li&gt;
+&lt;li&gt;Get_Msg ，出现错误根据source_id 获取错误信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# Records 定义
+g_Type_Batch_Source_Rec
+g_Type_Trx_Header_Feilds_Rec
+g_Type_Trx_Type_Rec
+g_Type_Customer_Rec
+g_Type_Exchange_Rate_Rec
+g_Type_Sales_Rec
+g_Type_Term_Rec
+
+TYPE g_Type_Header_Rec IS RECORD(
+    Batch_Source_Rec               g_Type_Batch_Source_Rec,
+    Trx_Header_Feilds_Rec          g_Type_Trx_Header_Feilds_Rec,
+    Trx_Type_Rec                   g_Type_Trx_Type_Rec,
+    Customer_Rec                   g_Type_Customer_Rec,
+    Exchange_Rate_Rec              g_Type_Exchange_Rate_Rec,
+    Term_Rec                       g_Type_Term_Rec,
+    Sales_Rec                      g_Type_Sales_Rec,
+    Header_Attribute_Rec           Cux_Flex_Utl.Attribute_Rec_Type,
+    Interface_Header_Attribute_Rec Cux_Flex_Utl.Attribute_Rec_Type);
+
+
+g_Type_Trx_Line_Feilds_Rec
+g_Type_Line_Amount_Rec
+g_Type_Memo_Line_Rec
+g_Type_Tax_Rec
+TYPE g_Type_Line_Rec IS RECORD(
+    Trx_Line_Feilds_Rec          g_Type_Trx_Line_Feilds_Rec,
+    Line_Amount_Rec              g_Type_Line_Amount_Rec,
+    Memo_Line_Rec                g_Type_Memo_Line_Rec,
+    Tax_Rec                      g_Type_Tax_Rec,
+    Line_Attribute_Rec           Cux_Flex_Utl.Attribute_Rec_Type,
+    Interface_Line_Attribute_Rec Cux_Flex_Utl.Attribute_Rec_Type);
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# build 方法
+Build_Batch_Source_Rec
+Build_Trx_Header_Feilds_Rec
+Build_Trx_Type_Rec
+Build_Term_Rec
+Build_Exchange_Rate_Rec
+Build_Attribute_Rec
+Build_Cust_Rec
+
+Build_Trx_Line_Feilds_Rec
+Build_Line_Amount_Rec
+Build_Line_Amount_Rec
+Trx_Number为空时根据Trx_Group_Identify进行分组
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# Add Header, Add Line
+PROCEDURE Add_Trx_Header(Pir_Batch_Source_Rec          IN g_Type_Batch_Source_Rec,
+                           Pir_Trx_Header_Feilds_Rec     IN g_Type_Trx_Header_Feilds_Rec,
+                           Pir_Trx_Type_Rec              IN g_Type_Trx_Type_Rec,
+                           Pir_Customer_Rec              IN g_Type_Customer_Rec,
+                           Pir_Term_Rec                  IN g_Type_Term_Rec DEFAULT NULL,
+                           Pir_Exchange_Rate_Rec         IN g_Type_Exchange_Rate_Rec DEFAULT NULL,
+                           Pir_Header_Attribute_Rec      IN Cux_Flex_Utl.Attribute_Rec_Type DEFAULT NULL,
+                           Pir_Interface_Header_Attr_Rec IN Cux_Flex_Utl.Attribute_Rec_Type DEFAULT NULL,
+                           Pir_Sales_Rec                 IN g_Type_Sales_Rec DEFAULT NULL);
+
+PROCEDURE Add_Trx_Line(Pir_Trx_Line_Feids_Rec      IN g_Type_Trx_Line_Feilds_Rec DEFAULT NULL,
+                         Pir_Line_Amount_Rec         IN g_Type_Line_Amount_Rec,
+                         Pir_Memo_Line_Rec           IN g_Type_Memo_Line_Rec DEFAULT NULL,
+                         Pir_Tax_Rec                 IN g_Type_Tax_Rec DEFAULT NULL,
+                         Pir_Line_Attribute_Rec      IN Cux_Flex_Utl.Attribute_Rec_Type DEFAULT NULL,
+                         Pir_Interface_Line_Attr_Rec IN Cux_Flex_Utl.Attribute_Rec_Type DEFAULT NULL,
+                         Pin_Source_Id               IN NUMBER);
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="c1"&gt;# validate, import , get_msg&lt;/span&gt;
+  &lt;span class="n"&gt;PROCEDURE&lt;/span&gt; &lt;span class="n"&gt;Run_Validate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pov_Return_Status&lt;/span&gt; &lt;span class="n"&gt;OUT&lt;/span&gt; &lt;span class="n"&gt;NOCOPY&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                         &lt;span class="n"&gt;Pov_Msg_Data&lt;/span&gt;      &lt;span class="n"&gt;OUT&lt;/span&gt; &lt;span class="n"&gt;NOCOPY&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                         &lt;span class="n"&gt;Piv_Commit&lt;/span&gt;        &lt;span class="n"&gt;IN&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt; &lt;span class="n"&gt;DEFAULT&lt;/span&gt; &lt;span class="n"&gt;Fnd_Api&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;g_False&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+  &lt;span class="n"&gt;FUNCTION&lt;/span&gt; &lt;span class="n"&gt;Get_Msg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pin_Source_Id&lt;/span&gt; &lt;span class="n"&gt;IN&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;RETURN&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+  &lt;span class="n"&gt;PROCEDURE&lt;/span&gt; &lt;span class="n"&gt;Run_Import&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pov_Return_Status&lt;/span&gt; &lt;span class="n"&gt;OUT&lt;/span&gt; &lt;span class="n"&gt;NOCOPY&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="n"&gt;Pov_Msg_Data&lt;/span&gt;      &lt;span class="n"&gt;OUT&lt;/span&gt; &lt;span class="n"&gt;NOCOPY&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="n"&gt;Piv_Commit&lt;/span&gt;        &lt;span class="n"&gt;IN&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt; &lt;span class="n"&gt;DEFAULT&lt;/span&gt; &lt;span class="n"&gt;Fnd_Api&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;g_False&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- Created on 2015/11/13 by YIHAN 
+DECLARE
+  -- Local variables here
+
+  Batch_Source_Rec      Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Batch_Source_Rec;
+  Trx_Header_Fields_Rec Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Trx_Header_Feilds_Rec;
+  Trx_Type_Rec          Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Trx_Type_Rec;
+  Cust_Rec              Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Customer_Rec;
+  Exchange_Rate_Rec     Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Exchange_Rate_Rec;
+  Term_Rec              Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Term_Rec;
+
+  Header_Attr_Rec           Cux_Flex_Utl.Attribute_Rec_Type;
+  Header_Interface_Attr_Rec Cux_Flex_Utl.Attribute_Rec_Type;
+  Line_Attribute_Rec        Cux_Flex_Utl.Attribute_Rec_Type;
+  Line_Interface_Attr_Rec   Cux_Flex_Utl.Attribute_Rec_Type;
+
+  Trx_Line_Feids_Rec Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Trx_Line_Feilds_Rec;
+  Line_Amount_Rec    Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Line_Amount_Rec;
+  Memo_Line_Rec      Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Memo_Line_Rec;
+  Tax_Rec            Cux_Ar_Trx_Imp_Pub_Wrap.g_Type_Tax_Rec;
+
+  Lv_Msg VARCHAR2(20000);
+BEGIN
+  IF :Init_Org = &amp;#39;Y&amp;#39; THEN
+    Mo_Global.Init(&amp;#39;AR&amp;#39;);
+  END IF;
+
+  :Rst := Fnd_Api.g_Ret_Sts_Success;
+  Cux_Ar_Trx_Imp_Pub_Wrap.Init;
+  IF Cux_Ar_Trx_Imp_Pub_Wrap.Get_Interface_Run_Id &amp;lt; 0 THEN
+    :Rst := Fnd_Api.g_Ret_Sts_Error;
+  END IF;
+
+  Batch_Source_Rec := Cux_Ar_Trx_Imp_Pub_Wrap.Build_Batch_Source_Rec(Piv_Batch_Source_Name =&amp;gt; &amp;#39;XXXXX&amp;#39;);
+
+  Trx_Header_Fields_Rec := Cux_Ar_Trx_Imp_Pub_Wrap.Build_Trx_Header_Feilds_Rec(Piv_Trx_Group_Identify =&amp;gt; &amp;#39;1234&amp;#39;,
+                                                                               Piv_Org_Name           =&amp;gt; &amp;#39;XXXXX&amp;#39;,
+                                                                               Pid_Trx_Date           =&amp;gt; SYSDATE - 30,
+                                                                               Pid_Gl_Date            =&amp;gt; SYSDATE - 30,
+                                                                               Piv_Currency_Code      =&amp;gt; &amp;#39;CNY&amp;#39;);
+
+  Trx_Type_Rec := Cux_Ar_Trx_Imp_Pub_Wrap.Build_Trx_Type_Rec(Piv_Cust_Trx_Type_Name =&amp;gt; &amp;#39;XXXXX&amp;#39;);
+  Cust_Rec     := Cux_Ar_Trx_Imp_Pub_Wrap.Build_Cust_Rec(Piv_Bill_To_Customer_Name =&amp;gt; &amp;#39;XXXXX&amp;#39;,
+                                                         Piv_Ship_To_Customer_Name =&amp;gt; &amp;#39;XXXXX&amp;#39;);
+
+  Header_Attr_Rec           := Cux_Ar_Trx_Imp_Pub_Wrap.Build_Attribute_Rec(Piv_Attribute_Category =&amp;gt; &amp;#39;XXXXX&amp;#39;);
+  Header_Interface_Attr_Rec := Cux_Ar_Trx_Imp_Pub_Wrap.Build_Attribute_Rec;
+
+  Cux_Ar_Trx_Imp_Pub_Wrap.Add_Trx_Header(Pir_Batch_Source_Rec          =&amp;gt; Batch_Source_Rec,
+                                         Pir_Trx_Header_Feilds_Rec     =&amp;gt; Trx_Header_Fields_Rec,
+                                         Pir_Trx_Type_Rec              =&amp;gt; Trx_Type_Rec,
+                                         Pir_Customer_Rec              =&amp;gt; Cust_Rec,
+                                         Pir_Term_Rec                  =&amp;gt; Term_Rec,
+                                         Pir_Exchange_Rate_Rec         =&amp;gt; Exchange_Rate_Rec,
+                                         Pir_Header_Attribute_Rec      =&amp;gt; Header_Attr_Rec,
+                                         Pir_Interface_Header_Attr_Rec =&amp;gt; Header_Interface_Attr_Rec);
+
+  Line_Amount_Rec := Cux_Ar_Trx_Imp_Pub_Wrap.Build_Line_Amount_Rec(Pin_Amount =&amp;gt; &amp;#39;-1000&amp;#39;);
+
+  Memo_Line_Rec := Cux_Ar_Trx_Imp_Pub_Wrap.Build_Memo_Line_Rec(Piv_Memo_Line_Name =&amp;gt; &amp;#39;XXXXX&amp;#39;);
+
+  Cux_Ar_Trx_Imp_Pub_Wrap.Add_Trx_Line(Pir_Trx_Line_Feids_Rec      =&amp;gt; Trx_Line_Feids_Rec,
+                                       Pir_Line_Amount_Rec         =&amp;gt; Line_Amount_Rec,
+                                       Pir_Memo_Line_Rec           =&amp;gt; Memo_Line_Rec,
+                                       Pir_Tax_Rec                 =&amp;gt; Tax_Rec,
+                                       Pir_Line_Attribute_Rec      =&amp;gt; Line_Attribute_Rec,
+                                       Pir_Interface_Line_Attr_Rec =&amp;gt; Line_Interface_Attr_Rec,
+                                       Pin_Source_Id               =&amp;gt; 112);
+  Cux_Ar_Trx_Imp_Pub_Wrap.Add_Trx_Line(Pir_Trx_Line_Feids_Rec      =&amp;gt; Trx_Line_Feids_Rec,
+                                       Pir_Line_Amount_Rec         =&amp;gt; Line_Amount_Rec,
+                                       Pir_Memo_Line_Rec           =&amp;gt; Memo_Line_Rec,
+                                       Pir_Tax_Rec                 =&amp;gt; Tax_Rec,
+                                       Pir_Line_Attribute_Rec      =&amp;gt; Line_Attribute_Rec,
+                                       Pir_Interface_Line_Attr_Rec =&amp;gt; Line_Interface_Attr_Rec,
+                                       Pin_Source_Id               =&amp;gt; 112);
+  Cux_Ar_Trx_Imp_Pub_Wrap.Run_Validate(Pov_Return_Status =&amp;gt; :Lv_Return_Status,
+                                       Pov_Msg_Data      =&amp;gt; :Lv_Msg_Data,
+                                       Piv_Commit        =&amp;gt; Fnd_Api.g_False);
+
+  IF :Lv_Return_Status = Fnd_Api.g_Ret_Sts_Success THEN
+    Cux_Ar_Trx_Imp_Pub_Wrap.Run_Import(Pov_Return_Status =&amp;gt; :Lv_i_Return_Status,
+                                       Pov_Msg_Data      =&amp;gt; :Lv_i_Msg_Data,
+                                       Piv_Commit        =&amp;gt; Fnd_Api.g_False);
+  ELSE
+    Dbms_Output.Put_Line(Cux_Ar_Trx_Imp_Pub_Wrap.Get_Interface_Run_Id);
+    :Lv_Err_Msg := Cux_Ar_Trx_Imp_Pub_Wrap.Get_Msg(Pin_Source_Id =&amp;gt; 112);
+
+  END IF;
+
+EXCEPTION
+  WHEN OTHERS THEN
+    Dbms_Output.Put_Line(Dbms_Utility.Format_Error_Stack);
+    Dbms_Output.Put_Line(Dbms_Utility.Format_Error_Backtrace);
+    Dbms_Output.Put_Line(Dbms_Utility.Format_Call_Stack);
+    RAISE;
+END;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Oracle"></category><category term="EBS"></category></entry><entry><title>How to Audit in Oracle EBS</title><link href="http://www.yilaguan.cc/posts/2015/11/09/how-to-audit-in-oracle-ebs.html" rel="alternate"></link><published>2015-11-09T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-09:posts/2015/11/09/how-to-audit-in-oracle-ebs.html</id><summary type="html">&lt;h2&gt;Metalink&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;How To Enable Auditing On A Table (文档 ID 1359749.1)&lt;/li&gt;
+&lt;li&gt;How To Audit An Oracle Applications' User? (文档 ID 395849.1)&lt;/li&gt;
+&lt;li&gt;Auditing: How Do I Audit Responsibilities and Data? (文档 ID 436316.1)&lt;/li&gt;
+&lt;li&gt;Overview of Audit Trails in Oracle Applications (文档 ID 60828.1)&lt;/li&gt;
+&lt;li&gt;Understanding Data Auditing in Oracle Applications Tables using Audit Trail (AuditTrail) (文档 ID 69660.1)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Profile&lt;/h2&gt;
+&lt;p&gt;审计线索：激活 设置为YES&lt;/p&gt;</summary><category term="Oracle"></category><category term="EBS"></category><category term="Audit"></category></entry><entry><title>启用session级别的trace</title><link href="http://www.yilaguan.cc/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html" rel="alternate"></link><published>2015-11-09T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-09:posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;DECLARE&lt;/span&gt;
+&lt;span class="x"&gt;  Session_Id binary_integer;&lt;/span&gt;
+&lt;span class="x"&gt;  Serial_Num binary_integer;&lt;/span&gt;
+
+&lt;span class="x"&gt;BEGIN&lt;/span&gt;
+&lt;span class="x"&gt;  SELECT Sid, Serial&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="x"&gt;    INTO Session_Id, Serial_Num&lt;/span&gt;
+&lt;span class="x"&gt;    FROM V&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;session&lt;/span&gt;&lt;span class="x"&gt; s&lt;/span&gt;
+&lt;span class="x"&gt;   WHERE s.Sid = Userenv(&amp;#39;SID&amp;#39;);&lt;/span&gt;
+&lt;span class="x"&gt;  Dbms_Monitor.session_trace_enable(Session_Id =&amp;gt; Session_Id,&lt;/span&gt;
+&lt;span class="x"&gt;                                    Serial_Num =&amp;gt; Serial_Num,&lt;/span&gt;
+&lt;span class="x"&gt;                                    Waits      =&amp;gt; TRUE,&lt;/span&gt;
+&lt;span class="x"&gt;                                    Binds      =&amp;gt; false);&lt;/span&gt;
+&lt;span class="x"&gt;  EXECUTE IMMEDIATE (&amp;#39;ALTER Session SET Tracefile_Identifier = &amp;#39;&amp;#39;yihan&amp;#39;&amp;#39;&amp;#39;);&lt;/span&gt;
+
+&lt;span class="x"&gt;  FOR Rec IN (SELECT * FROM Cux_Gl_Code_Combinations_b_v Gcc) LOOP&lt;/span&gt;
+&lt;span class="x"&gt;    NULL;&lt;/span&gt;
+&lt;span class="x"&gt;  END LOOP;&lt;/span&gt;
+&lt;span class="x"&gt;  Dbms_Monitor.Session_Trace_Disable;&lt;/span&gt;
+&lt;span class="x"&gt;END;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Oracle"></category><category term="PLSQL"></category></entry><entry><title>Forms Runtime Diagnostics (FRD)</title><link href="http://www.yilaguan.cc/posts/2015/11/04/forms-runtime-diagnostics-frd.html" rel="alternate"></link><published>2015-11-04T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-04:posts/2015/11/04/forms-runtime-diagnostics-frd.html</id><summary type="html">&lt;p&gt;The Forms Runtime Diagnostic (FRD) is a method for capturing all events that occur in a form session and writing a file with the details of those events. There is overhead in writing this file, so you should only use this for the purposes of development and debugging&lt;/p&gt;
+&lt;p&gt;When a form is run with FRD enabled, a combination of external user-application interactions and internal Forms processing events are written in chronological order to a log on the file system.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note: The Forms runtime diagnostics (FRD)  output is written to an intermediate OS buffer, and only written to the physical file when the buffer is full. The output buffer is finally flushed when the process terminates. Hence one need to take into consideration below points &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Make sure the forms session has ended, otherwise you may lose the last few lines which are usually the most important. . If the client has terminated abnormally, you may have to wait for the frmweb process to timeout, which is 5 minutes by default (timeout is governed by value of env variable FORMS_TIMEOUT). If you are unsure whether the process has terminated, you can obtain the process id from the header in the FRD log file and check whether the process ended using appropriate OS commands. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you are reproducing FRM-xxx errors. Please ensure you log off (after reproducing the error)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;active FRD&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Method1: Set the profile option 'ICX: Forms Launcher' to:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;In Servlet Mode&lt;/th&gt;
+&lt;th&gt;Socket Mode&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;https://hostname.domain:port/forms/frmservlet?record=collect&lt;/td&gt;
+&lt;td&gt;ttps://hostname.domain:port/OA_HTML/frmservlet?record=collect&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Method2: Set the profile option 'Forms Runtime Parameters' to 'record=collect'&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;log file location&lt;/h2&gt;
+&lt;p&gt;The FRD log file will be written  in the directory pointed by environment variable &lt;strong&gt;$FORMS_TRACE_DIR&lt;/strong&gt;. By default, the trace file with name &lt;code&gt;collect_&amp;lt;pid&amp;gt;&lt;/code&gt; gets written in $FORMS_TRACE_DIR , where &lt;code&gt;&amp;lt;pid&amp;gt;&lt;/code&gt; is the process identifier.This is a simple text file and can be viewed directly.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;Refrences&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://support.oracle.com/epmos/faces/DocumentDisplay?parent=DOCUMENT&amp;amp;sourceId=1238633.1&amp;amp;id=438652.1&amp;amp;_adf.ctrl-state=hfqxo0l92_53&amp;amp;_afrLoop=345047785108442#Option_1_frd"&gt;oracle support Document 438652.1&lt;/a&gt;&lt;/p&gt;</summary><category term="Oracle"></category><category term="EBS"></category></entry><entry><title>Log file location for Oracle E-Business Suite</title><link href="http://www.yilaguan.cc/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html" rel="alternate"></link><published>2015-10-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-30:posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html</id><summary type="html">&lt;h2&gt;Log file location for Oracle E-Business Suite R12&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Apache, OC4J and OPMN:&lt;blockquote&gt;
+&lt;p&gt;$LOG_HOME/ora/10.1.3/Apache
+$LOG_HOME/ora/10.1.3/j2ee
+$LOG_HOME/ora/10.1.3/opmn&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Startup/Shutdown Log files:&lt;blockquote&gt;
+&lt;p&gt;$INST_TOP/apps/$CONTEXT_NAME/logs/appl/admin/log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Patch log:&lt;blockquote&gt;
+&lt;p&gt;$APPL_TOP/admin/$SID/log/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Autoconfig log file:
+Apps:&lt;blockquote&gt;
+&lt;p&gt;$INST_TOP/apps/$CONTEXT_NAME/admin/log/$MMDDHHMM/adconfig.log
+Db:
+$ORACLE_HOME/appsutil/log/$CONTEXT_NAME/&lt;MMDDHHMM&gt;/adconfig.log
+$ORACLE_HOME/appsutil/log/$CONTEXT_NAME/&lt;MMDDHHMM&gt;/NetServiceHandler.log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Concurrent log:&lt;blockquote&gt;
+&lt;p&gt;$INST_TOP/apps/$CONTEXT_NAME/logs/appl/conc/log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Clone log:
+Preclone log files in source instance&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Apps:&lt;blockquote&gt;
+&lt;p&gt;$INST_TOP/apps/$CONTEXT_NAME/admin/log/ (StageAppsTier_MMDDHHMM.log)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Db:&lt;blockquote&gt;
+&lt;p&gt;$ORACLE_HOME/appsutil/log/$CONTEXT_NAME/(StageDBTier_MMDDHHMM.log)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Clone log files in target instance&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Apps :&lt;blockquote&gt;
+&lt;p&gt;$INST_TOP/apps/$CONTEXT_NAME/admin/log/ApplyAppsTier_&lt;time&gt;.log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Db:&lt;blockquote&gt;
+&lt;p&gt;$ORACLE_HOME/appsutil/log/$CONTEXT_NAME/ApplyDBTier_&lt;time&gt;.log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Alert Log File:&lt;blockquote&gt;
+&lt;p&gt;$ORACLE_HOME/admin/$CONTEXT_NAME/bdump/alert_$SID.log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Log file location for Oracle E-Business Suite R11&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;OPMN log file&lt;blockquote&gt;
+&lt;p&gt;$ORACLE_HOME/opmn/logs/ipm.log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Start/Stop script log files&lt;blockquote&gt;
+&lt;p&gt;$COMMON_TOP/admin/log/CONTEXT_NAME/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Apache, Jserv, JVM log files&lt;blockquote&gt;
+&lt;p&gt;$IAS_ORACLE_HOME/Apache/Apache/logs/ssl_engine_log
+$IAS_ORACLE_HOME/Apache/Apache/logs/ssl_request_log
+$IAS_ORACLE_HOME/Apache/Apache/logs/access_log
+$IAS_ORACLE_HOME/Apache/Apache/logs/error_log
+$IAS_ORACLE_HOME/Apache/JServ/logs&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Concurrent log file:&lt;blockquote&gt;
+&lt;p&gt;$APPL_TOP/admin/PROD/log or $APPLLOG/$APPLCSF&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Patch log file:&lt;blockquote&gt;
+&lt;p&gt;$APPL_TOP/admin/PROD/log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Worker Log:&lt;blockquote&gt;
+&lt;p&gt;$APPL_TOP/admin/PROD/log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Autoconfig log:&lt;ul&gt;
+&lt;li&gt;Appl:&lt;blockquote&gt;
+&lt;p&gt;$APPL_TOP/admin/SID_Hostname/log//DDMMTime/adconfig.log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Db:&lt;blockquote&gt;
+&lt;p&gt;$ORACLE_HOME/appsutil/log/SID_Hostname/DDMMTime/adconfig.log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Error log:&lt;ul&gt;
+&lt;li&gt;Appl:&lt;blockquote&gt;
+&lt;p&gt;$APPL_TOP/admin/PROD/log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Db tarafında:&lt;blockquote&gt;
+&lt;p&gt;$ORACLE_HOME/appsutil/log/SID_Hostname&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Alert Log File:&lt;blockquote&gt;
+&lt;p&gt;$ORACLE_HOME/admin/$CONTEXT_NAME/bdump/alert_$SID.log&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;Trace file:&lt;blockquote&gt;
+&lt;p&gt;$ORACLE_HOME/admin/SID_Hostname/udump&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Oracle"></category><category term="EBS"></category></entry><entry><title>发布ADF Essentials 至Glassfish</title><link href="http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html" rel="alternate"></link><published>2015-10-29T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-29:posts/2015/10/29/adf_to_glassfish.html</id><summary type="html">&lt;h2&gt;软件安装&lt;/h2&gt;
+&lt;h3&gt;JAVA&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;JAVA_HOME=/home/yihan/glassfish/jdk1.8.0_65&lt;/span&gt;
+&lt;span class="x"&gt;export PATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;JAVA_HOME&lt;/span&gt;&lt;span class="x"&gt;/bin:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Glassfish&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Oracle GlassFish Sever is commercially supported version of GlassFish v3. It is recommended for production environments. 
+Below is V4  &lt;/li&gt;
+&lt;li&gt;下载: https://glassfish.java.net/download.html&lt;/li&gt;
+&lt;li&gt;unzip glassfish-4.1.1*zip&lt;/li&gt;
+&lt;li&gt;glassfish4/bin/asadmin start-domain&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;ADF Essentials&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;下载： http://www.oracle.com/technetwork/developer-tools/adf/downloads/index.html&lt;ul&gt;
+&lt;li&gt;Oracle ADF Essentials&lt;/li&gt;
+&lt;li&gt;Oracle ADF Faces Components Demo&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;复制到domain目录下的lib目录：/home/yihan/glassfish/glassfish4/glassfish/domains/domain1/lib&lt;/li&gt;
+&lt;li&gt;unzip &lt;strong&gt;-j&lt;/strong&gt; adf_essentials.zip&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;配置Glassfish&lt;/h2&gt;
+&lt;h3&gt;更改端口号&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;/home/yihan/glassfish/glassfish4/glassfish/domains/domain1/config/domain.xml&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;network-listener&lt;/span&gt; &lt;span class="na"&gt;protocol=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;port=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;8080&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;thread-pool=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-thread-pool&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;transport=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tcp&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/network-listener&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;network-listener&lt;/span&gt; &lt;span class="na"&gt;protocol=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-2&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;port=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;8181&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-2&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;thread-pool=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-thread-pool&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;transport=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tcp&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/network-listener&amp;gt;&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;lt;network-listener&lt;/span&gt; &lt;span class="na"&gt;protocol=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pu-protocol&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;port=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;4848&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;admin-listener&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;thread-pool=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;admin-thread-pool&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;transport=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tcp&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/network-listener&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;、&lt;/p&gt;
+&lt;h3&gt;允许远程登陆&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;./asadmin --host localhost --port 4848 enable-secure-admin&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;配置参数&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;url: http://localhost:4848 or https://localhost:54848&lt;ul&gt;
+&lt;li&gt;Go to Configurations-&amp;gt;Server-config-&amp;gt;JVM Settings and choose the JVM Options tab&lt;/li&gt;
+&lt;li&gt;Add the following entries:&lt;/li&gt;
+&lt;li&gt;-XX:MaxPermSize=512m (note this entry should already exist so just make sure it has a big enough value)&lt;/li&gt;
+&lt;li&gt;-Doracle.mds.cache=simple&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;重启&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;./asadmin restart-domain&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;配置数据库&lt;/h2&gt;
+&lt;h3&gt;添加连接池&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;./&lt;/span&gt;&lt;span class="nt"&gt;asadmin&lt;/span&gt; &lt;span class="nt"&gt;--host&lt;/span&gt; &lt;span class="nt"&gt;localhost&lt;/span&gt; &lt;span class="nt"&gt;--port&lt;/span&gt; &lt;span class="nt"&gt;54848&lt;/span&gt; &lt;span class="nt"&gt;create-jdbc-connection-pool&lt;/span&gt; &lt;span class="nt"&gt;--datasourceclassname&lt;/span&gt; &lt;span class="nt"&gt;oracle&lt;/span&gt;&lt;span class="nc"&gt;.jdbc.xa.client.OracleXADataSource&lt;/span&gt; &lt;span class="nt"&gt;--restype&lt;/span&gt; &lt;span class="nt"&gt;javax&lt;/span&gt;&lt;span class="nc"&gt;.sql.XADataSource&lt;/span&gt; &lt;span class="nt"&gt;--property&lt;/span&gt; &lt;span class="nt"&gt;portNumber&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;1530&lt;/span&gt;&lt;span class="nd"&gt;:password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;APPS&lt;/span&gt;&lt;span class="nd"&gt;:user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;APPS&lt;/span&gt;&lt;span class="nd"&gt;:serverName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;localhost&lt;/span&gt;&lt;span class="nd"&gt;:databaseName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;DEMO&lt;/span&gt;&lt;span class="nd"&gt;:connectionAttributes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;adf_pool&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;添加连接&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;./asadmin --host localhost --port 54848 create-jdbc-resource --connectionpoolid adf_pool jdbc/HRDS
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;重启&lt;/h3&gt;
+&lt;h2&gt;添加demo至application&lt;/h2&gt;
+&lt;p&gt;Application-&amp;gt;Deploy...-&amp;gt;Choose File-&amp;gt;Type: Web Application-&amp;gt;OK&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;reference documentation&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://blogs.oracle.com/shay/entry/deploying_oracle_adf_applications_to"&gt;https://blogs.oracle.com/shay/entry/deploying_oracle_adf_applications_to&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://blog-raphaufrj.rhcloud.com/running-adf-essentials-in-tomcat/"&gt;http://blog-raphaufrj.rhcloud.com/running-adf-essentials-in-tomcat/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://docs.oracle.com/cd/E18930_01/html/821-2433/gentextid-110.html#scrolltoc"&gt;http://docs.oracle.com/cd/E18930_01/html/821-2433/gentextid-110.html#scrolltoc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Oracle"></category><category term="ADF"></category><category term="glassfish"></category></entry></feed>
