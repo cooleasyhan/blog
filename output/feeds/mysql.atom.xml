@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/mysql.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2015-12-13T00:00:00+08:00</updated><entry><title>xtrabackup 小结</title><link href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html" rel="alternate"></link><published>2015-12-13T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-13:posts/2015/12/13/xtrabackup.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/mysql.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-04-22T00:00:00+08:00</updated><entry><title>批量修改sql</title><link href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html" rel="alternate"></link><published>2016-04-22T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-04-22:posts/2016/04/22/mass_update.html</id><summary type="html">&lt;h2&gt;Mysql 批量修改view 的definer&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;select concat(&amp;quot;alter DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW &amp;quot;,
+    TABLE_SCHEMA,
+    &amp;quot;.&amp;quot;,
+    TABLE_NAME,
+    &amp;quot; as &amp;quot;
+    ,VIEW_DEFINITION,
+    &amp;quot;;&amp;quot;) 
+ from information_schema.VIEWS 
+where table_schema &amp;lt;&amp;gt; &amp;#39;sys&amp;#39;  ORDER BY 1 ASC;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;批量修改table engine&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;SELECT  CONCAT(&amp;#39;ALTER TABLE `&amp;#39;,table_schema,
+    &amp;#39;`.`&amp;#39;,
+    table_name,
+    &amp;#39;` ENGINE=InnoDB;&amp;#39;) AS sql_statements
+ FROM    information_schema.tables AS tb
+WHERE   `ENGINE` = &amp;#39;MyISAM&amp;#39;
+  AND     `TABLE_TYPE` = &amp;#39;BASE TABLE&amp;#39;
+  and table_schema not in (&amp;#39;mysql&amp;#39;,&amp;#39;&amp;#39;)
+ORDER BY table_name DESC;
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>xtrabackup 小结</title><link href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html" rel="alternate"></link><published>2015-12-13T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-13:posts/2015/12/13/xtrabackup.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
 &lt;p&gt;官网下载相关rpm 包, 此处为 percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm， 其中5.1版本的mysql只能使用 2.0版本的xtrabackup&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;rpm -ivh xxx.rpm
 &lt;/pre&gt;&lt;/div&gt;

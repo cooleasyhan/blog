@@ -1,5 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/all.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-03-20T00:00:00+08:00</updated><entry><title>Pandas</title><link href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html" rel="alternate"></link><published>2016-03-20T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-03-20:posts/2016/03/20/pandas.html</id><summary type="html">&lt;h2&gt;简单操作&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/all.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-06-11T00:00:00+08:00</updated><entry><title>Cookbook-数据结构和算法</title><link href="http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html" rel="alternate"></link><published>2016-06-11T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-06-11:posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html</id><summary type="html">&lt;h2&gt;1.1 序列分解&lt;/h2&gt;
+&lt;p&gt;_, x, y = (3, 4, 5)&lt;/p&gt;
+&lt;p&gt;x, *y, z = (3, 4, 5, 6)&lt;/p&gt;
+&lt;p&gt;x, *_, z = (3, 4, 5, 6, 7)&lt;/p&gt;
+&lt;h2&gt;1.2 collection&lt;/h2&gt;
+&lt;h3&gt;1.2.1 collection.deque&lt;/h3&gt;
+&lt;p&gt;deque: 保留历史记录&lt;br /&gt;
+deque(maxlen=5)&lt;/p&gt;
+&lt;h3&gt;1.2.2 collection.defaultdict&lt;/h3&gt;
+&lt;p&gt;一个key对应多个值  &lt;/p&gt;
+&lt;h3&gt;1.2.3 collection.orderdict&lt;/h3&gt;
+&lt;p&gt;按照添加顺序排序 &lt;/p&gt;
+&lt;h3&gt;1.2.4 collection.Counter&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collection&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Counter&lt;/span&gt;
+&lt;span class="n"&gt;_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;counter&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Counter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;counter&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;key&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;  &lt;span class="c1"&gt;# 1&lt;/span&gt;
+&lt;span class="n"&gt;counter&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;key&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="c1"&gt;# 增加计数&lt;/span&gt;
+&lt;span class="n"&gt;counter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_new_list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="n"&gt;countera&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;acountb&lt;/span&gt;  &lt;span class="c1"&gt;# 可进行简单加减乘除&lt;/span&gt;
+&lt;span class="n"&gt;countera&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;counterb&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;1.3 heapq&lt;/h2&gt;
+&lt;h3&gt;1.3.1 找到最大活最小的N个元素&lt;/h3&gt;
+&lt;p&gt;import heapq&lt;br /&gt;
+heapq.nsmallest&lt;br /&gt;
+q = heapq.nlargest(3, data_list_or_dict, key=lambda s: s['key'])  &lt;/p&gt;
+&lt;h3&gt;1.3.2 实现优先队列&lt;/h3&gt;
+&lt;p&gt;heapq.heappush(_queue, priority, index, item)&lt;br /&gt;
+index: 用于在同优先级的item间排序&lt;br /&gt;
+heapq.heappop(self._queue)[-1]  &lt;/p&gt;
+&lt;h2&gt;1.4 zip&lt;/h2&gt;
+&lt;p&gt;注意: zip 结果是迭代器&lt;br /&gt;
+计算dict的最大值最小值,排序&lt;br /&gt;
+min(zip(_dict.values(), _dict.keys()))&lt;br /&gt;
+sorted(zip(_dict.values(), _dict.keys()))  &lt;/p&gt;
+&lt;h2&gt;1.5 dict&lt;/h2&gt;
+&lt;h3&gt;1.5.1 字典比较&lt;/h3&gt;
+&lt;p&gt;同时存在 _dicta.keys() &amp;amp; _dictb.keys()&lt;br /&gt;
+a中存在b不存在 _dicta.keys() - _dictb.keys()  &lt;/p&gt;
+&lt;p&gt;_dicta.items() &amp;amp; _dictb.items()  &lt;/p&gt;
+&lt;p&gt;将结果组装成字典
+c = {key: dict_a[key] for key in dict_a.keys() - dict_b.keys()}&lt;/p&gt;
+&lt;h3&gt;1.5.2 defaultdict 见 1.2.2 collection.defaultdict&lt;/h3&gt;
+&lt;h2&gt;1.6 从序列中移除重复项,且顺序不变&lt;/h2&gt;
+&lt;p&gt;利用迭代器和set  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;def dedupe(items, fun=None):
+    _set = set()
+    for item in items:
+        var = item is fun is None else fun(item)
+        if var not in _set:
+            yield item
+            _set.add(var)
+
+rst = list(dedupe([1,3,4,4,5]))
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;1.7 对切片命名&lt;/h2&gt;
+&lt;p&gt;S=slice(1,2)&lt;br /&gt;
+S 属性:&lt;br /&gt;
+S.start&lt;br /&gt;
+S.stop&lt;br /&gt;
+S.step&lt;br /&gt;
+rec=_list[S]  &lt;/p&gt;
+&lt;h3&gt;按照特定长度切片&lt;/h3&gt;
+&lt;p&gt;indices(size)&lt;/p&gt;
+&lt;h2&gt;1.8 字典排序----itemgetter&lt;/h2&gt;
+&lt;p&gt;from operator import itemgetter
+可以用于排序, 最大值,最小值。 也可以用lambda
+sorted min max&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#等同于下面代码
+def itemgetter(*items):
+    if len(items) == 1:
+        item = items[0]
+        def g(obj):
+            return obj[item]
+    else:
+        def g(obj):
+            return tuple(obj[item] for item in items)
+    return g
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;sorted(_dict, key=itemgetter(('key','key1','key2')))&lt;/p&gt;
+&lt;h2&gt;1.9 object 排序--attrgetter&lt;/h2&gt;
+&lt;p&gt;可以用于sorted, max, min
+from operator import attrgetter&lt;/p&gt;
+&lt;p&gt;sorted(_dict, key=attrgetter('attr1'))&lt;/p&gt;
+&lt;h2&gt;1.10 itertools&lt;/h2&gt;
+&lt;h3&gt;1.10.1 groupby&lt;/h3&gt;
+&lt;p&gt;groupby 需要先排序, 结果是迭代器, 也可以使用collection.defaultdict 实现,不需要排序&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;itertools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;groupby&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;operator&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;itemgetter&lt;/span&gt;
+
+&lt;span class="n"&gt;rows&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;dict1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dict2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dict3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;rows&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sort&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;itemgetter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;date&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;items&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;groupby&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rows&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;itemgetter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;date&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;1.11 筛选序列中的元素&lt;/h2&gt;</summary><category term="Python"></category><category term="Cookbook"></category></entry><entry><title>批量修改sql</title><link href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html" rel="alternate"></link><published>2016-04-22T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-04-22:posts/2016/04/22/mass_update.html</id><summary type="html">&lt;h2&gt;Mysql 批量修改view 的definer&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;select concat(&amp;quot;alter DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW &amp;quot;,
+    TABLE_SCHEMA,
+    &amp;quot;.&amp;quot;,
+    TABLE_NAME,
+    &amp;quot; as &amp;quot;
+    ,VIEW_DEFINITION,
+    &amp;quot;;&amp;quot;) 
+ from information_schema.VIEWS 
+where table_schema &amp;lt;&amp;gt; &amp;#39;sys&amp;#39;  ORDER BY 1 ASC;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;批量修改table engine&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;SELECT  CONCAT(&amp;#39;ALTER TABLE `&amp;#39;,table_schema,
+    &amp;#39;`.`&amp;#39;,
+    table_name,
+    &amp;#39;` ENGINE=InnoDB;&amp;#39;) AS sql_statements
+ FROM    information_schema.tables AS tb
+WHERE   `ENGINE` = &amp;#39;MyISAM&amp;#39;
+  AND     `TABLE_TYPE` = &amp;#39;BASE TABLE&amp;#39;
+  and table_schema not in (&amp;#39;mysql&amp;#39;,&amp;#39;&amp;#39;)
+ORDER BY table_name DESC;
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>oracle 锁</title><link href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html" rel="alternate"></link><published>2016-04-22T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-04-22:posts/2016/04/22/oracle_lock.html</id><summary type="html">&lt;h2&gt;oracle查询锁&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;SELECT Obj.Owner,&lt;/span&gt;
+&lt;span class="x"&gt;       Obj.Object_Id,&lt;/span&gt;
+&lt;span class="x"&gt;       Obj.Object_Name,&lt;/span&gt;
+&lt;span class="x"&gt;       Lo.Locked_Mode,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Sid,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Serial&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Username,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Machine,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Terminal,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Program,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Client_Identifier,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Module,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Action,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Row_Wait_Obj&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Row_Wait_File&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Row_Wait_Block&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;       s.Row_Wait_Row&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;       CASE&lt;/span&gt;
+&lt;span class="x"&gt;         WHEN l.Request &amp;lt;&amp;gt; 0 THEN&lt;/span&gt;
+&lt;span class="x"&gt;          Dbms_Rowid.Rowid_Create(1,&lt;/span&gt;
+&lt;span class="x"&gt;                                  Row_Wait_Obj&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;                                  Row_Wait_File&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;                                  Row_Wait_Block&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;                                  Row_Wait_Row&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;)&lt;/span&gt;
+&lt;span class="x"&gt;         ELSE&lt;/span&gt;
+&lt;span class="x"&gt;          &amp;#39;no row id&amp;#39;&lt;/span&gt;
+&lt;span class="x"&gt;       END Row_Id,&lt;/span&gt;
+&lt;span class="x"&gt;       &amp;#39;select * from &amp;#39; || Obj.Owner || &amp;#39;.&amp;#39; || Obj.Object_Name ||&lt;/span&gt;
+&lt;span class="x"&gt;       &amp;#39; where rowid = &amp;#39;&amp;#39;&amp;#39; || CASE&lt;/span&gt;
+&lt;span class="x"&gt;         WHEN l.Request &amp;lt;&amp;gt; 0 THEN&lt;/span&gt;
+&lt;span class="x"&gt;          Dbms_Rowid.Rowid_Create(1,&lt;/span&gt;
+&lt;span class="x"&gt;                                  Row_Wait_Obj&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;                                  Row_Wait_File&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;                                  Row_Wait_Block&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;,&lt;/span&gt;
+&lt;span class="x"&gt;                                  Row_Wait_Row&lt;/span&gt;&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="x"&gt;)&lt;/span&gt;
+&lt;span class="x"&gt;         ELSE&lt;/span&gt;
+&lt;span class="x"&gt;          &amp;#39;no row id&amp;#39;&lt;/span&gt;
+&lt;span class="x"&gt;       END || &amp;#39;&amp;#39;&amp;#39;&amp;#39; Select_Row_Sql,&lt;/span&gt;
+&lt;span class="x"&gt;       l.Type,&lt;/span&gt;
+&lt;span class="x"&gt;       Lt.Name,&lt;/span&gt;
+&lt;span class="x"&gt;       Lt.Description,&lt;/span&gt;
+&lt;span class="x"&gt;       Lt.Id1_Tag,&lt;/span&gt;
+&lt;span class="x"&gt;       l.Id1,&lt;/span&gt;
+&lt;span class="x"&gt;       Lt.Id2_Tag,&lt;/span&gt;
+&lt;span class="x"&gt;       l.Id2,&lt;/span&gt;
+&lt;span class="x"&gt;       Decode(l.Lmode,&lt;/span&gt;
+&lt;span class="x"&gt;              0,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 0 - None &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              1,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 1 - NULL(NULL) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              2,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 2 - ROW - s(Ss) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              3,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 3 - ROW - x(Sx) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              4,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 4 - SHARE(s) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              5,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 5 - s / ROW - x(Ssx) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              6,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 6 - EXCLUSIVE(x) &amp;#39;) Lock_Mode,&lt;/span&gt;
+&lt;span class="x"&gt;       Decode(l.Request,&lt;/span&gt;
+&lt;span class="x"&gt;              0,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 0 - None &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              1,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 1 - NULL(NULL) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              2,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 2 - ROW - s(Ss) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              3,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 3 - ROW - x(Sx) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              4,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 4 - SHARE(s) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              5,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 5 - s / ROW - x(Ssx) &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              6,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 6 - EXCLUSIVE(x) &amp;#39;) Request,&lt;/span&gt;
+&lt;span class="x"&gt;       l.Block,&lt;/span&gt;
+&lt;span class="x"&gt;       Decode(l.Block,&lt;/span&gt;
+&lt;span class="x"&gt;              0,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 0 - THE LOCK IS NOT Blocking ANY Other Processes &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              1,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 1 - THE LOCK IS Blocking Other Processes &amp;#39;,&lt;/span&gt;
+&lt;span class="x"&gt;              2,&lt;/span&gt;
+&lt;span class="x"&gt;              &amp;#39; 2 - THE LOCK IS NOT Blocking ANY Blocked Processes ON THE LOCAL Node,&lt;/span&gt;
+&lt;span class="x"&gt;       But It May OR May NOT Be Blocking Processes ON Remote Nodes. &amp;#39;)&lt;/span&gt;
+&lt;span class="x"&gt;  FROM V&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lock&lt;/span&gt;&lt;span class="x"&gt;          l,&lt;/span&gt;
+&lt;span class="x"&gt;       V&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;lock_Type&lt;/span&gt;&lt;span class="x"&gt;     Lt,&lt;/span&gt;
+&lt;span class="x"&gt;       V&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;locked_Object&lt;/span&gt;&lt;span class="x"&gt; Lo,&lt;/span&gt;
+&lt;span class="x"&gt;       All_Objects     Obj,&lt;/span&gt;
+&lt;span class="x"&gt;       V&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;session&lt;/span&gt;&lt;span class="x"&gt;       s&lt;/span&gt;
+&lt;span class="x"&gt; WHERE 1 = 1&lt;/span&gt;
+&lt;span class="x"&gt;   AND l.Type = Lt.Type&lt;/span&gt;
+&lt;span class="x"&gt;   AND Lo.Session_Id = s.Sid&lt;/span&gt;
+&lt;span class="x"&gt;   AND Lo.Object_Id = Obj.Object_Id&lt;/span&gt;
+&lt;span class="x"&gt;   AND l.Sid = s.Sid&lt;/span&gt;
+&lt;span class="x"&gt;   AND Obj.Object_Name = &amp;#39;xxxxxx&amp;#39;&lt;/span&gt;
+&lt;span class="x"&gt;   AND (l.Block &amp;lt;&amp;gt; 0 OR l.Request &amp;lt;&amp;gt; 0);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>Pandas</title><link href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html" rel="alternate"></link><published>2016-03-20T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-03-20:posts/2016/03/20/pandas.html</id><summary type="html">&lt;h2&gt;简单操作&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# 设置索引
 basic = basic.set_index(&amp;#39;code&amp;#39;)
 
@@ -49,17 +276,7 @@ df = df[df[&amp;#39;date&amp;#39;] &amp;lt;= end]
 # 根据索引选择特定列的值
 df.loc[i, [&amp;#39;industry&amp;#39;]]
 industry = str(base_info[0])
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Python"></category><category term="Pandas"></category></entry><entry><title>Programming</title><link href="http://www.yilaguan.cc/posts/2016/03/20/programming.html" rel="alternate"></link><published>2016-03-20T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-03-20:posts/2016/03/20/programming.html</id><summary type="html">&lt;h2&gt;初始化python字典&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;fields = (&amp;#39;name&amp;#39;,&amp;#39;job&amp;#39;)
-record = dict.fromkeys(fields, &amp;#39;?&amp;#39;) 
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;zip dict list 互换&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;values = [&amp;#39;jone&amp;#39;,&amp;#39;coding&amp;#39;]
-_list = zip(fields, values)
-_dict = dict(_list)
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Python"></category><category term="Program"></category></entry><entry><title>工具</title><link href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html" rel="alternate"></link><published>2016-02-04T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-02-04:posts/2016/02/04/gong-ju.html</id><summary type="html">&lt;h2&gt;安装mysql clint tora&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Python"></category><category term="Pandas"></category></entry><entry><title>工具</title><link href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html" rel="alternate"></link><published>2016-02-04T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-02-04:posts/2016/02/04/gong-ju.html</id><summary type="html">&lt;h2&gt;安装mysql clint tora&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#sudo apt-get install tora
 #tora
 

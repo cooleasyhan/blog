@@ -69,6 +69,105 @@
   		<article>
 <header>
       <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html">Cookbook-数据结构和算法</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-06-11T00:00:00+08:00" pubdate>六 11 六月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>1.1 序列分解</h2>
+<p>_, x, y = (3, 4, 5)</p>
+<p>x, *y, z = (3, 4, 5, 6)</p>
+<p>x, *_, z = (3, 4, 5, 6, 7)</p>
+<h2>1.2 collection</h2>
+<h3>1.2.1 collection.deque</h3>
+<p>deque: 保留历史记录<br />
+deque(maxlen=5)</p>
+<h3>1.2.2 collection.defaultdict</h3>
+<p>一个key对应多个值  </p>
+<h3>1.2.3 collection.orderdict</h3>
+<p>按照添加顺序排序 </p>
+<h3>1 ...</h3></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html">批量修改sql</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-04-22T00:00:00+08:00" pubdate>五 22 四月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>Mysql 批量修改view 的definer</h2>
+<div class="highlight"><pre><span></span>select concat(&quot;alter DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW &quot;,
+    TABLE_SCHEMA,
+    &quot;.&quot;,
+    TABLE_NAME,
+    &quot; as &quot;
+    ,VIEW_DEFINITION,
+    &quot;;&quot;) 
+ from information_schema.VIEWS 
+where table_schema &lt;&gt; &#39;sys&#39;  ORDER BY 1 ASC;
+</pre></div>
+
+
+<h2>批量修改table engine</h2>
+<div class="highlight"><pre><span></span>SELECT  CONCAT(&#39;ALTER TABLE `&#39;,table_schema,
+    &#39;`.`&#39;,
+    table_name,
+    &#39;` ENGINE=InnoDB;&#39;) AS sql_statements
+ FROM    information_schema.tables AS tb
+WHERE   `ENGINE` = &#39;MyISAM&#39;
+  AND     `TABLE_TYPE` = &#39;BASE ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html">oracle 锁</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-04-22T00:00:00+08:00" pubdate>五 22 四月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>oracle查询锁</h2>
+<div class="highlight"><pre><span></span><span class="x">SELECT Obj.Owner,</span>
+<span class="x">       Obj.Object_Id,</span>
+<span class="x">       Obj.Object_Name,</span>
+<span class="x">       Lo.Locked_Mode,</span>
+<span class="x">       s.Sid,</span>
+<span class="x">       s.Serial</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Username,</span>
+<span class="x">       s.Machine,</span>
+<span class="x">       s.Terminal,</span>
+<span class="x">       s.Program,</span>
+<span class="x">       s.Client_Identifier,</span>
+<span class="x">       s.Module,</span>
+<span class="x">       s.Action,</span>
+<span class="x">       s.Row_Wait_Obj</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Row_Wait_File</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Row_Wait_Block</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Row_Wait_Row</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       CASE</span>
+<span class="x">         WHEN l.Request &lt;&gt; 0 THEN</span>
+<span class="x">          Dbms_Rowid.Rowid_Create(1,</span>
+<span class="x">                                  Row_Wait_Obj</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_File</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_Block</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_Row</span><span class="err">#</span><span class="x">)</span>
+<span class="x">         ELSE ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
         <a href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Pandas</a>
       </h1>
     <p class="meta">
@@ -101,27 +200,6 @@ rst = rst.sort_values(&#39;grow&#39;)
   <footer>
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Read On &crarr;</a>
   </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2016/03/20/programming.html">Programming</a>
-      </h1>
-    <p class="meta">
-<time datetime="2016-03-20T00:00:00+08:00" pubdate>日 20 三月 2016</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>初始化python字典</h2>
-<div class="highlight"><pre><span></span>fields = (&#39;name&#39;,&#39;job&#39;)
-record = dict.fromkeys(fields, &#39;?&#39;) 
-</pre></div>
-
-
-<h2>zip dict list 互换</h2>
-<div class="highlight"><pre><span></span>values = [&#39;jone&#39;,&#39;coding&#39;]
-_list = zip(fields, values)
-_dict = dict(_list)
-</pre></div></div>
   		</article>
   		<article>
 <header>
@@ -396,55 +474,6 @@ Match Group sftp_users
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html">AR 设置数据data fix</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-12-01T00:00:00+08:00" pubdate>二 01 十二月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>通知单行：</h2>
-<div class="highlight"><pre><span></span>--1.备份数据
-CREATE TABLE Ar_Memo_Lines_All_Tl_0529 AS
-  SELECT * FROM Ar_Memo_Lines_All_Tl;
-
---2. 创建临时表
-CREATE TABLE Cux_Ar_Memo_Lines_Df_0529(Memo_Line_Id NUMBER, Ou_Name VARCHAR2(240), NAME VARCHAR2(50), Description VARCHAR2(80), New_Name VARCHAR2(52), New_Description VARCHAR2(90))
-
---3. 修正临时表中数据
-UPDATE Cux_Ar_Memo_Lines_Df_0529 d SET(Memo_Line_Id, New_Name, New_Description) = (
-  SELECT Tl.Memo_Line_Id, d.Name || &#39;_O&#39;, d.Description || &#39;-历史 ...</pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">定位autoconfig模板文件</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><p>1、定位模版文件<br />
-$AD_TOP/bin/adtmplreport.sh contextfile=$CONTEXT_FILE target=$FORMS_WEB_CONFIG_FILE
-以上命令，通过查看报表日志，可分别得到如下模版结果：
-$FND_TOP/admin/template/forms_web_1012_cfg.tmp</p>
-<p>2、创建custom目录<br />
-mkdir $FND_TOP/admin/template/custom</p>
-<p>3、把上述文件拷贝到custom目录<br />
-cp -i $FND_TOP/admin/template/forms_web_1012_cfg.tmp $FND_TOP/admin/template/custom/forms_web_1012_cfg.tmp</p>
-<p>4、编辑custom目录下的模版文件<br />
-forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
-<p>添加金税的jar包<br />
-  archive2=,/OA_JAVA/hand/hand ...</p></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">Read On &crarr;</a>
-  </footer>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index2.html">&larr; Older</a>
 
@@ -455,19 +484,19 @@ forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html">Cookbook-数据结构和算法</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html">批量修改sql</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html">oracle 锁</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Pandas</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/03/20/programming.html">Programming</a>
-      </li>
-      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html">工具</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html">xtrabackup 小结</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2015/12/07/mysql_ibdata.html">mysql ibdata 太大</a>
       </li>
     </ul>
   </section>
@@ -489,7 +518,7 @@ forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/program.html">Program</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>  </section>
 
 
 

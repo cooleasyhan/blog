@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+    <list default="true" id="31b99d91-41e0-4f56-be54-1a92821b9804" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/content/python/cookbook.md" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/content/python/.env.md.swp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/content/python/programing.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/output/posts/2016/03/20/programming.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/output/tag/program.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/plugins/pelican-plugins/latex" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/pelican-plugins" afterPath="$PROJECT_DIR$/plugins/pelican-plugins" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/archives.html" afterPath="$PROJECT_DIR$/output/archives.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/author/yihan.html" afterPath="$PROJECT_DIR$/output/author/yihan.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/author/yihan2.html" afterPath="$PROJECT_DIR$/output/author/yihan2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/author/yihan3.html" afterPath="$PROJECT_DIR$/output/author/yihan3.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/authors.html" afterPath="$PROJECT_DIR$/output/authors.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/categories.html" afterPath="$PROJECT_DIR$/output/categories.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/category/algorithms.html" afterPath="$PROJECT_DIR$/output/category/algorithms.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/category/documents.html" afterPath="$PROJECT_DIR$/output/category/documents.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/category/ebs.html" afterPath="$PROJECT_DIR$/output/category/ebs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/category/java.html" afterPath="$PROJECT_DIR$/output/category/java.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/category/linux.html" afterPath="$PROJECT_DIR$/output/category/linux.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/category/mysql.html" afterPath="$PROJECT_DIR$/output/category/mysql.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/category/python.html" afterPath="$PROJECT_DIR$/output/category/python.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/category/reading.html" afterPath="$PROJECT_DIR$/output/category/reading.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/feeds/all.atom.xml" afterPath="$PROJECT_DIR$/output/feeds/all.atom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/feeds/ebs.atom.xml" afterPath="$PROJECT_DIR$/output/feeds/ebs.atom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/feeds/mysql.atom.xml" afterPath="$PROJECT_DIR$/output/feeds/mysql.atom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/feeds/python.atom.xml" afterPath="$PROJECT_DIR$/output/feeds/python.atom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/index.html" afterPath="$PROJECT_DIR$/output/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/index2.html" afterPath="$PROJECT_DIR$/output/index2.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/index3.html" afterPath="$PROJECT_DIR$/output/index3.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/10/28/python-zhu-zhuang-dong-tu.html" afterPath="$PROJECT_DIR$/output/posts/2015/10/28/python-zhu-zhuang-dong-tu.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/10/29/Linux.html" afterPath="$PROJECT_DIR$/output/posts/2015/10/29/Linux.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/10/29/adf_to_glassfish.html" afterPath="$PROJECT_DIR$/output/posts/2015/10/29/adf_to_glassfish.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/10/29/doc.html" afterPath="$PROJECT_DIR$/output/posts/2015/10/29/doc.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html" afterPath="$PROJECT_DIR$/output/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/10/30/you-yong-de-dai-ma.html" afterPath="$PROJECT_DIR$/output/posts/2015/10/30/you-yong-de-dai-ma.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/04/forms-runtime-diagnostics-frd.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/04/forms-runtime-diagnostics-frd.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/09/how-to-audit-in-oracle-ebs.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/09/how-to-audit-in-oracle-ebs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/09/kibana-elasticsearch-logstash.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/09/kibana-elasticsearch-logstash.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/14/ar-de-shi-wu-chu-li-jie-kou.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/14/ar-de-shi-wu-chu-li-jie-kou.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/16/cache.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/16/cache.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/16/priority_queue.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/16/priority_queue.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/16/sort.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/16/sort.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/16/sort_code.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/16/sort_code.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/18/iptables-xiao-jie.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/18/iptables-xiao-jie.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/24/zhong-gou-_gai-shan-ji-you-dai-ma-de-she-ji.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/24/zhong-gou-_gai-shan-ji-you-dai-ma-de-she-ji.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/26/nginx-php-fpm.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/26/nginx-php-fpm.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/30/shell-bi-jiao.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/30/shell-bi-jiao.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/11/30/shelljiao-ben-pian-duan.html" afterPath="$PROJECT_DIR$/output/posts/2015/11/30/shelljiao-ben-pian-duan.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html" afterPath="$PROJECT_DIR$/output/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/12/02/graph.html" afterPath="$PROJECT_DIR$/output/posts/2015/12/02/graph.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html" afterPath="$PROJECT_DIR$/output/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/12/03/redhat6-sftp-setup.html" afterPath="$PROJECT_DIR$/output/posts/2015/12/03/redhat6-sftp-setup.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/12/07/mysql_ibdata.html" afterPath="$PROJECT_DIR$/output/posts/2015/12/07/mysql_ibdata.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2015/12/13/xtrabackup.html" afterPath="$PROJECT_DIR$/output/posts/2015/12/13/xtrabackup.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2016/02/04/gong-ju.html" afterPath="$PROJECT_DIR$/output/posts/2016/02/04/gong-ju.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/posts/2016/03/20/pandas.html" afterPath="$PROJECT_DIR$/output/posts/2016/03/20/pandas.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/sitemap.txt" afterPath="$PROJECT_DIR$/output/sitemap.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/adf.html" afterPath="$PROJECT_DIR$/output/tag/adf.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/algorithms.html" afterPath="$PROJECT_DIR$/output/tag/algorithms.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/audit.html" afterPath="$PROJECT_DIR$/output/tag/audit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/cache.html" afterPath="$PROJECT_DIR$/output/tag/cache.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/docs.html" afterPath="$PROJECT_DIR$/output/tag/docs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/ebs.html" afterPath="$PROJECT_DIR$/output/tag/ebs.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/elasticsearch.html" afterPath="$PROJECT_DIR$/output/tag/elasticsearch.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/excel.html" afterPath="$PROJECT_DIR$/output/tag/excel.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/glassfish.html" afterPath="$PROJECT_DIR$/output/tag/glassfish.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/graph.html" afterPath="$PROJECT_DIR$/output/tag/graph.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/iptables.html" afterPath="$PROJECT_DIR$/output/tag/iptables.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/java.html" afterPath="$PROJECT_DIR$/output/tag/java.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/kibana.html" afterPath="$PROJECT_DIR$/output/tag/kibana.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/linux.html" afterPath="$PROJECT_DIR$/output/tag/linux.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/log.html" afterPath="$PROJECT_DIR$/output/tag/log.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/logstash.html" afterPath="$PROJECT_DIR$/output/tag/logstash.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/matplotlib.html" afterPath="$PROJECT_DIR$/output/tag/matplotlib.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/nginx.html" afterPath="$PROJECT_DIR$/output/tag/nginx.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/oracle.html" afterPath="$PROJECT_DIR$/output/tag/oracle.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/pandas.html" afterPath="$PROJECT_DIR$/output/tag/pandas.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/plsql.html" afterPath="$PROJECT_DIR$/output/tag/plsql.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/python.html" afterPath="$PROJECT_DIR$/output/tag/python.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/queue.html" afterPath="$PROJECT_DIR$/output/tag/queue.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/reading.html" afterPath="$PROJECT_DIR$/output/tag/reading.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/redhat.html" afterPath="$PROJECT_DIR$/output/tag/redhat.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/refactoring.html" afterPath="$PROJECT_DIR$/output/tag/refactoring.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/sftp.html" afterPath="$PROJECT_DIR$/output/tag/sftp.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/shell.html" afterPath="$PROJECT_DIR$/output/tag/shell.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tag/sort.html" afterPath="$PROJECT_DIR$/output/tag/sort.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/output/tags.html" afterPath="$PROJECT_DIR$/output/tags.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/test_data/pelicanhtml_2.tpl" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/test_data/pelicanhtml_2.tpl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/test_data/pelicanhtml_3.tpl" afterPath="$PROJECT_DIR$/plugins/pelican-plugins/liquid_tags/test_data/pelicanhtml_3.tpl" />
+    </list>
+    <ignored path="blog.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,7 +108,69 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="blog" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="cookbook.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/content/python/cookbook.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8541329">
+              <caret line="172" column="59" selection-start-line="172" selection-start-column="59" selection-end-line="172" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cache.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/content/python/cache.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="13.965517">
+              <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pandas.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/content/python/pandas.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.586207">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/content/python/cookbook.md" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1440" />
+    <option name="height" value="793" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -21,19 +180,269 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="content" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="blog" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="content" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="python" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../virtualenv/s/bin/python" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoRunFileConfiguration" factoryName="Go Single File">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="DIRECTORY" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="blog" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="blog" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="blog" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="blog" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="blog" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="blog" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+      <changelist id="31b99d91-41e0-4f56-be54-1a92821b9804" name="Default" comment="" />
       <created>1460173532306</created>
       <option name="number" value="Default" />
       <updated>1460173532306</updated>
     </task>
     <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1440" height="793" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -41,5 +450,40 @@
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/content/python/pandas.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.586207">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/python/cache.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="13.965517">
+          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/content/python/cookbook.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8541329">
+          <caret line="172" column="59" selection-start-line="172" selection-start-column="59" selection-end-line="172" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
   </component>
 </project>

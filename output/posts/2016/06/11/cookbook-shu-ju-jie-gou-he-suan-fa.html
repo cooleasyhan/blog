@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>shell脚本片段 &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <title>Cookbook-数据结构和算法 &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
   <meta name="author" content="YiHan">
 
 
@@ -52,13 +52,13 @@
       <li >
         <a href="http://www.yilaguan.cc/category/java.html">Java</a>
       </li>
-      <li class="active">
+      <li >
         <a href="http://www.yilaguan.cc/category/linux.html">Linux</a>
       </li>
       <li >
         <a href="http://www.yilaguan.cc/category/mysql.html">Mysql</a>
       </li>
-      <li >
+      <li class="active">
         <a href="http://www.yilaguan.cc/category/python.html">Python</a>
       </li>
       <li >
@@ -70,48 +70,119 @@
 <div>
   <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">shell脚本片段</h1>
+      <h1 class="entry-title">Cookbook-数据结构和算法</h1>
     <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
+<time datetime="2016-06-11T00:00:00+08:00" pubdate>六 11 六月 2016</time>    </p>
 </header>
 
-  <div class="entry-content"><h2>read user enter</h2>
-<div class="highlight"><pre><span></span>read -p &quot;Read rows CNT[W]: &quot; ROWS_CNT
+  <div class="entry-content"><h2>1.1 序列分解</h2>
+<p>_, x, y = (3, 4, 5)</p>
+<p>x, *y, z = (3, 4, 5, 6)</p>
+<p>x, *_, z = (3, 4, 5, 6, 7)</p>
+<h2>1.2 collection</h2>
+<h3>1.2.1 collection.deque</h3>
+<p>deque: 保留历史记录<br />
+deque(maxlen=5)</p>
+<h3>1.2.2 collection.defaultdict</h3>
+<p>一个key对应多个值  </p>
+<h3>1.2.3 collection.orderdict</h3>
+<p>按照添加顺序排序 </p>
+<h3>1.2.4 collection.Counter</h3>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collection</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="n">_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">_list</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">counter</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>  <span class="c1"># 1</span>
+<span class="n">counter</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># 增加计数</span>
+<span class="n">counter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_new_list</span><span class="p">)</span>
+
+
+<span class="n">countera</span> <span class="o">+</span> <span class="n">acountb</span>  <span class="c1"># 可进行简单加减乘除</span>
+<span class="n">countera</span> <span class="o">-</span> <span class="n">counterb</span>
 </pre></div>
 
 
-<h2>获取文件行数</h2>
-<div class="highlight"><pre><span></span><span class="x">ROW=`wc -l </span><span class="p">$</span><span class="nv">DATA_FILE</span><span class="x"> | awk &#39;</span><span class="err">{</span><span class="x">print </span><span class="p">$</span><span class="x">1}&#39;`</span>
+<h2>1.3 heapq</h2>
+<h3>1.3.1 找到最大活最小的N个元素</h3>
+<p>import heapq<br />
+heapq.nsmallest<br />
+q = heapq.nlargest(3, data_list_or_dict, key=lambda s: s['key'])  </p>
+<h3>1.3.2 实现优先队列</h3>
+<p>heapq.heappush(_queue, priority, index, item)<br />
+index: 用于在同优先级的item间排序<br />
+heapq.heappop(self._queue)[-1]  </p>
+<h2>1.4 zip</h2>
+<p>注意: zip 结果是迭代器<br />
+计算dict的最大值最小值,排序<br />
+min(zip(_dict.values(), _dict.keys()))<br />
+sorted(zip(_dict.values(), _dict.keys()))  </p>
+<h2>1.5 dict</h2>
+<h3>1.5.1 字典比较</h3>
+<p>同时存在 _dicta.keys() &amp; _dictb.keys()<br />
+a中存在b不存在 _dicta.keys() - _dictb.keys()  </p>
+<p>_dicta.items() &amp; _dictb.items()  </p>
+<p>将结果组装成字典
+c = {key: dict_a[key] for key in dict_a.keys() - dict_b.keys()}</p>
+<h3>1.5.2 defaultdict 见 1.2.2 collection.defaultdict</h3>
+<h2>1.6 从序列中移除重复项,且顺序不变</h2>
+<p>利用迭代器和set  </p>
+<div class="highlight"><pre><span></span>def dedupe(items, fun=None):
+    _set = set()
+    for item in items:
+        var = item is fun is None else fun(item)
+        if var not in _set:
+            yield item
+            _set.add(var)
+
+rst = list(dedupe([1,3,4,4,5]))
 </pre></div>
 
 
-<h2>浮点数计算</h2>
-<div class="highlight"><pre><span></span><span class="x">per=`awk &#39;BEGIN</span><span class="err">{</span><span class="x">printf &quot;%.2f\n&quot;,&#39;</span><span class="p">$</span><span class="nv">wcnt</span><span class="x">&#39;/&#39;</span><span class="p">$</span><span class="nv">scnt</span><span class="x">&#39;}&#39;`</span>
+<h2>1.7 对切片命名</h2>
+<p>S=slice(1,2)<br />
+S 属性:<br />
+S.start<br />
+S.stop<br />
+S.step<br />
+rec=_list[S]  </p>
+<h3>按照特定长度切片</h3>
+<p>indices(size)</p>
+<h2>1.8 字典排序----itemgetter</h2>
+<p>from operator import itemgetter
+可以用于排序, 最大值,最小值。 也可以用lambda
+sorted min max</p>
+<div class="highlight"><pre><span></span>#等同于下面代码
+def itemgetter(*items):
+    if len(items) == 1:
+        item = items[0]
+        def g(obj):
+            return obj[item]
+    else:
+        def g(obj):
+            return tuple(obj[item] for item in items)
+    return g
 </pre></div>
 
 
-<h2>string=&gt;list</h2>
-<div class="highlight"><pre><span></span>list=&quot;a,
-b,
-c,
-d
-&quot;
+<p>sorted(_dict, key=itemgetter(('key','key1','key2')))</p>
+<h2>1.9 object 排序--attrgetter</h2>
+<p>可以用于sorted, max, min
+from operator import attrgetter</p>
+<p>sorted(_dict, key=attrgetter('attr1'))</p>
+<h2>1.10 itertools</h2>
+<h3>1.10.1 groupby</h3>
+<p>groupby 需要先排序, 结果是迭代器, 也可以使用collection.defaultdict 实现,不需要排序</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">groupby</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
 
-arr=(<span class="cp">${</span><span class="nb">list</span><span class="o">//</span><span class="p">,</span><span class="o">/</span> <span class="cp">}</span>)
+<span class="n">rows</span><span class="o">=</span><span class="p">[</span><span class="n">dict1</span><span class="p">,</span> <span class="n">dict2</span><span class="p">,</span> <span class="n">dict3</span><span class="p">]</span>
 
-echo &quot;====count====&quot;
-
-for v in <span class="cp">${</span><span class="n">arr</span><span class="p">[</span><span class="err">@</span><span class="p">]</span><span class="cp">}</span>
-do
-    i=`echo <span class="nv">$v</span>`
-    echo i
-done
+<span class="n">rows</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">date</span><span class="p">,</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">)):</span>
+    <span class="k">pass</span>
 </pre></div>
 
 
-<h2>ubuntu命令行多线程断点续传下载工具-axel</h2>
-<div class="highlight"><pre><span></span>axel -n 10 xxxx.tar.gz
-</pre></div></div>
+<h2>1.11 筛选序列中的元素</h2></div>
     <footer>
 <p class="meta">
   <span class="byline author vcard">
@@ -119,11 +190,11 @@ done
         YiHan
     </span>
   </span>
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>  <span class="categories">
-    <a class='category' href='http://www.yilaguan.cc/category/linux.html'>linux</a>
+<time datetime="2016-06-11T00:00:00+08:00" pubdate>六 11 六月 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/python.html'>python</a>
   </span>
   <span class="categories">
-    <a class="category" href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a class="category" href="http://www.yilaguan.cc/tag/shell.html">Shell</a>  </span>
+    <a class="category" href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a class="category" href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>  </span>
 </p><div class="sharing">
 </div>    </footer>
   </article>
@@ -229,9 +300,9 @@ done
   <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
     var disqus_shortname = 'yilaguan';
-    var disqus_identifier = '/posts/2015/11/30/shelljiao-ben-pian-duan.html';
-    var disqus_url = 'http://www.yilaguan.cc/posts/2015/11/30/shelljiao-ben-pian-duan.html';
-    var disqus_title = 'shell脚本片段';
+    var disqus_identifier = '/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html';
+    var disqus_title = 'Cookbook-数据结构和算法';
     (function() {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';

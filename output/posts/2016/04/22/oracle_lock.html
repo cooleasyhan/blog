@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>shell脚本片段 &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <title>oracle 锁 &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
   <meta name="author" content="YiHan">
 
 
@@ -46,13 +46,13 @@
       <li >
         <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
       </li>
-      <li >
+      <li class="active">
         <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
       </li>
       <li >
         <a href="http://www.yilaguan.cc/category/java.html">Java</a>
       </li>
-      <li class="active">
+      <li >
         <a href="http://www.yilaguan.cc/category/linux.html">Linux</a>
       </li>
       <li >
@@ -70,47 +70,108 @@
 <div>
   <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">shell脚本片段</h1>
+      <h1 class="entry-title">oracle 锁</h1>
     <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
+<time datetime="2016-04-22T00:00:00+08:00" pubdate>五 22 四月 2016</time>    </p>
 </header>
 
-  <div class="entry-content"><h2>read user enter</h2>
-<div class="highlight"><pre><span></span>read -p &quot;Read rows CNT[W]: &quot; ROWS_CNT
-</pre></div>
-
-
-<h2>获取文件行数</h2>
-<div class="highlight"><pre><span></span><span class="x">ROW=`wc -l </span><span class="p">$</span><span class="nv">DATA_FILE</span><span class="x"> | awk &#39;</span><span class="err">{</span><span class="x">print </span><span class="p">$</span><span class="x">1}&#39;`</span>
-</pre></div>
-
-
-<h2>浮点数计算</h2>
-<div class="highlight"><pre><span></span><span class="x">per=`awk &#39;BEGIN</span><span class="err">{</span><span class="x">printf &quot;%.2f\n&quot;,&#39;</span><span class="p">$</span><span class="nv">wcnt</span><span class="x">&#39;/&#39;</span><span class="p">$</span><span class="nv">scnt</span><span class="x">&#39;}&#39;`</span>
-</pre></div>
-
-
-<h2>string=&gt;list</h2>
-<div class="highlight"><pre><span></span>list=&quot;a,
-b,
-c,
-d
-&quot;
-
-arr=(<span class="cp">${</span><span class="nb">list</span><span class="o">//</span><span class="p">,</span><span class="o">/</span> <span class="cp">}</span>)
-
-echo &quot;====count====&quot;
-
-for v in <span class="cp">${</span><span class="n">arr</span><span class="p">[</span><span class="err">@</span><span class="p">]</span><span class="cp">}</span>
-do
-    i=`echo <span class="nv">$v</span>`
-    echo i
-done
-</pre></div>
-
-
-<h2>ubuntu命令行多线程断点续传下载工具-axel</h2>
-<div class="highlight"><pre><span></span>axel -n 10 xxxx.tar.gz
+  <div class="entry-content"><h2>oracle查询锁</h2>
+<div class="highlight"><pre><span></span><span class="x">SELECT Obj.Owner,</span>
+<span class="x">       Obj.Object_Id,</span>
+<span class="x">       Obj.Object_Name,</span>
+<span class="x">       Lo.Locked_Mode,</span>
+<span class="x">       s.Sid,</span>
+<span class="x">       s.Serial</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Username,</span>
+<span class="x">       s.Machine,</span>
+<span class="x">       s.Terminal,</span>
+<span class="x">       s.Program,</span>
+<span class="x">       s.Client_Identifier,</span>
+<span class="x">       s.Module,</span>
+<span class="x">       s.Action,</span>
+<span class="x">       s.Row_Wait_Obj</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Row_Wait_File</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Row_Wait_Block</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Row_Wait_Row</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       CASE</span>
+<span class="x">         WHEN l.Request &lt;&gt; 0 THEN</span>
+<span class="x">          Dbms_Rowid.Rowid_Create(1,</span>
+<span class="x">                                  Row_Wait_Obj</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_File</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_Block</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_Row</span><span class="err">#</span><span class="x">)</span>
+<span class="x">         ELSE</span>
+<span class="x">          &#39;no row id&#39;</span>
+<span class="x">       END Row_Id,</span>
+<span class="x">       &#39;select * from &#39; || Obj.Owner || &#39;.&#39; || Obj.Object_Name ||</span>
+<span class="x">       &#39; where rowid = &#39;&#39;&#39; || CASE</span>
+<span class="x">         WHEN l.Request &lt;&gt; 0 THEN</span>
+<span class="x">          Dbms_Rowid.Rowid_Create(1,</span>
+<span class="x">                                  Row_Wait_Obj</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_File</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_Block</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_Row</span><span class="err">#</span><span class="x">)</span>
+<span class="x">         ELSE</span>
+<span class="x">          &#39;no row id&#39;</span>
+<span class="x">       END || &#39;&#39;&#39;&#39; Select_Row_Sql,</span>
+<span class="x">       l.Type,</span>
+<span class="x">       Lt.Name,</span>
+<span class="x">       Lt.Description,</span>
+<span class="x">       Lt.Id1_Tag,</span>
+<span class="x">       l.Id1,</span>
+<span class="x">       Lt.Id2_Tag,</span>
+<span class="x">       l.Id2,</span>
+<span class="x">       Decode(l.Lmode,</span>
+<span class="x">              0,</span>
+<span class="x">              &#39; 0 - None &#39;,</span>
+<span class="x">              1,</span>
+<span class="x">              &#39; 1 - NULL(NULL) &#39;,</span>
+<span class="x">              2,</span>
+<span class="x">              &#39; 2 - ROW - s(Ss) &#39;,</span>
+<span class="x">              3,</span>
+<span class="x">              &#39; 3 - ROW - x(Sx) &#39;,</span>
+<span class="x">              4,</span>
+<span class="x">              &#39; 4 - SHARE(s) &#39;,</span>
+<span class="x">              5,</span>
+<span class="x">              &#39; 5 - s / ROW - x(Ssx) &#39;,</span>
+<span class="x">              6,</span>
+<span class="x">              &#39; 6 - EXCLUSIVE(x) &#39;) Lock_Mode,</span>
+<span class="x">       Decode(l.Request,</span>
+<span class="x">              0,</span>
+<span class="x">              &#39; 0 - None &#39;,</span>
+<span class="x">              1,</span>
+<span class="x">              &#39; 1 - NULL(NULL) &#39;,</span>
+<span class="x">              2,</span>
+<span class="x">              &#39; 2 - ROW - s(Ss) &#39;,</span>
+<span class="x">              3,</span>
+<span class="x">              &#39; 3 - ROW - x(Sx) &#39;,</span>
+<span class="x">              4,</span>
+<span class="x">              &#39; 4 - SHARE(s) &#39;,</span>
+<span class="x">              5,</span>
+<span class="x">              &#39; 5 - s / ROW - x(Ssx) &#39;,</span>
+<span class="x">              6,</span>
+<span class="x">              &#39; 6 - EXCLUSIVE(x) &#39;) Request,</span>
+<span class="x">       l.Block,</span>
+<span class="x">       Decode(l.Block,</span>
+<span class="x">              0,</span>
+<span class="x">              &#39; 0 - THE LOCK IS NOT Blocking ANY Other Processes &#39;,</span>
+<span class="x">              1,</span>
+<span class="x">              &#39; 1 - THE LOCK IS Blocking Other Processes &#39;,</span>
+<span class="x">              2,</span>
+<span class="x">              &#39; 2 - THE LOCK IS NOT Blocking ANY Blocked Processes ON THE LOCAL Node,</span>
+<span class="x">       But It May OR May NOT Be Blocking Processes ON Remote Nodes. &#39;)</span>
+<span class="x">  FROM V</span><span class="p">$</span><span class="nv">lock</span><span class="x">          l,</span>
+<span class="x">       V</span><span class="p">$</span><span class="nv">lock_Type</span><span class="x">     Lt,</span>
+<span class="x">       V</span><span class="p">$</span><span class="nv">locked_Object</span><span class="x"> Lo,</span>
+<span class="x">       All_Objects     Obj,</span>
+<span class="x">       V</span><span class="p">$</span><span class="nv">session</span><span class="x">       s</span>
+<span class="x"> WHERE 1 = 1</span>
+<span class="x">   AND l.Type = Lt.Type</span>
+<span class="x">   AND Lo.Session_Id = s.Sid</span>
+<span class="x">   AND Lo.Object_Id = Obj.Object_Id</span>
+<span class="x">   AND l.Sid = s.Sid</span>
+<span class="x">   AND Obj.Object_Name = &#39;xxxxxx&#39;</span>
+<span class="x">   AND (l.Block &lt;&gt; 0 OR l.Request &lt;&gt; 0);</span>
 </pre></div></div>
     <footer>
 <p class="meta">
@@ -119,11 +180,9 @@ done
         YiHan
     </span>
   </span>
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>  <span class="categories">
-    <a class='category' href='http://www.yilaguan.cc/category/linux.html'>linux</a>
+<time datetime="2016-04-22T00:00:00+08:00" pubdate>五 22 四月 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/ebs.html'>ebs</a>
   </span>
-  <span class="categories">
-    <a class="category" href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a class="category" href="http://www.yilaguan.cc/tag/shell.html">Shell</a>  </span>
 </p><div class="sharing">
 </div>    </footer>
   </article>
@@ -229,9 +288,9 @@ done
   <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
     var disqus_shortname = 'yilaguan';
-    var disqus_identifier = '/posts/2015/11/30/shelljiao-ben-pian-duan.html';
-    var disqus_url = 'http://www.yilaguan.cc/posts/2015/11/30/shelljiao-ben-pian-duan.html';
-    var disqus_title = 'shell脚本片段';
+    var disqus_identifier = '/posts/2016/04/22/oracle_lock.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html';
+    var disqus_title = 'oracle 锁';
     (function() {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
