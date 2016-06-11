@@ -25,6 +25,47 @@ deque(maxlen=5)&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h2&gt;1.2.5 collection.namedtuple()&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collection&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;namedtuple&lt;/span&gt;
+&lt;span class="n"&gt;User&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;namedtuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;User&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user_id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;yh&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;yh&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;yh2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)]:&lt;/span&gt;
+    &lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user_id&lt;/span&gt;
+
+
+&lt;span class="c1"&gt;# dict_to_namedtuple&lt;/span&gt;
+&lt;span class="n"&gt;dict_a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user_id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;yh3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="c1"&gt;# 通过_replace 设置默认值&lt;/span&gt;
+&lt;span class="n"&gt;user_prototype&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;user_id&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;  
+&lt;span class="n"&gt;user3&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;user_prototype&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;dict_a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;1.2.6 collection.ChainMap()&lt;/h2&gt;
+&lt;p&gt;from collection import ChainMap&lt;br /&gt;
+将多个字典拼接成一个字典,通过迭代器实现,返回遇到的第一个值  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collection&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ChainMap&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;y&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;z&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ChainMap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;# 1&lt;/span&gt;
+
+
+&lt;span class="c1"&gt;# 可以将一个key值多个值按照链表保存并取出&lt;/span&gt;
+&lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ChainMap&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new_child&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;#2&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;parents&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;x&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;1.3 heapq&lt;/h2&gt;
 &lt;h3&gt;1.3.1 找到最大活最小的N个元素&lt;/h3&gt;
 &lt;p&gt;import heapq&lt;br /&gt;
@@ -45,7 +86,7 @@ sorted(zip(_dict.values(), _dict.keys()))  &lt;/p&gt;
 a中存在b不存在 _dicta.keys() - _dictb.keys()  &lt;/p&gt;
 &lt;p&gt;_dicta.items() &amp;amp; _dictb.items()  &lt;/p&gt;
 &lt;p&gt;将结果组装成字典
-c = {key: dict_a[key] for key in dict_a.keys() - dict_b.keys()}&lt;/p&gt;
+c = {key: dict_a[key] for key in dict_a.keys() - dict_b.keys()}  &lt;/p&gt;
 &lt;h3&gt;1.5.2 defaultdict 见 1.2.2 collection.defaultdict&lt;/h3&gt;
 &lt;h2&gt;1.6 从序列中移除重复项,且顺序不变&lt;/h2&gt;
 &lt;p&gt;利用迭代器和set  &lt;/p&gt;
@@ -69,10 +110,10 @@ S.stop&lt;br /&gt;
 S.step&lt;br /&gt;
 rec=_list[S]  &lt;/p&gt;
 &lt;h3&gt;按照特定长度切片&lt;/h3&gt;
-&lt;p&gt;indices(size)&lt;/p&gt;
+&lt;p&gt;indices(size)  &lt;/p&gt;
 &lt;h2&gt;1.8 字典排序----itemgetter&lt;/h2&gt;
-&lt;p&gt;from operator import itemgetter
-可以用于排序, 最大值,最小值。 也可以用lambda
+&lt;p&gt;from operator import itemgetter&lt;br /&gt;
+可以用于排序, 最大值,最小值。 也可以用lambda&lt;br /&gt;
 sorted min max&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#等同于下面代码
 def itemgetter(*items):
@@ -89,12 +130,12 @@ def itemgetter(*items):
 
 &lt;p&gt;sorted(_dict, key=itemgetter(('key','key1','key2')))&lt;/p&gt;
 &lt;h2&gt;1.9 object 排序--attrgetter&lt;/h2&gt;
-&lt;p&gt;可以用于sorted, max, min
-from operator import attrgetter&lt;/p&gt;
-&lt;p&gt;sorted(_dict, key=attrgetter('attr1'))&lt;/p&gt;
+&lt;p&gt;可以用于sorted, max, min&lt;br /&gt;
+from operator import attrgetter  &lt;/p&gt;
+&lt;p&gt;sorted(_dict, key=attrgetter('attr1'))  &lt;/p&gt;
 &lt;h2&gt;1.10 itertools&lt;/h2&gt;
 &lt;h3&gt;1.10.1 groupby&lt;/h3&gt;
-&lt;p&gt;groupby 需要先排序, 结果是迭代器, 也可以使用collection.defaultdict 实现,不需要排序&lt;/p&gt;
+&lt;p&gt;groupby 需要先排序, 结果是迭代器, 也可以使用collection.defaultdict 实现,不需要排序  &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;itertools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;groupby&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;operator&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;itemgetter&lt;/span&gt;
 
@@ -106,7 +147,30 @@ from operator import attrgetter&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;1.11 筛选序列中的元素&lt;/h2&gt;</summary><category term="Python"></category><category term="Cookbook"></category></entry><entry><title>批量修改sql</title><link href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html" rel="alternate"></link><published>2016-04-22T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-04-22:posts/2016/04/22/mass_update.html</id><summary type="html">&lt;h2&gt;Mysql 批量修改view 的definer&lt;/h2&gt;
+&lt;h3&gt;1.10.2 compress&lt;/h3&gt;
+&lt;p&gt;多个列表组合删选&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;list_a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;d&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;list_b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;itertools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;compress&lt;/span&gt;
+&lt;span class="n"&gt;more0&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;list_b&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;# [False, False, True, True]&lt;/span&gt;
+
+&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;compress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;list_a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;more0&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;# [&amp;#39;c&amp;#39;,&amp;#39;d&amp;#39;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;1.11 筛选序列中的元素&lt;/h2&gt;
+&lt;p&gt;rst = [n in list_n if n &amp;lt; 0]&lt;br /&gt;
+rst = list(filter(fun_is_int, list_n))  &lt;/p&gt;
+&lt;h3&gt;1.11.1 多个列表组合删选&lt;/h3&gt;
+&lt;p&gt;from itertools import compress # 详情见 1.10.2 compress&lt;/p&gt;
+&lt;h3&gt;1.11.2 刷选后直接进行换算,比如min, max&lt;/h3&gt;
+&lt;p&gt;min(n in list_n if n &amp;lt; 0)&lt;br /&gt;
+min([n in list_n if n &amp;lt; 0]) # 该语句多一个将迭代器转换成列表的操作&lt;/p&gt;
+&lt;h2&gt;1.12 字典提取子集---字典推导式&lt;/h2&gt;
+&lt;p&gt;pl = dict((key, value) for key, value in dict_a.items() if value &amp;gt; 100)   &lt;/p&gt;
+&lt;p&gt;list_keys = ['a','b','c']&lt;br /&gt;
+pl = {key:dict_a[key] for key in dict_a.keys() &amp;amp; list_keys}  &lt;/p&gt;</summary><category term="Python"></category><category term="Cookbook"></category></entry><entry><title>批量修改sql</title><link href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html" rel="alternate"></link><published>2016-04-22T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-04-22:posts/2016/04/22/mass_update.html</id><summary type="html">&lt;h2&gt;Mysql 批量修改view 的definer&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;select concat(&amp;quot;alter DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW &amp;quot;,
     TABLE_SCHEMA,
     &amp;quot;.&amp;quot;,

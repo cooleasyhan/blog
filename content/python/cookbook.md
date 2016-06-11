@@ -39,6 +39,50 @@ countera - counterb
 
 ```
 
+## 1.2.5 collection.namedtuple()
+```
+
+from collection import namedtuple
+User = namedtuple('User',['user_id', 'name'])
+user = User(1,'yh')
+
+print user.user_id, user.name
+for user in [(1, 'yh'),(2,'yh2')]:
+    u = User(*user)
+    print u.user_id
+    
+
+# dict_to_namedtuple
+dict_a = {'user_id':3, 'name':'yh3'}
+# 通过_replace 设置默认值
+user_prototype = {'user_id':0, 'name':None}  
+user3 = user_prototype._replace(**dict_a)  
+
+```
+
+
+## 1.2.6 collection.ChainMap()
+from collection import ChainMap  
+将多个字典拼接成一个字典,通过迭代器实现,返回遇到的第一个值  
+```
+from collection import ChainMap
+a={'x':1, 'y':2}
+b={'x':3, 'z':3}
+
+c = ChainMap(a, b)
+print c['x'] # 1
+
+
+# 可以将一个key值多个值按照链表保存并取出
+v = ChainMap()
+v['x'] = 1
+v = v.new_child()
+v['x'] = 2
+
+print v['x'] #2
+print v.parents['x']
+```
+
 
 ## 1.3 heapq
 
@@ -68,7 +112,7 @@ a中存在b不存在 _dicta.keys() - _dictb.keys()
 _dicta.items() & _dictb.items()  
 
 将结果组装成字典
-c = {key: dict_a[key] for key in dict_a.keys() - dict_b.keys()}
+c = {key: dict_a[key] for key in dict_a.keys() - dict_b.keys()}  
 
 ### 1.5.2 defaultdict 见 1.2.2 collection.defaultdict  
 
@@ -96,12 +140,12 @@ S.step
 rec=_list[S]  
 
 ### 按照特定长度切片
-indices(size)
+indices(size)  
 
 
 ## 1.8 字典排序----itemgetter
-from operator import itemgetter
-可以用于排序, 最大值,最小值。 也可以用lambda
+from operator import itemgetter  
+可以用于排序, 最大值,最小值。 也可以用lambda  
 sorted min max
 ```
 #等同于下面代码
@@ -120,17 +164,17 @@ def itemgetter(*items):
 sorted(_dict, key=itemgetter(('key','key1','key2')))
 
 
-## 1.9 object 排序--attrgetter
-可以用于sorted, max, min
-from operator import attrgetter
+## 1.9 object 排序--attrgetter  
+可以用于sorted, max, min  
+from operator import attrgetter  
 
-sorted(_dict, key=attrgetter('attr1'))
+sorted(_dict, key=attrgetter('attr1'))  
 
 
 
 ## 1.10 itertools
 ### 1.10.1 groupby
-groupby 需要先排序, 结果是迭代器, 也可以使用collection.defaultdict 实现,不需要排序
+groupby 需要先排序, 结果是迭代器, 也可以使用collection.defaultdict 实现,不需要排序  
 
 ```
 from itertools import groupby
@@ -159,15 +203,20 @@ list(compress(list_a, more0)) # ['c','d']
 ```
 
 ## 1.11 筛选序列中的元素
-rst = [n in list_n if n < 0]
-rst = list(filter(fun_is_int, list_n))
+rst = [n in list_n if n < 0]  
+rst = list(filter(fun_is_int, list_n))  
 
 ### 1.11.1 多个列表组合删选 
 from itertools import compress # 详情见 1.10.2 compress
 
+### 1.11.2 刷选后直接进行换算,比如min, max
+min(n in list_n if n < 0)  
+min([n in list_n if n < 0]) # 该语句多一个将迭代器转换成列表的操作
+
 
 ## 1.12 字典提取子集---字典推导式
-pl = dict((key, value) for key, value in dict_a.items() if value > 100)
+pl = dict((key, value) for key, value in dict_a.items() if value > 100)   
 
-list_keys = ['a','b','c']
-pl = {key:dict_a[key] for key in dict_a.keys() & list_keys}
+list_keys = ['a','b','c']  
+pl = {key:dict_a[key] for key in dict_a.keys() & list_keys}  
+

@@ -101,6 +101,47 @@ deque(maxlen=5)</p>
 </pre></div>
 
 
+<h2>1.2.5 collection.namedtuple()</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collection</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="n">User</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,[</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">])</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;yh&#39;</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">user</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span>
+<span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;yh&#39;</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;yh2&#39;</span><span class="p">)]:</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="o">*</span><span class="n">user</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">u</span><span class="o">.</span><span class="n">user_id</span>
+
+
+<span class="c1"># dict_to_namedtuple</span>
+<span class="n">dict_a</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;yh3&#39;</span><span class="p">}</span>
+<span class="c1"># 通过_replace 设置默认值</span>
+<span class="n">user_prototype</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user_id&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="bp">None</span><span class="p">}</span>  
+<span class="n">user3</span> <span class="o">=</span> <span class="n">user_prototype</span><span class="o">.</span><span class="n">_replace</span><span class="p">(</span><span class="o">**</span><span class="n">dict_a</span><span class="p">)</span>  
+</pre></div>
+
+
+<h2>1.2.6 collection.ChainMap()</h2>
+<p>from collection import ChainMap<br />
+将多个字典拼接成一个字典,通过迭代器实现,返回遇到的第一个值  </p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collection</span> <span class="kn">import</span> <span class="n">ChainMap</span>
+<span class="n">a</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}</span>
+<span class="n">b</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">ChainMap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="c1"># 1</span>
+
+
+<span class="c1"># 可以将一个key值多个值按照链表保存并取出</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">ChainMap</span><span class="p">()</span>
+<span class="n">v</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">new_child</span><span class="p">()</span>
+<span class="n">v</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="k">print</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="c1">#2</span>
+<span class="k">print</span> <span class="n">v</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+</pre></div>
+
+
 <h2>1.3 heapq</h2>
 <h3>1.3.1 找到最大活最小的N个元素</h3>
 <p>import heapq<br />
@@ -121,7 +162,7 @@ sorted(zip(_dict.values(), _dict.keys()))  </p>
 a中存在b不存在 _dicta.keys() - _dictb.keys()  </p>
 <p>_dicta.items() &amp; _dictb.items()  </p>
 <p>将结果组装成字典
-c = {key: dict_a[key] for key in dict_a.keys() - dict_b.keys()}</p>
+c = {key: dict_a[key] for key in dict_a.keys() - dict_b.keys()}  </p>
 <h3>1.5.2 defaultdict 见 1.2.2 collection.defaultdict</h3>
 <h2>1.6 从序列中移除重复项,且顺序不变</h2>
 <p>利用迭代器和set  </p>
@@ -145,10 +186,10 @@ S.stop<br />
 S.step<br />
 rec=_list[S]  </p>
 <h3>按照特定长度切片</h3>
-<p>indices(size)</p>
+<p>indices(size)  </p>
 <h2>1.8 字典排序----itemgetter</h2>
-<p>from operator import itemgetter
-可以用于排序, 最大值,最小值。 也可以用lambda
+<p>from operator import itemgetter<br />
+可以用于排序, 最大值,最小值。 也可以用lambda<br />
 sorted min max</p>
 <div class="highlight"><pre><span></span>#等同于下面代码
 def itemgetter(*items):
@@ -165,12 +206,12 @@ def itemgetter(*items):
 
 <p>sorted(_dict, key=itemgetter(('key','key1','key2')))</p>
 <h2>1.9 object 排序--attrgetter</h2>
-<p>可以用于sorted, max, min
-from operator import attrgetter</p>
-<p>sorted(_dict, key=attrgetter('attr1'))</p>
+<p>可以用于sorted, max, min<br />
+from operator import attrgetter  </p>
+<p>sorted(_dict, key=attrgetter('attr1'))  </p>
 <h2>1.10 itertools</h2>
 <h3>1.10.1 groupby</h3>
-<p>groupby 需要先排序, 结果是迭代器, 也可以使用collection.defaultdict 实现,不需要排序</p>
+<p>groupby 需要先排序, 结果是迭代器, 也可以使用collection.defaultdict 实现,不需要排序  </p>
 <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">groupby</span>
 <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
 
@@ -182,7 +223,30 @@ from operator import attrgetter</p>
 </pre></div>
 
 
-<h2>1.11 筛选序列中的元素</h2></div>
+<h3>1.10.2 compress</h3>
+<p>多个列表组合删选</p>
+<div class="highlight"><pre><span></span><span class="n">list_a</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]</span>
+<span class="n">list_b</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">compress</span>
+<span class="n">more0</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">list_b</span><span class="p">]</span> <span class="c1"># [False, False, True, True]</span>
+
+<span class="nb">list</span><span class="p">(</span><span class="n">compress</span><span class="p">(</span><span class="n">list_a</span><span class="p">,</span> <span class="n">more0</span><span class="p">))</span> <span class="c1"># [&#39;c&#39;,&#39;d&#39;]</span>
+</pre></div>
+
+
+<h2>1.11 筛选序列中的元素</h2>
+<p>rst = [n in list_n if n &lt; 0]<br />
+rst = list(filter(fun_is_int, list_n))  </p>
+<h3>1.11.1 多个列表组合删选</h3>
+<p>from itertools import compress # 详情见 1.10.2 compress</p>
+<h3>1.11.2 刷选后直接进行换算,比如min, max</h3>
+<p>min(n in list_n if n &lt; 0)<br />
+min([n in list_n if n &lt; 0]) # 该语句多一个将迭代器转换成列表的操作</p>
+<h2>1.12 字典提取子集---字典推导式</h2>
+<p>pl = dict((key, value) for key, value in dict_a.items() if value &gt; 100)   </p>
+<p>list_keys = ['a','b','c']<br />
+pl = {key:dict_a[key] for key in dict_a.keys() &amp; list_keys}  </p></div>
     <footer>
 <p class="meta">
   <span class="byline author vcard">
