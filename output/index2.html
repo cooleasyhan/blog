@@ -69,10 +69,283 @@
   		<article>
 <header>
       <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html">工具</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-02-04T00:00:00+08:00" pubdate>Thu 04 February 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>安装mysql clint tora</h2>
+<div class="highlight"><pre><span></span>#sudo apt-get install tora
+#tora
+
+
+error: no avaliable connection provider
+使用命令：
+#sudo apt-get install libqt4-sql-mysql
+会问要不要覆盖坏准文件，选择n
+</pre></div></div>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html">xtrabackup 小结</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-13T00:00:00+08:00" pubdate>Sun 13 December 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>安装</h2>
+<p>官网下载相关rpm 包, 此处为 percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm， 其中5.1版本的mysql只能使用 2.0版本的xtrabackup</p>
+<div class="highlight"><pre><span></span>rpm -ivh xxx.rpm
+</pre></div>
+
+
+<h2>使用要点</h2>
+<ol>
+<li>正常备份会锁表，可以使用 </li>
+</ol>
+<h2>备份脚本</h2>
+<p>写了一个脚本，用于每周日全备，其他时候增量备份</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25 ...</pre></div></td></tr></table></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/07/mysql_ibdata.html">mysql ibdata 太大</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-07T00:00:00+08:00" pubdate>Mon 07 December 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><p>ibdata 太大无法缩小</p>
+<ol>
+<li>Do a mysqldump of all databases, procedures, triggers etc except the mysql and performance_schema databases</li>
+<li>Drop all databases except the above 2 databases
+<code>drop schema xxxxx</code></li>
+<li>Stop mysql
+<code>service mysqld stop</code></li>
+<li>Delete ibdata1 and ib_log files</li>
+<li>Start mysql
+<code>service mysqld start</code></li>
+<li>Restore from dump</li>
+</ol></div>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/03/redhat6-sftp-setup.html">redhat6 sftp 设置</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-03T00:00:00+08:00" pubdate>Thu 03 December 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>创建用户组</h2>
+<p>用于与sftp设置进行匹配</p>
+<div class="highlight"><pre><span></span>groupadd  sftp_users
+</pre></div>
+
+
+<h2>设置sftp</h2>
+<div class="highlight"><pre><span></span># Subsystem sftp    /usr/libexec/openssh/sftp-server
+Subsystem       sftp    internal-sftp
+Match Group sftp_users
+        X11Forwarding no
+        AllowTcpForwarding no
+        ChrootDirectory %h
+        ForceCommand internal-sftp
+</pre></div>
+
+
+<ul>
+<li>Match Group sftp_users – 匹配sftp_users组中的用户</li>
+<li>ChrootDirectory %h – 该参数指定用户验证后用于chroot环境的路径，用户登录后只能查看到该目录下内容，此处设置成你home目录</li>
+<li>ForceCommand internal-sftp – 该参数强制执行内部sftp</li>
+</ul>
+<h2>添加sftp用户</h2>
+<p>写了一个小脚本，  <br />
+需要注意的是root dirctory onwer 必须是root， 权限必须是755<br />
+有问题可以查看日志：/var/log/syslog and /var ...</p></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/03/redhat6-sftp-setup.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/02/graph.html">无向图</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-02T00:00:00+08:00" pubdate>Wed 02 December 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>基本概念</h2>
+<p>图是由一组顶点(vertex)和一组能够将两个顶点相连的边(edge)组成的  </p>
+<p>图种类： 自环，平行边， 简单图<br />
+这里主要关注简单图</p>
+<h3>术语表</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>相邻</td>
+<td></td>
+</tr>
+<tr>
+<td>依附</td>
+<td></td>
+</tr>
+<tr>
+<td>度数</td>
+<td></td>
+</tr>
+<tr>
+<td>子图</td>
+<td>识别子图是核心问题之一，尤其是那些能够顺序连接一系列顶点的边所组成的子图</td>
+</tr>
+<tr>
+<td>路径</td>
+<td></td>
+</tr>
+<tr>
+<td>简单路径</td>
+<td>一条没有重复顶点的路径</td>
+</tr>
+<tr>
+<td>环</td>
+<td></td>
+</tr>
+<tr>
+<td>简单环</td>
+<td></td>
+</tr>
+<tr>
+<td>路径，环的长度</td>
+<td></td>
+</tr>
+<tr>
+<td>连通</td>
+<td>两个顶点存在路径</td>
+</tr>
+<tr>
+<td>连通图</td>
+<td></td>
+</tr>
+<tr>
+<td>极大连通子图</td>
+<td></td>
+</tr>
+<tr>
+<td>无环图</td>
+<td></td>
+</tr>
+<tr>
+<td>树</td>
+<td></td>
+</tr>
+<tr>
+<td>森林</td>
+<td></td>
+</tr>
+<tr>
+<td>生成树</td>
+<td></td>
+</tr>
+<tr>
+<td>生成树森林</td>
+<td></td>
+</tr>
+<tr>
+<td>稠密图</td>
+<td></td>
+</tr>
+<tr>
+<td>稀疏图</td>
+<td></td>
+</tr>
+<tr>
+<td>二分图</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>一颗树条件</h3>
+<p>一幅含有V个节点的图G满足下列5个条件之一，它就是一棵树  </p>
+<div class="highlight"><pre><span></span>- G 有V-1条边且不含有环
+- G 有V-1条边且是连通的
+- G 是连通的， 但删除任意一条边度会使它不再联通
+- G ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/02/graph.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html">利用nginx 转发 EBS</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-02T00:00:00+08:00" pubdate>Wed 02 December 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>需求</h2>
+<p>EBS 服务器搭建在内网上， 需要开放给外网使用。 <br />
+实现： EBS 设置单一网络入口点，  外网服务器上配置nginx 转发至内网服务器。</p>
+<h2>配置EBS</h2>
+<h3>修改host文件， 在EBS app 服务器上添加相关host</h3>
+<div class="highlight"><pre><span></span>110.10.10.10 prod.xxx.xxx.xxx prod
+</pre></div>
+
+
+<h3>修改 $CONTEXT_FILE , 配置EBS单一网络入口</h3>
+<p>http://app01.domain.name:8000  ===&gt;   http://prod.domain.name:80<br />
+修改前后比对</p>
+<div class="highlight"><pre><span></span>[applprod@app01 admin]$ diff PROD_app01.xml PROD_app01.xml.bak 
+123c123
+<span class="err">&lt;</span>          <span class="nt">&lt;chronosURL</span> <span class="na">oa_var=</span><span class="s">&quot;s_chronosURL ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
         <a href="http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html">AR 设置数据data fix</a>
       </h1>
     <p class="meta">
-<time datetime="2015-12-01T00:00:00+08:00" pubdate>二 01 十二月 2015</time>    </p>
+<time datetime="2015-12-01T00:00:00+08:00" pubdate>Tue 01 December 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>通知单行：</h2>
@@ -96,7 +369,7 @@ UPDATE Cux_Ar_Memo_Lines_Df_0529 d SET(Memo_Line_Id, New_Name, New_Description) 
         <a href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">定位autoconfig模板文件</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
+<time datetime="2015-11-30T00:00:00+08:00" pubdate>Mon 30 November 2015</time>    </p>
 </header>
 
   <div class="entry-content"><p>1、定位模版文件<br />
@@ -121,7 +394,7 @@ forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
         <a href="http://www.yilaguan.cc/posts/2015/11/30/shell-bi-jiao.html">shell 比较</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
+<time datetime="2015-11-30T00:00:00+08:00" pubdate>Mon 30 November 2015</time>    </p>
 </header>
 
   <div class="entry-content"><table>
@@ -172,7 +445,7 @@ forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
         <a href="http://www.yilaguan.cc/posts/2015/11/30/shelljiao-ben-pian-duan.html">shell脚本片段</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
+<time datetime="2015-11-30T00:00:00+08:00" pubdate>Mon 30 November 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>read user enter</h2>
@@ -214,198 +487,6 @@ done
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/30/shelljiao-ben-pian-duan.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html">Nginx, Php-fpm</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-26T00:00:00+08:00" pubdate>四 26 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>安装php</h2>
-<div class="highlight"><pre><span></span>yum install libxml2-devel bzip2-devel libcurl-devel libjpeg-devel libpng-devel freetype-devel openssl-devel  
-./configure --prefix=/usr/local/php-5.6 --with-config-file-path=/usr/local/php-5.6/etc --with-bz2 --with-curl --enable-ftp --enable-sockets --disable-ipv6 --with-gd --with-freetype-dir=/usr/local --enable-gd-native-ttf --with-iconv-dir=/usr/local --enable-mbstring --enable-calendar --with-gettext --with-libxml-dir=/usr/local --with-zlib --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql=mysqlnd --enable-dom --enable-xml ...</pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/24/zhong-gou-_gai-shan-ji-you-dai-ma-de-she-ji.html">重构_改善既有代码的设计</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-24T00:00:00+08:00" pubdate>二 24 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>第一章 重构、第一个案例</h2>
-<h3>Tips</h3>
-<ul>
-<li>如果你发现自己需要为程序添加一个特性，而代码结构使你无法很方便地达成目的，那就先重构那个程序，是特性的添加比较容易进行，然后再添加特性</li>
-<li>先看看有没有一套OK的测试机制，这些测试要有自我检测能力</li>
-<li>尽量干掉一些临时变量，但是需要考虑性能问题</li>
-<li>函数应该放在它所使用的数据的所属对象内</li>
-<li>考虑使用多态来替换那些if else, switch case - State 模式</li>
-<li>测试、小修改、测试、小修改、测试、小修改</li>
-</ul>
-<h3>总结</h3>
-<p>该重构时就重构，自动化测试是前提，提炼函数，临时变量，switch case，变量名是重点
-但是自动化测试一般没有，怎么破？</p>
-<h2>第二章 重构原则</h2>
-<h3>正文</h3>
-<ul>
-<li>
-<p>定义</p>
-<ul>
-<li>对软件内部结构的一种调整， 目的是在不改变软件可观查行为的前提下，提高其可理解性，降低其修改成本</li>
-<li>使用一系列重构手法， 在不改变软件可观察行为的前提下，调整其结构</li>
-</ul>
-</li>
-<li>
-<p>为何重构</p>
-<ul>
-<li>改进软件设计， 软件结构会流失 ...</li></ul></li></ul></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/24/zhong-gou-_gai-shan-ji-you-dai-ma-de-she-ji.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/18/iptables-xiao-jie.html">iptables 小结</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-18T00:00:00+08:00" pubdate>三 18 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>规则顺序</h2>
-<p>iptables 按照设定顺序比对规则内容，如果封包资料与规则一致则执行操作：ACCEPT，DROP，REJECT， LOG。 LOG只会记录信息到/var/log/messages中，该封包还是会继续下面的规则比对<br />
-所以顺序很重要,错误的顺序错误的结果<br />
-其中内网限制建议REJECT， drop并不会知会client端，client会等待直到timeout</p>
-<h2>封包政策， Policy</h2>
-<p>Policy 如果不是ACCEPT，务必小心，很可能会把自己挡住，务必开放自己的ssh 22端口权限</p>
-<h2>table 和 chain</h2>
-<p>fileter<br />
-mangle<br />
-nat<br />
-一般控制本机资源的访问，只要设置 filter中的INPUT 和 OUTPUT 就可以了<br />
-<img alt="链路图" src="/images/iptables_chain.gif" /></p>
-<h2>查看设置</h2>
-<div class="highlight"><pre><span></span>iptables -L -n -v -t tables
--t 默认为filter
-</pre></div>
-
-
-<p>使用iptables-save 可以看到更有价值的信息，这部分内容也可以直接作为 ...</p></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/18/iptables-xiao-jie.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/16/cache.html">Cache</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><div class="highlight"><pre><span></span><span class="cp"># Copyright 2007 Matt Chaput. All rights reserved.</span>
-<span class="cp">#</span>
-<span class="cp"># Redistribution and use in source and binary forms, with or without</span>
-<span class="cp"># modification, are permitted provided that the following conditions are met:</span>
-<span class="cp">#</span>
-<span class="cp">#    1. Redistributions of source code must retain the above copyright notice,</span>
-<span class="cp">#       this list of conditions and the following disclaimer.</span>
-<span class="cp">#</span>
-<span class="cp">#    2. Redistributions in ...</span></pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/cache.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/16/priority_queue.html">优先队列Python实现</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><p>典型应用于任务调度，典型算法为堆排序</p>
-<h2>MaxPQ API</h2>
-<table>
-<thead>
-<tr>
-<th>MaxPQ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MaxPQ()</td>
-</tr>
-<tr>
-<td>MaxPQ(int max)</td>
-</tr>
-<tr>
-<td>MaxPQ(Key[] a)</td>
-</tr>
-<tr>
-<td>void Insert(Key, v)</td>
-</tr>
-<tr>
-<td>Key max()</td>
-</tr>
-<tr>
-<td>Key delMax()</td>
-</tr>
-<tr>
-<td>boolean isEmpty()</td>
-</tr>
-<tr>
-<td>int size()</td>
-</tr>
-</tbody>
-</table>
-<h2>Code</h2>
-<div class="highlight"><pre><span></span><span class="c1"># Author: YiHan</span>
-<span class="c1"># Date: 2015-11-16</span>
-
-<span class="kn">import</span> <span class="nn">random</span>
-
-
-<span class="k">class</span> <span class="nc">MaxPQ</span><span class="p">:</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>   <span class="n">list_a</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">list_a</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">list_a</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">isEmpty ...</span></pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/priority_queue.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/16/sort.html">排序算法</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>优先队列</h2>
-<p>一句话：</p>
-<h2>堆排序</h2>
-<p>时间复杂度： 2NlogN
-一句话： 对</p>
-<p>主要的优点在于能够同时最优使用空间，时间，最坏情况下是2NLOGN<br />
-缺点在于不能很好利用缓冲，因为他的比较是跳跃的，而不是与周围的数据进行比较</p>
-<p>堆这种数据结构还是主要用于优先队列中，每次只需要加载部分数据进入内存，就可以完成大数据量的处理，比如TOP10， 只需要维护一个10元素的数组，然后增量的处理数据就可以了。</p></div>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index3.html">&larr; Older</a>
 
@@ -417,19 +498,19 @@ nat<br />
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html">Cookbook-数据结构和算法</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/03/fabric-an-zhuang-salt-minions.html">fabric 安装salt minions</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html">批量修改sql</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/salt.html">salt</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html">oracle 锁</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html">salt安装</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Pandas</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltpei-zhi.html">salt配置</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html">工具</a>
+          <a href="http://www.yilaguan.cc/posts/2016/06/26/cookbook-han-shu.html">Cookbook-函数</a>
       </li>
     </ul>
   </section>
@@ -451,7 +532,7 @@ nat<br />
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

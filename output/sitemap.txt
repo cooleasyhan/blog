@@ -6,6 +6,12 @@ http://www.yilaguan.cc/
 http://www.yilaguan.cc/archives.html
 http://www.yilaguan.cc/tags.html
 http://www.yilaguan.cc/categories.html
+http://www.yilaguan.cc/posts/2016/08/03/fabric-an-zhuang-salt-minions.html
+http://www.yilaguan.cc/posts/2016/08/01/salt.html
+http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html
+http://www.yilaguan.cc/posts/2016/08/01/saltpei-zhi.html
+http://www.yilaguan.cc/posts/2016/06/26/cookbook-han-shu.html
+http://www.yilaguan.cc/posts/2016/06/22/mysql_skip.html
 http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html
 http://www.yilaguan.cc/posts/2016/04/22/mass_update.html
 http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html
@@ -76,4 +82,5 @@ http://www.yilaguan.cc/tag/queue.html
 http://www.yilaguan.cc/tag/algorithms.html
 http://www.yilaguan.cc/tag/oracle.html
 http://www.yilaguan.cc/tag/cookbook.html
+http://www.yilaguan.cc/tag/salt.html
 http://www.yilaguan.cc/author/yihan.html

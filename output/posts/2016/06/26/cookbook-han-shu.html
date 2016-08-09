@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Cookbook-函数 &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <meta name="author" content="YiHan">
+
+
+
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="http://www.yilaguan.cc/favicon.png" rel="icon">
+
+  <link href="http://www.yilaguan.cc/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://www.yilaguan.cc/">Yi's Blog  -  Do. Or do not. There is no try</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+</ul>
+
+
+<ul class="main-navigation">
+    <li><a href="/">Home</a></li>
+    <li><a href="/archives.html">Archives</a></li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/java.html">Java</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/linux.html">Linux</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/mysql.html">Mysql</a>
+      </li>
+      <li class="active">
+        <a href="http://www.yilaguan.cc/category/python.html">Python</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/reading.html">Reading</a>
+      </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">Cookbook-函数</h1>
+    <p class="meta">
+<time datetime="2016-06-26T00:00:00+08:00" pubdate>Sun 26 June 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>7.1 编写可接受任何参数的函数</h2>
+<p><em>args, </em>*kwargs<br />
+args 只能是最后一个位置参数。</p>
+<div class="highlight"><pre><span></span>def fun(x, *args, y, **kwargs):
+    &#39;&#39;&#39;
+    y 是keyword参数
+    &#39;&#39;&#39;
+    pass
+</pre></div>
+
+
+<h2>7.2 只接受关键字参数</h2>
+<div class="highlight"><pre><span></span>def fun(x, *, block):
+    &#39;&#39;&#39;
+    y 是keyword参数
+    &#39;&#39;&#39;
+    pass
+
+fun(x, block=True)
+fun(x, True) # TypeError
+</pre></div>
+
+
+<h2>7.3 设置元数据类型</h2>
+<div class="highlight"><pre><span></span>def fun(x:int, *, block:boolean) -&gt; int:
+    &#39;&#39;&#39;
+    y 是keyword参数
+    &#39;&#39;&#39;
+    pass
+
+fun(x, block=True)
+fun(x, True) # TypeError
+</pre></div>
+
+
+<h2>7.4 返回多个值</h2>
+<h2>7.5 带默认值的函数</h2>
+<p>7.5.1 可以通过no_object = object(),来设定空的默认值。避免使用Flase, None
+7.5.2 默认值只在函数初始化时生效一次,所以尽量不要使用变量作为默认值
+7.5.3 不要使用地址引用作为参数传递</p>
+<h2>7.6 匿名函数 lambda, 7.7 匿名函数绑定变量的值</h2>
+<p>需要注意的是匿名函数的值是在真正调用的时候才进行赋值,如果需要在定义的时候就进行赋值,需要使用默认参数</p>
+<div class="highlight"><pre><span></span>In[14]: x = 10
+In[15]: a = lambda y : x + y
+In[16]: x = 20
+In[17]: b = lambda y : x + y
+In[18]: a(10)
+Out[18]: 30
+In[19]: b(10)
+Out[19]: 30
+In[20]: x = 10
+In[21]: a = lambda y, x=x : x + y
+In[22]: x = 20
+In[23]: b = lambda y, x=x : x + y
+In[24]: a(10)
+Out[24]: 20
+In[25]: b(10)
+Out[25]: 30
+</pre></div>
+
+
+<h2>7.8 让带有N个参数的函数以更少参数调用</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="k">def</span> <span class="nf">spam</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span>
+
+<span class="n">s1</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">spam</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">s1</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">s2</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">spam</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">d</span><span class="o">=</span><span class="mi">33</span><span class="p">)</span>
+<span class="n">s2</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span>
+<span class="o">&gt;</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">33</span>
+</pre></div>
+
+
+<h2>7.9 函数代替只有单个方法的类 ---- 闭包</h2>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="n">CTest</span>(<span class="n">object</span>):
+    <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">para</span>):
+        <span class="k">self</span>.<span class="n">para</span> = <span class="n">para</span>
+
+    <span class="n">def</span> <span class="n">do_something</span>(<span class="k">self</span>,<span class="n">a</span>):
+        <span class="nb">print</span> <span class="k">self</span>.<span class="n">para</span>, <span class="n">a</span>
+
+<span class="n">c</span> = <span class="n">CTest</span>(<span class="s">&#39;abc&#39;</span>)
+<span class="n">c</span>.<span class="n">do_something</span>(<span class="n">a</span>=<span class="s">&#39;test&#39;</span>)
+
+
+<span class="n">def</span> <span class="n">warp</span>(<span class="n">para</span>):
+    <span class="n">_para</span> = <span class="n">para</span>
+    <span class="n">def</span> <span class="n">do_something</span>(<span class="n">a</span>):
+        <span class="nb">print</span> <span class="n">_para</span>, <span class="n">a</span>
+
+    <span class="k">return</span> <span class="n">do_something</span>
+
+<span class="n">w</span> = <span class="n">warp</span>(<span class="s">&#39;abc&#39;</span>)
+<span class="n">w</span>(<span class="n">a</span>=<span class="s">&#39;test&#39;</span>)
+</pre></div>
+
+
+<h2>7.10 回调函数携带额外的状态类参数</h2>
+<ol>
+<li>使用回调的方式写的代码会造成发起请求和处理结果之间出现割裂,上下文会丢失。  </li>
+<li>
+<p>处理方式:<br />
+    2.1 带状态参数的类
+    2.2 闭包
+    2.3 functools.partial , 利用partial封装一个状态类的class,统一处理, 也可以通过lambda处理</p>
+</li>
+<li>
+<p>代码示例略</p>
+</li>
+</ol>
+<h2>7.11 内联回调函数</h2>
+<ol>
+<li></li>
+</ol>
+<h2>7.12 访问在闭包内变量的函数</h2>
+<p>在python3 之后有了nonloacl, 可以实现修改闭包中的变量</p>
+<div class="highlight"><pre><span></span>def test():
+    a = None
+    def fun():
+        print a
+
+    def get_a():
+        return a
+
+    def set_a(value):
+        nonlocal a
+        a = value
+
+    fun.get_a = get_a
+    fun.set_a = set_a
+    return fun
+</pre></div></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">
+        YiHan
+    </span>
+  </span>
+<time datetime="2016-06-26T00:00:00+08:00" pubdate>Sun 26 June 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/python.html'>python</a>
+  </span>
+  <span class="categories">
+    <a class="category" href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a class="category" href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>  </span>
+</p><div class="sharing">
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/03/fabric-an-zhuang-salt-minions.html">fabric 安装salt minions</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/salt.html">salt</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html">salt安装</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltpei-zhi.html">salt配置</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/06/26/cookbook-han-shu.html">Cookbook-函数</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
+        <li><a href="http://www.yilaguan.cc/category/documents.html">Documents</a></li>
+        <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
+        <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
+        <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
+        <li><a href="http://www.yilaguan.cc/category/mysql.html">mysql</a></li>
+        <li><a href="http://www.yilaguan.cc/category/python.html">python</a></li>
+        <li><a href="http://www.yilaguan.cc/category/reading.html">Reading</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://www.yilaguan.cc/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'cooleasyhan',
+              count: 5,
+              skip_forks: false,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://www.yilaguan.cc/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="http://cooleasyhan.github.io" target="_blank">github 个人页</a></li>
+        </ul>
+    </section>
+    <section>
+        <h1>Blogroll</h1>
+        <ul>
+            <li><a href="https://rhettinger.wordpress.com/" target="_blank">rhettinger</a></li>
+            <li><a href="http://www.dongwm.com/" target="_blank">小明明</a></li>
+            <li><a href="http://www.keakon.net/" target="_blank">keakon的涂鸦馆</a></li>
+            <li><a href="http://zheng-ji.info/" target="_blank">织网</a></li>
+        </ul>
+    </section>
+
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+  <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/ender.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var disqus_shortname = 'yilaguan';
+    var disqus_identifier = '/posts/2016/06/26/cookbook-han-shu.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/06/26/cookbook-han-shu.html';
+    var disqus_title = 'Cookbook-函数';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+  </script>
+</body>
+</html>

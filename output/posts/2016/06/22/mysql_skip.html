@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>主从同步 &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <meta name="author" content="YiHan">
+
+
+
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="http://www.yilaguan.cc/favicon.png" rel="icon">
+
+  <link href="http://www.yilaguan.cc/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://www.yilaguan.cc/">Yi's Blog  -  Do. Or do not. There is no try</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+</ul>
+
+
+<ul class="main-navigation">
+    <li><a href="/">Home</a></li>
+    <li><a href="/archives.html">Archives</a></li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/java.html">Java</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/linux.html">Linux</a>
+      </li>
+      <li class="active">
+        <a href="http://www.yilaguan.cc/category/mysql.html">Mysql</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/python.html">Python</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/reading.html">Reading</a>
+      </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">主从同步</h1>
+    <p class="meta">
+<time datetime="2016-06-22T00:00:00+08:00" pubdate>Wed 22 June 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>主从同步处理</h2>
+<p>最近mysql 主从经常出现不同步的情况。 <br />
+1. 从库开发修改,有同学上从库改表造成不同步。 <br />
+    处理: 从库设置为只读 <br />
+2. 主从同步hung住, 显示如下, 线程状态显示OK, 但是Seconds Behind Master 值非常大。  </p>
+<div class="highlight"><pre><span></span><span class="n">Slave_IO_Running</span><span class="o">:</span> <span class="n">Yes</span>
+<span class="n">Slave_SQL_Running</span><span class="o">:</span> <span class="n">Yes</span>
+<span class="n">Seconds_Behind_Master</span><span class="o">:</span> <span class="mi">9999</span>
+
+<span class="err">#</span> <span class="err">处理</span><span class="o">:</span>  
+<span class="n">stop</span> <span class="n">slave</span><span class="o">;</span> <span class="o">--</span><span class="err">等待时间可达数分钟</span>
+<span class="n">start</span> <span class="n">slave</span><span class="o">;</span>
+</pre></div>
+
+
+<ol>
+<li>启用了gtid的主从同步,skip操作</li>
+</ol>
+<p>获取当前 处理到的Executed_Gtid_Set, 下面最后处理的gtid 为: dcbfbf7e-e05a-11e5-8160-6c92bf225ad1:129985921</p>
+<div class="highlight"><pre><span></span><span class="n">Retrieved_Gtid_Set</span><span class="o">:</span> <span class="n">dcbfbf7e</span><span class="o">-</span><span class="n">e05a</span><span class="o">-</span><span class="mi">11</span><span class="n">e5</span><span class="o">-</span><span class="mi">8160</span><span class="o">-</span><span class="mi">6</span><span class="n">c92bf225ad1</span><span class="o">:</span><span class="mi">16700783</span><span class="o">-</span><span class="mi">129985931</span>
+<span class="n">Executed_Gtid_Set</span><span class="o">:</span> <span class="n">dc24de6f</span><span class="o">-</span><span class="mi">2969</span><span class="o">-</span><span class="mi">11</span><span class="n">e6</span><span class="o">-</span><span class="mi">8</span><span class="n">ae8</span><span class="o">-</span><span class="mi">6</span><span class="n">c92bf2c1069</span><span class="o">:</span><span class="mi">1</span><span class="o">-</span><span class="mi">11</span><span class="o">,</span>
+<span class="n">dcbfbf7e</span><span class="o">-</span><span class="n">e05a</span><span class="o">-</span><span class="mi">11</span><span class="n">e5</span><span class="o">-</span><span class="mi">8160</span><span class="o">-</span><span class="mi">6</span><span class="n">c92bf225ad1</span><span class="o">:</span><span class="mi">1</span><span class="o">-</span><span class="mi">16132149</span><span class="o">:</span><span class="mi">16700783</span><span class="o">-</span><span class="mi">129985921</span>
+</pre></div>
+
+
+<p>通过创建空的gtid,跳过该gitd。</p>
+<div class="highlight"><pre><span></span><span class="nt">STOP</span> <span class="nt">SLAVE</span><span class="o">;</span>
+<span class="nt">SET</span> <span class="nt">GTID_NEXT</span><span class="o">=</span><span class="s2">&quot;dcbfbf7e-e05a-11e5-8160-6c92bf225ad1:129985921&quot;</span><span class="o">;</span>
+<span class="nt">BEGIN</span><span class="o">;</span> <span class="nt">COMMIT</span><span class="o">;</span>
+<span class="nt">SET</span> <span class="nt">GTID_NEXT</span><span class="o">=</span><span class="s2">&quot;AUTOMATIC&quot;</span><span class="o">;</span>
+<span class="nt">START</span> <span class="nt">SLAVE</span><span class="o">;</span>
+<span class="nt">show</span> <span class="nt">slave</span> <span class="nt">status</span> <span class="err">\</span><span class="nt">G</span><span class="o">;</span>
+</pre></div></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">
+        YiHan
+    </span>
+  </span>
+<time datetime="2016-06-22T00:00:00+08:00" pubdate>Wed 22 June 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/mysql.html'>mysql</a>
+  </span>
+</p><div class="sharing">
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/03/fabric-an-zhuang-salt-minions.html">fabric 安装salt minions</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/salt.html">salt</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html">salt安装</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltpei-zhi.html">salt配置</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/06/26/cookbook-han-shu.html">Cookbook-函数</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
+        <li><a href="http://www.yilaguan.cc/category/documents.html">Documents</a></li>
+        <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
+        <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
+        <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
+        <li><a href="http://www.yilaguan.cc/category/mysql.html">mysql</a></li>
+        <li><a href="http://www.yilaguan.cc/category/python.html">python</a></li>
+        <li><a href="http://www.yilaguan.cc/category/reading.html">Reading</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://www.yilaguan.cc/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'cooleasyhan',
+              count: 5,
+              skip_forks: false,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://www.yilaguan.cc/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="http://cooleasyhan.github.io" target="_blank">github 个人页</a></li>
+        </ul>
+    </section>
+    <section>
+        <h1>Blogroll</h1>
+        <ul>
+            <li><a href="https://rhettinger.wordpress.com/" target="_blank">rhettinger</a></li>
+            <li><a href="http://www.dongwm.com/" target="_blank">小明明</a></li>
+            <li><a href="http://www.keakon.net/" target="_blank">keakon的涂鸦馆</a></li>
+            <li><a href="http://zheng-ji.info/" target="_blank">织网</a></li>
+        </ul>
+    </section>
+
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+  <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/ender.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var disqus_shortname = 'yilaguan';
+    var disqus_identifier = '/posts/2016/06/22/mysql_skip.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/06/22/mysql_skip.html';
+    var disqus_title = '主从同步';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+  </script>
+</body>
+</html>

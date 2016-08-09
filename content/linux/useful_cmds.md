@@ -12,3 +12,7 @@ getconf LONG_BIT
 ## 去除注释，空行
 more php-fpm.conf | grep -v ^\; | grep -v ^$;
 
+
+## 查看tcp连接情况
+netstat -n|awk '/^tcp/{++S[$NF]}END{for (key in S) print key,S[key]}'
+

@@ -69,10 +69,202 @@
   		<article>
 <header>
       <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html">Nginx, Php-fpm</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-26T00:00:00+08:00" pubdate>Thu 26 November 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>安装php</h2>
+<div class="highlight"><pre><span></span>yum install libxml2-devel bzip2-devel libcurl-devel libjpeg-devel libpng-devel freetype-devel openssl-devel  
+./configure --prefix=/usr/local/php-5.6 --with-config-file-path=/usr/local/php-5.6/etc --with-bz2 --with-curl --enable-ftp --enable-sockets --disable-ipv6 --with-gd --with-freetype-dir=/usr/local --enable-gd-native-ttf --with-iconv-dir=/usr/local --enable-mbstring --enable-calendar --with-gettext --with-libxml-dir=/usr/local --with-zlib --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql=mysqlnd --enable-dom --enable-xml ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/24/zhong-gou-_gai-shan-ji-you-dai-ma-de-she-ji.html">重构_改善既有代码的设计</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-24T00:00:00+08:00" pubdate>Tue 24 November 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>第一章 重构、第一个案例</h2>
+<h3>Tips</h3>
+<ul>
+<li>如果你发现自己需要为程序添加一个特性，而代码结构使你无法很方便地达成目的，那就先重构那个程序，是特性的添加比较容易进行，然后再添加特性</li>
+<li>先看看有没有一套OK的测试机制，这些测试要有自我检测能力</li>
+<li>尽量干掉一些临时变量，但是需要考虑性能问题</li>
+<li>函数应该放在它所使用的数据的所属对象内</li>
+<li>考虑使用多态来替换那些if else, switch case - State 模式</li>
+<li>测试、小修改、测试、小修改、测试、小修改</li>
+</ul>
+<h3>总结</h3>
+<p>该重构时就重构，自动化测试是前提，提炼函数，临时变量，switch case，变量名是重点
+但是自动化测试一般没有，怎么破？</p>
+<h2>第二章 重构原则</h2>
+<h3>正文</h3>
+<ul>
+<li>
+<p>定义</p>
+<ul>
+<li>对软件内部结构的一种调整， 目的是在不改变软件可观查行为的前提下，提高其可理解性，降低其修改成本</li>
+<li>使用一系列重构手法， 在不改变软件可观察行为的前提下，调整其结构</li>
+</ul>
+</li>
+<li>
+<p>为何重构</p>
+<ul>
+<li>改进软件设计， 软件结构会流失 ...</li></ul></li></ul></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/24/zhong-gou-_gai-shan-ji-you-dai-ma-de-she-ji.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/18/iptables-xiao-jie.html">iptables 小结</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-18T00:00:00+08:00" pubdate>Wed 18 November 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>规则顺序</h2>
+<p>iptables 按照设定顺序比对规则内容，如果封包资料与规则一致则执行操作：ACCEPT，DROP，REJECT， LOG。 LOG只会记录信息到/var/log/messages中，该封包还是会继续下面的规则比对<br />
+所以顺序很重要,错误的顺序错误的结果<br />
+其中内网限制建议REJECT， drop并不会知会client端，client会等待直到timeout</p>
+<h2>封包政策， Policy</h2>
+<p>Policy 如果不是ACCEPT，务必小心，很可能会把自己挡住，务必开放自己的ssh 22端口权限</p>
+<h2>table 和 chain</h2>
+<p>fileter<br />
+mangle<br />
+nat<br />
+一般控制本机资源的访问，只要设置 filter中的INPUT 和 OUTPUT 就可以了<br />
+<img alt="链路图" src="/images/iptables_chain.gif" /></p>
+<h2>查看设置</h2>
+<div class="highlight"><pre><span></span>iptables -L -n -v -t tables
+-t 默认为filter
+</pre></div>
+
+
+<p>使用iptables-save 可以看到更有价值的信息，这部分内容也可以直接作为 ...</p></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/18/iptables-xiao-jie.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/16/cache.html">Cache</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><div class="highlight"><pre><span></span><span class="cp"># Copyright 2007 Matt Chaput. All rights reserved.</span>
+<span class="cp">#</span>
+<span class="cp"># Redistribution and use in source and binary forms, with or without</span>
+<span class="cp"># modification, are permitted provided that the following conditions are met:</span>
+<span class="cp">#</span>
+<span class="cp">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="cp">#       this list of conditions and the following disclaimer.</span>
+<span class="cp">#</span>
+<span class="cp">#    2. Redistributions in ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/cache.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/16/priority_queue.html">优先队列Python实现</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><p>典型应用于任务调度，典型算法为堆排序</p>
+<h2>MaxPQ API</h2>
+<table>
+<thead>
+<tr>
+<th>MaxPQ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MaxPQ()</td>
+</tr>
+<tr>
+<td>MaxPQ(int max)</td>
+</tr>
+<tr>
+<td>MaxPQ(Key[] a)</td>
+</tr>
+<tr>
+<td>void Insert(Key, v)</td>
+</tr>
+<tr>
+<td>Key max()</td>
+</tr>
+<tr>
+<td>Key delMax()</td>
+</tr>
+<tr>
+<td>boolean isEmpty()</td>
+</tr>
+<tr>
+<td>int size()</td>
+</tr>
+</tbody>
+</table>
+<h2>Code</h2>
+<div class="highlight"><pre><span></span><span class="c1"># Author: YiHan</span>
+<span class="c1"># Date: 2015-11-16</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="k">class</span> <span class="nc">MaxPQ</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>   <span class="n">list_a</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">list_a</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">list_a</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">isEmpty ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/priority_queue.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/16/sort.html">排序算法</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>优先队列</h2>
+<p>一句话：</p>
+<h2>堆排序</h2>
+<p>时间复杂度： 2NlogN
+一句话： 对</p>
+<p>主要的优点在于能够同时最优使用空间，时间，最坏情况下是2NLOGN<br />
+缺点在于不能很好利用缓冲，因为他的比较是跳跃的，而不是与周围的数据进行比较</p>
+<p>堆这种数据结构还是主要用于优先队列中，每次只需要加载部分数据进入内存，就可以完成大数据量的处理，比如TOP10， 只需要维护一个10元素的数组，然后增量的处理数据就可以了。</p></div>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
         <a href="http://www.yilaguan.cc/posts/2015/11/16/sort_code.html">排序算法python实现</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>Code</h2>
@@ -108,7 +300,7 @@ HeapSort 堆排序  </p>
         <a href="http://www.yilaguan.cc/posts/2015/11/14/ar-de-shi-wu-chu-li-jie-kou.html">AR 的事务处理接口</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-14T00:00:00+08:00" pubdate>六 14 十一月 2015</time>    </p>
+<time datetime="2015-11-14T00:00:00+08:00" pubdate>Sat 14 November 2015</time>    </p>
 </header>
 
   <div class="entry-content"><p>最近由于会有大量的接口开发，重构了现有AR 的事务处理接口，将其作为后续所有事务处理接口的统一入口。在后期的项目中看看效果，如果效果OK， 考虑把收款接口，核销接口也用类似方法重构下，从测试脚本来看，使用还是比较简单的，就是感觉方法的调用会不会多了点，不过个人挺习惯和喜欢这种无脑的调用方法，后面会贴出来一个精简版的测试脚本</p>
@@ -139,7 +331,7 @@ HeapSort 堆排序  </p>
         <a href="http://www.yilaguan.cc/posts/2015/11/09/how-to-audit-in-oracle-ebs.html">How to Audit in Oracle EBS</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-09T00:00:00+08:00" pubdate>一 09 十一月 2015</time>    </p>
+<time datetime="2015-11-09T00:00:00+08:00" pubdate>Mon 09 November 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>Metalink</h2>
@@ -159,7 +351,7 @@ HeapSort 堆排序  </p>
         <a href="http://www.yilaguan.cc/posts/2015/11/09/kibana-elasticsearch-logstash.html">Kibana elasticsearch logstash</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-09T00:00:00+08:00" pubdate>一 09 十一月 2015</time>    </p>
+<time datetime="2015-11-09T00:00:00+08:00" pubdate>Mon 09 November 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>Kibana elasticsearch logstash 日志系统搭建</h2>
@@ -177,139 +369,6 @@ HeapSort 堆排序  </p>
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/09/kibana-elasticsearch-logstash.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html">启用session级别的trace</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-09T00:00:00+08:00" pubdate>一 09 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><div class="highlight"><pre><span></span><span class="x">DECLARE</span>
-<span class="x">  Session_Id binary_integer;</span>
-<span class="x">  Serial_Num binary_integer;</span>
-
-<span class="x">BEGIN</span>
-<span class="x">  SELECT Sid, Serial</span><span class="err">#</span><span class="x"></span>
-<span class="x">    INTO Session_Id, Serial_Num</span>
-<span class="x">    FROM V</span><span class="p">$</span><span class="nv">session</span><span class="x"> s</span>
-<span class="x">   WHERE s.Sid = Userenv(&#39;SID&#39;);</span>
-<span class="x">  Dbms_Monitor.session_trace_enable(Session_Id =&gt; Session_Id,</span>
-<span class="x">                                    Serial_Num =&gt; Serial_Num,</span>
-<span class="x">                                    Waits      =&gt; TRUE,</span>
-<span class="x">                                    Binds      =&gt; false);</span>
-<span class="x">  EXECUTE IMMEDIATE (&#39;ALTER Session SET Tracefile_Identifier = &#39;&#39;yihan&#39;&#39;&#39;);</span>
-
-<span class="x">  FOR Rec IN (SELECT * FROM Cux_Gl_Code_Combinations_b_v Gcc) LOOP</span>
-<span class="x">    NULL;</span>
-<span class="x">  END LOOP;</span>
-<span class="x">  Dbms_Monitor ...</span></pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/04/forms-runtime-diagnostics-frd.html">Forms Runtime Diagnostics (FRD)</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-04T00:00:00+08:00" pubdate>三 04 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><p>The Forms Runtime Diagnostic (FRD) is a method for capturing all events that occur in a form session and writing a file with the details of those events. There is overhead in writing this file, so you should only use this for the purposes of development and debugging</p>
-<p>When a ...</p></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/04/forms-runtime-diagnostics-frd.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html">Log file location for Oracle E-Business Suite</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-10-30T00:00:00+08:00" pubdate>五 30 十月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>Log file location for Oracle E-Business Suite R12</h2>
-<ul>
-<li>Apache, OC4J and OPMN:<blockquote>
-<p>$LOG_HOME/ora/10.1.3/Apache
-$LOG_HOME/ora/10.1.3/j2ee
-$LOG_HOME/ora/10.1.3/opmn</p>
-</blockquote>
-</li>
-<li>Startup/Shutdown Log files:<blockquote>
-<p>$INST_TOP/apps/$CONTEXT_NAME/logs/appl/admin/log</p>
-</blockquote>
-</li>
-<li>Patch log:<blockquote>
-<p>$APPL_TOP/admin/$SID/log/</p>
-</blockquote>
-</li>
-<li>Autoconfig log file ...</li></ul></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-dai-ma.html">有用的代码</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-10-30T00:00:00+08:00" pubdate>五 30 十月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><ol>
-<li><a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/eventusermodel/XLSX2CSV.java">turn an big excel file into a CSV</a></li>
-</ol></div>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/10/29/Linux.html">命令-赶紧的</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-10-29T00:00:00+08:00" pubdate>四 29 十月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>查看端口的占用情况</h2>
-<p>netstat -tln</p>
-<h2>查看32,64位系统</h2>
-<p>getconf LONG_BIT</p>
-<h2>去除注释，空行</h2>
-<p>more php-fpm.conf | grep -v ^\; | grep -v ^$;</p></div>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html">发布ADF Essentials 至Glassfish</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-10-29T00:00:00+08:00" pubdate>四 29 十月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>软件安装</h2>
-<h3>JAVA</h3>
-<div class="highlight"><pre><span></span><span class="x">JAVA_HOME=/home/yihan/glassfish/jdk1.8.0_65</span>
-<span class="x">export PATH=</span><span class="p">$</span><span class="nv">JAVA_HOME</span><span class="x">/bin:</span><span class="p">$</span><span class="nv">PATH</span><span class="x"></span>
-</pre></div>
-
-
-<h3>Glassfish</h3>
-<ul>
-<li>Oracle GlassFish Sever is commercially supported version of GlassFish v3. It is recommended for production environments. 
-Below is V4  </li>
-<li>下载: https://glassfish.java.net/download.html</li>
-<li>unzip glassfish-4.1.1*zip</li>
-<li>glassfish4/bin/asadmin start-domain ...</li></ul></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html">Read On &crarr;</a>
-  </footer>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index4.html">&larr; Older</a>
 
@@ -321,19 +380,19 @@ Below is V4  </li>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html">Cookbook-数据结构和算法</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/03/fabric-an-zhuang-salt-minions.html">fabric 安装salt minions</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html">批量修改sql</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/salt.html">salt</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html">oracle 锁</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html">salt安装</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Pandas</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltpei-zhi.html">salt配置</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html">工具</a>
+          <a href="http://www.yilaguan.cc/posts/2016/06/26/cookbook-han-shu.html">Cookbook-函数</a>
       </li>
     </ul>
   </section>
@@ -355,7 +414,7 @@ Below is V4  </li>
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 
