@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>salt default opts &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <meta name="author" content="YiHan">
+
+
+
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="http://www.yilaguan.cc/favicon.png" rel="icon">
+
+  <link href="http://www.yilaguan.cc/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://www.yilaguan.cc/">Yi's Blog  -  Do. Or do not. There is no try</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+</ul>
+
+
+<ul class="main-navigation">
+    <li><a href="/">Home</a></li>
+    <li><a href="/archives.html">Archives</a></li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/java.html">Java</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/linux.html">Linux</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/mysql.html">Mysql</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/python.html">Python</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/reading.html">Reading</a>
+      </li>
+      <li class="active">
+        <a href="http://www.yilaguan.cc/category/salt.html">Salt</a>
+      </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">salt default opts</h1>
+    <p class="meta">
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><p>/u01/github/salt-develop/salt/config/<strong>init</strong>.py </p>
+<div class="highlight"><pre><span></span>_DFLT_LOG_DATEFMT = &#39;%H:%M:%S&#39;
+_DFLT_LOG_DATEFMT_LOGFILE = &#39;%Y-%m-%d %H:%M:%S&#39;
+_DFLT_LOG_FMT_CONSOLE = &#39;[%(levelname)-8s] %(message)s&#39;
+_DFLT_LOG_FMT_LOGFILE = (
+    &#39;%(asctime)s,%(msecs)03d [%(name)-17s][%(levelname)-8s][%(process)d] %(message)s&#39;
+)
+
+if salt.utils.is_windows():
+    # Since an &#39;ipc_mode&#39; of &#39;ipc&#39; will never work on Windows due to lack of
+    # support in ZeroMQ, we want the default to be something that has a
+    # chance of working.
+    _DFLT_IPC_MODE = &#39;tcp&#39;
+    _MASTER_TRIES = -1
+else:
+    _DFLT_IPC_MODE = &#39;ipc&#39;
+    _MASTER_TRIES = 1
+
+FLO_DIR = os.path.join(
+        os.path.dirname(os.path.dirname(__file__)),
+        &#39;daemons&#39;, &#39;flo&#39;)
+
+# default configurations
+DEFAULT_MINION_OPTS = {
+    &#39;interface&#39;: &#39;0.0.0.0&#39;,
+    &#39;master&#39;: &#39;salt&#39;,
+    &#39;master_type&#39;: &#39;str&#39;,
+    &#39;master_uri_format&#39;: &#39;default&#39;,
+    &#39;master_port&#39;: 4506,
+    &#39;master_finger&#39;: &#39;&#39;,
+    &#39;master_shuffle&#39;: False,
+    &#39;master_alive_interval&#39;: 0,
+    &#39;master_failback&#39;: False,
+    &#39;master_failback_interval&#39;: 0,
+    &#39;verify_master_pubkey_sign&#39;: False,
+    &#39;always_verify_signature&#39;: False,
+    &#39;master_sign_key_name&#39;: &#39;master_sign&#39;,
+    &#39;syndic_finger&#39;: &#39;&#39;,
+    &#39;user&#39;: &#39;root&#39;,
+    &#39;root_dir&#39;: salt.syspaths.ROOT_DIR,
+    &#39;pki_dir&#39;: os.path.join(salt.syspaths.CONFIG_DIR, &#39;pki&#39;, &#39;minion&#39;),
+    &#39;id&#39;: &#39;&#39;,
+    &#39;cachedir&#39;: os.path.join(salt.syspaths.CACHE_DIR, &#39;minion&#39;),
+    &#39;cache_jobs&#39;: False,
+    &#39;grains_cache&#39;: False,
+    &#39;grains_cache_expiration&#39;: 300,
+    &#39;grains_deep_merge&#39;: False,
+    &#39;conf_file&#39;: os.path.join(salt.syspaths.CONFIG_DIR, &#39;minion&#39;),
+    &#39;sock_dir&#39;: os.path.join(salt.syspaths.SOCK_DIR, &#39;minion&#39;),
+    &#39;backup_mode&#39;: &#39;&#39;,
+    &#39;renderer&#39;: &#39;yaml_jinja&#39;,
+    &#39;renderer_whitelist&#39;: [],
+    &#39;renderer_blacklist&#39;: [],
+    &#39;failhard&#39;: False,
+    &#39;autoload_dynamic_modules&#39;: True,
+    &#39;environment&#39;: None,
+    &#39;pillarenv&#39;: None,
+    &#39;pillar_opts&#39;: False,
+    # ``pillar_cache``, ``pillar_cache_ttl`` and ``pillar_cache_backend``
+    # are not used on the minion but are unavoidably in the code path
+    &#39;pillar_cache&#39;: False,
+    &#39;pillar_cache_ttl&#39;: 3600,
+    &#39;pillar_cache_backend&#39;: &#39;disk&#39;,
+    &#39;extension_modules&#39;: os.path.join(salt.syspaths.CACHE_DIR, &#39;minion&#39;, &#39;extmods&#39;),
+    &#39;state_top&#39;: &#39;top.sls&#39;,
+    &#39;state_top_saltenv&#39;: None,
+    &#39;startup_states&#39;: &#39;&#39;,
+    &#39;sls_list&#39;: [],
+    &#39;top_file&#39;: &#39;&#39;,
+    &#39;thorium_interval&#39;: 0.5,
+    &#39;thorium_roots&#39;: {
+        &#39;base&#39;: [salt.syspaths.BASE_THORIUM_ROOTS_DIR],
+        },
+    &#39;file_client&#39;: &#39;remote&#39;,
+    &#39;use_master_when_local&#39;: False,
+    &#39;file_roots&#39;: {
+        &#39;base&#39;: [salt.syspaths.BASE_FILE_ROOTS_DIR,
+                 salt.syspaths.SPM_FORMULA_PATH]
+    },
+    &#39;top_file_merging_strategy&#39;: &#39;merge&#39;,
+    &#39;env_order&#39;: [],
+    &#39;default_top&#39;: &#39;base&#39;,
+    &#39;fileserver_limit_traversal&#39;: False,
+    &#39;file_recv&#39;: False,
+    &#39;file_recv_max_size&#39;: 100,
+    &#39;file_ignore_regex&#39;: [],
+    &#39;file_ignore_glob&#39;: [],
+    &#39;fileserver_backend&#39;: [&#39;roots&#39;],
+    &#39;fileserver_followsymlinks&#39;: True,
+    &#39;fileserver_ignoresymlinks&#39;: False,
+    &#39;pillar_roots&#39;: {
+        &#39;base&#39;: [salt.syspaths.BASE_PILLAR_ROOTS_DIR,
+                 salt.syspaths.SPM_PILLAR_PATH]
+    },
+    &#39;git_pillar_base&#39;: &#39;master&#39;,
+    &#39;git_pillar_branch&#39;: &#39;master&#39;,
+    &#39;git_pillar_env&#39;: &#39;&#39;,
+    &#39;git_pillar_root&#39;: &#39;&#39;,
+    &#39;git_pillar_ssl_verify&#39;: True,
+    &#39;git_pillar_global_lock&#39;: True,
+    &#39;git_pillar_user&#39;: &#39;&#39;,
+    &#39;git_pillar_password&#39;: &#39;&#39;,
+    &#39;git_pillar_insecure_auth&#39;: False,
+    &#39;git_pillar_privkey&#39;: &#39;&#39;,
+    &#39;git_pillar_pubkey&#39;: &#39;&#39;,
+    &#39;git_pillar_passphrase&#39;: &#39;&#39;,
+    &#39;gitfs_remotes&#39;: [],
+    &#39;gitfs_mountpoint&#39;: &#39;&#39;,
+    &#39;gitfs_root&#39;: &#39;&#39;,
+    &#39;gitfs_base&#39;: &#39;master&#39;,
+    &#39;gitfs_user&#39;: &#39;&#39;,
+    &#39;gitfs_password&#39;: &#39;&#39;,
+    &#39;gitfs_insecure_auth&#39;: False,
+    &#39;gitfs_privkey&#39;: &#39;&#39;,
+    &#39;gitfs_pubkey&#39;: &#39;&#39;,
+    &#39;gitfs_passphrase&#39;: &#39;&#39;,
+    &#39;gitfs_env_whitelist&#39;: [],
+    &#39;gitfs_env_blacklist&#39;: [],
+    &#39;gitfs_global_lock&#39;: True,
+    &#39;gitfs_ssl_verify&#39;: True,
+    &#39;gitfs_saltenv&#39;: [],
+    &#39;hash_type&#39;: &#39;md5&#39;,
+    &#39;disable_modules&#39;: [],
+    &#39;disable_returners&#39;: [],
+    &#39;whitelist_modules&#39;: [],
+    &#39;module_dirs&#39;: [],
+    &#39;returner_dirs&#39;: [],
+    &#39;grains_dirs&#39;: [],
+    &#39;states_dirs&#39;: [],
+    &#39;render_dirs&#39;: [],
+    &#39;outputter_dirs&#39;: [],
+    &#39;utils_dirs&#39;: [],
+    &#39;providers&#39;: {},
+    &#39;clean_dynamic_modules&#39;: True,
+    &#39;open_mode&#39;: False,
+    &#39;auto_accept&#39;: True,
+    &#39;autosign_timeout&#39;: 120,
+    &#39;multiprocessing&#39;: True,
+    &#39;mine_enabled&#39;: True,
+    &#39;mine_return_job&#39;: False,
+    &#39;mine_interval&#39;: 60,
+    &#39;ipc_mode&#39;: _DFLT_IPC_MODE,
+    &#39;ipv6&#39;: False,
+    &#39;file_buffer_size&#39;: 262144,
+    &#39;tcp_pub_port&#39;: 4510,
+    &#39;tcp_pull_port&#39;: 4511,
+    &#39;log_file&#39;: os.path.join(salt.syspaths.LOGS_DIR, &#39;minion&#39;),
+    &#39;log_level&#39;: &#39;warning&#39;,
+    &#39;log_level_logfile&#39;: None,
+    &#39;log_datefmt&#39;: _DFLT_LOG_DATEFMT,
+    &#39;log_datefmt_logfile&#39;: _DFLT_LOG_DATEFMT_LOGFILE,
+    &#39;log_fmt_console&#39;: _DFLT_LOG_FMT_CONSOLE,
+    &#39;log_fmt_logfile&#39;: _DFLT_LOG_FMT_LOGFILE,
+    &#39;log_granular_levels&#39;: {},
+    &#39;max_event_size&#39;: 1048576,
+    &#39;test&#39;: False,
+    &#39;ext_job_cache&#39;: &#39;&#39;,
+    &#39;cython_enable&#39;: False,
+    &#39;enable_zip_modules&#39;: False,
+    &#39;state_verbose&#39;: True,
+    &#39;state_output&#39;: &#39;full&#39;,
+    &#39;state_output_diff&#39;: False,
+    &#39;state_auto_order&#39;: True,
+    &#39;state_events&#39;: False,
+    &#39;state_aggregate&#39;: False,
+    &#39;acceptance_wait_time&#39;: 10,
+    &#39;acceptance_wait_time_max&#39;: 0,
+    &#39;rejected_retry&#39;: False,
+    &#39;loop_interval&#39;: 1,
+    &#39;verify_env&#39;: True,
+    &#39;grains&#39;: {},
+    &#39;permissive_pki_access&#39;: False,
+    &#39;default_include&#39;: &#39;minion.d/*.conf&#39;,
+    &#39;update_url&#39;: False,
+    &#39;update_restart_services&#39;: [],
+    &#39;retry_dns&#39;: 30,
+    &#39;recon_max&#39;: 10000,
+    &#39;recon_default&#39;: 1000,
+    &#39;recon_randomize&#39;: True,
+    &#39;return_retry_timer&#39;: 5,
+    &#39;return_retry_timer_max&#39;: 10,
+    &#39;random_reauth_delay&#39;: 10,
+    &#39;winrepo_source_dir&#39;: &#39;salt://win/repo-ng/&#39;,
+    &#39;winrepo_dir&#39;: os.path.join(salt.syspaths.BASE_FILE_ROOTS_DIR, &#39;win&#39;, &#39;repo&#39;),
+    &#39;winrepo_dir_ng&#39;: os.path.join(salt.syspaths.BASE_FILE_ROOTS_DIR, &#39;win&#39;, &#39;repo-ng&#39;),
+    &#39;winrepo_cachefile&#39;: &#39;winrepo.p&#39;,
+    &#39;winrepo_remotes&#39;: [&#39;https://github.com/saltstack/salt-winrepo.git&#39;],
+    &#39;winrepo_remotes_ng&#39;: [&#39;https://github.com/saltstack/salt-winrepo-ng.git&#39;],
+    &#39;winrepo_branch&#39;: &#39;master&#39;,
+    &#39;winrepo_ssl_verify&#39;: True,
+    &#39;winrepo_user&#39;: &#39;&#39;,
+    &#39;winrepo_password&#39;: &#39;&#39;,
+    &#39;winrepo_insecure_auth&#39;: False,
+    &#39;winrepo_privkey&#39;: &#39;&#39;,
+    &#39;winrepo_pubkey&#39;: &#39;&#39;,
+    &#39;winrepo_passphrase&#39;: &#39;&#39;,
+    &#39;pidfile&#39;: os.path.join(salt.syspaths.PIDFILE_DIR, &#39;salt-minion.pid&#39;),
+    &#39;range_server&#39;: &#39;range:80&#39;,
+    &#39;reactor_refresh_interval&#39;: 60,
+    &#39;reactor_worker_threads&#39;: 10,
+    &#39;reactor_worker_hwm&#39;: 10000,
+    &#39;engines&#39;: [],
+    &#39;tcp_keepalive&#39;: True,
+    &#39;tcp_keepalive_idle&#39;: 300,
+    &#39;tcp_keepalive_cnt&#39;: -1,
+    &#39;tcp_keepalive_intvl&#39;: -1,
+    &#39;modules_max_memory&#39;: -1,
+    &#39;grains_refresh_every&#39;: 0,
+    &#39;minion_id_caching&#39;: True,
+    &#39;keysize&#39;: 2048,
+    &#39;transport&#39;: &#39;zeromq&#39;,
+    &#39;auth_timeout&#39;: 60,
+    &#39;auth_tries&#39;: 7,
+    &#39;master_tries&#39;: _MASTER_TRIES,
+    &#39;auth_safemode&#39;: False,
+    &#39;random_master&#39;: False,
+    &#39;minion_floscript&#39;: os.path.join(FLO_DIR, &#39;minion.flo&#39;),
+    &#39;caller_floscript&#39;: os.path.join(FLO_DIR, &#39;caller.flo&#39;),
+    &#39;ioflo_verbose&#39;: 0,
+    &#39;ioflo_period&#39;: 0.1,
+    &#39;ioflo_realtime&#39;: True,
+    &#39;ioflo_console_logdir&#39;: &#39;&#39;,
+    &#39;raet_port&#39;: 4510,
+    &#39;raet_alt_port&#39;: 4511,
+    &#39;raet_mutable&#39;: False,
+    &#39;raet_main&#39;: False,
+    &#39;raet_clear_remotes&#39;: True,
+    &#39;raet_clear_remote_masters&#39;: True,
+    &#39;raet_road_bufcnt&#39;: 2,
+    &#39;raet_lane_bufcnt&#39;: 100,
+    &#39;cluster_mode&#39;: False,
+    &#39;cluster_masters&#39;: [],
+    &#39;restart_on_error&#39;: False,
+    &#39;ping_interval&#39;: 0,
+    &#39;username&#39;: None,
+    &#39;password&#39;: None,
+    &#39;zmq_filtering&#39;: False,
+    &#39;zmq_monitor&#39;: False,
+    &#39;cache_sreqs&#39;: True,
+    &#39;cmd_safe&#39;: True,
+    &#39;sudo_user&#39;: &#39;&#39;,
+    &#39;http_request_timeout&#39;: 1 * 60 * 60.0,  # 1 hour
+    &#39;http_max_body&#39;: 100 * 1024 * 1024 * 1024,  # 100GB
+    # ZMQ HWM for SaltEvent pub socket - different for minion vs. master
+    &#39;salt_event_pub_hwm&#39;: 2000,
+    # ZMQ HWM for EventPublisher pub socket - different for minion vs. master
+    &#39;event_publisher_pub_hwm&#39;: 1000,
+    &#39;event_match_type&#39;: &#39;startswith&#39;,
+    &#39;minion_restart_command&#39;: [],
+    &#39;pub_ret&#39;: True,
+    &#39;proxy_host&#39;: &#39;&#39;,
+    &#39;proxy_username&#39;: &#39;&#39;,
+    &#39;proxy_password&#39;: &#39;&#39;,
+    &#39;proxy_port&#39;: 0,
+}
+
+DEFAULT_MASTER_OPTS = {
+    &#39;interface&#39;: &#39;0.0.0.0&#39;,
+    &#39;publish_port&#39;: 4505,
+    &#39;pub_hwm&#39;: 1000,
+    # ZMQ HWM for SaltEvent pub socket - different for minion vs. master
+    &#39;salt_event_pub_hwm&#39;: 2000,
+    # ZMQ HWM for EventPublisher pub socket - different for minion vs. master
+    &#39;event_publisher_pub_hwm&#39;: 1000,
+    &#39;auth_mode&#39;: 1,
+    &#39;user&#39;: &#39;root&#39;,
+    &#39;worker_threads&#39;: 5,
+    &#39;sock_dir&#39;: os.path.join(salt.syspaths.SOCK_DIR, &#39;master&#39;),
+    &#39;ret_port&#39;: 4506,
+    &#39;timeout&#39;: 5,
+    &#39;keep_jobs&#39;: 24,
+    &#39;root_dir&#39;: salt.syspaths.ROOT_DIR,
+    &#39;pki_dir&#39;: os.path.join(salt.syspaths.CONFIG_DIR, &#39;pki&#39;, &#39;master&#39;),
+    &#39;cachedir&#39;: os.path.join(salt.syspaths.CACHE_DIR, &#39;master&#39;),
+    &#39;file_roots&#39;: {
+        &#39;base&#39;: [salt.syspaths.BASE_FILE_ROOTS_DIR,
+                 salt.syspaths.SPM_FORMULA_PATH]
+    },
+    &#39;master_roots&#39;: {
+        &#39;base&#39;: [salt.syspaths.BASE_MASTER_ROOTS_DIR],
+    },
+    &#39;pillar_roots&#39;: {
+        &#39;base&#39;: [salt.syspaths.BASE_PILLAR_ROOTS_DIR,
+                 salt.syspaths.SPM_PILLAR_PATH]
+    },
+    &#39;thorium_interval&#39;: 0.5,
+    &#39;thorium_roots&#39;: {
+        &#39;base&#39;: [salt.syspaths.BASE_THORIUM_ROOTS_DIR],
+        },
+    &#39;top_file_merging_strategy&#39;: &#39;merge&#39;,
+    &#39;env_order&#39;: [],
+    &#39;environment&#39;: None,
+    &#39;default_top&#39;: &#39;base&#39;,
+    &#39;file_client&#39;: &#39;local&#39;,
+    &#39;git_pillar_base&#39;: &#39;master&#39;,
+    &#39;git_pillar_branch&#39;: &#39;master&#39;,
+    &#39;git_pillar_env&#39;: &#39;&#39;,
+    &#39;git_pillar_root&#39;: &#39;&#39;,
+    &#39;git_pillar_ssl_verify&#39;: True,
+    &#39;git_pillar_global_lock&#39;: True,
+    &#39;git_pillar_user&#39;: &#39;&#39;,
+    &#39;git_pillar_password&#39;: &#39;&#39;,
+    &#39;git_pillar_insecure_auth&#39;: False,
+    &#39;git_pillar_privkey&#39;: &#39;&#39;,
+    &#39;git_pillar_pubkey&#39;: &#39;&#39;,
+    &#39;git_pillar_passphrase&#39;: &#39;&#39;,
+    &#39;gitfs_remotes&#39;: [],
+    &#39;gitfs_mountpoint&#39;: &#39;&#39;,
+    &#39;gitfs_root&#39;: &#39;&#39;,
+    &#39;gitfs_base&#39;: &#39;master&#39;,
+    &#39;gitfs_user&#39;: &#39;&#39;,
+    &#39;gitfs_password&#39;: &#39;&#39;,
+    &#39;gitfs_insecure_auth&#39;: False,
+    &#39;gitfs_privkey&#39;: &#39;&#39;,
+    &#39;gitfs_pubkey&#39;: &#39;&#39;,
+    &#39;gitfs_passphrase&#39;: &#39;&#39;,
+    &#39;gitfs_env_whitelist&#39;: [],
+    &#39;gitfs_env_blacklist&#39;: [],
+    &#39;gitfs_global_lock&#39;: True,
+    &#39;gitfs_ssl_verify&#39;: True,
+    &#39;gitfs_saltenv&#39;: [],
+    &#39;hgfs_remotes&#39;: [],
+    &#39;hgfs_mountpoint&#39;: &#39;&#39;,
+    &#39;hgfs_root&#39;: &#39;&#39;,
+    &#39;hgfs_base&#39;: &#39;default&#39;,
+    &#39;hgfs_branch_method&#39;: &#39;branches&#39;,
+    &#39;hgfs_env_whitelist&#39;: [],
+    &#39;hgfs_env_blacklist&#39;: [],
+    &#39;show_timeout&#39;: True,
+    &#39;show_jid&#39;: False,
+    &#39;svnfs_remotes&#39;: [],
+    &#39;svnfs_mountpoint&#39;: &#39;&#39;,
+    &#39;svnfs_root&#39;: &#39;&#39;,
+    &#39;svnfs_trunk&#39;: &#39;trunk&#39;,
+    &#39;svnfs_branches&#39;: &#39;branches&#39;,
+    &#39;svnfs_tags&#39;: &#39;tags&#39;,
+    &#39;svnfs_env_whitelist&#39;: [],
+    &#39;svnfs_env_blacklist&#39;: [],
+    &#39;max_event_size&#39;: 1048576,
+    &#39;minionfs_env&#39;: &#39;base&#39;,
+    &#39;minionfs_mountpoint&#39;: &#39;&#39;,
+    &#39;minionfs_whitelist&#39;: [],
+    &#39;minionfs_blacklist&#39;: [],
+    &#39;ext_pillar&#39;: [],
+    &#39;pillar_version&#39;: 2,
+    &#39;pillar_opts&#39;: False,
+    &#39;pillar_safe_render_error&#39;: True,
+    &#39;pillar_source_merging_strategy&#39;: &#39;smart&#39;,
+    &#39;pillar_merge_lists&#39;: False,
+    &#39;pillar_cache&#39;: False,
+    &#39;pillar_cache_ttl&#39;: 3600,
+    &#39;pillar_cache_backend&#39;: &#39;disk&#39;,
+    &#39;ping_on_rotate&#39;: False,
+    &#39;peer&#39;: {},
+    &#39;preserve_minion_cache&#39;: False,
+    &#39;syndic_master&#39;: &#39;&#39;,
+    &#39;syndic_failover&#39;: &#39;random&#39;,
+    &#39;syndic_log_file&#39;: os.path.join(salt.syspaths.LOGS_DIR, &#39;syndic&#39;),
+    &#39;syndic_pidfile&#39;: os.path.join(salt.syspaths.PIDFILE_DIR, &#39;salt-syndic.pid&#39;),
+    &#39;runner_dirs&#39;: [],
+    &#39;outputter_dirs&#39;: [],
+    &#39;client_acl&#39;: {},
+    &#39;client_acl_blacklist&#39;: {},
+    &#39;publisher_acl&#39;: {},
+    &#39;publisher_acl_blacklist&#39;: {},
+    &#39;sudo_acl&#39;: False,
+    &#39;external_auth&#39;: {},
+    &#39;token_expire&#39;: 43200,
+    &#39;token_expire_user_override&#39;: False,
+    &#39;extension_modules&#39;: os.path.join(salt.syspaths.CACHE_DIR, &#39;master&#39;, &#39;extmods&#39;),
+    &#39;file_recv&#39;: False,
+    &#39;file_recv_max_size&#39;: 100,
+    &#39;file_buffer_size&#39;: 1048576,
+    &#39;file_ignore_regex&#39;: [],
+    &#39;file_ignore_glob&#39;: [],
+    &#39;fileserver_backend&#39;: [&#39;roots&#39;],
+    &#39;fileserver_followsymlinks&#39;: True,
+    &#39;fileserver_ignoresymlinks&#39;: False,
+    &#39;fileserver_limit_traversal&#39;: False,
+    &#39;max_open_files&#39;: 100000,
+    &#39;hash_type&#39;: &#39;md5&#39;,
+    &#39;conf_file&#39;: os.path.join(salt.syspaths.CONFIG_DIR, &#39;master&#39;),
+    &#39;open_mode&#39;: False,
+    &#39;auto_accept&#39;: False,
+    &#39;renderer&#39;: &#39;yaml_jinja&#39;,
+    &#39;renderer_whitelist&#39;: [],
+    &#39;renderer_blacklist&#39;: [],
+    &#39;failhard&#39;: False,
+    &#39;state_top&#39;: &#39;top.sls&#39;,
+    &#39;state_top_saltenv&#39;: None,
+    &#39;master_tops&#39;: {},
+    &#39;order_masters&#39;: False,
+    &#39;job_cache&#39;: True,
+    &#39;ext_job_cache&#39;: &#39;&#39;,
+    &#39;master_job_cache&#39;: &#39;local_cache&#39;,
+    &#39;job_cache_store_endtime&#39;: False,
+    &#39;minion_data_cache&#39;: True,
+    &#39;enforce_mine_cache&#39;: False,
+    &#39;ipc_mode&#39;: _DFLT_IPC_MODE,
+    &#39;ipv6&#39;: False,
+    &#39;tcp_master_pub_port&#39;: 4512,
+    &#39;tcp_master_pull_port&#39;: 4513,
+    &#39;tcp_master_publish_pull&#39;: 4514,
+    &#39;tcp_master_workers&#39;: 4515,
+    &#39;log_file&#39;: os.path.join(salt.syspaths.LOGS_DIR, &#39;master&#39;),
+    &#39;log_level&#39;: &#39;warning&#39;,
+    &#39;log_level_logfile&#39;: None,
+    &#39;log_datefmt&#39;: _DFLT_LOG_DATEFMT,
+    &#39;log_datefmt_logfile&#39;: _DFLT_LOG_DATEFMT_LOGFILE,
+    &#39;log_fmt_console&#39;: _DFLT_LOG_FMT_CONSOLE,
+    &#39;log_fmt_logfile&#39;: _DFLT_LOG_FMT_LOGFILE,
+    &#39;log_granular_levels&#39;: {},
+    &#39;pidfile&#39;: os.path.join(salt.syspaths.PIDFILE_DIR, &#39;salt-master.pid&#39;),
+    &#39;publish_session&#39;: 86400,
+    &#39;range_server&#39;: &#39;range:80&#39;,
+    &#39;reactor&#39;: [],
+    &#39;reactor_refresh_interval&#39;: 60,
+    &#39;reactor_worker_threads&#39;: 10,
+    &#39;reactor_worker_hwm&#39;: 10000,
+    &#39;engines&#39;: [],
+    &#39;event_return&#39;: &#39;&#39;,
+    &#39;event_return_queue&#39;: 0,
+    &#39;event_return_whitelist&#39;: [],
+    &#39;event_return_blacklist&#39;: [],
+    &#39;event_match_type&#39;: &#39;startswith&#39;,
+    &#39;serial&#39;: &#39;msgpack&#39;,
+    &#39;state_verbose&#39;: True,
+    &#39;state_output&#39;: &#39;full&#39;,
+    &#39;state_output_diff&#39;: False,
+    &#39;state_auto_order&#39;: True,
+    &#39;state_events&#39;: False,
+    &#39;state_aggregate&#39;: False,
+    &#39;search&#39;: &#39;&#39;,
+    &#39;search_index_interval&#39;: 3600,
+    &#39;loop_interval&#39;: 60,
+    &#39;nodegroups&#39;: {},
+    &#39;ssh_list_nodegroups&#39;: {},
+    &#39;ssh_use_home_key&#39;: False,
+    &#39;cython_enable&#39;: False,
+    &#39;enable_gpu_grains&#39;: False,
+    # XXX: Remove &#39;key_logfile&#39; support in 2014.1.0
+    &#39;key_logfile&#39;: os.path.join(salt.syspaths.LOGS_DIR, &#39;key&#39;),
+    &#39;verify_env&#39;: True,
+    &#39;permissive_pki_access&#39;: False,
+    &#39;default_include&#39;: &#39;master.d/*.conf&#39;,
+    &#39;winrepo_dir&#39;: os.path.join(salt.syspaths.BASE_FILE_ROOTS_DIR, &#39;win&#39;, &#39;repo&#39;),
+    &#39;winrepo_dir_ng&#39;: os.path.join(salt.syspaths.BASE_FILE_ROOTS_DIR, &#39;win&#39;, &#39;repo-ng&#39;),
+    &#39;winrepo_cachefile&#39;: &#39;winrepo.p&#39;,
+    &#39;winrepo_remotes&#39;: [&#39;https://github.com/saltstack/salt-winrepo.git&#39;],
+    &#39;winrepo_remotes_ng&#39;: [&#39;https://github.com/saltstack/salt-winrepo-ng.git&#39;],
+    &#39;winrepo_branch&#39;: &#39;master&#39;,
+    &#39;winrepo_ssl_verify&#39;: True,
+    &#39;winrepo_user&#39;: &#39;&#39;,
+    &#39;winrepo_password&#39;: &#39;&#39;,
+    &#39;winrepo_insecure_auth&#39;: False,
+    &#39;winrepo_privkey&#39;: &#39;&#39;,
+    &#39;winrepo_pubkey&#39;: &#39;&#39;,
+    &#39;winrepo_passphrase&#39;: &#39;&#39;,
+    &#39;syndic_wait&#39;: 5,
+    &#39;jinja_lstrip_blocks&#39;: False,
+    &#39;jinja_trim_blocks&#39;: False,
+    &#39;tcp_keepalive&#39;: True,
+    &#39;tcp_keepalive_idle&#39;: 300,
+    &#39;tcp_keepalive_cnt&#39;: -1,
+    &#39;tcp_keepalive_intvl&#39;: -1,
+    &#39;sign_pub_messages&#39;: False,
+    &#39;keysize&#39;: 2048,
+    &#39;transport&#39;: &#39;zeromq&#39;,
+    &#39;gather_job_timeout&#39;: 10,
+    &#39;syndic_event_forward_timeout&#39;: 0.5,
+    &#39;syndic_jid_forward_cache_hwm&#39;: 100,
+    &#39;ssh_passwd&#39;: &#39;&#39;,
+    &#39;ssh_port&#39;: &#39;22&#39;,
+    &#39;ssh_sudo&#39;: False,
+    &#39;ssh_timeout&#39;: 60,
+    &#39;ssh_user&#39;: &#39;root&#39;,
+    &#39;ssh_scan_ports&#39;: &#39;22&#39;,
+    &#39;ssh_scan_timeout&#39;: 0.01,
+    &#39;ssh_identities_only&#39;: False,
+    &#39;master_floscript&#39;: os.path.join(FLO_DIR, &#39;master.flo&#39;),
+    &#39;worker_floscript&#39;: os.path.join(FLO_DIR, &#39;worker.flo&#39;),
+    &#39;maintenance_floscript&#39;: os.path.join(FLO_DIR, &#39;maint.flo&#39;),
+    &#39;ioflo_verbose&#39;: 0,
+    &#39;ioflo_period&#39;: 0.01,
+    &#39;ioflo_realtime&#39;: True,
+    &#39;ioflo_console_logdir&#39;: &#39;&#39;,
+    &#39;raet_port&#39;: 4506,
+    &#39;raet_alt_port&#39;: 4511,
+    &#39;raet_mutable&#39;: False,
+    &#39;raet_main&#39;: True,
+    &#39;raet_clear_remotes&#39;: False,
+    &#39;raet_clear_remote_masters&#39;: True,
+    &#39;raet_road_bufcnt&#39;: 2,
+    &#39;raet_lane_bufcnt&#39;: 100,
+    &#39;cluster_mode&#39;: False,
+    &#39;cluster_masters&#39;: [],
+    &#39;sqlite_queue_dir&#39;: os.path.join(salt.syspaths.CACHE_DIR, &#39;master&#39;, &#39;queues&#39;),
+    &#39;queue_dirs&#39;: [],
+    &#39;cli_summary&#39;: False,
+    &#39;max_minions&#39;: 0,
+    &#39;master_sign_key_name&#39;: &#39;master_sign&#39;,
+    &#39;master_sign_pubkey&#39;: False,
+    &#39;master_pubkey_signature&#39;: &#39;master_pubkey_signature&#39;,
+    &#39;master_use_pubkey_signature&#39;: False,
+    &#39;zmq_filtering&#39;: False,
+    &#39;zmq_monitor&#39;: False,
+    &#39;con_cache&#39;: False,
+    &#39;rotate_aes_key&#39;: True,
+    &#39;cache_sreqs&#39;: True,
+    &#39;dummy_pub&#39;: False,
+    &#39;http_request_timeout&#39;: 1 * 60 * 60.0,  # 1 hour
+    &#39;http_max_body&#39;: 100 * 1024 * 1024 * 1024,  # 100GB
+    &#39;python2_bin&#39;: &#39;python2&#39;,
+    &#39;python3_bin&#39;: &#39;python3&#39;,
+}
+
+# ----- Salt Proxy Minion Configuration Defaults -----------------------------------&gt;
+# Note that proxies use the same config path as regular minions.  DEFAULT_MINION_OPTS
+# is loaded first, then if we are setting up a proxy, the config is overwritten with
+# these settings.
+DEFAULT_PROXY_MINION_OPTS = {
+    &#39;conf_file&#39;: os.path.join(salt.syspaths.CONFIG_DIR, &#39;proxy&#39;),
+    &#39;log_file&#39;: os.path.join(salt.syspaths.LOGS_DIR, &#39;proxy&#39;),
+    &#39;add_proxymodule_to_opts&#39;: False,
+    &#39;proxy_merge_grains_in_module&#39;: False,
+    &#39;default_include&#39;: &#39;proxy.d/*.conf&#39;,
+}
+
+# ----- Salt Cloud Configuration Defaults -----------------------------------&gt;
+CLOUD_CONFIG_DEFAULTS = {
+    &#39;verify_env&#39;: True,
+    &#39;default_include&#39;: &#39;cloud.conf.d/*.conf&#39;,
+    # Global defaults
+    &#39;ssh_auth&#39;: &#39;&#39;,
+    &#39;keysize&#39;: 4096,
+    &#39;os&#39;: &#39;&#39;,
+    &#39;script&#39;: &#39;bootstrap-salt&#39;,
+    &#39;start_action&#39;: None,
+    &#39;enable_hard_maps&#39;: False,
+    &#39;delete_sshkeys&#39;: False,
+    # Custom deploy scripts
+    &#39;deploy_scripts_search_path&#39;: &#39;cloud.deploy.d&#39;,
+    # Logging defaults
+    &#39;log_file&#39;: os.path.join(salt.syspaths.LOGS_DIR, &#39;cloud&#39;),
+    &#39;log_level&#39;: &#39;warning&#39;,
+    &#39;log_level_logfile&#39;: None,
+    &#39;log_datefmt&#39;: _DFLT_LOG_DATEFMT,
+    &#39;log_datefmt_logfile&#39;: _DFLT_LOG_DATEFMT_LOGFILE,
+    &#39;log_fmt_console&#39;: _DFLT_LOG_FMT_CONSOLE,
+    &#39;log_fmt_logfile&#39;: _DFLT_LOG_FMT_LOGFILE,
+    &#39;log_granular_levels&#39;: {},
+    &#39;bootstrap_delay&#39;: None,
+}
+
+DEFAULT_API_OPTS = {
+    # ----- Salt master settings overridden by Salt-API ---------------------&gt;
+    &#39;pidfile&#39;: &#39;/var/run/salt-api.pid&#39;,
+    &#39;logfile&#39;: &#39;/var/log/salt/api&#39;,
+    &#39;rest_timeout&#39;: 300,
+    # &lt;---- Salt master settings overridden by Salt-API ----------------------
+}
+
+DEFAULT_SPM_OPTS = {
+    # ----- Salt master settings overridden by SPM ---------------------&gt;
+    &#39;spm_conf_file&#39;: os.path.join(salt.syspaths.CONFIG_DIR, &#39;spm&#39;),
+    &#39;formula_path&#39;: &#39;/srv/spm/salt&#39;,
+    &#39;pillar_path&#39;: &#39;/srv/spm/pillar&#39;,
+    &#39;reactor_path&#39;: &#39;/srv/spm/reactor&#39;,
+    &#39;spm_logfile&#39;: &#39;/var/log/salt/spm&#39;,
+    &#39;spm_default_include&#39;: &#39;spm.d/*.conf&#39;,
+    # spm_repos_config also includes a .d/ directory
+    &#39;spm_repos_config&#39;: &#39;/etc/salt/spm.repos&#39;,
+    &#39;spm_cache_dir&#39;: os.path.join(salt.syspaths.CACHE_DIR, &#39;spm&#39;),
+    &#39;spm_build_dir&#39;: &#39;/srv/spm_build&#39;,
+    &#39;spm_build_exclude&#39;: [&#39;CVS&#39;, &#39;.hg&#39;, &#39;.git&#39;, &#39;.svn&#39;],
+    &#39;spm_db&#39;: os.path.join(salt.syspaths.CACHE_DIR, &#39;spm&#39;, &#39;packages.db&#39;),
+    # &lt;---- Salt master settings overridden by SPM ----------------------
+}
+
+VM_CONFIG_DEFAULTS = {
+    &#39;default_include&#39;: &#39;cloud.profiles.d/*.conf&#39;,
+}
+
+PROVIDER_CONFIG_DEFAULTS = {
+    &#39;default_include&#39;: &#39;cloud.providers.d/*.conf&#39;,
+}
+</pre></div></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">
+        YiHan
+    </span>
+  </span>
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/salt.html'>salt</a>
+  </span>
+  <span class="categories">
+    <a class="category" href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </span>
+</p><div class="sharing">
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">跟着salt学单例模式</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">salt valid opts</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
+        <li><a href="http://www.yilaguan.cc/category/documents.html">Documents</a></li>
+        <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
+        <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
+        <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
+        <li><a href="http://www.yilaguan.cc/category/mysql.html">mysql</a></li>
+        <li><a href="http://www.yilaguan.cc/category/python.html">python</a></li>
+        <li><a href="http://www.yilaguan.cc/category/reading.html">Reading</a></li>
+        <li><a href="http://www.yilaguan.cc/category/salt.html">salt</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://www.yilaguan.cc/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'cooleasyhan',
+              count: 5,
+              skip_forks: false,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://www.yilaguan.cc/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="http://cooleasyhan.github.io" target="_blank">github 个人页</a></li>
+        </ul>
+    </section>
+    <section>
+        <h1>Blogroll</h1>
+        <ul>
+            <li><a href="https://rhettinger.wordpress.com/" target="_blank">rhettinger</a></li>
+            <li><a href="http://www.dongwm.com/" target="_blank">小明明</a></li>
+            <li><a href="http://www.keakon.net/" target="_blank">keakon的涂鸦馆</a></li>
+            <li><a href="http://zheng-ji.info/" target="_blank">织网</a></li>
+        </ul>
+    </section>
+
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+  <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/ender.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var disqus_shortname = 'yilaguan';
+    var disqus_identifier = '/posts/2016/08/10/salt-default-opts.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html';
+    var disqus_title = 'salt default opts';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+  </script>
+</body>
+</html>

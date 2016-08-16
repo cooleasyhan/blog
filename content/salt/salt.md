@@ -50,6 +50,20 @@ include:
             - export ABC=abc
 ```
 
+
+## file.recurse
+file_rsync:   
+   file.recurse:   
+     - source: salt://tools   
+     - name: /home/tools   
+     - user: nobody   
+     - group: nobody   
+     - dir_mode: 755   
+     - file_mode: 644   
+     - makedirs: True   
+     - backup: minion   
+     - include_enpty: True 
+
 ## file.managed
 ```
     file.managed:

@@ -62,10 +62,171 @@
       <li >
         <a href="http://www.yilaguan.cc/category/reading.html">Reading</a>
       </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/salt.html">Salt</a>
+      </li>
 </ul></nav>
   <div id="main">
     <div id="content">
 <div class="blog-index">
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-08-12T00:00:00+08:00" pubdate>Fri 12 August 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>/u01/github/salt-develop/salt/transport/zeromq.py : class AsyncZeroMQReqChannel</h2>
+<p>这是ZEROMQ的一个底层封装程序,实现了单例模式,ZEROMQ REQ/REP 模式中的 REQ send 方法, REQ/REP 是一个低效的,类似于socket 的通讯模式, 发起一次REQ,等待一个REP,
+不会进行多次消息交互,给salt用还是挺合理的,发送一个命令给minion, minion 返回一个执行结果。 原始的REQ/REP不支持异步,通过使用tornado实现异步操作。</p>
+<h3>单例:</h3>
+<p>首先是根据 io_loop, io_loop如果为空,则使用zmq自带的tornado, ioloop</p>
+<div class="highlight"><pre><span></span><span class="n">io_loop</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;io_loop&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">zmq</span><span class="o">.</span><span class="n">eventloop</span><span class="o">.</span><span class="n">ioloop ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">跟着salt学单例模式</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><p>/u01/github/salt-develop/salt/transport/zeromq.py 里使用了单例模式, 写了一个模板类, 需要使用时直接修改添加方法就好了。</p>
+<p>单例模式一般离不开6个方面的内容, 存储, 创建实例, 获取唯一key, 初始化(一般为空), 单例初始化操作,  删除</p>
+<div class="highlight"><pre><span></span><span class="c1"># coding=utf-8</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">SingletonClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1"># 使用weakref.WeakKeyDictionary来存储实例,weakref 中的item会在没有其他引用时被删除,GOOD</span>
+    <span class="n">instance_map</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Only create one instance of channel ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><p>/u01/github/salt-develop/salt/config/<strong>init</strong>.py </p>
+<div class="highlight"><pre><span></span>_DFLT_LOG_DATEFMT = &#39;%H:%M:%S&#39;
+_DFLT_LOG_DATEFMT_LOGFILE = &#39;%Y-%m-%d %H:%M:%S&#39;
+_DFLT_LOG_FMT_CONSOLE = &#39;[%(levelname)-8s] %(message)s&#39;
+_DFLT_LOG_FMT_LOGFILE = (
+    &#39;%(asctime)s,%(msecs)03d [%(name)-17s][%(levelname)-8s][%(process)d] %(message)s&#39;
+)
+
+if salt.utils.is_windows():
+    # Since an &#39;ipc_mode&#39; of &#39;ipc&#39; will never work on Windows ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><p>salt 源码点滴记录</p>
+<h2>最简单的操作LocalClient</h2>
+<p>想看看salt的源码, 从最简单的操作开始。 其实restful api, 命令行,还是python api,都殊途同归,最后也会到达salt.client, 只是入口不一样, restful API入口是 salt.netapi,
+而命令行的入口是 salt.cli。 </p>
+<div class="highlight"><pre><span></span># 变更虚拟环境
+source /u01/virtualenv/salt/bin/activate
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">salt.client</span>
+
+<span class="n">local</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">LocalClient</span><span class="p">()</span>
+<span class="n">local</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;test.fib&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+
+
+<h2>/u01/github/salt-develop/salt/client/<strong>init</strong>.py : class LocalClient</h2>
+<h3><strong>init ...</strong></h3></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">salt valid opts</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><p>/u01/github/salt-develop/salt/config/<strong>init</strong>.py </p>
+<div class="highlight"><pre><span></span><span class="n">VALID_OPTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># The address of the salt master. May be specified as IP address or hostname</span>
+    <span class="s1">&#39;master&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">string_types</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span>
+
+    <span class="c1"># The TCP/UDP port of the master to connect to in order to listen to publications</span>
+    <span class="s1">&#39;master_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+
+    <span class="c1"># The behaviour of the minion when connecting ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/08/08/tornado-test.html">Tornado Test</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-08-08T00:00:00+08:00" pubdate>Mon 08 August 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><p>看salt源码,发现用了一些tornado的异步编程, 写了点测试代码。</p>
+<h3>首先熟悉下简单的yield send, 通过send发送数据至生成器。</h3>
+<div class="highlight"><pre><span></span>In [16]: def test_yield():
+   ....:         print &quot;test yeild&quot;
+   ....:         says = yield
+   ....:         print says
+   ....:
+
+In [17]: y = test_yield()
+
+In [18]: y.next()
+test yeild
+
+In [19]: y.send(&#39;a&#39;)
+a
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+&lt;ipython-input-19-cf1d6ef756f2&gt; in &lt;module&gt;()
+----&gt; 1 y.send(&#39;a&#39;)
+
+StopIteration:
+</pre></div></div>
+  		</article>
   		<article>
 <header>
       <h1 class="entry-title">
@@ -258,219 +419,6 @@ pillar_roots:
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/01/saltpei-zhi.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2016/06/26/cookbook-han-shu.html">Cookbook-函数</a>
-      </h1>
-    <p class="meta">
-<time datetime="2016-06-26T00:00:00+08:00" pubdate>Sun 26 June 2016</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>7.1 编写可接受任何参数的函数</h2>
-<p><em>args, </em>*kwargs<br />
-args 只能是最后一个位置参数。</p>
-<div class="highlight"><pre><span></span>def fun(x, *args, y, **kwargs):
-    &#39;&#39;&#39;
-    y 是keyword参数
-    &#39;&#39;&#39;
-    pass
-</pre></div>
-
-
-<h2>7.2 只接受关键字参数</h2>
-<div class="highlight"><pre><span></span>def fun(x, *, block):
-    &#39;&#39;&#39;
-    y 是keyword参数
-    &#39;&#39;&#39;
-    pass
-
-fun(x, block=True)
-fun(x, True) # TypeError
-</pre></div>
-
-
-<h2>7.3 设置元数据类型</h2>
-<div class="highlight"><pre><span></span>def fun(x:int, *, block:boolean) -&gt; int:
-    &#39;&#39;&#39;
-    y 是keyword参数
-    &#39;&#39;&#39;
-    pass
-
-fun(x, block ...</pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/06/26/cookbook-han-shu.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2016/06/22/mysql_skip.html">主从同步</a>
-      </h1>
-    <p class="meta">
-<time datetime="2016-06-22T00:00:00+08:00" pubdate>Wed 22 June 2016</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>主从同步处理</h2>
-<p>最近mysql 主从经常出现不同步的情况。 <br />
-1. 从库开发修改,有同学上从库改表造成不同步。 <br />
-    处理: 从库设置为只读 <br />
-2. 主从同步hung住, 显示如下, 线程状态显示OK, 但是Seconds Behind Master 值非常大。  </p>
-<div class="highlight"><pre><span></span><span class="n">Slave_IO_Running</span><span class="o">:</span> <span class="n">Yes</span>
-<span class="n">Slave_SQL_Running</span><span class="o">:</span> <span class="n">Yes</span>
-<span class="n">Seconds_Behind_Master</span><span class="o">:</span> <span class="mi">9999</span>
-
-<span class="err">#</span> <span class="err">处理</span><span class="o">:</span>  
-<span class="n">stop</span> <span class="n">slave</span><span class="o">;</span> <span class="o">--</span><span class="err">等待时间可达数分钟</span>
-<span class="n">start</span> <span class="n">slave</span><span class="o">;</span>
-</pre></div>
-
-
-<ol>
-<li>启用了gtid的主从同步,skip操作</li>
-</ol>
-<p>获取当前 处理到的Executed_Gtid_Set, 下面最后处理的gtid 为: dcbfbf7e-e05a-11e5-8160-6c92bf225ad1:129985921</p>
-<div class="highlight"><pre><span></span><span class="n">Retrieved_Gtid_Set</span><span class="o">:</span> <span class="n">dcbfbf7e</span><span class="o">-</span><span class="n">e05a</span><span class="o">-</span><span class="mi">11</span><span class="n">e5</span><span class="o">-</span><span class="mi">8160</span><span class="o">-</span><span class="mi">6</span><span class="n">c92bf225ad1</span><span class="o">:</span><span class="mi">16700783</span><span class="o">-</span><span class="mi">129985931</span>
-<span class="n">Executed_Gtid_Set</span><span class="o">:</span> <span class="n">dc24de6f</span><span class="o">-</span><span class="mi">2969</span><span class="o">-</span><span class="mi">11 ...</span></pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/06/22/mysql_skip.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html">Cookbook-数据结构和算法</a>
-      </h1>
-    <p class="meta">
-<time datetime="2016-06-11T00:00:00+08:00" pubdate>Sat 11 June 2016</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>1.1 序列分解</h2>
-<p>_, x, y = (3, 4, 5)</p>
-<p>x, *y, z = (3, 4, 5, 6)</p>
-<p>x, *_, z = (3, 4, 5, 6, 7)</p>
-<h2>1.2 collection</h2>
-<h3>1.2.1 collection.deque</h3>
-<p>deque: 保留历史记录<br />
-deque(maxlen=5)</p>
-<h3>1.2.2 collection.defaultdict</h3>
-<p>一个key对应多个值  </p>
-<h3>1.2.3 collection.orderdict</h3>
-<p>按照添加顺序排序 </p>
-<h3>1 ...</h3></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/06/11/cookbook-shu-ju-jie-gou-he-suan-fa.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html">批量修改sql</a>
-      </h1>
-    <p class="meta">
-<time datetime="2016-04-22T00:00:00+08:00" pubdate>Fri 22 April 2016</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>Mysql 批量修改view 的definer</h2>
-<div class="highlight"><pre><span></span>select concat(&quot;alter DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW &quot;,
-    TABLE_SCHEMA,
-    &quot;.&quot;,
-    TABLE_NAME,
-    &quot; as &quot;
-    ,VIEW_DEFINITION,
-    &quot;;&quot;) 
- from information_schema.VIEWS 
-where table_schema &lt;&gt; &#39;sys&#39;  ORDER BY 1 ASC;
-</pre></div>
-
-
-<h2>批量修改table engine</h2>
-<div class="highlight"><pre><span></span>SELECT  CONCAT(&#39;ALTER TABLE `&#39;,table_schema,
-    &#39;`.`&#39;,
-    table_name,
-    &#39;` ENGINE=InnoDB;&#39;) AS sql_statements
- FROM    information_schema.tables AS tb
-WHERE   `ENGINE` = &#39;MyISAM&#39;
-  AND     `TABLE_TYPE` = &#39;BASE ...</pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html">oracle 锁</a>
-      </h1>
-    <p class="meta">
-<time datetime="2016-04-22T00:00:00+08:00" pubdate>Fri 22 April 2016</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>oracle查询锁</h2>
-<div class="highlight"><pre><span></span><span class="x">SELECT Obj.Owner,</span>
-<span class="x">       Obj.Object_Id,</span>
-<span class="x">       Obj.Object_Name,</span>
-<span class="x">       Lo.Locked_Mode,</span>
-<span class="x">       s.Sid,</span>
-<span class="x">       s.Serial</span><span class="err">#</span><span class="x">,</span>
-<span class="x">       s.Username,</span>
-<span class="x">       s.Machine,</span>
-<span class="x">       s.Terminal,</span>
-<span class="x">       s.Program,</span>
-<span class="x">       s.Client_Identifier,</span>
-<span class="x">       s.Module,</span>
-<span class="x">       s.Action,</span>
-<span class="x">       s.Row_Wait_Obj</span><span class="err">#</span><span class="x">,</span>
-<span class="x">       s.Row_Wait_File</span><span class="err">#</span><span class="x">,</span>
-<span class="x">       s.Row_Wait_Block</span><span class="err">#</span><span class="x">,</span>
-<span class="x">       s.Row_Wait_Row</span><span class="err">#</span><span class="x">,</span>
-<span class="x">       CASE</span>
-<span class="x">         WHEN l.Request &lt;&gt; 0 THEN</span>
-<span class="x">          Dbms_Rowid.Rowid_Create(1,</span>
-<span class="x">                                  Row_Wait_Obj</span><span class="err">#</span><span class="x">,</span>
-<span class="x">                                  Row_Wait_File</span><span class="err">#</span><span class="x">,</span>
-<span class="x">                                  Row_Wait_Block</span><span class="err">#</span><span class="x">,</span>
-<span class="x">                                  Row_Wait_Row</span><span class="err">#</span><span class="x">)</span>
-<span class="x">         ELSE ...</span></pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Pandas</a>
-      </h1>
-    <p class="meta">
-<time datetime="2016-03-20T00:00:00+08:00" pubdate>Sun 20 March 2016</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>简单操作</h2>
-<div class="highlight"><pre><span></span># 设置索引
-basic = basic.set_index(&#39;code&#39;)
-
-#左连接
-rst = basic.join(max, how=&#39;left&#39;)
-
-#多次左连接，设置右边前缀
-rst = rst.join(min, how=&#39;left&#39;, rsuffix=&#39;min&#39;)
-
-#简单计算
-rst[&#39;grow&#39;] = rst[&#39;high&#39;] / rst[&#39;lowmin&#39;]
-
-#四舍五入
-rst[&#39;round_grow&#39;] = rst[&#39;grow&#39;].apply(numpy.round)
-
-# 选择列
-rst = rst[[&#39;name&#39;, &#39;grow&#39;,&#39;round_grow&#39;]]
-
-#排序
-rst = rst.sort_values(&#39;grow&#39;)
-
-#to_csv ...</pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Read On &crarr;</a>
-  </footer>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index2.html">&larr; Older</a>
 
@@ -481,19 +429,19 @@ rst = rst.sort_values(&#39;grow&#39;)
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/03/fabric-an-zhuang-salt-minions.html">fabric 安装salt minions</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/01/salt.html">salt</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">跟着salt学单例模式</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html">salt安装</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/01/saltpei-zhi.html">salt配置</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/06/26/cookbook-han-shu.html">Cookbook-函数</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">salt valid opts</a>
       </li>
     </ul>
   </section>
@@ -509,13 +457,14 @@ rst = rst.sort_values(&#39;grow&#39;)
         <li><a href="http://www.yilaguan.cc/category/mysql.html">mysql</a></li>
         <li><a href="http://www.yilaguan.cc/category/python.html">python</a></li>
         <li><a href="http://www.yilaguan.cc/category/reading.html">Reading</a></li>
+        <li><a href="http://www.yilaguan.cc/category/salt.html">salt</a></li>
     </ul>
   </section>
  
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

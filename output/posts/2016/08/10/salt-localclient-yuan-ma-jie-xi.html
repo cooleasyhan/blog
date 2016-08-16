@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>salt - LocalClient 源码解析 &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <meta name="author" content="YiHan">
+
+
+
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="http://www.yilaguan.cc/favicon.png" rel="icon">
+
+  <link href="http://www.yilaguan.cc/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://www.yilaguan.cc/">Yi's Blog  -  Do. Or do not. There is no try</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+</ul>
+
+
+<ul class="main-navigation">
+    <li><a href="/">Home</a></li>
+    <li><a href="/archives.html">Archives</a></li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/java.html">Java</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/linux.html">Linux</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/mysql.html">Mysql</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/python.html">Python</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/reading.html">Reading</a>
+      </li>
+      <li class="active">
+        <a href="http://www.yilaguan.cc/category/salt.html">Salt</a>
+      </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">salt - LocalClient 源码解析</h1>
+    <p class="meta">
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><p>salt 源码点滴记录</p>
+<h2>最简单的操作LocalClient</h2>
+<p>想看看salt的源码, 从最简单的操作开始。 其实restful api, 命令行,还是python api,都殊途同归,最后也会到达salt.client, 只是入口不一样, restful API入口是 salt.netapi,
+而命令行的入口是 salt.cli。 </p>
+<div class="highlight"><pre><span></span># 变更虚拟环境
+source /u01/virtualenv/salt/bin/activate
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">salt.client</span>
+
+<span class="n">local</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">LocalClient</span><span class="p">()</span>
+<span class="n">local</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;test.fib&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+
+
+<h2>/u01/github/salt-develop/salt/client/<strong>init</strong>.py : class LocalClient</h2>
+<h3><strong>init</strong>()</h3>
+<p>主要初始化了上下文, 然后啥也没干,细节先TODO,后续再补</p>
+<div class="highlight"><pre><span></span><span class="c1"># c_path: 主要是master配置文件所在,一般是/etc/salt/master ,一般不填</span>
+<span class="c1"># mopts: 如果有值,则忽略c_path ,这两个参数主要是搞定 self.opts</span>
+<span class="c1"># skip_perm_errors: 权限校验 TODO</span>
+<span class="c1"># io_loop: TODO</span>
+<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">c_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">syspaths</span><span class="o">.</span><span class="n">CONFIG_DIR</span><span class="p">,</span> <span class="s1">&#39;master&#39;</span><span class="p">),</span>
+                 <span class="n">mopts</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">skip_perm_errors</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                 <span class="n">io_loop</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="c1"># self.opts 所有的配置项</span>
+        <span class="k">if</span> <span class="n">mopts</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opts</span> <span class="o">=</span> <span class="n">mopts</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">c_path</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s1">&#39;{0} expects a file path not a directory path({1}) to &#39;</span>
+                    <span class="s1">&#39;it</span><span class="se">\&#39;</span><span class="s1">s </span><span class="se">\&#39;</span><span class="s1">c_path</span><span class="se">\&#39;</span><span class="s1"> keyword argument&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">c_path</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opts</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">client_config</span><span class="p">(</span><span class="n">c_path</span><span class="p">)</span>
+
+        <span class="c1"># 其他细节 TODO</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serial</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">salt_user</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_specific_user</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_perm_errors</span> <span class="o">=</span> <span class="n">skip_perm_errors</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_master_key</span><span class="p">()</span>
+
+        <span class="c1"># 用于获取返回</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get_event</span><span class="p">(</span>
+                <span class="s1">&#39;master&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;sock_dir&#39;</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;transport&#39;</span><span class="p">],</span>
+                <span class="n">opts</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">,</span>
+                <span class="n">listen</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                <span class="n">io_loop</span><span class="o">=</span><span class="n">io_loop</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">utils</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">utils</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">functions</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">minion_mods</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">,</span> <span class="n">utils</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">utils</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">returners</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">returners</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">)</span>
+</pre></div>
+
+
+<h4>主要上下文 【TODO】:</h4>
+<ul>
+<li>self.opts</li>
+<li>self.utils</li>
+<li>self.key</li>
+<li>self.salt_user</li>
+<li>self.skip_perm_errors</li>
+<li>self.event  # 用于获取命令返回</li>
+<li>self.utils</li>
+<li>self.functions</li>
+<li>self.returners</li>
+<li>self.serial # 序列化, 关心的配置为serial ,默认是 msgpack </li>
+</ul>
+<h3>cmd()</h3>
+<p>为了了解整个流程,而不是去纠结各种执行方式,比如批次执行,异步执行等等, 就看cmd吧。<br />
+cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pub_data, pub_data 中主要有job_id和minions, 用于从event中获取到返回结果,
+返回结果是一个minion_id 为key 的字典。 代码量很少,就粘贴在下面了。</p>
+<div class="highlight"><pre><span></span><span class="c1"># tgt, expr_form 确定minins</span>
+<span class="c1"># fun arg timeout 确定命令执行</span>
+<span class="c1"># ret 指定return</span>
+<span class="c1"># jid 指定jid</span>
+<span class="c1"># kwarg</span>
+<span class="c1"># kwargs 权限相关参数</span>
+<span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tgt</span><span class="p">,</span>
+        <span class="n">fun</span><span class="p">,</span>
+        <span class="n">arg</span><span class="o">=</span><span class="p">(),</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">expr_form</span><span class="o">=</span><span class="s1">&#39;glob&#39;</span><span class="p">,</span>
+        <span class="n">ret</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">jid</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">kwarg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">arg</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">condition_input</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">kwarg</span><span class="p">)</span>
+    <span class="n">pub_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_job</span><span class="p">(</span><span class="n">tgt</span><span class="p">,</span>
+                            <span class="n">fun</span><span class="p">,</span>
+                            <span class="n">arg</span><span class="p">,</span>
+                            <span class="n">expr_form</span><span class="p">,</span>
+                            <span class="n">ret</span><span class="p">,</span>
+                            <span class="n">timeout</span><span class="p">,</span>
+                            <span class="n">jid</span><span class="p">,</span>
+                            <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">pub_data</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pub_data</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">fn_ret</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cli_event_returns</span><span class="p">(</span>
+            <span class="n">pub_data</span><span class="p">[</span><span class="s1">&#39;jid&#39;</span><span class="p">],</span>
+            <span class="n">pub_data</span><span class="p">[</span><span class="s1">&#39;minions&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_timeout</span><span class="p">(</span><span class="n">timeout</span><span class="p">),</span>
+            <span class="n">tgt</span><span class="p">,</span>
+            <span class="n">expr_form</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">fn_ret</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">mid</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">fn_ret</span><span class="p">):</span>
+                <span class="n">ret</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ret&#39;</span><span class="p">,</span> <span class="p">{})</span>
+
+    <span class="k">return</span> <span class="n">ret</span>
+</pre></div>
+
+
+<h3>run_job()</h3>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_job</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">tgt</span><span class="p">,</span>
+            <span class="n">fun</span><span class="p">,</span>
+            <span class="n">arg</span><span class="o">=</span><span class="p">(),</span>
+            <span class="n">expr_form</span><span class="o">=</span><span class="s1">&#39;glob&#39;</span><span class="p">,</span>
+            <span class="n">ret</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="n">jid</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">kwarg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">arg</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">condition_input</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">kwarg</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pub_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pub</span><span class="p">(</span>
+            <span class="n">tgt</span><span class="p">,</span>
+            <span class="n">fun</span><span class="p">,</span>
+            <span class="n">arg</span><span class="p">,</span>
+            <span class="n">expr_form</span><span class="p">,</span>
+            <span class="n">ret</span><span class="p">,</span>
+            <span class="n">jid</span><span class="o">=</span><span class="n">jid</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_timeout</span><span class="p">(</span><span class="n">timeout</span><span class="p">),</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">SaltClientError</span><span class="p">:</span>
+        <span class="c1"># Re-raise error with specific message</span>
+        <span class="k">raise</span> <span class="n">SaltClientError</span><span class="p">(</span>
+            <span class="s1">&#39;The salt master could not be contacted. Is master running?&#39;</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">general_exception</span><span class="p">:</span>
+        <span class="c1"># Convert to generic client error and pass along message</span>
+        <span class="k">raise</span> <span class="n">SaltClientError</span><span class="p">(</span><span class="n">general_exception</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_pub_data</span><span class="p">(</span><span class="n">pub_data</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>pub()</h3>
+<p>参数很好理解,跟之前的参数一样</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="n">tgt</span><span class="p">,</span>
+        <span class="n">fun</span><span class="p">,</span>
+        <span class="n">arg</span><span class="o">=</span><span class="p">(),</span>
+        <span class="n">expr_form</span><span class="o">=</span><span class="s1">&#39;glob&#39;</span><span class="p">,</span>
+        <span class="n">ret</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">jid</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</pre></div>
+
+
+<p>根据ipc_mode选择了通讯方式,是tcp还是ipc, 一般windows 下是 tcp, 而linux 则是ipc</p>
+<div class="highlight"><pre><span></span>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ipc_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;tcp&#39;</span> <span class="ow">and</span>
+                <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;sock_dir&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;publish_pull.ipc&#39;</span><span class="p">))):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s1">&#39;Unable to connect to the salt master publisher at &#39;</span>
+                <span class="s1">&#39;{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;sock_dir&#39;</span><span class="p">])</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SaltClientError</span>
+</pre></div>
+
+
+<p>组装通讯用的data, 主要处理了tgt和expr_from,</p>
+<div class="highlight"><pre><span></span><span class="n">payload_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prep_pub</span><span class="p">(</span>
+                <span class="n">tgt</span><span class="p">,</span>
+                <span class="n">fun</span><span class="p">,</span>
+                <span class="n">arg</span><span class="p">,</span>
+                <span class="n">expr_form</span><span class="p">,</span>
+                <span class="n">ret</span><span class="p">,</span>
+                <span class="n">jid</span><span class="p">,</span>
+                <span class="n">timeout</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="c1"># 结果, 如果使用syndic模式, 需要将user和timeout传递下去</span>
+<span class="n">payload_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;publish&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;tgt&#39;</span><span class="p">:</span> <span class="n">tgt</span><span class="p">,</span>
+                          <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">fun</span><span class="p">,</span>
+                          <span class="s1">&#39;arg&#39;</span><span class="p">:</span> <span class="n">arg</span><span class="p">,</span>
+                          <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
+                          <span class="s1">&#39;tgt_type&#39;</span><span class="p">:</span> <span class="n">expr_form</span><span class="p">,</span>
+                          <span class="s1">&#39;ret&#39;</span><span class="p">:</span> <span class="n">ret</span><span class="p">,</span>
+                          <span class="s1">&#39;jid&#39;</span><span class="p">:</span> <span class="n">jid</span><span class="p">,</span>
+                          <span class="c1">####</span>
+                          <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span><span class="n">kwargs</span><span class="p">,</span>
+                          <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;syndic_master&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">salt_user</span><span class="p">,</span>
+                          <span class="s1">&#39;to&#39;</span><span class="p">:</span> <span class="n">timeout</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;order_masters&#39;</span><span class="p">]</span>
+                          <span class="p">}</span>
+</pre></div>
+
+
+<p>获取channel, 这里使用了warp,做了一些封装, 上述例子最终使用的是 AsyncZeroMQReqChannel, </p>
+<div class="highlight"><pre><span></span><span class="c1"># master url, 此处的ip 为master 本机ip: 0.0.0.0 , 端口为4506, 这个端口是用来minions 返回结果用的</span>
+<span class="n">master_uri</span> <span class="o">=</span> <span class="s1">&#39;tcp://&#39;</span> <span class="o">+</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">ip_bracket</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;interface&#39;</span><span class="p">])</span> <span class="o">+</span> \
+                     <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;ret_port&#39;</span><span class="p">])</span>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">Channel</span><span class="o">.</span><span class="n">factory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">,</span>
+                                                 <span class="n">crypt</span><span class="o">=</span><span class="s1">&#39;clear&#39;</span><span class="p">,</span>
+                                                 <span class="n">master_uri</span><span class="o">=</span><span class="n">master_uri</span><span class="p">)</span>
+</pre></div>
+
+
+<p>AsyncZeroMQReqChannel 细节往后看, 这里接着看run_job, 将消息发送给zeromq 4506 端口后, 会检查其结果。 </p>
+<h3>_check_pub_data(pub_data)</h3>
+<p>主要做了两件事情, 一是检查jid是否正常, 二是subscribe event获取执行结果。 </p>
+<h3>get_cli_event_returns()</h3>
+<p>通过event获取结果, 主要通过event_tag 筛选消息。程序会连接到 zmq pub socket上, 通过tag解析不同类型的event。</p>
+<p>job tag 类似 salt/job/jid, 如果是syndic, 则类似于 syndic/.*/jid</p>
+<div class="highlight"><pre><span></span><span class="n">TAGEND</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span>  <span class="c1"># long tag delimiter</span>
+<span class="n">TAGPARTER</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>  <span class="c1"># name spaced tag delimiter</span>
+<span class="n">SALT</span> <span class="o">=</span> <span class="s1">&#39;salt&#39;</span>  <span class="c1"># base prefix for all salt/ events</span>
+<span class="c1"># dict map of namespaced base tag prefixes for salt events</span>
+<span class="n">TAGS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;auth&#39;</span><span class="p">:</span> <span class="s1">&#39;auth&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/auth events</span>
+    <span class="s1">&#39;job&#39;</span><span class="p">:</span> <span class="s1">&#39;job&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/job events (minion jobs)</span>
+    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;key&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/key events</span>
+    <span class="s1">&#39;minion&#39;</span><span class="p">:</span> <span class="s1">&#39;minion&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/minion events</span>
+                         <span class="c1"># (minion sourced events)</span>
+    <span class="s1">&#39;syndic&#39;</span><span class="p">:</span> <span class="s1">&#39;syndic&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/syndic events</span>
+                         <span class="c1"># (syndic minion sourced events)</span>
+    <span class="s1">&#39;run&#39;</span><span class="p">:</span> <span class="s1">&#39;run&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/run events (salt runners)</span>
+    <span class="s1">&#39;wheel&#39;</span><span class="p">:</span> <span class="s1">&#39;wheel&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/wheel events</span>
+    <span class="s1">&#39;cloud&#39;</span><span class="p">:</span> <span class="s1">&#39;cloud&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/cloud events</span>
+    <span class="s1">&#39;fileserver&#39;</span><span class="p">:</span> <span class="s1">&#39;fileserver&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/fileserver events</span>
+    <span class="s1">&#39;queue&#39;</span><span class="p">:</span> <span class="s1">&#39;queue&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/queue events</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>subscribe 主要是添加一个tag 名称, 和match 用的fuction</p>
+<div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">match_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Subscribe to events matching the passed tag.</span>
+
+<span class="sd">        If you do not subscribe to a tag, events will be discarded by calls to</span>
+<span class="sd">        get_event that request a different tag. In contexts where many different</span>
+<span class="sd">        jobs are outstanding it is important to subscribe to prevent one call</span>
+<span class="sd">        to get_event from discarding a response required by a subsequent call</span>
+<span class="sd">        to get_event.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">match_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_match_func</span><span class="p">(</span><span class="n">match_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pending_tags</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">tag</span><span class="p">,</span> <span class="n">match_func</span><span class="p">])</span>
+</pre></div>
+
+
+<p>get_event 优先通过 _check_pending 检查pending_events, 如果存在则放回,如果不存在,则调用_get_event 获取消息,<br />
+如果直接match上了,则返回,那些没有match上当前tag,但是match上其他tag的,放置到 pending_events 列表中,什么也没match上的直接丢弃。处理过程中,也会将 unsubscribe的event移除。</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_get_event</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+<span class="o">...</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">match_func</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">],</span> <span class="n">tag</span><span class="p">):</span>
+                <span class="c1"># tag not match</span>
+                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">pmatch_func</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">],</span> <span class="n">ptag</span><span class="p">)</span> <span class="k">for</span> <span class="n">ptag</span><span class="p">,</span> <span class="n">pmatch_func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pending_tags</span><span class="p">):</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;get_event() caching unwanted event = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">pending_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">wait</span><span class="p">:</span>  <span class="c1"># only update the wait timeout if we had one</span>
+                    <span class="n">wait</span> <span class="o">=</span> <span class="n">timeout_at</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="k">continue</span>
+</pre></div>
+
+
+<h2>上面只是整体的一个执行流程, 还缺少salt transport 部分, event 部分, client端等处理。</h2></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">
+        YiHan
+    </span>
+  </span>
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/salt.html'>salt</a>
+  </span>
+  <span class="categories">
+    <a class="category" href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </span>
+</p><div class="sharing">
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">跟着salt学单例模式</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">salt valid opts</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
+        <li><a href="http://www.yilaguan.cc/category/documents.html">Documents</a></li>
+        <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
+        <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
+        <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
+        <li><a href="http://www.yilaguan.cc/category/mysql.html">mysql</a></li>
+        <li><a href="http://www.yilaguan.cc/category/python.html">python</a></li>
+        <li><a href="http://www.yilaguan.cc/category/reading.html">Reading</a></li>
+        <li><a href="http://www.yilaguan.cc/category/salt.html">salt</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://www.yilaguan.cc/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'cooleasyhan',
+              count: 5,
+              skip_forks: false,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://www.yilaguan.cc/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="http://cooleasyhan.github.io" target="_blank">github 个人页</a></li>
+        </ul>
+    </section>
+    <section>
+        <h1>Blogroll</h1>
+        <ul>
+            <li><a href="https://rhettinger.wordpress.com/" target="_blank">rhettinger</a></li>
+            <li><a href="http://www.dongwm.com/" target="_blank">小明明</a></li>
+            <li><a href="http://www.keakon.net/" target="_blank">keakon的涂鸦馆</a></li>
+            <li><a href="http://zheng-ji.info/" target="_blank">织网</a></li>
+        </ul>
+    </section>
+
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+  <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/ender.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var disqus_shortname = 'yilaguan';
+    var disqus_identifier = '/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html';
+    var disqus_title = 'salt - LocalClient 源码解析';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+  </script>
+</body>
+</html>
