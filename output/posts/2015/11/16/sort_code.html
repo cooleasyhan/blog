@@ -44,9 +44,6 @@
         <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
       </li>
       <li >
-        <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
-      </li>
-      <li >
         <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
       </li>
       <li >
@@ -75,7 +72,7 @@
 <header>
       <h1 class="entry-title">排序算法python实现</h1>
     <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>    </p>
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>Code</h2>
@@ -83,7 +80,8 @@
 InsertionSort, InsertionSort 插入排序<br />
 ShellSort, ShellSort2 希尔排序<br />
 HeapSort 堆排序  </p>
-<div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;sort base class&#39;&#39;&#39;</span>
+<div class="highlight"><pre><span></span><span class="c1"># -*- coding: UTF-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;sort base class&#39;&#39;&#39;</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
@@ -188,7 +186,13 @@ HeapSort 堆排序  </p>
 
 <span class="k">class</span> <span class="nc">SelectSort</span><span class="p">(</span><span class="n">BaseSort</span><span class="p">):</span>
 
-    <span class="sd">&#39;&#39;&#39;TestSort&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    SelectSort</span>
+
+<span class="sd">    逐个循环, 当前元素与后续所有元素比较,得到最小值,与当前元素互换</span>
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="nd">@TimeIt</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_a</span><span class="p">):</span>
 
@@ -212,7 +216,22 @@ HeapSort 堆排序  </p>
 
 <span class="k">class</span> <span class="nc">InsertionSort</span><span class="p">(</span><span class="n">BaseSort</span><span class="p">):</span>
 
-    <span class="sd">&#39;&#39;&#39;InsertionSort&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    InsertionSort</span>
+<span class="sd">    一句话: 扫描每个key, 在前面找一个能放下的地方, 后面的牌靠后站一位</span>
+
+<span class="sd">    从第二个元素开始循环, 与之前所有元素进行比较,如果找到可以插入的位置, </span>
+<span class="sd">    则将插入位置后的所有元素向后偏移一位, 将当前元素值替换到插入位置</span>
+<span class="sd">    3 1 9 7 2 4 8</span>
+<span class="sd">    1 3 9 7 2 4 8</span>
+<span class="sd">    1 3 9 7 2 4 8</span>
+<span class="sd">    1 3 7 9 2 4 8</span>
+<span class="sd">    1 2 3 7 9 4 8</span>
+<span class="sd">    1 2 3 4 7 9 8</span>
+<span class="sd">    1 2 3 4 7 8 9</span>
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="nd">@TimeIt</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_a</span><span class="p">):</span>
         <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_a</span><span class="p">)</span>
@@ -235,6 +254,19 @@ HeapSort 堆排序  </p>
 <span class="k">class</span> <span class="nc">InsertionSort2</span><span class="p">(</span><span class="n">BaseSort</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39;InsertionSort&#39;&#39;&#39;</span>
+    <span class="err">一句话</span><span class="p">:</span> <span class="err">扫描每个</span><span class="n">key</span><span class="p">,</span> <span class="err">与前面的骗进行比较</span><span class="p">,</span><span class="err">如果小就交换</span>
+
+    <span class="mi">3</span> <span class="mi">1</span> <span class="mi">9</span> <span class="mi">7</span> <span class="mi">2</span> <span class="mi">4</span> <span class="mi">8</span>
+    <span class="mi">1</span> <span class="mi">3</span> <span class="mi">9</span> <span class="mi">7</span> <span class="mi">2</span> <span class="mi">4</span> <span class="mi">8</span>
+    <span class="mi">1</span> <span class="mi">3</span> <span class="mi">9</span> <span class="mi">7</span> <span class="mi">2</span> <span class="mi">4</span> <span class="mi">8</span>
+    <span class="mi">1</span> <span class="mi">3</span> <span class="mi">7</span> <span class="mi">9</span> <span class="mi">2</span> <span class="mi">4</span> <span class="mi">8</span>
+        <span class="mi">1</span> <span class="mi">3</span> <span class="mi">7</span> <span class="mi">2</span> <span class="mi">9</span> <span class="mi">4</span> <span class="mi">8</span>
+        <span class="mi">1</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">7</span> <span class="mi">9</span> <span class="mi">4</span> <span class="mi">8</span>
+        <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">7</span> <span class="mi">9</span> <span class="mi">4</span> <span class="mi">8</span>
+    <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">7</span> <span class="mi">9</span> <span class="mi">4</span> <span class="mi">8</span>
+    <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">9</span> <span class="mi">8</span>
+    <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span>
+
     <span class="nd">@TimeIt</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_a</span><span class="p">):</span>
         <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_a</span><span class="p">)</span>
@@ -251,7 +283,29 @@ HeapSort 堆排序  </p>
 
 <span class="k">class</span> <span class="nc">ShellSort</span><span class="p">(</span><span class="n">BaseSort</span><span class="p">):</span>
 
-    <span class="sd">&#39;&#39;&#39;ShellSort&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    ShellSort</span>
+<span class="sd">    分组进行插入排序,然后降低分组数再进行插入排序,直到所有元素进行一次插入排序。</span>
+<span class="sd">    插入排序对近似排序的队列有很好的性能, 分组数按照3的倍数递增</span>
+<span class="sd">    第一次分组是4, 第二次分组是1 </span>
+
+<span class="sd">    h = 4</span>
+
+<span class="sd">    3 1 9 7 2 4 8</span>
+<span class="sd">    2 1 9 7 3 4 8</span>
+<span class="sd">    2 1 9 7 3 4 8</span>
+<span class="sd">    2 1 8 7 3 4 9</span>
+
+<span class="sd">    h = 1</span>
+<span class="sd">    1 2 8 7 3 4 9</span>
+<span class="sd">    1 2 8 7 3 4 9</span>
+<span class="sd">    1 2 7 8 3 4 9</span>
+<span class="sd">    1 2 3 7 8 4 9</span>
+<span class="sd">    1 2 3 4 7 8 9</span>
+
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="nd">@TimeIt</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_a</span><span class="p">):</span>
         <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_a</span><span class="p">)</span>
@@ -298,6 +352,14 @@ HeapSort 堆排序  </p>
 
 
 <span class="k">class</span> <span class="nc">HeapSort</span><span class="p">(</span><span class="n">BaseSort</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    HeapSort</span>
+<span class="sd">    堆排序, 如果父节点均大于或小于子节点就是堆了。 一次堆处理总能得到一个最大值或者最小值。 </span>
+
+<span class="sd">    首先构建一个堆, 逐个检查所有的父节点, 并将父节点下放</span>
+
+<span class="sd">    将堆顶点数据与最后节点进行交换,然后对顶点进行下放</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
@@ -382,7 +444,7 @@ HeapSort 堆排序  </p>
         YiHan
     </span>
   </span>
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>  <span class="categories">
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>  <span class="categories">
     <a class='category' href='http://www.yilaguan.cc/category/algorithms.html'>Algorithms</a>
   </span>
   <span class="categories">
@@ -401,19 +463,19 @@ HeapSort 堆排序  </p>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">跟着salt学单例模式</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html">单例模式</a>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">salt valid opts</a>
       </li>
     </ul>
   </section>
@@ -422,7 +484,6 @@ HeapSort 堆排序  </p>
     <h1>Categories</h1>
     <ul id="recent_posts">
         <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
-        <li><a href="http://www.yilaguan.cc/category/documents.html">Documents</a></li>
         <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
         <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
         <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
@@ -436,7 +497,7 @@ HeapSort 堆排序  </p>
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

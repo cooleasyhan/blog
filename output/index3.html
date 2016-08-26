@@ -42,9 +42,6 @@
         <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
       </li>
       <li >
-        <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
-      </li>
-      <li >
         <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
       </li>
       <li >
@@ -72,10 +69,49 @@
   		<article>
 <header>
       <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/03/redhat6-sftp-setup.html">redhat6 sftp 设置</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-03T00:00:00+08:00" pubdate>四 03 十二月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>创建用户组</h2>
+<p>用于与sftp设置进行匹配</p>
+<div class="highlight"><pre><span></span>groupadd  sftp_users
+</pre></div>
+
+
+<h2>设置sftp</h2>
+<div class="highlight"><pre><span></span># Subsystem sftp    /usr/libexec/openssh/sftp-server
+Subsystem       sftp    internal-sftp
+Match Group sftp_users
+        X11Forwarding no
+        AllowTcpForwarding no
+        ChrootDirectory %h
+        ForceCommand internal-sftp
+</pre></div>
+
+
+<ul>
+<li>Match Group sftp_users – 匹配sftp_users组中的用户</li>
+<li>ChrootDirectory %h – 该参数指定用户验证后用于chroot环境的路径，用户登录后只能查看到该目录下内容，此处设置成你home目录</li>
+<li>ForceCommand internal-sftp – 该参数强制执行内部sftp</li>
+</ul>
+<h2>添加sftp用户</h2>
+<p>写了一个小脚本，  <br />
+需要注意的是root dirctory onwer 必须是root， 权限必须是755<br />
+有问题可以查看日志：/var/log/syslog and /var ...</p></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/03/redhat6-sftp-setup.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
         <a href="http://www.yilaguan.cc/posts/2015/12/02/graph.html">无向图</a>
       </h1>
     <p class="meta">
-<time datetime="2015-12-02T00:00:00+08:00" pubdate>Wed 02 December 2015</time>    </p>
+<time datetime="2015-12-02T00:00:00+08:00" pubdate>三 02 十二月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>基本概念</h2>
@@ -189,7 +225,7 @@
         <a href="http://www.yilaguan.cc/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html">利用nginx 转发 EBS</a>
       </h1>
     <p class="meta">
-<time datetime="2015-12-02T00:00:00+08:00" pubdate>Wed 02 December 2015</time>    </p>
+<time datetime="2015-12-02T00:00:00+08:00" pubdate>三 02 十二月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>需求</h2>
@@ -217,7 +253,7 @@
         <a href="http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html">AR 设置数据data fix</a>
       </h1>
     <p class="meta">
-<time datetime="2015-12-01T00:00:00+08:00" pubdate>Tue 01 December 2015</time>    </p>
+<time datetime="2015-12-01T00:00:00+08:00" pubdate>二 01 十二月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>通知单行：</h2>
@@ -241,7 +277,7 @@ UPDATE Cux_Ar_Memo_Lines_Df_0529 d SET(Memo_Line_Id, New_Name, New_Description) 
         <a href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">定位autoconfig模板文件</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>Mon 30 November 2015</time>    </p>
+<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><p>1、定位模版文件<br />
@@ -266,7 +302,7 @@ forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
         <a href="http://www.yilaguan.cc/posts/2015/11/30/shell-bi-jiao.html">shell 比较</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>Mon 30 November 2015</time>    </p>
+<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><table>
@@ -317,7 +353,7 @@ forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
         <a href="http://www.yilaguan.cc/posts/2015/11/30/shelljiao-ben-pian-duan.html">shell脚本片段</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>Mon 30 November 2015</time>    </p>
+<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>read user enter</h2>
@@ -365,7 +401,7 @@ done
         <a href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html">Nginx, Php-fpm</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-26T00:00:00+08:00" pubdate>Thu 26 November 2015</time>    </p>
+<time datetime="2015-11-26T00:00:00+08:00" pubdate>四 26 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>安装php</h2>
@@ -381,7 +417,7 @@ done
         <a href="http://www.yilaguan.cc/posts/2015/11/24/zhong-gou-_gai-shan-ji-you-dai-ma-de-she-ji.html">重构_改善既有代码的设计</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-24T00:00:00+08:00" pubdate>Tue 24 November 2015</time>    </p>
+<time datetime="2015-11-24T00:00:00+08:00" pubdate>二 24 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>第一章 重构、第一个案例</h2>
@@ -421,7 +457,7 @@ done
         <a href="http://www.yilaguan.cc/posts/2015/11/18/iptables-xiao-jie.html">iptables 小结</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-18T00:00:00+08:00" pubdate>Wed 18 November 2015</time>    </p>
+<time datetime="2015-11-18T00:00:00+08:00" pubdate>三 18 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>规则顺序</h2>
@@ -447,28 +483,6 @@ nat<br />
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/18/iptables-xiao-jie.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/16/cache.html">Cache</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><div class="highlight"><pre><span></span><span class="cp"># Copyright 2007 Matt Chaput. All rights reserved.</span>
-<span class="cp">#</span>
-<span class="cp"># Redistribution and use in source and binary forms, with or without</span>
-<span class="cp"># modification, are permitted provided that the following conditions are met:</span>
-<span class="cp">#</span>
-<span class="cp">#    1. Redistributions of source code must retain the above copyright notice,</span>
-<span class="cp">#       this list of conditions and the following disclaimer.</span>
-<span class="cp">#</span>
-<span class="cp">#    2. Redistributions in ...</span></pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/cache.html">Read On &crarr;</a>
-  </footer>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index4.html">&larr; Older</a>
 
@@ -480,19 +494,19 @@ nat<br />
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">跟着salt学单例模式</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html">单例模式</a>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">salt valid opts</a>
       </li>
     </ul>
   </section>
@@ -501,7 +515,6 @@ nat<br />
     <h1>Categories</h1>
     <ul id="recent_posts">
         <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
-        <li><a href="http://www.yilaguan.cc/category/documents.html">Documents</a></li>
         <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
         <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
         <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
@@ -515,7 +528,7 @@ nat<br />
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

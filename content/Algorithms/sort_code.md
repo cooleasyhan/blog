@@ -10,6 +10,7 @@ InsertionSort, InsertionSort 插入排序
 ShellSort, ShellSort2 希尔排序  
 HeapSort 堆排序  
 ```
+# -*- coding: UTF-8 -*-
 '''sort base class'''
 import random
 import time
@@ -115,7 +116,13 @@ class BaseSort(object):
 
 class SelectSort(BaseSort):
 
-    '''TestSort'''
+    '''
+    SelectSort
+    
+    逐个循环, 当前元素与后续所有元素比较,得到最小值,与当前元素互换
+    
+    
+    '''
     @TimeIt()
     def sort(self, list_a):
 
@@ -139,7 +146,22 @@ class SelectSort(BaseSort):
 
 class InsertionSort(BaseSort):
 
-    '''InsertionSort'''
+    '''
+    InsertionSort
+    一句话: 扫描每个key, 在前面找一个能放下的地方, 后面的牌靠后站一位
+    
+    从第二个元素开始循环, 与之前所有元素进行比较,如果找到可以插入的位置, 
+    则将插入位置后的所有元素向后偏移一位, 将当前元素值替换到插入位置
+    3 1 9 7 2 4 8
+    1 3 9 7 2 4 8
+    1 3 9 7 2 4 8
+    1 3 7 9 2 4 8
+    1 2 3 7 9 4 8
+    1 2 3 4 7 9 8
+    1 2 3 4 7 8 9
+    
+    
+    '''
     @TimeIt()
     def sort(self, list_a):
         length = len(list_a)
@@ -162,6 +184,19 @@ class InsertionSort(BaseSort):
 class InsertionSort2(BaseSort):
 
     '''InsertionSort'''
+    一句话: 扫描每个key, 与前面的骗进行比较,如果小就交换
+    
+    3 1 9 7 2 4 8
+    1 3 9 7 2 4 8
+    1 3 9 7 2 4 8
+    1 3 7 9 2 4 8
+        1 3 7 2 9 4 8
+        1 3 2 7 9 4 8
+        1 2 3 7 9 4 8
+    1 2 3 7 9 4 8
+    1 2 3 4 7 9 8
+    1 2 3 4 7 8 9
+    
     @TimeIt()
     def sort(self, list_a):
         length = len(list_a)
@@ -178,7 +213,29 @@ class InsertionSort2(BaseSort):
 
 class ShellSort(BaseSort):
 
-    '''ShellSort'''
+    '''
+    ShellSort
+    分组进行插入排序,然后降低分组数再进行插入排序,直到所有元素进行一次插入排序。
+    插入排序对近似排序的队列有很好的性能, 分组数按照3的倍数递增
+    第一次分组是4, 第二次分组是1 
+    
+    h = 4
+    
+    3 1 9 7 2 4 8
+    2 1 9 7 3 4 8
+    2 1 9 7 3 4 8
+    2 1 8 7 3 4 9
+    
+    h = 1
+    1 2 8 7 3 4 9
+    1 2 8 7 3 4 9
+    1 2 7 8 3 4 9
+    1 2 3 7 8 4 9
+    1 2 3 4 7 8 9
+    
+    
+    
+    '''
     @TimeIt()
     def sort(self, list_a):
         length = len(list_a)
@@ -225,6 +282,14 @@ class ShellSort2(BaseSort):
 
 
 class HeapSort(BaseSort):
+    '''
+    HeapSort
+    堆排序, 如果父节点均大于或小于子节点就是堆了。 一次堆处理总能得到一个最大值或者最小值。 
+    
+    首先构建一个堆, 逐个检查所有的父节点, 并将父节点下放
+    
+    将堆顶点数据与最后节点进行交换,然后对顶点进行下放
+    '''
 
     def _parent(self,  j, k, i):
         idx = (i + 1) / 2 - 1

@@ -6,8 +6,9 @@ http://www.yilaguan.cc/
 http://www.yilaguan.cc/archives.html
 http://www.yilaguan.cc/tags.html
 http://www.yilaguan.cc/categories.html
+http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html
 http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html
-http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html
+http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html
 http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html
 http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html
 http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html
@@ -48,10 +49,8 @@ http://www.yilaguan.cc/posts/2015/10/30/log-file-location-for-oracle-e-business-
 http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-dai-ma.html
 http://www.yilaguan.cc/posts/2015/10/29/Linux.html
 http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html
-http://www.yilaguan.cc/posts/2015/10/29/doc.html
 http://www.yilaguan.cc/posts/2015/10/28/python-zhu-zhuang-dong-tu.html
 http://www.yilaguan.cc/category/algorithms.html
-http://www.yilaguan.cc/category/documents.html
 http://www.yilaguan.cc/category/ebs.html
 http://www.yilaguan.cc/category/java.html
 http://www.yilaguan.cc/category/linux.html
@@ -69,6 +68,7 @@ http://www.yilaguan.cc/tag/log.html
 http://www.yilaguan.cc/tag/graph.html
 http://www.yilaguan.cc/tag/cache.html
 http://www.yilaguan.cc/tag/excel.html
+http://www.yilaguan.cc/tag/single_instance.html
 http://www.yilaguan.cc/tag/adf.html
 http://www.yilaguan.cc/tag/tornado.html
 http://www.yilaguan.cc/tag/glassfish.html
@@ -79,7 +79,6 @@ http://www.yilaguan.cc/tag/iptables.html
 http://www.yilaguan.cc/tag/shell.html
 http://www.yilaguan.cc/tag/plsql.html
 http://www.yilaguan.cc/tag/python.html
-http://www.yilaguan.cc/tag/docs.html
 http://www.yilaguan.cc/tag/matplotlib.html
 http://www.yilaguan.cc/tag/nginx.html
 http://www.yilaguan.cc/tag/logstash.html

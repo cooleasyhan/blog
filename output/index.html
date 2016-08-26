@@ -42,9 +42,6 @@
         <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
       </li>
       <li >
-        <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
-      </li>
-      <li >
         <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
       </li>
       <li >
@@ -72,10 +69,40 @@
   		<article>
 <header>
       <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-08-18T00:00:00+08:00" pubdate>四 18 八月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><p>要想理解tornado coroutine, 就需要先了解什么是yield。下面做了一个简单介绍和demo。
+yield 返回函数,但是记录函数上下文,等待调用next后接着执行。  使用yield的函数自动变成一个生成器。也就是可以通过 for i in xxx 执行。  </p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s1">&#39;enter&#39;</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="k">yield</span>
+        <span class="k">yield</span> <span class="n">b</span>
+
+
+
+<span class="c1"># f.next() 与 f.send(None) 等价。</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span> <span class="c1"># f.next()</span>
+<span class="k">print</span> <span class="n">f</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">f</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">f ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
         <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
       </h1>
     <p class="meta">
-<time datetime="2016-08-12T00:00:00+08:00" pubdate>Fri 12 August 2016</time>    </p>
+<time datetime="2016-08-12T00:00:00+08:00" pubdate>五 12 八月 2016</time>    </p>
 </header>
 
   <div class="entry-content"><h2>/u01/github/salt-develop/salt/transport/zeromq.py : class AsyncZeroMQReqChannel</h2>
@@ -93,10 +120,10 @@
   		<article>
 <header>
       <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">跟着salt学单例模式</a>
+        <a href="http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html">单例模式</a>
       </h1>
     <p class="meta">
-<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>三 10 八月 2016</time>    </p>
 </header>
 
   <div class="entry-content"><p>/u01/github/salt-develop/salt/transport/zeromq.py 里使用了单例模式, 写了一个模板类, 需要使用时直接修改添加方法就好了。</p>
@@ -116,7 +143,7 @@
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Only create one instance of channel ...</span></pre></div></div>
   <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">Read On &crarr;</a>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html">Read On &crarr;</a>
   </footer>
   		</article>
   		<article>
@@ -125,7 +152,7 @@
         <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
       </h1>
     <p class="meta">
-<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>三 10 八月 2016</time>    </p>
 </header>
 
   <div class="entry-content"><p>/u01/github/salt-develop/salt/config/<strong>init</strong>.py </p>
@@ -148,7 +175,7 @@ if salt.utils.is_windows():
         <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
       </h1>
     <p class="meta">
-<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>三 10 八月 2016</time>    </p>
 </header>
 
   <div class="entry-content"><p>salt 源码点滴记录</p>
@@ -179,7 +206,7 @@ source /u01/virtualenv/salt/bin/activate
         <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">salt valid opts</a>
       </h1>
     <p class="meta">
-<time datetime="2016-08-10T00:00:00+08:00" pubdate>Wed 10 August 2016</time>    </p>
+<time datetime="2016-08-10T00:00:00+08:00" pubdate>三 10 八月 2016</time>    </p>
 </header>
 
   <div class="entry-content"><p>/u01/github/salt-develop/salt/config/<strong>init</strong>.py </p>
@@ -201,7 +228,7 @@ source /u01/virtualenv/salt/bin/activate
         <a href="http://www.yilaguan.cc/posts/2016/08/08/tornado-test.html">Tornado Test</a>
       </h1>
     <p class="meta">
-<time datetime="2016-08-08T00:00:00+08:00" pubdate>Mon 08 August 2016</time>    </p>
+<time datetime="2016-08-08T00:00:00+08:00" pubdate>一 08 八月 2016</time>    </p>
 </header>
 
   <div class="entry-content"><p>看salt源码,发现用了一些tornado的异步编程, 写了点测试代码。</p>
@@ -233,7 +260,7 @@ StopIteration:
         <a href="http://www.yilaguan.cc/posts/2016/08/03/fabric-an-zhuang-salt-minions.html">fabric 安装salt minions</a>
       </h1>
     <p class="meta">
-<time datetime="2016-08-03T00:00:00+08:00" pubdate>Wed 03 August 2016</time>    </p>
+<time datetime="2016-08-03T00:00:00+08:00" pubdate>三 03 八月 2016</time>    </p>
 </header>
 
   <div class="entry-content"><p>salt 需要安装客户端, 写了一个简单的fabric 脚本进行安装, 大规模安装可能还需要进行一些优化</p>
@@ -284,10 +311,18 @@ StopIteration:
         <a href="http://www.yilaguan.cc/posts/2016/08/01/salt.html">salt</a>
       </h1>
     <p class="meta">
-<time datetime="2016-08-01T00:00:00+08:00" pubdate>Mon 01 August 2016</time>    </p>
+<time datetime="2016-08-01T00:00:00+08:00" pubdate>一 01 八月 2016</time>    </p>
 </header>
 
   <div class="entry-content"><p>最近研究salt装我那小一百台服务器, 之前一直是fabric安装的, 感觉salt还是挺好用的, 下面是一些使用到的小脚本</p>
+<h2>salt 常用命令</h2>
+<div class="highlight"><pre><span></span>salt <span class="s1">&#39;xxx*&#39;</span> state.show_lowstate
+salt <span class="s1">&#39;xxx*&#39;</span> state.show_highstate
+salt <span class="s1">&#39;*&#39;</span> sys.doc state
+salt <span class="s1">&#39;*&#39;</span> state.highstate
+</pre></div>
+
+
 <h2>salt formula</h2>
 <p>里头有很多软件安装的模板,通过pillar配置进行安装,需要一些个性化
 https://github.com/saltstack-formulas  </p>
@@ -304,26 +339,7 @@ prod:
         - nginx.service
         - php.install
         - php.php-redis
-        - redis.server
-</pre></div>
-
-
-<h2>应用入口文件demo</h2>
-<p>init/env_init.sls</p>
-<div class="highlight"><pre><span></span>include:
-    - init.test_file_append
-</pre></div>
-
-
-<div class="highlight"><pre><span></span># 文件目录 
-├── init
-│   ├── env_init.sls
-│   └── test_file_append.sls
-└── top.sls
-</pre></div>
-
-
-<h2>file ...</h2></div>
+        - redis ...</pre></div></div>
   <footer>
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/01/salt.html">Read On &crarr;</a>
   </footer>
@@ -334,7 +350,7 @@ prod:
         <a href="http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html">salt安装</a>
       </h1>
     <p class="meta">
-<time datetime="2016-08-01T00:00:00+08:00" pubdate>Mon 01 August 2016</time>    </p>
+<time datetime="2016-08-01T00:00:00+08:00" pubdate>一 01 八月 2016</time>    </p>
 </header>
 
   <div class="entry-content"><p>最近研究salt装我那小一百台服务器, 之前一直是fabric安装的, 感觉salt还是挺好用的。python 安装还是习惯使用pip安装。 </p>
@@ -371,54 +387,6 @@ trusted-host = pypi.douban.com
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2016/08/01/saltpei-zhi.html">salt配置</a>
-      </h1>
-    <p class="meta">
-<time datetime="2016-08-01T00:00:00+08:00" pubdate>Mon 01 August 2016</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>master配置</h2>
-<p>master 主要配置file_roots, pillar_roots, </p>
-<div class="highlight"><pre><span></span># pam权限配置, 使用linux用户名密码进行登录
-external_auth:
-  pam:
-    salt:
-        - .*
-        - &#39;@runner&#39;
-        - &#39;@wheel&#39;
-
-# master 是否可以接收minion文件,线上最好设置为False
-file_recv: True
-file_recv_max_size: 1000
-
-# 文件目录
-file_roots:
-   base:
-     - /srv/salt/base
-   dev:
-     - /srv/salt/dev
-   prod:
-     - /srv/salt/prod
-     - /srv/formulas/redis-formula
-
-# pillar 文件目录,与fie_roots对应
-pillar_roots:
-  base:
-    - /srv/pillar/base
-  prod:
-    - /srv/pillar/prod
-</pre></div>
-
-
-<h2>salt 文件结构</h2>
-<p>目前使用多env结构 ...</p></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/08/01/saltpei-zhi.html">Read On &crarr;</a>
-  </footer>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index2.html">&larr; Older</a>
 
@@ -429,19 +397,19 @@ pillar_roots:
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">跟着salt学单例模式</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html">单例模式</a>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">salt valid opts</a>
       </li>
     </ul>
   </section>
@@ -450,7 +418,6 @@ pillar_roots:
     <h1>Categories</h1>
     <ul id="recent_posts">
         <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
-        <li><a href="http://www.yilaguan.cc/category/documents.html">Documents</a></li>
         <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
         <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
         <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
@@ -464,7 +431,7 @@ pillar_roots:
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

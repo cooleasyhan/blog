@@ -5,6 +5,14 @@ sulg: salt
 
 最近研究salt装我那小一百台服务器, 之前一直是fabric安装的, 感觉salt还是挺好用的, 下面是一些使用到的小脚本
 
+## salt 常用命令
+```sh
+salt 'xxx*' state.show_lowstate
+salt 'xxx*' state.show_highstate
+salt '*' sys.doc state
+salt '*' state.highstate
+```
+
 ## salt formula
 里头有很多软件安装的模板,通过pillar配置进行安装,需要一些个性化
 https://github.com/saltstack-formulas  
@@ -222,4 +230,17 @@ nginx_user_{{name}}:
     - path: {{ htauth }}
     - require:
       - pkg: htpasswd
+```
+
+
+## test.check_pillar
+```
+git-sls-is-pillar-present:
+  test.check_pillar:
+    - present:
+        - git_url
+        - git_archive_dir
+        - git_resp_base_dir
+        - git_tag_name
+        - dir_name
 ```

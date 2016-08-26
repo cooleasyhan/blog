@@ -42,9 +42,6 @@
         <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
       </li>
       <li >
-        <a href="http://www.yilaguan.cc/category/documents.html">Documents</a>
-      </li>
-      <li >
         <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
       </li>
       <li >
@@ -72,10 +69,32 @@
   		<article>
 <header>
       <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/16/cache.html">Cache</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><div class="highlight"><pre><span></span><span class="cp"># Copyright 2007 Matt Chaput. All rights reserved.</span>
+<span class="cp">#</span>
+<span class="cp"># Redistribution and use in source and binary forms, with or without</span>
+<span class="cp"># modification, are permitted provided that the following conditions are met:</span>
+<span class="cp">#</span>
+<span class="cp">#    1. Redistributions of source code must retain the above copyright notice,</span>
+<span class="cp">#       this list of conditions and the following disclaimer.</span>
+<span class="cp">#</span>
+<span class="cp">#    2. Redistributions in ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/cache.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
         <a href="http://www.yilaguan.cc/posts/2015/11/16/priority_queue.html">优先队列Python实现</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>    </p>
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><p>典型应用于任务调度，典型算法为堆排序</p>
@@ -139,7 +158,7 @@
         <a href="http://www.yilaguan.cc/posts/2015/11/16/sort.html">排序算法</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>    </p>
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>优先队列</h2>
@@ -157,7 +176,7 @@
         <a href="http://www.yilaguan.cc/posts/2015/11/16/sort_code.html">排序算法python实现</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>Mon 16 November 2015</time>    </p>
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>Code</h2>
@@ -165,7 +184,8 @@
 InsertionSort, InsertionSort 插入排序<br />
 ShellSort, ShellSort2 希尔排序<br />
 HeapSort 堆排序  </p>
-<div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;sort base class&#39;&#39;&#39;</span>
+<div class="highlight"><pre><span></span><span class="c1"># -*- coding: UTF-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;sort base class&#39;&#39;&#39;</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
@@ -181,8 +201,7 @@ HeapSort 堆排序  </p>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">begin</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-            <span class="n">fn ...</span></pre></div></div>
+            <span class="n">begin</span> <span class="o">=</span> <span class="n">time ...</span></pre></div></div>
   <footer>
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/sort_code.html">Read On &crarr;</a>
   </footer>
@@ -193,7 +212,7 @@ HeapSort 堆排序  </p>
         <a href="http://www.yilaguan.cc/posts/2015/11/14/ar-de-shi-wu-chu-li-jie-kou.html">AR 的事务处理接口</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-14T00:00:00+08:00" pubdate>Sat 14 November 2015</time>    </p>
+<time datetime="2015-11-14T00:00:00+08:00" pubdate>六 14 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><p>最近由于会有大量的接口开发，重构了现有AR 的事务处理接口，将其作为后续所有事务处理接口的统一入口。在后期的项目中看看效果，如果效果OK， 考虑把收款接口，核销接口也用类似方法重构下，从测试脚本来看，使用还是比较简单的，就是感觉方法的调用会不会多了点，不过个人挺习惯和喜欢这种无脑的调用方法，后面会贴出来一个精简版的测试脚本</p>
@@ -224,7 +243,7 @@ HeapSort 堆排序  </p>
         <a href="http://www.yilaguan.cc/posts/2015/11/09/how-to-audit-in-oracle-ebs.html">How to Audit in Oracle EBS</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-09T00:00:00+08:00" pubdate>Mon 09 November 2015</time>    </p>
+<time datetime="2015-11-09T00:00:00+08:00" pubdate>一 09 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>Metalink</h2>
@@ -244,7 +263,7 @@ HeapSort 堆排序  </p>
         <a href="http://www.yilaguan.cc/posts/2015/11/09/kibana-elasticsearch-logstash.html">Kibana elasticsearch logstash</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-09T00:00:00+08:00" pubdate>Mon 09 November 2015</time>    </p>
+<time datetime="2015-11-09T00:00:00+08:00" pubdate>一 09 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>Kibana elasticsearch logstash 日志系统搭建</h2>
@@ -268,7 +287,7 @@ HeapSort 堆排序  </p>
         <a href="http://www.yilaguan.cc/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html">启用session级别的trace</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-09T00:00:00+08:00" pubdate>Mon 09 November 2015</time>    </p>
+<time datetime="2015-11-09T00:00:00+08:00" pubdate>一 09 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><div class="highlight"><pre><span></span><span class="x">DECLARE</span>
@@ -300,7 +319,7 @@ HeapSort 堆排序  </p>
         <a href="http://www.yilaguan.cc/posts/2015/11/04/forms-runtime-diagnostics-frd.html">Forms Runtime Diagnostics (FRD)</a>
       </h1>
     <p class="meta">
-<time datetime="2015-11-04T00:00:00+08:00" pubdate>Wed 04 November 2015</time>    </p>
+<time datetime="2015-11-04T00:00:00+08:00" pubdate>三 04 十一月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><p>The Forms Runtime Diagnostic (FRD) is a method for capturing all events that occur in a form session and writing a file with the details of those events. There is overhead in writing this file, so you should only use this for the purposes of development and debugging</p>
@@ -315,7 +334,7 @@ HeapSort 堆排序  </p>
         <a href="http://www.yilaguan.cc/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html">Log file location for Oracle E-Business Suite</a>
       </h1>
     <p class="meta">
-<time datetime="2015-10-30T00:00:00+08:00" pubdate>Fri 30 October 2015</time>    </p>
+<time datetime="2015-10-30T00:00:00+08:00" pubdate>五 30 十月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><h2>Log file location for Oracle E-Business Suite R12</h2>
@@ -339,19 +358,6 @@ $LOG_HOME/ora/10.1.3/opmn</p>
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-dai-ma.html">有用的代码</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-10-30T00:00:00+08:00" pubdate>Fri 30 October 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><ol>
-<li><a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/eventusermodel/XLSX2CSV.java">turn an big excel file into a CSV</a></li>
-</ol></div>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index5.html">&larr; Older</a>
 
@@ -363,19 +369,19 @@ $LOG_HOME/ora/10.1.3/opmn</p>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
       </li>
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/gen-zhao-saltxue-dan-li-mo-shi.html">跟着salt学单例模式</a>
+          <a href="http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html">单例模式</a>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-valid-opts.html">salt valid opts</a>
       </li>
     </ul>
   </section>
@@ -384,7 +390,6 @@ $LOG_HOME/ora/10.1.3/opmn</p>
     <h1>Categories</h1>
     <ul id="recent_posts">
         <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
-        <li><a href="http://www.yilaguan.cc/category/documents.html">Documents</a></li>
         <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
         <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
         <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
@@ -398,7 +403,7 @@ $LOG_HOME/ora/10.1.3/opmn</p>
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/docs.html">Docs</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

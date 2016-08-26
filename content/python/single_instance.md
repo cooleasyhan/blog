@@ -1,7 +1,7 @@
 Date: 2016-08-10
-Title: 跟着salt学单例模式
-Tags: Salt
-sulg: salt_source
+Title: 单例模式
+Tags: Single_Instance
+sulg: python
 
 
 /u01/github/salt-develop/salt/transport/zeromq.py 里使用了单例模式, 写了一个模板类, 需要使用时直接修改添加方法就好了。
