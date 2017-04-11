@@ -69,6 +69,82 @@
   		<article>
 <header>
       <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">定位autoconfig模板文件</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><p>1、定位模版文件<br />
+$AD_TOP/bin/adtmplreport.sh contextfile=$CONTEXT_FILE target=$FORMS_WEB_CONFIG_FILE
+以上命令，通过查看报表日志，可分别得到如下模版结果：
+$FND_TOP/admin/template/forms_web_1012_cfg.tmp</p>
+<p>2、创建custom目录<br />
+mkdir $FND_TOP/admin/template/custom</p>
+<p>3、把上述文件拷贝到custom目录<br />
+cp -i $FND_TOP/admin/template/forms_web_1012_cfg.tmp $FND_TOP/admin/template/custom/forms_web_1012_cfg.tmp</p>
+<p>4、编辑custom目录下的模版文件<br />
+forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
+<p>添加金税的jar包<br />
+  archive2=,/OA_JAVA/hand/hand ...</p></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/30/shell-bi-jiao.html">shell 比较</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文件比较运算符</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>-e filename</td>
+<td>如果 filename 存在，则为真</td>
+<td>[ -e /var/log/syslog ]</td>
+</tr>
+<tr>
+<td>-d filename</td>
+<td>如果 filename 为目录，则为真</td>
+<td>[ -d /tmp/mydir ]</td>
+</tr>
+<tr>
+<td>-f filename</td>
+<td>如果 filename 为常规文件，则为真</td>
+<td>[ -f /usr/bin/grep ]</td>
+</tr>
+<tr>
+<td>-L filename</td>
+<td>如果 filename 为符号链接，则为真</td>
+<td>[ -L /usr/bin/grep ]</td>
+</tr>
+<tr>
+<td>-r filename</td>
+<td>如果 filename 可读，则为真</td>
+<td>[ -r ...</td></tr></tbody></table></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/30/shell-bi-jiao.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
         <a href="http://www.yilaguan.cc/posts/2015/11/30/shelljiao-ben-pian-duan.html">shell脚本片段</a>
       </h1>
     <p class="meta">
@@ -76,22 +152,22 @@
 </header>
 
   <div class="entry-content"><h2>read user enter</h2>
-<div class="highlight"><pre><span></span>read -p &quot;Read rows CNT[W]: &quot; ROWS_CNT
+<div class="highlight"><pre>read -p &quot;Read rows CNT[W]: &quot; ROWS_CNT
 </pre></div>
 
 
 <h2>获取文件行数</h2>
-<div class="highlight"><pre><span></span><span class="x">ROW=`wc -l </span><span class="p">$</span><span class="nv">DATA_FILE</span><span class="x"> | awk &#39;</span><span class="err">{</span><span class="x">print </span><span class="p">$</span><span class="x">1}&#39;`</span>
+<div class="highlight"><pre><span class="x">ROW=`wc -l </span><span class="p">$</span><span class="nv">DATA_FILE</span><span class="x"> | awk &#39;</span><span class="err">{</span><span class="x">print </span><span class="p">$</span><span class="x">1}&#39;`</span>
 </pre></div>
 
 
 <h2>浮点数计算</h2>
-<div class="highlight"><pre><span></span><span class="x">per=`awk &#39;BEGIN</span><span class="err">{</span><span class="x">printf &quot;%.2f\n&quot;,&#39;</span><span class="p">$</span><span class="nv">wcnt</span><span class="x">&#39;/&#39;</span><span class="p">$</span><span class="nv">scnt</span><span class="x">&#39;}&#39;`</span>
+<div class="highlight"><pre><span class="x">per=`awk &#39;BEGIN</span><span class="err">{</span><span class="x">printf &quot;%.2f\n&quot;,&#39;</span><span class="p">$</span><span class="nv">wcnt</span><span class="x">&#39;/&#39;</span><span class="p">$</span><span class="nv">scnt</span><span class="x">&#39;}&#39;`</span>
 </pre></div>
 
 
 <h2>string=&gt;list</h2>
-<div class="highlight"><pre><span></span>list=&quot;a,
+<div class="highlight"><pre>list=&quot;a,
 b,
 c,
 d
@@ -124,7 +200,7 @@ done
 </header>
 
   <div class="entry-content"><h2>安装php</h2>
-<div class="highlight"><pre><span></span>yum install libxml2-devel bzip2-devel libcurl-devel libjpeg-devel libpng-devel freetype-devel openssl-devel  
+<div class="highlight"><pre>yum install libxml2-devel bzip2-devel libcurl-devel libjpeg-devel libpng-devel freetype-devel openssl-devel  
 ./configure --prefix=/usr/local/php-5.6 --with-config-file-path=/usr/local/php-5.6/etc --with-bz2 --with-curl --enable-ftp --enable-sockets --disable-ipv6 --with-gd --with-freetype-dir=/usr/local --enable-gd-native-ttf --with-iconv-dir=/usr/local --enable-mbstring --enable-calendar --with-gettext --with-libxml-dir=/usr/local --with-zlib --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql=mysqlnd --enable-dom --enable-xml ...</pre></div></div>
   <footer>
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html">Read On &crarr;</a>
@@ -192,7 +268,7 @@ nat<br />
 一般控制本机资源的访问，只要设置 filter中的INPUT 和 OUTPUT 就可以了<br />
 <img alt="链路图" src="/images/iptables_chain.gif" /></p>
 <h2>查看设置</h2>
-<div class="highlight"><pre><span></span>iptables -L -n -v -t tables
+<div class="highlight"><pre>iptables -L -n -v -t tables
 -t 默认为filter
 </pre></div>
 
@@ -211,7 +287,7 @@ nat<br />
 <time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
 </header>
 
-  <div class="entry-content"><div class="highlight"><pre><span></span><span class="cp"># Copyright 2007 Matt Chaput. All rights reserved.</span>
+  <div class="entry-content"><div class="highlight"><pre><span class="cp"># Copyright 2007 Matt Chaput. All rights reserved.</span>
 <span class="cp">#</span>
 <span class="cp"># Redistribution and use in source and binary forms, with or without</span>
 <span class="cp"># modification, are permitted provided that the following conditions are met:</span>
@@ -269,8 +345,8 @@ nat<br />
 </tbody>
 </table>
 <h2>Code</h2>
-<div class="highlight"><pre><span></span><span class="c1"># Author: YiHan</span>
-<span class="c1"># Date: 2015-11-16</span>
+<div class="highlight"><pre><span class="c"># Author: YiHan</span>
+<span class="c"># Date: 2015-11-16</span>
 
 <span class="kn">import</span> <span class="nn">random</span>
 
@@ -320,7 +396,7 @@ nat<br />
 InsertionSort, InsertionSort 插入排序<br />
 ShellSort, ShellSort2 希尔排序<br />
 HeapSort 堆排序  </p>
-<div class="highlight"><pre><span></span><span class="c1"># -*- coding: UTF-8 -*-</span>
+<div class="highlight"><pre><span class="c"># -*- coding: UTF-8 -*-</span>
 <span class="sd">&#39;&#39;&#39;sort base class&#39;&#39;&#39;</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -342,57 +418,6 @@ HeapSort 堆排序  </p>
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/sort_code.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/14/ar-de-shi-wu-chu-li-jie-kou.html">AR 的事务处理接口</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-14T00:00:00+08:00" pubdate>六 14 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><p>最近由于会有大量的接口开发，重构了现有AR 的事务处理接口，将其作为后续所有事务处理接口的统一入口。在后期的项目中看看效果，如果效果OK， 考虑把收款接口，核销接口也用类似方法重构下，从测试脚本来看，使用还是比较简单的，就是感觉方法的调用会不会多了点，不过个人挺习惯和喜欢这种无脑的调用方法，后面会贴出来一个精简版的测试脚本</p>
-<p>结构如下：</p>
-<ul>
-<li>使用一个第三方的表作为借口表，如 Cux_Ar_Trx_Imp_t_Pub， 数据通过INTERFACE_RUN_ID 进行分组</li>
-<li>该表中有所有AR TRX api 所需的字段，后期随业务增加可以添加</li>
-<li>创建 PACKAGE Cux_Ar_Trx_Imp_Pub, 提供两个入口方法， #主要参数为INTERFACE_RUN_ID<ul>
-<li>Validate_Main</li>
-<li>Import_Main</li>
-</ul>
-</li>
-<li>
-<p>为了方便使用这个接口包 Cux_Ar_Trx_Imp_Pub ， 对insert 数据到Cux_Ar_Trx_Imp_t_Pub做了一层封装， 包： Cux_Ar_Trx_Imp_Pub_Wrap， 主要思想为对创建事务处理所需要的参数进行拆分方便使用和修改。</p>
-<ul>
-<li>利用record进行数据拆分：</li>
-<li>主要提供几类方法：<ul>
-<li>init : 生成interface_run_id， 初始化变量</li>
-<li>build 方法, build 方法帮忙生成上述record记录</li>
-<li>Add_Header, Add_Line 利用生成的record ...</li></ul></li></ul></li></ul></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/14/ar-de-shi-wu-chu-li-jie-kou.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/09/how-to-audit-in-oracle-ebs.html">How to Audit in Oracle EBS</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-09T00:00:00+08:00" pubdate>一 09 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>Metalink</h2>
-<ul>
-<li>How To Enable Auditing On A Table (文档 ID 1359749.1)</li>
-<li>How To Audit An Oracle Applications' User? (文档 ID 395849.1)</li>
-<li>Auditing: How Do I Audit Responsibilities and Data? (文档 ID 436316.1)</li>
-<li>Overview of Audit Trails in Oracle Applications (文档 ID 60828.1)</li>
-<li>Understanding Data Auditing in ...</li></ul></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/09/how-to-audit-in-oracle-ebs.html">Read On &crarr;</a>
-  </footer>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index5.html">&larr; Older</a>
 
@@ -404,6 +429,12 @@ HeapSort 堆排序  </p>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -411,12 +442,6 @@ HeapSort 堆排序  </p>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -438,7 +463,7 @@ HeapSort 堆排序  </p>
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

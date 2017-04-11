@@ -80,7 +80,7 @@
 1. 从库开发修改,有同学上从库改表造成不同步。 <br />
     处理: 从库设置为只读 <br />
 2. 主从同步hung住, 显示如下, 线程状态显示OK, 但是Seconds Behind Master 值非常大。  </p>
-<div class="highlight"><pre><span></span><span class="n">Slave_IO_Running</span><span class="o">:</span> <span class="n">Yes</span>
+<div class="highlight"><pre><span class="n">Slave_IO_Running</span><span class="o">:</span> <span class="n">Yes</span>
 <span class="n">Slave_SQL_Running</span><span class="o">:</span> <span class="n">Yes</span>
 <span class="n">Seconds_Behind_Master</span><span class="o">:</span> <span class="mi">9999</span>
 
@@ -94,14 +94,14 @@
 <li>启用了gtid的主从同步,skip操作</li>
 </ol>
 <p>获取当前 处理到的Executed_Gtid_Set, 下面最后处理的gtid 为: dcbfbf7e-e05a-11e5-8160-6c92bf225ad1:129985921</p>
-<div class="highlight"><pre><span></span><span class="n">Retrieved_Gtid_Set</span><span class="o">:</span> <span class="n">dcbfbf7e</span><span class="o">-</span><span class="n">e05a</span><span class="o">-</span><span class="mi">11</span><span class="n">e5</span><span class="o">-</span><span class="mi">8160</span><span class="o">-</span><span class="mi">6</span><span class="n">c92bf225ad1</span><span class="o">:</span><span class="mi">16700783</span><span class="o">-</span><span class="mi">129985931</span>
+<div class="highlight"><pre><span class="n">Retrieved_Gtid_Set</span><span class="o">:</span> <span class="n">dcbfbf7e</span><span class="o">-</span><span class="n">e05a</span><span class="o">-</span><span class="mi">11</span><span class="n">e5</span><span class="o">-</span><span class="mi">8160</span><span class="o">-</span><span class="mi">6</span><span class="n">c92bf225ad1</span><span class="o">:</span><span class="mi">16700783</span><span class="o">-</span><span class="mi">129985931</span>
 <span class="n">Executed_Gtid_Set</span><span class="o">:</span> <span class="n">dc24de6f</span><span class="o">-</span><span class="mi">2969</span><span class="o">-</span><span class="mi">11</span><span class="n">e6</span><span class="o">-</span><span class="mi">8</span><span class="n">ae8</span><span class="o">-</span><span class="mi">6</span><span class="n">c92bf2c1069</span><span class="o">:</span><span class="mi">1</span><span class="o">-</span><span class="mi">11</span><span class="o">,</span>
 <span class="n">dcbfbf7e</span><span class="o">-</span><span class="n">e05a</span><span class="o">-</span><span class="mi">11</span><span class="n">e5</span><span class="o">-</span><span class="mi">8160</span><span class="o">-</span><span class="mi">6</span><span class="n">c92bf225ad1</span><span class="o">:</span><span class="mi">1</span><span class="o">-</span><span class="mi">16132149</span><span class="o">:</span><span class="mi">16700783</span><span class="o">-</span><span class="mi">129985921</span>
 </pre></div>
 
 
 <p>通过创建空的gtid,跳过该gitd。</p>
-<div class="highlight"><pre><span></span><span class="nt">STOP</span> <span class="nt">SLAVE</span><span class="o">;</span>
+<div class="highlight"><pre><span class="nt">STOP</span> <span class="nt">SLAVE</span><span class="o">;</span>
 <span class="nt">SET</span> <span class="nt">GTID_NEXT</span><span class="o">=</span><span class="s2">&quot;dcbfbf7e-e05a-11e5-8160-6c92bf225ad1:129985921&quot;</span><span class="o">;</span>
 <span class="nt">BEGIN</span><span class="o">;</span> <span class="nt">COMMIT</span><span class="o">;</span>
 <span class="nt">SET</span> <span class="nt">GTID_NEXT</span><span class="o">=</span><span class="s2">&quot;AUTOMATIC&quot;</span><span class="o">;</span>
@@ -132,6 +132,12 @@
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -139,12 +145,6 @@
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -166,7 +166,7 @@
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

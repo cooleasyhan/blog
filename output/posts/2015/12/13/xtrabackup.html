@@ -77,14 +77,59 @@
 
   <div class="entry-content"><h2>安装</h2>
 <p>官网下载相关rpm 包, 此处为 percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm， 其中5.1版本的mysql只能使用 2.0版本的xtrabackup</p>
-<div class="highlight"><pre><span></span>rpm -ivh xxx.rpm
+<div class="highlight"><pre>rpm -ivh xxx.rpm
 </pre></div>
 
 
-<h2>使用要点</h2>
+<h2>单表备份</h2>
+<p>/usr/bin/innobackupex --defaults-file=/etc/my.cnf \
+--slave-info --safe-slave-backup --no-lock \
+--no-timestamp --user=xxx --password=xxxx \
+--host=xxxx --port=3306 --stream=xbstream --compress \
+--include='^database.table_name' /tmp \</p>
+<h2>单表恢复</h2>
+<p>1.安装qpress
+wget http://www.quicklz.com/qpress-11-linux-x64.tar
+2. xbstream解压
+xbstream -x &lt; xxx.xxx.xbstream -C ./test
+3. qpress 解压</p>
+<div class="highlight"><pre><span class="x">for f in `find ./ -iname &quot;*\.qp&quot;`; do qpress -dT2 </span><span class="p">$</span><span class="nv">f</span><span class="x">  </span><span class="p">$(</span><span class="err">dirname</span> <span class="p">$</span><span class="nv">f</span><span class="p">)</span><span class="x"> &amp;&amp; rm -f </span><span class="p">$</span><span class="nv">f</span><span class="x">; done</span>
+</pre></div>
+
+
 <ol>
-<li>正常备份会锁表，可以使用 </li>
+<li>apply log</li>
 </ol>
+<div class="highlight"><pre>innobackupex --apply-log --export /home/yihan/test/
+</pre></div>
+
+
+<ol>
+<li>拿掉tablespace </li>
+</ol>
+<div class="highlight"><pre>ALTER TABLE xxx.xxx DISCARD TABLESPACE;
+</pre></div>
+
+
+<ol>
+<li>cp data 至 mysql data 目录</li>
+</ol>
+<div class="highlight"><pre>cp xxx.ibd /data/mysql/xxx/xxx.ibd
+cp xxx.exp /data/mysql/xxx/xxx.exp
+# 5.6 需要copy
+cp xxx.cfg /data/mysql/xxx/xxx.cfg
+</pre></div>
+
+
+<ol>
+<li>chown to mysql
+chown mysql:mysql /data/mysql/xxx/xxx.*
+8 导入tablesapce </li>
+</ol>
+<div class="highlight"><pre>ALTER TABLE xxx.xxx IMPORT TABLESPACE;
+</pre></div>
+
+
 <h2>备份脚本</h2>
 <p>写了一个脚本，用于每周日全备，其他时候增量备份</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -190,16 +235,16 @@
 101
 102
 103
-104</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
-<span class="c1">#author: yihan</span>
-<span class="c1">#date: 2015-12-13</span>
-<span class="c1">#</span>
-<span class="c1">#</span>
-<span class="c1">#创建用户</span>
-<span class="c1">#mysql&gt; CREATE USER &#39;bkpuser&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;xxx&#39;;</span>
-<span class="c1">#mysql&gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT, REPLICATION SLAVE,SUPER ON *.* TO &#39;bkpuser&#39;@&#39;localhost&#39;;</span>
-<span class="c1">#mysql&gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO &#39;bkpuser&#39;@&#39;localhost&#39;;</span>
-<span class="c1">#mysql&gt; FLUSH PRIVILEGES;</span>
+104</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="c">#author: yihan</span>
+<span class="c">#date: 2015-12-13</span>
+<span class="c">#</span>
+<span class="c">#</span>
+<span class="c">#创建用户</span>
+<span class="c">#mysql&gt; CREATE USER &#39;bkpuser&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;xxx&#39;;</span>
+<span class="c">#mysql&gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT, REPLICATION SLAVE,SUPER ON *.* TO &#39;bkpuser&#39;@&#39;localhost&#39;;</span>
+<span class="c">#mysql&gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO &#39;bkpuser&#39;@&#39;localhost&#39;;</span>
+<span class="c">#mysql&gt; FLUSH PRIVILEGES;</span>
 
 
 <span class="nv">weekday</span><span class="o">=</span><span class="sb">`</span>date +%w<span class="sb">`</span>
@@ -234,8 +279,8 @@
       --user<span class="o">=</span><span class="nv">$user_name</span> --password<span class="o">=</span><span class="nv">$password</span> <span class="se">\</span>
       --host<span class="o">=</span><span class="nv">$ip</span> --port<span class="o">=</span><span class="nv">$port</span> --stream<span class="o">=</span>xbstream --compress --extra-lsndir<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$lsn_dir</span><span class="s2">&quot;</span> /tmp 2&gt;<span class="nv">$Xtrabackup_log</span> <span class="se">\</span>
       &gt; <span class="si">${</span><span class="nv">back_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">target_dir</span><span class="si">}</span>_<span class="si">${</span><span class="nv">timestamp</span><span class="si">}</span>.xbstream
-      <span class="c1">#| $ssh_tool \ &quot;cat - &gt; ${back_dir}/${target_dir}_${timestamp}.xbstream&quot;</span>
-      <span class="c1">#| gzip &gt; $back_dir/$target_dir.xbstream</span>
+      <span class="c">#| $ssh_tool \ &quot;cat - &gt; ${back_dir}/${target_dir}_${timestamp}.xbstream&quot;</span>
+      <span class="c">#| gzip &gt; $back_dir/$target_dir.xbstream</span>
     log <span class="s2">&quot;full_backup end&quot;</span>
 <span class="o">}</span>
 
@@ -249,8 +294,8 @@
     --port<span class="o">=</span><span class="nv">$port</span> --incremental --incremental-basedir<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$lsn_dir</span><span class="s2">&quot;</span> --extra-lsndir<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$lsn_dir</span><span class="s2">&quot;</span> <span class="se">\</span>
     --stream<span class="o">=</span>xbstream --compress /tmp 2&gt;<span class="nv">$Xtrabackup_log</span> <span class="se">\</span>
     &gt; <span class="si">${</span><span class="nv">back_dir</span><span class="si">}</span>/<span class="si">${</span><span class="nv">xtra_target_dir</span><span class="si">}</span>_<span class="si">${</span><span class="nv">timestamp</span><span class="si">}</span>.xbstream
-    <span class="c1"># | $ssh_tool \ &quot;cat - &gt; ${back_dir}/${xtra_target_dir}_${timestamp}.xbstream&quot;</span>
-    <span class="c1"># &gt; $back_dir/$xtra_target_dir.xbstream</span>
+    <span class="c"># | $ssh_tool \ &quot;cat - &gt; ${back_dir}/${xtra_target_dir}_${timestamp}.xbstream&quot;</span>
+    <span class="c"># &gt; $back_dir/$xtra_target_dir.xbstream</span>
     log <span class="s2">&quot;incremental_bakup end&quot;</span>
 <span class="o">}</span>
 
@@ -268,7 +313,7 @@
     <span class="k">fi</span>
 <span class="o">}</span>
 
-<span class="c1">####################main###############</span>
+<span class="c">####################main###############</span>
 mkdir -p <span class="nv">$back_dir</span>
 <span class="nv">$ssh_tool</span> <span class="se">\ </span><span class="s2">&quot;mkdir -p </span><span class="nv">$back_dir</span><span class="s2">&quot;</span>
 
@@ -276,12 +321,12 @@ mkdir -p <span class="nv">$lsn_dir</span>
 log <span class="s2">&quot;++++++++++++++++++++++++++++++++++++++++++++++++++&quot;</span>
 log <span class="s2">&quot;weekday:</span><span class="nv">$weekday</span><span class="s2">&quot;</span>
 <span class="k">if</span> <span class="o">[</span> <span class="m">0</span> -eq <span class="nv">$weekday</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
-    <span class="c1"># 备份目录,从而删除lsn文件或者全备目录,当前启用的增备方式为lsn文件</span>
+    <span class="c"># 备份目录,从而删除lsn文件或者全备目录,当前启用的增备方式为lsn文件</span>
     back_up_dir
     mkdir -p <span class="nv">$back_dir</span>
     full_backup backup0_full_backup
 <span class="k">else</span>
-    <span class="c1"># xtrabackup lsn文件存在则增备,不存在则全备.</span>
+    <span class="c"># xtrabackup lsn文件存在则增备,不存在则全备.</span>
     <span class="k">if</span> <span class="o">[</span> -f <span class="nv">$lsn_dir</span>/xtrabackup_checkpoints <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
       incremental_bakup backup<span class="si">${</span><span class="nv">weekday</span><span class="si">}</span>_incremental_bakup
     <span class="k">else</span>
@@ -381,7 +426,7 @@ log <span class="s2">&quot;--------------------------------------------------&qu
 81
 82
 83
-84</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+84</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
 
 <span class="nv">SCRIPT_BASE_PATH</span><span class="o">=</span>/u01/scripts
 <span class="nv">BACK_BASH_PATH</span><span class="o">=</span>/data/master_backup
@@ -389,7 +434,7 @@ log <span class="s2">&quot;--------------------------------------------------&qu
 <span class="nv">FULL_DB_BACK_NAME</span><span class="o">=</span>full_db_backup_from_master
 <span class="nv">MYSQL_DATA_DIR</span><span class="o">=</span>/data/mysql
 
-<span class="c1">#db config</span>
+<span class="c">#db config</span>
 <span class="nv">file_cnf</span><span class="o">=</span>/etc/my.cnf
 <span class="nv">user_name</span><span class="o">=</span>bkpuser
 <span class="nv">password</span><span class="o">=</span>xxx
@@ -407,29 +452,29 @@ log <span class="s2">&quot;--------------------------------------------------&qu
   <span class="k">return</span> <span class="k">$((</span><span class="nv">$2</span><span class="o">-</span><span class="nv">$1</span><span class="k">))</span>
 <span class="o">}</span>
 
-<span class="c1">#从主库备份数据到本地</span>
+<span class="c">#从主库备份数据到本地</span>
 <span class="k">function</span> full_backdb_from_master
 <span class="o">{</span>
     <span class="nv">startTime</span><span class="o">=</span><span class="sb">`</span>date +%s<span class="sb">`</span>
     <span class="nb">echo</span> <span class="s2">&quot;full backupdb process starting ....................&quot;</span>
     <span class="nb">echo</span> <span class="s2">&quot;back dir: </span><span class="si">${</span><span class="nv">back_dir</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="c1">#rm -rf ${back_dir}/${FULL_DB_BACK_NAME}.xbstream</span>
-    <span class="c1">#rm -rf $Xtrabackup_log</span>
+    <span class="c">#rm -rf ${back_dir}/${FULL_DB_BACK_NAME}.xbstream</span>
+    <span class="c">#rm -rf $Xtrabackup_log</span>
     innobackupex --defaults-file<span class="o">=</span><span class="nv">$file_cnf</span> --slave-info --safe-slave-backup --no-lock --no-timestamp<span class="se">\</span>
       --user<span class="o">=</span><span class="nv">$user_name</span> --password<span class="o">=</span><span class="nv">$password</span> <span class="se">\</span>
       --host<span class="o">=</span><span class="nv">$ip</span> --port<span class="o">=</span><span class="nv">$port</span> <span class="se">\</span>
       <span class="si">${</span><span class="nv">back_dir</span><span class="si">}</span> <span class="se">\</span>
       1&gt; <span class="nv">$Xtrabackup_log</span> 2&gt;<span class="nv">$Xtrabackup_log</span>
-      <span class="c1">#--stream=xbstream --compress --extra-lsndir=&quot;$lsn_dir&quot; \</span>
-      <span class="c1"># /tmp 2&gt;$Xtrabackup_log \</span>
-      <span class="c1">#&gt; ${back_dir}/${FULL_DB_BACK_NAME}.xbstream</span>
+      <span class="c">#--stream=xbstream --compress --extra-lsndir=&quot;$lsn_dir&quot; \</span>
+      <span class="c"># /tmp 2&gt;$Xtrabackup_log \</span>
+      <span class="c">#&gt; ${back_dir}/${FULL_DB_BACK_NAME}.xbstream</span>
      <span class="nv">endTime</span><span class="o">=</span><span class="sb">`</span>date +%s<span class="sb">`</span>
      <span class="nv">diffTime</span><span class="o">=</span><span class="k">$(</span>getDiffTime <span class="nv">$startTime</span> <span class="nv">$endTime</span><span class="k">)</span>
      <span class="nb">echo</span> <span class="s2">&quot;full backupdb complate and total time(second) is </span><span class="si">${</span><span class="nv">diffTime</span><span class="si">}</span><span class="s2">&quot;</span>
     innobackupex --defaults-file<span class="o">=</span>/etc/my.cnf --user<span class="o">=</span><span class="nv">$user_name</span> --password<span class="o">=</span><span class="nv">$password</span> --apply-log <span class="nv">$back_dir</span>/  1&gt; <span class="si">${</span><span class="nv">Xtrabackup_log</span><span class="si">}</span>.applylog 2&gt;<span class="si">${</span><span class="nv">Xtrabackup_log</span><span class="si">}</span>.applylog
 <span class="o">}</span>
 
-<span class="c1">#还原数据</span>
+<span class="c">#还原数据</span>
 <span class="k">function</span> restore_backdb
 <span class="o">{</span>
      <span class="nv">startTime</span><span class="o">=</span><span class="sb">`</span>date +%s<span class="sb">`</span>
@@ -447,7 +492,7 @@ log <span class="s2">&quot;--------------------------------------------------&qu
      <span class="nb">echo</span> <span class="s2">&quot;restore process complete and total time(second) is : </span><span class="si">${</span><span class="nv">diffTime</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="o">}</span>
 
-<span class="c1">#启动slave</span>
+<span class="c">#启动slave</span>
 <span class="k">function</span> start_slave
 <span class="o">{</span>
     <span class="nv">startTime</span><span class="o">=</span><span class="sb">`</span>date +%s<span class="sb">`</span>
@@ -462,7 +507,7 @@ log <span class="s2">&quot;--------------------------------------------------&qu
 
 <span class="o">}</span>
 
-<span class="c1">#full_backdb_from_master</span>
+<span class="c">#full_backdb_from_master</span>
 restore_backdb
 start_slave
 </pre></div>
@@ -491,6 +536,12 @@ start_slave
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -498,12 +549,6 @@ start_slave
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -525,7 +570,7 @@ start_slave
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

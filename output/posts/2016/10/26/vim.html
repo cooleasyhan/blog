@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Forms Runtime Diagnostics (FRD) &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <title>vim &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
   <meta name="author" content="YiHan">
 
 
@@ -43,7 +43,7 @@
       <li >
         <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
       </li>
-      <li class="active">
+      <li >
         <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
       </li>
       <li >
@@ -58,7 +58,7 @@
       <li >
         <a href="http://www.yilaguan.cc/category/python.html">Python</a>
       </li>
-      <li >
+      <li class="active">
         <a href="http://www.yilaguan.cc/category/reading.html">Reading</a>
       </li>
       <li >
@@ -70,50 +70,193 @@
 <div>
   <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">Forms Runtime Diagnostics (FRD)</h1>
+      <h1 class="entry-title">vim</h1>
     <p class="meta">
-<time datetime="2015-11-04T00:00:00+08:00" pubdate>三 04 十一月 2015</time>    </p>
+<time datetime="2016-10-26T00:00:00+08:00" pubdate>三 26 十月 2016</time>    </p>
 </header>
 
-  <div class="entry-content"><p>The Forms Runtime Diagnostic (FRD) is a method for capturing all events that occur in a form session and writing a file with the details of those events. There is overhead in writing this file, so you should only use this for the purposes of development and debugging</p>
-<p>When a form is run with FRD enabled, a combination of external user-application interactions and internal Forms processing events are written in chronological order to a log on the file system.</p>
-<blockquote>
-<p>Note: The Forms runtime diagnostics (FRD)  output is written to an intermediate OS buffer, and only written to the physical file when the buffer is full. The output buffer is finally flushed when the process terminates. Hence one need to take into consideration below points </p>
-<ol>
-<li>
-<p>Make sure the forms session has ended, otherwise you may lose the last few lines which are usually the most important. . If the client has terminated abnormally, you may have to wait for the frmweb process to timeout, which is 5 minutes by default (timeout is governed by value of env variable FORMS_TIMEOUT). If you are unsure whether the process has terminated, you can obtain the process id from the header in the FRD log file and check whether the process ended using appropriate OS commands. </p>
-</li>
-<li>
-<p>If you are reproducing FRM-xxx errors. Please ensure you log off (after reproducing the error)</p>
-</li>
-</ol>
-</blockquote>
-<h2>active FRD</h2>
-<ul>
-<li>Method1: Set the profile option 'ICX: Forms Launcher' to:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>In Servlet Mode</th>
-<th>Socket Mode</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>https://hostname.domain:port/forms/frmservlet?record=collect</td>
-<td>ttps://hostname.domain:port/OA_HTML/frmservlet?record=collect</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Method2: Set the profile option 'Forms Runtime Parameters' to 'record=collect'</li>
-</ul>
-<h2>log file location</h2>
-<p>The FRD log file will be written  in the directory pointed by environment variable <strong>$FORMS_TRACE_DIR</strong>. By default, the trace file with name <code>collect_&lt;pid&gt;</code> gets written in $FORMS_TRACE_DIR , where <code>&lt;pid&gt;</code> is the process identifier.This is a simple text file and can be viewed directly.</p>
-<hr />
-<h2>Refrences</h2>
-<p><a href="https://support.oracle.com/epmos/faces/DocumentDisplay?parent=DOCUMENT&amp;sourceId=1238633.1&amp;id=438652.1&amp;_adf.ctrl-state=hfqxo0l92_53&amp;_afrLoop=345047785108442#Option_1_frd">oracle support Document 438652.1</a></p></div>
+  <div class="entry-content"><div class="highlight"><pre>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                               第一講小結
+
+
+  1. 光標在屏幕文本中的移動既可以用箭頭鍵，也可以使用 hjkl 字母鍵。
+         h (左移)       j (下行)       k (上行)     l (右移)
+
+  2. 欲進入vim編輯器(從命令行提示符)，請輸入︰vim 文件名 &lt;回車&gt;
+
+  3. 欲退出vim編輯器，請輸入以下命令放棄所有修改︰
+
+        &lt;ESC&gt;   :q!      &lt;回車&gt;
+
+     或者輸入以下命令保存所有修改︰
+
+        &lt;ESC&gt;   :wq      &lt;回車&gt;
+
+  4. 在正常模式下刪除光標所在位置的字符，請按︰ x
+
+  5. 在正常模式下要在光標所在位置開始插入文本，請按︰
+
+         i     輸入必要文本     &lt;ESC&gt;
+
+特別提示︰按下 &lt;ESC&gt; 鍵會帶您回到正常模式或者取消一個不期望或者部分完成
+的命令。
+
+好了，第一講到此結束。下面接下來繼續第二講的內容。
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                               第二讲小结
+
+
+  1. 欲从当前光标删除至下一个单词，请输入：dw
+  2. 欲从当前光标删除至当前行末尾，请输入：d$
+  3. 欲删除整行，请输入：dd
+
+  4. 欲重复一个动作，请在它前面加上一个数字：2w
+  5. 在正常模式下修改命令的格式是：
+               operator   [number]   motion
+     其中：
+       operator - 操作符，代表要做的事情，比如 d 代表删除
+       [number] - 可以附加的数字，代表动作重复的次数
+       motion   - 动作，代表在所操作的文本上的移动，例如 w 代表单词(word)，
+                  $ 代表行末等等。
+
+  6. 欲移动光标到行首，请按数字0键：0
+
+  7. 欲撤消以前的操作，请输入：u (小写的u)
+     欲撤消在一行中所做的改动，请输入：U (大写的U)
+     欲撤消以前的撤消命令，恢复以前的操作结果，请输入：CTRL-R
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                  第三讲小结
+
+
+  1. 要重新置入已经删除的文本内容，请按小写字母 p 键。该操作可以将已删除
+     的文本内容置于光标之后。如果最后一次删除的是一个整行，那么该行将置
+     于当前光标所在行的下一行。
+
+  2. 要替换光标所在位置的字符，请输入小写的 r 和要替换掉原位置字符的新字
+     符即可。
+
+  3. 更改类命令允许您改变从当前光标所在位置直到动作指示的位置中间的文本。
+     比如输入 ce 可以替换当前光标到单词的末尾的内容；输入 c$ 可以替换当
+     前光标到行末的内容。
+
+  4. 更改类命令的格式是：
+
+         c   [number]   motion
+
+现在我们继续学习下一讲。
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                               第四讲小结
+
+
+  1. CTRL-G 用于显示当前光标所在位置和文件状态信息。
+     G 用于将光标跳转至文件最后一行。
+     先敲入一个行号然后输入大写 G 则是将光标移动至该行号代表的行。
+     gg 用于将光标跳转至文件第一行。
+
+  2. 输入 / 然后紧随一个字符串是在当前所编辑的文档中正向查找该字符串。
+     输入 ? 然后紧随一个字符串则是在当前所编辑的文档中反向查找该字符串。
+     完成一次查找之后按 n 键是重复上一次的命令，可在同一方向上查
+     找下一个匹配字符串所在；或者按大写 N 向相反方向查找下一匹配字符串所在。
+     CTRL-O 带您跳转回较旧的位置，CTRL-I 则带您到较新的位置。
+
+  3. 如果光标当前位置是括号(、)、[、]、{、}，按 % 会将光标移动到配对的括号上。
+
+  4. 在一行内替换头一个字符串 old 为新的字符串 new，请输入  :s/old/new
+     在一行内替换所有的字符串 old 为新的字符串 new，请输入  :s/old/new/g
+     在两行内替换所有的字符串 old 为新的字符串 new，请输入  :#,#s/old/new/g
+     在文件内替换所有的字符串 old 为新的字符串 new，请输入  :%s/old/new/g
+     进行全文替换时询问用户确认每个替换需添加 c 标志        :%s/old/new/gc
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                               第五讲小结
+
+
+  1. :!command 用于执行一个外部命令 command。
+
+     请看一些实际例子：
+         (MS-DOS)         (Unix)
+          :!dir            :!ls            -  用于显示当前目录的内容。
+          :!del FILENAME   :!rm FILENAME   -  用于删除名为 FILENAME 的文件。
+
+  2. :w FILENAME  可将当前 VIM 中正在编辑的文件保存到名为 FILENAME 的文
+     件中。
+
+  3. v motion :w FILENAME 可将当前编辑文件中可视模式下选中的内容保存到文件
+     FILENAME 中。
+
+  4. :r FILENAME 可提取磁盘文件 FILENAME 并将其插入到当前文件的光标位置
+     后面。
+
+  5. :r !dir 可以读取 dir 命令的输出并将其放置到当前文件的光标位置后面。
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                               第六讲小结
+
+  1. 输入小写的 o 可以在光标下方打开新的一行并进入插入模式。
+     输入大写的 O 可以在光标上方打开新的一行。
+
+  2. 输入小写的 a 可以在光标所在位置之后插入文本。
+     输入大写的 A 可以在光标所在行的行末之后插入文本。
+
+  3. e 命令可以使光标移动到单词末尾。
+
+  4. 操作符 y 复制文本，p 粘贴先前复制的文本。
+
+  5. 输入大写的 R 将进入替换模式，直至按 &lt;ESC&gt; 键回到正常模式。
+
+  6. 输入 :set xxx 可以设置 xxx 选项。一些有用的选项如下：
+        &#39;ic&#39; &#39;ignorecase&#39;       查找时忽略字母大小写
+        &#39;is&#39; &#39;incsearch&#39;        查找短语时显示部分匹配
+        &#39;hls&#39; &#39;hlsearch&#39;        高亮显示所有的匹配短语
+     选项名可以用完整版本，也可以用缩略版本。
+
+  7. 在选项前加上 no 可以关闭选项：  :set noic
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                  第七讲小结
+
+
+  1. 输入 :help 或者按 &lt;F1&gt; 键或 &lt;Help&gt; 键可以打开帮助窗口。
+
+  2. 输入 :help cmd 可以找到关于 cmd 命令的帮助。
+
+  3. 输入 CTRL-W CTRL-W  可以使您在窗口之间跳转。
+
+  4. 输入 :q 以关闭帮助窗口
+
+  5. 您可以创建一个 vimrc 启动脚本文件用来保存您偏好的设置。
+
+  6. 请确保 Vim 不是在以兼容模式运行： :set nocp 当输入 : 命令时，按 CTRL-D 可以查看可能的补全结果。
+     按 &lt;TAB&gt; 可以使用一个补全。
+
+
+
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</pre></div></div>
     <footer>
 <p class="meta">
   <span class="byline author vcard">
@@ -121,11 +264,11 @@
         YiHan
     </span>
   </span>
-<time datetime="2015-11-04T00:00:00+08:00" pubdate>三 04 十一月 2015</time>  <span class="categories">
-    <a class='category' href='http://www.yilaguan.cc/category/ebs.html'>ebs</a>
+<time datetime="2016-10-26T00:00:00+08:00" pubdate>三 26 十月 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/reading.html'>Reading</a>
   </span>
   <span class="categories">
-    <a class="category" href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a class="category" href="http://www.yilaguan.cc/tag/ebs.html">EBS</a>  </span>
+    <a class="category" href="http://www.yilaguan.cc/tag/vim.html">vim</a>  </span>
 </p><div class="sharing">
 </div>    </footer>
   </article>
@@ -231,9 +374,9 @@
   <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
     var disqus_shortname = 'yilaguan';
-    var disqus_identifier = '/posts/2015/11/04/forms-runtime-diagnostics-frd.html';
-    var disqus_url = 'http://www.yilaguan.cc/posts/2015/11/04/forms-runtime-diagnostics-frd.html';
-    var disqus_title = 'Forms Runtime Diagnostics (FRD)';
+    var disqus_identifier = '/posts/2016/10/26/vim.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/10/26/vim.html';
+    var disqus_title = 'vim';
     (function() {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';

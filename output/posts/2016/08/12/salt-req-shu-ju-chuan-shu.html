@@ -80,7 +80,7 @@
 不会进行多次消息交互,给salt用还是挺合理的,发送一个命令给minion, minion 返回一个执行结果。 原始的REQ/REP不支持异步,通过使用tornado实现异步操作。</p>
 <h3>单例:</h3>
 <p>首先是根据 io_loop, io_loop如果为空,则使用zmq自带的tornado, ioloop</p>
-<div class="highlight"><pre><span></span><span class="n">io_loop</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;io_loop&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="n">io_loop</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;io_loop&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">zmq</span><span class="o">.</span><span class="n">eventloop</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
             <span class="n">io_loop</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
@@ -91,16 +91,16 @@
 
 
 <p>key:</p>
-<div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">(</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;pki_dir&#39;</span><span class="p">],</span>     <span class="c1"># where the keys are stored</span>
-                <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>          <span class="c1"># minion ID</span>
-                <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;master_uri&#39;</span><span class="p">,</span> <span class="n">opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;master_uri&#39;</span><span class="p">)),</span>  <span class="c1"># master ID</span>
-                <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crypt&#39;</span><span class="p">,</span> <span class="s1">&#39;aes&#39;</span><span class="p">),</span>  <span class="c1"># TODO: use the same channel for crypt</span>
+<div class="highlight"><pre><span class="k">return</span> <span class="p">(</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;pki_dir&#39;</span><span class="p">],</span>     <span class="c"># where the keys are stored</span>
+                <span class="n">opts</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">],</span>          <span class="c"># minion ID</span>
+                <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;master_uri&#39;</span><span class="p">,</span> <span class="n">opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;master_uri&#39;</span><span class="p">)),</span>  <span class="c"># master ID</span>
+                <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;crypt&#39;</span><span class="p">,</span> <span class="s">&#39;aes&#39;</span><span class="p">),</span>  <span class="c"># TODO: use the same channel for crypt</span>
                 <span class="p">)</span>
 </pre></div>
 
 
 <p>核心对象:</p>
-<div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">message_client</span> <span class="o">=</span> <span class="n">AsyncReqMessageClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">,</span>
+<div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">message_client</span> <span class="o">=</span> <span class="n">AsyncReqMessageClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">,</span>
                                                     <span class="bp">self</span><span class="o">.</span><span class="n">master_uri</span><span class="p">,</span>
                                                     <span class="n">io_loop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_io_loop</span><span class="p">,</span>
                                                     <span class="p">)</span>
@@ -108,7 +108,7 @@
 
 
 <p>核心方法(这里不考虑权限):</p>
-<div class="highlight"><pre><span></span>    <span class="nd">@tornado.gen.coroutine</span>
+<div class="highlight"><pre>    <span class="nd">@tornado.gen.coroutine</span>
     <span class="k">def</span> <span class="nf">_uncrypted_transfer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">load</span><span class="p">,</span> <span class="n">tries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Send a load across the wire in cleartext</span>
@@ -129,27 +129,27 @@
 
 <h2>/u01/github/salt-develop/salt/transport/zeromq.py : class AsyncReqMessageClient</h2>
 <p>_init_socket</p>
-<div class="highlight"><pre><span></span><span class="c1"># 使用REQ</span>
+<div class="highlight"><pre><span class="c"># 使用REQ</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">REQ</span><span class="p">)</span>
 
-<span class="c1"># 启用异步</span>
+<span class="c"># 启用异步</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">stream</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">eventloop</span><span class="o">.</span><span class="n">zmqstream</span><span class="o">.</span><span class="n">ZMQStream</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="p">,</span> <span class="n">io_loop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span><span class="p">)</span>
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="nd">@tornado.gen.coroutine</span>
+<div class="highlight"><pre><span class="nd">@tornado.gen.coroutine</span>
 <span class="k">def</span> <span class="nf">_internal_send_recv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">send_queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">future</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_future_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">future</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="c1"># Timedout</span>
+            <span class="c"># Timedout</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">continue</span>
 
-        <span class="c1"># 设置on_recv方法, 收到消息,调用 future.set_result</span>
-        <span class="c1"># send</span>
+        <span class="c"># 设置on_recv方法, 收到消息,调用 future.set_result</span>
+        <span class="c"># send</span>
         <span class="k">def</span> <span class="nf">mark_future</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">future</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -157,11 +157,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">on_recv</span><span class="p">(</span><span class="n">mark_future</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-        <span class="c1"># 返回future</span>
+        <span class="c"># 返回future</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">future</span>
-        <span class="k">except</span><span class="p">:</span>  <span class="c1"># pylint: disable=W0702</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_init_socket</span><span class="p">()</span>  <span class="c1"># re-init the zmq socket (no other way in zmq)</span>
+        <span class="k">except</span><span class="p">:</span>  <span class="c"># pylint: disable=W0702</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_socket</span><span class="p">()</span>  <span class="c"># re-init the zmq socket (no other way in zmq)</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">continue</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -194,6 +194,12 @@
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -201,12 +207,6 @@
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -228,7 +228,7 @@
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

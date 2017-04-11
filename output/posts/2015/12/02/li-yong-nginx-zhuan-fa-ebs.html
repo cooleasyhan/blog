@@ -80,14 +80,14 @@
 实现： EBS 设置单一网络入口点，  外网服务器上配置nginx 转发至内网服务器。</p>
 <h2>配置EBS</h2>
 <h3>修改host文件， 在EBS app 服务器上添加相关host</h3>
-<div class="highlight"><pre><span></span>110.10.10.10 prod.xxx.xxx.xxx prod
+<div class="highlight"><pre>110.10.10.10 prod.xxx.xxx.xxx prod
 </pre></div>
 
 
 <h3>修改 $CONTEXT_FILE , 配置EBS单一网络入口</h3>
 <p>http://app01.domain.name:8000  ===&gt;   http://prod.domain.name:80<br />
 修改前后比对</p>
-<div class="highlight"><pre><span></span>[applprod@app01 admin]$ diff PROD_app01.xml PROD_app01.xml.bak 
+<div class="highlight"><pre>[applprod@app01 admin]$ diff PROD_app01.xml PROD_app01.xml.bak 
 123c123
 <span class="err">&lt;</span>          <span class="nt">&lt;chronosURL</span> <span class="na">oa_var=</span><span class="s">&quot;s_chronosURL&quot;</span> <span class="na">customized=</span><span class="s">&quot;yes&quot;</span><span class="nt">&gt;</span>http://prod.domain.name:80/oracle_smp_chronos/oracle_smp_chronos_sdk.gif<span class="nt">&lt;/chronosURL&gt;</span>
 ---
@@ -128,7 +128,7 @@
 <p><a href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html">Nginx, Php-fpm 安装</a></p>
 <h3>配置nginx</h3>
 <p>nginx.conf</p>
-<div class="highlight"><pre><span></span><span class="nn">#user</span>  <span class="nt">nobody</span><span class="o">;</span>
+<div class="highlight"><pre><span class="nf">#user</span>  <span class="nt">nobody</span><span class="o">;</span>
 <span class="nt">worker_processes</span>  <span class="nt">6</span><span class="o">;</span>
 
 <span class="nt">error_log</span>  <span class="nt">logs</span><span class="o">/</span><span class="nt">error</span><span class="nc">.log</span>  <span class="nt">info</span><span class="o">;</span>
@@ -172,7 +172,7 @@
     <span class="n">gzip_http_version</span>   <span class="m">1</span><span class="o">.</span><span class="m">1</span><span class="p">;</span>
     <span class="n">gzip_comp_level</span>     <span class="m">9</span><span class="p">;</span>
     <span class="n">gzip_vary</span>           <span class="n">off</span><span class="p">;</span>
-    <span class="n">gzip_types</span>          <span class="nb">text</span><span class="o">/</span><span class="n">plain</span> <span class="nb">text</span><span class="o">/</span><span class="n">javascript</span> <span class="nb">text</span><span class="o">/</span><span class="n">css</span> <span class="nb">text</span><span class="o">/</span><span class="n">xml</span> <span class="n">application</span><span class="o">/</span><span class="n">xml</span><span class="p">;</span>
+    <span class="n">gzip_types</span>          <span class="k">text</span><span class="o">/</span><span class="n">plain</span> <span class="k">text</span><span class="o">/</span><span class="n">javascript</span> <span class="k">text</span><span class="o">/</span><span class="n">css</span> <span class="k">text</span><span class="o">/</span><span class="n">xml</span> <span class="n">application</span><span class="o">/</span><span class="n">xml</span><span class="p">;</span>
     <span class="err">##</span> <span class="n">gzip</span> <span class="n">setting</span> <span class="n">end</span><span class="o">.</span>
 
     <span class="n">output_buffers</span>      <span class="m">4</span> <span class="m">32</span><span class="n">k</span><span class="p">;</span>
@@ -189,7 +189,7 @@
 
 
 <p>vhost.conf</p>
-<div class="highlight"><pre><span></span><span class="nt">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="nt">server</span> <span class="p">{</span>
     <span class="n">listen</span>       <span class="m">80</span><span class="p">;</span>
     <span class="n">server_name</span>  <span class="n">prod</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">name</span><span class="p">;</span>
 
@@ -268,6 +268,12 @@
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -275,12 +281,6 @@
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -302,7 +302,7 @@
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

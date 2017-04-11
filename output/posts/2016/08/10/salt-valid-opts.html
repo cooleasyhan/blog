@@ -76,784 +76,784 @@
 </header>
 
   <div class="entry-content"><p>/u01/github/salt-develop/salt/config/<strong>init</strong>.py </p>
-<div class="highlight"><pre><span></span><span class="n">VALID_OPTS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="c1"># The address of the salt master. May be specified as IP address or hostname</span>
-    <span class="s1">&#39;master&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">string_types</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span>
+<div class="highlight"><pre><span class="n">VALID_OPTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c"># The address of the salt master. May be specified as IP address or hostname</span>
+    <span class="s">&#39;master&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">string_types</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span>
 
-    <span class="c1"># The TCP/UDP port of the master to connect to in order to listen to publications</span>
-    <span class="s1">&#39;master_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The TCP/UDP port of the master to connect to in order to listen to publications</span>
+    <span class="s">&#39;master_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The behaviour of the minion when connecting to a master. Can specify &#39;failover&#39;,</span>
-    <span class="c1"># &#39;disable&#39; or &#39;func&#39;. If &#39;func&#39; is specified, the &#39;master&#39; option should be set to an</span>
-    <span class="c1"># exec module function to run to determine the master hostname. If &#39;disable&#39; is specified</span>
-    <span class="c1"># the minion will run, but will not try to connect to a master.</span>
-    <span class="s1">&#39;master_type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The behaviour of the minion when connecting to a master. Can specify &#39;failover&#39;,</span>
+    <span class="c"># &#39;disable&#39; or &#39;func&#39;. If &#39;func&#39; is specified, the &#39;master&#39; option should be set to an</span>
+    <span class="c"># exec module function to run to determine the master hostname. If &#39;disable&#39; is specified</span>
+    <span class="c"># the minion will run, but will not try to connect to a master.</span>
+    <span class="s">&#39;master_type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Specify the format in which the master address will be specified. Can</span>
-    <span class="c1"># specify &#39;default&#39; or &#39;ip_only&#39;. If &#39;ip_only&#39; is specified, then the</span>
-    <span class="c1"># master address will not be split into IP and PORT.</span>
-    <span class="s1">&#39;master_uri_format&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Specify the format in which the master address will be specified. Can</span>
+    <span class="c"># specify &#39;default&#39; or &#39;ip_only&#39;. If &#39;ip_only&#39; is specified, then the</span>
+    <span class="c"># master address will not be split into IP and PORT.</span>
+    <span class="s">&#39;master_uri_format&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The fingerprint of the master key may be specified to increase security. Generate</span>
-    <span class="c1"># a master fingerprint with `salt-key -F master`</span>
-    <span class="s1">&#39;master_finger&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The fingerprint of the master key may be specified to increase security. Generate</span>
+    <span class="c"># a master fingerprint with `salt-key -F master`</span>
+    <span class="s">&#39;master_finger&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Selects a random master when starting a minion up in multi-master mode</span>
-    <span class="s1">&#39;master_shuffle&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Selects a random master when starting a minion up in multi-master mode</span>
+    <span class="s">&#39;master_shuffle&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># When in multi-master mode, temporarily remove a master from the list if a conenction</span>
-    <span class="c1"># is interrupted and try another master in the list.</span>
-    <span class="s1">&#39;master_alive_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># When in multi-master mode, temporarily remove a master from the list if a conenction</span>
+    <span class="c"># is interrupted and try another master in the list.</span>
+    <span class="s">&#39;master_alive_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># When in multi-master failover mode, fail back to the first master in the list if it&#39;s back</span>
-    <span class="c1"># online.</span>
-    <span class="s1">&#39;master_failback&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># When in multi-master failover mode, fail back to the first master in the list if it&#39;s back</span>
+    <span class="c"># online.</span>
+    <span class="s">&#39;master_failback&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># When in multi-master mode, and master_failback is enabled ping the top master with this</span>
-    <span class="c1"># interval.</span>
-    <span class="s1">&#39;master_failback_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># When in multi-master mode, and master_failback is enabled ping the top master with this</span>
+    <span class="c"># interval.</span>
+    <span class="s">&#39;master_failback_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The name of the signing key-pair</span>
-    <span class="s1">&#39;master_sign_key_name&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The name of the signing key-pair</span>
+    <span class="s">&#39;master_sign_key_name&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Sign the master auth-replies with a cryptographic signature of the masters public key.</span>
-    <span class="s1">&#39;master_sign_pubkey&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Sign the master auth-replies with a cryptographic signature of the masters public key.</span>
+    <span class="s">&#39;master_sign_pubkey&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Enables verification of the master-public-signature returned by the master in auth-replies.</span>
-    <span class="c1"># Must also set master_sign_pubkey for this to work</span>
-    <span class="s1">&#39;verify_master_pubkey_sign&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Enables verification of the master-public-signature returned by the master in auth-replies.</span>
+    <span class="c"># Must also set master_sign_pubkey for this to work</span>
+    <span class="s">&#39;verify_master_pubkey_sign&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># If verify_master_pubkey_sign is enabled, the signature is only verified, if the public-key of the master changes.</span>
-    <span class="c1"># If the signature should always be verified, this can be set to True.</span>
-    <span class="s1">&#39;always_verify_signature&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># If verify_master_pubkey_sign is enabled, the signature is only verified, if the public-key of the master changes.</span>
+    <span class="c"># If the signature should always be verified, this can be set to True.</span>
+    <span class="s">&#39;always_verify_signature&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The name of the file in the masters pki-directory that holds the pre-calculated signature of the masters public-key.</span>
-    <span class="s1">&#39;master_pubkey_signature&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The name of the file in the masters pki-directory that holds the pre-calculated signature of the masters public-key.</span>
+    <span class="s">&#39;master_pubkey_signature&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Instead of computing the signature for each auth-reply, use a pre-calculated signature.</span>
-    <span class="c1"># The master_pubkey_signature must also be set for this.</span>
-    <span class="s1">&#39;master_use_pubkey_signature&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Instead of computing the signature for each auth-reply, use a pre-calculated signature.</span>
+    <span class="c"># The master_pubkey_signature must also be set for this.</span>
+    <span class="s">&#39;master_use_pubkey_signature&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The key fingerprint of the higher-level master for the syndic to verify it is talking to the intended</span>
-    <span class="c1"># master</span>
-    <span class="s1">&#39;syndic_finger&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The key fingerprint of the higher-level master for the syndic to verify it is talking to the intended</span>
+    <span class="c"># master</span>
+    <span class="s">&#39;syndic_finger&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The user under which the daemon should run</span>
-    <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The user under which the daemon should run</span>
+    <span class="s">&#39;user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The root directory prepended to these options: pki_dir, cachedir,</span>
-    <span class="c1"># sock_dir, log_file, autosign_file, autoreject_file, extension_modules,</span>
-    <span class="c1"># key_logfile, pidfile:</span>
-    <span class="s1">&#39;root_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The root directory prepended to these options: pki_dir, cachedir,</span>
+    <span class="c"># sock_dir, log_file, autosign_file, autoreject_file, extension_modules,</span>
+    <span class="c"># key_logfile, pidfile:</span>
+    <span class="s">&#39;root_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The directory used to store public key data</span>
-    <span class="s1">&#39;pki_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The directory used to store public key data</span>
+    <span class="s">&#39;pki_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># A unique identifier for this daemon</span>
-    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># A unique identifier for this daemon</span>
+    <span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The directory to store all cache files.</span>
-    <span class="s1">&#39;cachedir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The directory to store all cache files.</span>
+    <span class="s">&#39;cachedir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Flag to cache jobs locally.</span>
-    <span class="s1">&#39;cache_jobs&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Flag to cache jobs locally.</span>
+    <span class="s">&#39;cache_jobs&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The path to the salt configuration file</span>
-    <span class="s1">&#39;conf_file&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The path to the salt configuration file</span>
+    <span class="s">&#39;conf_file&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The directory containing unix sockets for things like the event bus</span>
-    <span class="s1">&#39;sock_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The directory containing unix sockets for things like the event bus</span>
+    <span class="s">&#39;sock_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Specifies how the file server should backup files, if enabled. The backups</span>
-    <span class="c1"># live in the cache dir.</span>
-    <span class="s1">&#39;backup_mode&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Specifies how the file server should backup files, if enabled. The backups</span>
+    <span class="c"># live in the cache dir.</span>
+    <span class="s">&#39;backup_mode&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># A default renderer for all operations on this host</span>
-    <span class="s1">&#39;renderer&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># A default renderer for all operations on this host</span>
+    <span class="s">&#39;renderer&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Renderer whitelist. The only renderers from this list are allowed.</span>
-    <span class="s1">&#39;renderer_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Renderer whitelist. The only renderers from this list are allowed.</span>
+    <span class="s">&#39;renderer_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># Rendrerer blacklist. Renderers from this list are disalloed even if specified in whitelist.</span>
-    <span class="s1">&#39;renderer_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Rendrerer blacklist. Renderers from this list are disalloed even if specified in whitelist.</span>
+    <span class="s">&#39;renderer_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># A flag indicating that a highstate run should immediately cease if a failure occurs.</span>
-    <span class="s1">&#39;failhard&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># A flag indicating that a highstate run should immediately cease if a failure occurs.</span>
+    <span class="s">&#39;failhard&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># A flag to indicate that highstate runs should force refresh the modules prior to execution</span>
-    <span class="s1">&#39;autoload_dynamic_modules&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># A flag to indicate that highstate runs should force refresh the modules prior to execution</span>
+    <span class="s">&#39;autoload_dynamic_modules&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Force the minion into a single environment when it fetches files from the master</span>
-    <span class="s1">&#39;environment&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Force the minion into a single environment when it fetches files from the master</span>
+    <span class="s">&#39;environment&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Force the minion into a single pillar root when it fetches pillar data from the master</span>
-    <span class="s1">&#39;pillarenv&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Force the minion into a single pillar root when it fetches pillar data from the master</span>
+    <span class="s">&#39;pillarenv&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Allows a user to provide an alternate name for top.sls</span>
-    <span class="s1">&#39;state_top&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Allows a user to provide an alternate name for top.sls</span>
+    <span class="s">&#39;state_top&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="s1">&#39;state_top_saltenv&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;state_top_saltenv&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># States to run when a minion starts up</span>
-    <span class="s1">&#39;startup_states&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># States to run when a minion starts up</span>
+    <span class="s">&#39;startup_states&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># List of startup states</span>
-    <span class="s1">&#39;sls_list&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># List of startup states</span>
+    <span class="s">&#39;sls_list&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># A top file to execute if startup_states == &#39;top&#39;</span>
-    <span class="s1">&#39;top_file&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># A top file to execute if startup_states == &#39;top&#39;</span>
+    <span class="s">&#39;top_file&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Location of the files a minion should look for. Set to &#39;local&#39; to never ask the master.</span>
-    <span class="s1">&#39;file_client&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Location of the files a minion should look for. Set to &#39;local&#39; to never ask the master.</span>
+    <span class="s">&#39;file_client&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># When using a local file_client, this parameter is used to allow the client to connect to</span>
-    <span class="c1"># a master for remote execution.</span>
-    <span class="s1">&#39;use_master_when_local&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># When using a local file_client, this parameter is used to allow the client to connect to</span>
+    <span class="c"># a master for remote execution.</span>
+    <span class="s">&#39;use_master_when_local&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># A map of saltenvs and fileserver backend locations</span>
-    <span class="s1">&#39;file_roots&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="c"># A map of saltenvs and fileserver backend locations</span>
+    <span class="s">&#39;file_roots&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
 
-    <span class="c1"># A map of saltenvs and fileserver backend locations</span>
-    <span class="s1">&#39;pillar_roots&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="c"># A map of saltenvs and fileserver backend locations</span>
+    <span class="s">&#39;pillar_roots&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
 
-    <span class="c1"># The type of hashing algorithm to use when doing file comparisons</span>
-    <span class="s1">&#39;hash_type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The type of hashing algorithm to use when doing file comparisons</span>
+    <span class="s">&#39;hash_type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># FIXME Does not appear to be implemented</span>
-    <span class="s1">&#39;disable_modules&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># FIXME Does not appear to be implemented</span>
+    <span class="s">&#39;disable_modules&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># FIXME Does not appear to be implemented</span>
-    <span class="s1">&#39;disable_returners&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># FIXME Does not appear to be implemented</span>
+    <span class="s">&#39;disable_returners&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># Tell the loader to only load modules in this list</span>
-    <span class="s1">&#39;whitelist_modules&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Tell the loader to only load modules in this list</span>
+    <span class="s">&#39;whitelist_modules&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># A list of additional directories to search for salt modules in</span>
-    <span class="s1">&#39;module_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># A list of additional directories to search for salt modules in</span>
+    <span class="s">&#39;module_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># A list of additional directories to search for salt returners in</span>
-    <span class="s1">&#39;returner_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># A list of additional directories to search for salt returners in</span>
+    <span class="s">&#39;returner_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># A list of additional directories to search for salt states in</span>
-    <span class="s1">&#39;states_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># A list of additional directories to search for salt states in</span>
+    <span class="s">&#39;states_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># A list of additional directories to search for salt grains in</span>
-    <span class="s1">&#39;grains_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># A list of additional directories to search for salt grains in</span>
+    <span class="s">&#39;grains_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># A list of additional directories to search for salt renderers in</span>
-    <span class="s1">&#39;render_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># A list of additional directories to search for salt renderers in</span>
+    <span class="s">&#39;render_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># A list of additional directories to search for salt outputters in</span>
-    <span class="s1">&#39;outputter_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># A list of additional directories to search for salt outputters in</span>
+    <span class="s">&#39;outputter_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># A list of additional directories to search for salt utilities in. (Used by the loader</span>
-    <span class="c1"># to populate __utils__)</span>
-    <span class="s1">&#39;utils_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># A list of additional directories to search for salt utilities in. (Used by the loader</span>
+    <span class="c"># to populate __utils__)</span>
+    <span class="s">&#39;utils_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># salt cloud providers</span>
-    <span class="s1">&#39;providers&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="c"># salt cloud providers</span>
+    <span class="s">&#39;providers&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
 
-    <span class="c1"># First remove all modules during any sync operation</span>
-    <span class="s1">&#39;clean_dynamic_modules&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># First remove all modules during any sync operation</span>
+    <span class="s">&#39;clean_dynamic_modules&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># A flag indicating that a master should accept any minion connection without any authentication</span>
-    <span class="s1">&#39;open_mode&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># A flag indicating that a master should accept any minion connection without any authentication</span>
+    <span class="s">&#39;open_mode&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Whether or not processes should be forked when needed. The alternative is to use threading.</span>
-    <span class="s1">&#39;multiprocessing&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Whether or not processes should be forked when needed. The alternative is to use threading.</span>
+    <span class="s">&#39;multiprocessing&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Whether or not the salt minion should run scheduled mine updates</span>
-    <span class="s1">&#39;mine_enabled&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Whether or not the salt minion should run scheduled mine updates</span>
+    <span class="s">&#39;mine_enabled&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Whether or not scheduled mine updates should be accompanied by a job return for the job cache</span>
-    <span class="s1">&#39;mine_return_job&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Whether or not scheduled mine updates should be accompanied by a job return for the job cache</span>
+    <span class="s">&#39;mine_return_job&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Schedule a mine update every n number of seconds</span>
-    <span class="s1">&#39;mine_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Schedule a mine update every n number of seconds</span>
+    <span class="s">&#39;mine_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The ipc strategy. (i.e., sockets versus tcp, etc)</span>
-    <span class="s1">&#39;ipc_mode&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The ipc strategy. (i.e., sockets versus tcp, etc)</span>
+    <span class="s">&#39;ipc_mode&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Enable ipv6 support for daemons</span>
-    <span class="s1">&#39;ipv6&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Enable ipv6 support for daemons</span>
+    <span class="s">&#39;ipv6&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The chunk size to use when streaming files with the file server</span>
-    <span class="s1">&#39;file_buffer_size&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The chunk size to use when streaming files with the file server</span>
+    <span class="s">&#39;file_buffer_size&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The TCP port on which minion events should be published if ipc_mode is TCP</span>
-    <span class="s1">&#39;tcp_pub_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The TCP port on which minion events should be published if ipc_mode is TCP</span>
+    <span class="s">&#39;tcp_pub_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The TCP port on which minion events should be pulled if ipc_mode is TCP</span>
-    <span class="s1">&#39;tcp_pull_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The TCP port on which minion events should be pulled if ipc_mode is TCP</span>
+    <span class="s">&#39;tcp_pull_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The TCP port on which events for the master should be pulled if ipc_mode is TCP</span>
-    <span class="s1">&#39;tcp_master_pub_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The TCP port on which events for the master should be pulled if ipc_mode is TCP</span>
+    <span class="s">&#39;tcp_master_pub_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The TCP port on which events for the master should be pulled if ipc_mode is TCP</span>
-    <span class="s1">&#39;tcp_master_pull_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The TCP port on which events for the master should be pulled if ipc_mode is TCP</span>
+    <span class="s">&#39;tcp_master_pull_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The TCP port on which events for the master should pulled and then republished onto</span>
-    <span class="c1"># the event bus on the master</span>
-    <span class="s1">&#39;tcp_master_publish_pull&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The TCP port on which events for the master should pulled and then republished onto</span>
+    <span class="c"># the event bus on the master</span>
+    <span class="s">&#39;tcp_master_publish_pull&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The TCP port for mworkers to connect to on the master</span>
-    <span class="s1">&#39;tcp_master_workers&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The TCP port for mworkers to connect to on the master</span>
+    <span class="s">&#39;tcp_master_workers&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The file to send logging data to</span>
-    <span class="s1">&#39;log_file&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The file to send logging data to</span>
+    <span class="s">&#39;log_file&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The level of verbosity at which to log</span>
-    <span class="s1">&#39;log_level&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The level of verbosity at which to log</span>
+    <span class="s">&#39;log_level&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The log level to log to a given file</span>
-    <span class="s1">&#39;log_level_logfile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The log level to log to a given file</span>
+    <span class="s">&#39;log_level_logfile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The format to construct dates in log files</span>
-    <span class="s1">&#39;log_datefmt&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The format to construct dates in log files</span>
+    <span class="s">&#39;log_datefmt&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The dateformat for a given logfile</span>
-    <span class="s1">&#39;log_datefmt_logfile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The dateformat for a given logfile</span>
+    <span class="s">&#39;log_datefmt_logfile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The format for console logs</span>
-    <span class="s1">&#39;log_fmt_console&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The format for console logs</span>
+    <span class="s">&#39;log_fmt_console&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The format for a given log file</span>
-    <span class="s1">&#39;log_fmt_logfile&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
+    <span class="c"># The format for a given log file</span>
+    <span class="s">&#39;log_fmt_logfile&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
 
-    <span class="c1"># A dictionary of logging levels</span>
-    <span class="s1">&#39;log_granular_levels&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="c"># A dictionary of logging levels</span>
+    <span class="s">&#39;log_granular_levels&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
 
-    <span class="c1"># If an event is above this size, it will be trimmed before putting it on the event bus</span>
-    <span class="s1">&#39;max_event_size&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># If an event is above this size, it will be trimmed before putting it on the event bus</span>
+    <span class="s">&#39;max_event_size&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Always execute states with test=True if this flag is set</span>
-    <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Always execute states with test=True if this flag is set</span>
+    <span class="s">&#39;test&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Tell the loader to attempt to import *.pyx cython files if cython is available</span>
-    <span class="s1">&#39;cython_enable&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Tell the loader to attempt to import *.pyx cython files if cython is available</span>
+    <span class="s">&#39;cython_enable&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Tell the loader to attempt to import *.zip archives</span>
-    <span class="s1">&#39;enable_zip_modules&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Tell the loader to attempt to import *.zip archives</span>
+    <span class="s">&#39;enable_zip_modules&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Tell the client to show minions that have timed out</span>
-    <span class="s1">&#39;show_timeout&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Tell the client to show minions that have timed out</span>
+    <span class="s">&#39;show_timeout&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Tell the client to display the jid when a job is published</span>
-    <span class="s1">&#39;show_jid&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Tell the client to display the jid when a job is published</span>
+    <span class="s">&#39;show_jid&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Tells the highstate outputter to show successful states. False will omit successes.</span>
-    <span class="s1">&#39;state_verbose&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Tells the highstate outputter to show successful states. False will omit successes.</span>
+    <span class="s">&#39;state_verbose&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Specify the format for state outputs. See highstate outputter for additional details.</span>
-    <span class="s1">&#39;state_output&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Specify the format for state outputs. See highstate outputter for additional details.</span>
+    <span class="s">&#39;state_output&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Tells the highstate outputter to only report diffs of states that changed</span>
-    <span class="s1">&#39;state_output_diff&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Tells the highstate outputter to only report diffs of states that changed</span>
+    <span class="s">&#39;state_output_diff&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># When true, states run in the order defined in an SLS file, unless requisites re-order them</span>
-    <span class="s1">&#39;state_auto_order&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># When true, states run in the order defined in an SLS file, unless requisites re-order them</span>
+    <span class="s">&#39;state_auto_order&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Fire events as state chunks are processed by the state compiler</span>
-    <span class="s1">&#39;state_events&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Fire events as state chunks are processed by the state compiler</span>
+    <span class="s">&#39;state_events&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The number of seconds a minion should wait before retry when attempting authentication</span>
-    <span class="s1">&#39;acceptance_wait_time&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># The number of seconds a minion should wait before retry when attempting authentication</span>
+    <span class="s">&#39;acceptance_wait_time&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># The number of seconds a minion should wait before giving up during authentication</span>
-    <span class="s1">&#39;acceptance_wait_time_max&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># The number of seconds a minion should wait before giving up during authentication</span>
+    <span class="s">&#39;acceptance_wait_time_max&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># Retry a connection attempt if the master rejects a minion&#39;s public key</span>
-    <span class="s1">&#39;rejected_retry&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Retry a connection attempt if the master rejects a minion&#39;s public key</span>
+    <span class="s">&#39;rejected_retry&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The interval in which a daemon&#39;s main loop should attempt to perform all necessary tasks</span>
-    <span class="c1"># for normal operation</span>
-    <span class="s1">&#39;loop_interval&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># The interval in which a daemon&#39;s main loop should attempt to perform all necessary tasks</span>
+    <span class="c"># for normal operation</span>
+    <span class="s">&#39;loop_interval&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># Perform pre-flight verification steps before daemon startup, such as checking configuration</span>
-    <span class="c1"># files and certain directories.</span>
-    <span class="s1">&#39;verify_env&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Perform pre-flight verification steps before daemon startup, such as checking configuration</span>
+    <span class="c"># files and certain directories.</span>
+    <span class="s">&#39;verify_env&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The grains dictionary for a minion, containing specific &quot;facts&quot; about the minion</span>
-    <span class="s1">&#39;grains&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="c"># The grains dictionary for a minion, containing specific &quot;facts&quot; about the minion</span>
+    <span class="s">&#39;grains&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
 
-    <span class="c1"># Allow a daemon to function even if the key directories are not secured</span>
-    <span class="s1">&#39;permissive_pki_access&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Allow a daemon to function even if the key directories are not secured</span>
+    <span class="s">&#39;permissive_pki_access&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The path to a directory to pull in configuration file includes</span>
-    <span class="s1">&#39;default_include&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The path to a directory to pull in configuration file includes</span>
+    <span class="s">&#39;default_include&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># If a minion is running an esky build of salt, upgrades can be performed using the url</span>
-    <span class="c1"># defined here. See saltutil.update() for additional information</span>
-    <span class="s1">&#39;update_url&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">string_types</span><span class="p">),</span>
+    <span class="c"># If a minion is running an esky build of salt, upgrades can be performed using the url</span>
+    <span class="c"># defined here. See saltutil.update() for additional information</span>
+    <span class="s">&#39;update_url&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="n">string_types</span><span class="p">),</span>
 
-    <span class="c1"># If using update_url with saltutil.update(), provide a list of services to be restarted</span>
-    <span class="c1"># post-install</span>
-    <span class="s1">&#39;update_restart_services&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># If using update_url with saltutil.update(), provide a list of services to be restarted</span>
+    <span class="c"># post-install</span>
+    <span class="s">&#39;update_restart_services&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># The number of seconds to sleep between retrying an attempt to resolve the hostname of a</span>
-    <span class="c1"># salt master</span>
-    <span class="s1">&#39;retry_dns&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># The number of seconds to sleep between retrying an attempt to resolve the hostname of a</span>
+    <span class="c"># salt master</span>
+    <span class="s">&#39;retry_dns&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># set the zeromq_reconnect_ivl option on the minion.</span>
-    <span class="c1"># http://lists.zeromq.org/pipermail/zeromq-dev/2011-January/008845.html</span>
-    <span class="s1">&#39;recon_max&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># set the zeromq_reconnect_ivl option on the minion.</span>
+    <span class="c"># http://lists.zeromq.org/pipermail/zeromq-dev/2011-January/008845.html</span>
+    <span class="s">&#39;recon_max&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># If recon_randomize is set, this specifies the lower bound for the randomized period</span>
-    <span class="s1">&#39;recon_default&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># If recon_randomize is set, this specifies the lower bound for the randomized period</span>
+    <span class="s">&#39;recon_default&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># Tells the minion to choose a bounded, random interval to have zeromq attempt to reconnect</span>
-    <span class="c1"># in the event of a disconnect event</span>
-    <span class="s1">&#39;recon_randomize&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Tells the minion to choose a bounded, random interval to have zeromq attempt to reconnect</span>
+    <span class="c"># in the event of a disconnect event</span>
+    <span class="s">&#39;recon_randomize&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="s1">&#39;return_retry_timer&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="s1">&#39;return_retry_timer_max&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s">&#39;return_retry_timer&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s">&#39;return_retry_timer_max&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Specify a returner in which all events will be sent to. Requires that the returner in question</span>
-    <span class="c1"># have an event_return(event) function!</span>
-    <span class="s1">&#39;event_return&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Specify a returner in which all events will be sent to. Requires that the returner in question</span>
+    <span class="c"># have an event_return(event) function!</span>
+    <span class="s">&#39;event_return&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The number of events to queue up in memory before pushing them down the pipe to an event returner</span>
-    <span class="c1"># specified by &#39;event_return&#39;</span>
-    <span class="s1">&#39;event_return_queue&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of events to queue up in memory before pushing them down the pipe to an event returner</span>
+    <span class="c"># specified by &#39;event_return&#39;</span>
+    <span class="s">&#39;event_return_queue&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Only forward events to an event returner if it matches one of the tags in this list</span>
-    <span class="s1">&#39;event_return_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Only forward events to an event returner if it matches one of the tags in this list</span>
+    <span class="s">&#39;event_return_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># Events matching a tag in this list should never be sent to an event returner.</span>
-    <span class="s1">&#39;event_return_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Events matching a tag in this list should never be sent to an event returner.</span>
+    <span class="s">&#39;event_return_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># default match type for filtering events tags: startswith, endswith, find, regex, fnmatch</span>
-    <span class="s1">&#39;event_match_type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># default match type for filtering events tags: startswith, endswith, find, regex, fnmatch</span>
+    <span class="s">&#39;event_match_type&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># This pidfile to write out to when a daemon starts</span>
-    <span class="s1">&#39;pidfile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># This pidfile to write out to when a daemon starts</span>
+    <span class="s">&#39;pidfile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Used with the SECO range master tops system</span>
-    <span class="s1">&#39;range_server&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Used with the SECO range master tops system</span>
+    <span class="s">&#39;range_server&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The tcp keepalive interval to set on TCP ports. This setting can be used to tune salt connectivity</span>
-    <span class="c1"># issues in messy network environments with misbehaving firewalls</span>
-    <span class="s1">&#39;tcp_keepalive&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># The tcp keepalive interval to set on TCP ports. This setting can be used to tune salt connectivity</span>
+    <span class="c"># issues in messy network environments with misbehaving firewalls</span>
+    <span class="s">&#39;tcp_keepalive&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Sets zeromq TCP keepalive idle. May be used to tune issues with minion disconnects</span>
-    <span class="s1">&#39;tcp_keepalive_idle&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># Sets zeromq TCP keepalive idle. May be used to tune issues with minion disconnects</span>
+    <span class="s">&#39;tcp_keepalive_idle&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># Sets zeromq TCP keepalive count. May be used to tune issues with minion disconnects</span>
-    <span class="s1">&#39;tcp_keepalive_cnt&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># Sets zeromq TCP keepalive count. May be used to tune issues with minion disconnects</span>
+    <span class="s">&#39;tcp_keepalive_cnt&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># Sets zeromq TCP keepalive interval. May be used to tune issues with minion disconnects.</span>
-    <span class="s1">&#39;tcp_keepalive_intvl&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># Sets zeromq TCP keepalive interval. May be used to tune issues with minion disconnects.</span>
+    <span class="s">&#39;tcp_keepalive_intvl&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># The network interface for a daemon to bind to</span>
-    <span class="s1">&#39;interface&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The network interface for a daemon to bind to</span>
+    <span class="s">&#39;interface&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The port for a salt master to broadcast publications on. This will also be the port minions</span>
-    <span class="c1"># connect to to listen for publications.</span>
-    <span class="s1">&#39;publish_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The port for a salt master to broadcast publications on. This will also be the port minions</span>
+    <span class="c"># connect to to listen for publications.</span>
+    <span class="s">&#39;publish_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># TODO unknown option!</span>
-    <span class="s1">&#39;auth_mode&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># TODO unknown option!</span>
+    <span class="s">&#39;auth_mode&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Set the zeromq high water mark on the publisher interface.</span>
-    <span class="c1"># http://api.zeromq.org/3-2:zmq-setsockopt</span>
-    <span class="s1">&#39;pub_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Set the zeromq high water mark on the publisher interface.</span>
+    <span class="c"># http://api.zeromq.org/3-2:zmq-setsockopt</span>
+    <span class="s">&#39;pub_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># ZMQ HWM for SaltEvent pub socket</span>
-    <span class="s1">&#39;salt_event_pub_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="c1"># ZMQ HWM for EventPublisher pub socket</span>
-    <span class="s1">&#39;event_publisher_pub_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># ZMQ HWM for SaltEvent pub socket</span>
+    <span class="s">&#39;salt_event_pub_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># ZMQ HWM for EventPublisher pub socket</span>
+    <span class="s">&#39;event_publisher_pub_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The number of MWorker processes for a master to startup. This number needs to scale up as</span>
-    <span class="c1"># the number of connected minions increases.</span>
-    <span class="s1">&#39;worker_threads&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of MWorker processes for a master to startup. This number needs to scale up as</span>
+    <span class="c"># the number of connected minions increases.</span>
+    <span class="s">&#39;worker_threads&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The port for the master to listen to returns on. The minion needs to connect to this port</span>
-    <span class="c1"># to send returns.</span>
-    <span class="s1">&#39;ret_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The port for the master to listen to returns on. The minion needs to connect to this port</span>
+    <span class="c"># to send returns.</span>
+    <span class="s">&#39;ret_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The number of hours to keep jobs around in the job cache on the master</span>
-    <span class="s1">&#39;keep_jobs&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of hours to keep jobs around in the job cache on the master</span>
+    <span class="s">&#39;keep_jobs&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># A master-only copy of the file_roots dictionary, used by the state compiler</span>
-    <span class="s1">&#39;master_roots&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="c"># A master-only copy of the file_roots dictionary, used by the state compiler</span>
+    <span class="s">&#39;master_roots&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
 
-    <span class="c1"># Add the proxymodule LazyLoader object to opts.  This breaks many things</span>
-    <span class="c1"># but this was the default pre 2015.8.2.  This should default to</span>
-    <span class="c1"># False in 2016.3.0</span>
-    <span class="s1">&#39;add_proxymodule_to_opts&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_base&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_branch&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_env&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_root&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_ssl_verify&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_global_lock&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_insecure_auth&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_privkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_pubkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;git_pillar_passphrase&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_remotes&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_mountpoint&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_root&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_base&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_insecure_auth&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_privkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_pubkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_passphrase&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_env_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_env_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_ssl_verify&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_global_lock&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;gitfs_saltenv&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;hgfs_remotes&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;hgfs_mountpoint&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;hgfs_root&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;hgfs_base&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;hgfs_branch_method&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;hgfs_env_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;hgfs_env_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;svnfs_remotes&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;svnfs_mountpoint&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;svnfs_root&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;svnfs_trunk&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;svnfs_branches&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;svnfs_tags&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;svnfs_env_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;svnfs_env_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;minionfs_env&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;minionfs_mountpoint&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;minionfs_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;minionfs_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Add the proxymodule LazyLoader object to opts.  This breaks many things</span>
+    <span class="c"># but this was the default pre 2015.8.2.  This should default to</span>
+    <span class="c"># False in 2016.3.0</span>
+    <span class="s">&#39;add_proxymodule_to_opts&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_base&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_branch&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_env&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_root&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_ssl_verify&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_global_lock&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_insecure_auth&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_privkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_pubkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;git_pillar_passphrase&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_remotes&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_mountpoint&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_root&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_base&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_insecure_auth&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_privkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_pubkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_passphrase&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_env_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_env_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_ssl_verify&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_global_lock&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;gitfs_saltenv&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;hgfs_remotes&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;hgfs_mountpoint&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;hgfs_root&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;hgfs_base&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;hgfs_branch_method&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;hgfs_env_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;hgfs_env_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;svnfs_remotes&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;svnfs_mountpoint&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;svnfs_root&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;svnfs_trunk&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;svnfs_branches&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;svnfs_tags&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;svnfs_env_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;svnfs_env_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;minionfs_env&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;minionfs_mountpoint&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;minionfs_whitelist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;minionfs_blacklist&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># Specify a list of external pillar systems to use</span>
-    <span class="s1">&#39;ext_pillar&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Specify a list of external pillar systems to use</span>
+    <span class="s">&#39;ext_pillar&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># Reserved for future use to version the pillar structure</span>
-    <span class="s1">&#39;pillar_version&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Reserved for future use to version the pillar structure</span>
+    <span class="s">&#39;pillar_version&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Whether or not a copy of the master opts dict should be rendered into minion pillars</span>
-    <span class="s1">&#39;pillar_opts&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Whether or not a copy of the master opts dict should be rendered into minion pillars</span>
+    <span class="s">&#39;pillar_opts&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Cache the master pillar to disk to avoid having to pass through the rendering system</span>
-    <span class="s1">&#39;pillar_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Cache the master pillar to disk to avoid having to pass through the rendering system</span>
+    <span class="s">&#39;pillar_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Pillar cache TTL, in seconds. Has no effect unless `pillar_cache` is True</span>
-    <span class="s1">&#39;pillar_cache_ttl&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Pillar cache TTL, in seconds. Has no effect unless `pillar_cache` is True</span>
+    <span class="s">&#39;pillar_cache_ttl&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Pillar cache backend. Defaults to `disk` which stores caches in the master cache</span>
-    <span class="s1">&#39;pillar_cache_backend&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Pillar cache backend. Defaults to `disk` which stores caches in the master cache</span>
+    <span class="s">&#39;pillar_cache_backend&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="s1">&#39;pillar_safe_render_error&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;pillar_safe_render_error&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># When creating a pillar, there are several strategies to choose from when</span>
-    <span class="c1"># encountering duplicate values</span>
-    <span class="s1">&#39;pillar_source_merging_strategy&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># When creating a pillar, there are several strategies to choose from when</span>
+    <span class="c"># encountering duplicate values</span>
+    <span class="s">&#39;pillar_source_merging_strategy&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Recursively merge lists by aggregating them instead of replacing them.</span>
-    <span class="s1">&#39;pillar_merge_lists&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Recursively merge lists by aggregating them instead of replacing them.</span>
+    <span class="s">&#39;pillar_merge_lists&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># How to merge multiple top files from multiple salt environments</span>
-    <span class="c1"># (saltenvs); can be &#39;merge&#39; or &#39;same&#39;</span>
-    <span class="s1">&#39;top_file_merging_strategy&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># How to merge multiple top files from multiple salt environments</span>
+    <span class="c"># (saltenvs); can be &#39;merge&#39; or &#39;same&#39;</span>
+    <span class="s">&#39;top_file_merging_strategy&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The ordering for salt environment merging, when top_file_merging_strategy</span>
-    <span class="c1"># is set to &#39;same&#39;</span>
-    <span class="s1">&#39;env_order&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># The ordering for salt environment merging, when top_file_merging_strategy</span>
+    <span class="c"># is set to &#39;same&#39;</span>
+    <span class="s">&#39;env_order&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># The salt environment which provides the default top file when</span>
-    <span class="c1"># top_file_merging_strategy is set to &#39;same&#39;; defaults to &#39;base&#39;</span>
-    <span class="s1">&#39;default_top&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The salt environment which provides the default top file when</span>
+    <span class="c"># top_file_merging_strategy is set to &#39;same&#39;; defaults to &#39;base&#39;</span>
+    <span class="s">&#39;default_top&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="s1">&#39;ping_on_rotate&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;peer&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="s1">&#39;preserve_minion_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;syndic_master&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">string_types</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span>
+    <span class="s">&#39;ping_on_rotate&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;peer&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="s">&#39;preserve_minion_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;syndic_master&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">string_types</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span>
 
-    <span class="c1"># The behaviour of the multimaster syndic when connection to a master of masters failed. Can</span>
-    <span class="c1"># specify &#39;random&#39; (default) or &#39;ordered&#39;. If set to &#39;random&#39; masters will be iterated in random</span>
-    <span class="c1"># order if &#39;ordered&#39; the configured order will be used.</span>
-    <span class="s1">&#39;syndic_failover&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;runner_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;client_acl&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="s1">&#39;client_acl_blacklist&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="s1">&#39;publisher_acl&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="s1">&#39;publisher_acl_blacklist&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="s1">&#39;sudo_acl&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;external_auth&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="s1">&#39;token_expire&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="s1">&#39;token_expire_user_override&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span>
-    <span class="s1">&#39;file_recv&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;file_recv_max_size&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="s1">&#39;file_ignore_regex&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">string_types</span><span class="p">),</span>
-    <span class="s1">&#39;file_ignore_glob&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">string_types</span><span class="p">),</span>
-    <span class="s1">&#39;fileserver_backend&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;fileserver_followsymlinks&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;fileserver_ignoresymlinks&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;fileserver_limit_traversal&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># The behaviour of the multimaster syndic when connection to a master of masters failed. Can</span>
+    <span class="c"># specify &#39;random&#39; (default) or &#39;ordered&#39;. If set to &#39;random&#39; masters will be iterated in random</span>
+    <span class="c"># order if &#39;ordered&#39; the configured order will be used.</span>
+    <span class="s">&#39;syndic_failover&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;runner_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;client_acl&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="s">&#39;client_acl_blacklist&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="s">&#39;publisher_acl&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="s">&#39;publisher_acl_blacklist&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="s">&#39;sudo_acl&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;external_auth&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="s">&#39;token_expire&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s">&#39;token_expire_user_override&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span>
+    <span class="s">&#39;file_recv&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;file_recv_max_size&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s">&#39;file_ignore_regex&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">string_types</span><span class="p">),</span>
+    <span class="s">&#39;file_ignore_glob&#39;</span><span class="p">:</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">string_types</span><span class="p">),</span>
+    <span class="s">&#39;fileserver_backend&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;fileserver_followsymlinks&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;fileserver_ignoresymlinks&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;fileserver_limit_traversal&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The number of open files a daemon is allowed to have open. Frequently needs to be increased</span>
-    <span class="c1"># higher than the system default in order to account for the way zeromq consumes file handles.</span>
-    <span class="s1">&#39;max_open_files&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of open files a daemon is allowed to have open. Frequently needs to be increased</span>
+    <span class="c"># higher than the system default in order to account for the way zeromq consumes file handles.</span>
+    <span class="s">&#39;max_open_files&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Automatically accept any key provided to the master. Implies that the key will be preserved</span>
-    <span class="c1"># so that subsequent connections will be authenticated even if this option has later been</span>
-    <span class="c1"># turned off.</span>
-    <span class="s1">&#39;auto_accept&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;autosign_timeout&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Automatically accept any key provided to the master. Implies that the key will be preserved</span>
+    <span class="c"># so that subsequent connections will be authenticated even if this option has later been</span>
+    <span class="c"># turned off.</span>
+    <span class="s">&#39;auto_accept&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;autosign_timeout&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># A mapping of external systems that can be used to generate topfile data.</span>
-    <span class="s1">&#39;master_tops&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="c"># A mapping of external systems that can be used to generate topfile data.</span>
+    <span class="s">&#39;master_tops&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
 
-    <span class="c1"># A flag that should be set on a top-level master when it is ordering around subordinate masters</span>
-    <span class="c1"># via the use of a salt syndic</span>
-    <span class="s1">&#39;order_masters&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># A flag that should be set on a top-level master when it is ordering around subordinate masters</span>
+    <span class="c"># via the use of a salt syndic</span>
+    <span class="s">&#39;order_masters&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Whether or not to cache jobs so that they can be examined later on</span>
-    <span class="s1">&#39;job_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Whether or not to cache jobs so that they can be examined later on</span>
+    <span class="s">&#39;job_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Define a returner to be used as an external job caching storage backend</span>
-    <span class="s1">&#39;ext_job_cache&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Define a returner to be used as an external job caching storage backend</span>
+    <span class="s">&#39;ext_job_cache&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Specify a returner for the master to use as a backend storage system to cache jobs returns</span>
-    <span class="c1"># that it receives</span>
-    <span class="s1">&#39;master_job_cache&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Specify a returner for the master to use as a backend storage system to cache jobs returns</span>
+    <span class="c"># that it receives</span>
+    <span class="s">&#39;master_job_cache&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Specify whether the master should store end times for jobs as returns come in</span>
-    <span class="s1">&#39;job_cache_store_endtime&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Specify whether the master should store end times for jobs as returns come in</span>
+    <span class="s">&#39;job_cache_store_endtime&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The minion data cache is a cache of information about the minions stored on the master.</span>
-    <span class="c1"># This information is primarily the pillar and grains data. The data is cached in the master</span>
-    <span class="c1"># cachedir under the name of the minion and used to predetermine what minions are expected to</span>
-    <span class="c1"># reply from executions.</span>
-    <span class="s1">&#39;minion_data_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># The minion data cache is a cache of information about the minions stored on the master.</span>
+    <span class="c"># This information is primarily the pillar and grains data. The data is cached in the master</span>
+    <span class="c"># cachedir under the name of the minion and used to predetermine what minions are expected to</span>
+    <span class="c"># reply from executions.</span>
+    <span class="s">&#39;minion_data_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The number of seconds between AES key rotations on the master</span>
-    <span class="s1">&#39;publish_session&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of seconds between AES key rotations on the master</span>
+    <span class="s">&#39;publish_session&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Defines a salt reactor. See http://docs.saltstack.com/en/latest/topics/reactor/</span>
-    <span class="s1">&#39;reactor&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Defines a salt reactor. See http://docs.saltstack.com/en/latest/topics/reactor/</span>
+    <span class="s">&#39;reactor&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># The TTL for the cache of the reactor configuration</span>
-    <span class="s1">&#39;reactor_refresh_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The TTL for the cache of the reactor configuration</span>
+    <span class="s">&#39;reactor_refresh_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The number of workers for the runner/wheel in the reactor</span>
-    <span class="s1">&#39;reactor_worker_threads&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of workers for the runner/wheel in the reactor</span>
+    <span class="s">&#39;reactor_worker_threads&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The queue size for workers in the reactor</span>
-    <span class="s1">&#39;reactor_worker_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The queue size for workers in the reactor</span>
+    <span class="s">&#39;reactor_worker_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Defines engines. See https://docs.saltstack.com/en/latest/topics/engines/</span>
-    <span class="s1">&#39;engines&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Defines engines. See https://docs.saltstack.com/en/latest/topics/engines/</span>
+    <span class="s">&#39;engines&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="s1">&#39;serial&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;search&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;serial&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;search&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The update interval, in seconds, for the master maintenance process to update the search</span>
-    <span class="c1"># index</span>
-    <span class="s1">&#39;search_index_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The update interval, in seconds, for the master maintenance process to update the search</span>
+    <span class="c"># index</span>
+    <span class="s">&#39;search_index_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># A compound target definition. See: http://docs.saltstack.com/en/latest/topics/targeting/nodegroups.html</span>
-    <span class="s1">&#39;nodegroups&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="c"># A compound target definition. See: http://docs.saltstack.com/en/latest/topics/targeting/nodegroups.html</span>
+    <span class="s">&#39;nodegroups&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
 
-    <span class="c1"># List-only nodegroups for salt-ssh. Each group must be formed as either a</span>
-    <span class="c1"># comma-separated list, or a YAML list.</span>
-    <span class="s1">&#39;ssh_list_nodegroups&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="c"># List-only nodegroups for salt-ssh. Each group must be formed as either a</span>
+    <span class="c"># comma-separated list, or a YAML list.</span>
+    <span class="s">&#39;ssh_list_nodegroups&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
 
-    <span class="c1"># By default, salt-ssh uses its own specially-generated RSA key to auth</span>
-    <span class="c1"># against minions. If this is set to True, salt-ssh will look in</span>
-    <span class="c1"># for a key at ~/.ssh/id_rsa, and fall back to using its own specially-</span>
-    <span class="c1"># generated RSA key if that file doesn&#39;t exist.</span>
-    <span class="s1">&#39;ssh_use_home_key&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># By default, salt-ssh uses its own specially-generated RSA key to auth</span>
+    <span class="c"># against minions. If this is set to True, salt-ssh will look in</span>
+    <span class="c"># for a key at ~/.ssh/id_rsa, and fall back to using its own specially-</span>
+    <span class="c"># generated RSA key if that file doesn&#39;t exist.</span>
+    <span class="s">&#39;ssh_use_home_key&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The logfile location for salt-key</span>
-    <span class="s1">&#39;key_logfile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The logfile location for salt-key</span>
+    <span class="s">&#39;key_logfile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The source location for the winrepo sls files</span>
-    <span class="c1"># (used by win_pkg.py, minion only)</span>
-    <span class="s1">&#39;winrepo_source_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The source location for the winrepo sls files</span>
+    <span class="c"># (used by win_pkg.py, minion only)</span>
+    <span class="s">&#39;winrepo_source_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="s1">&#39;winrepo_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_dir_ng&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_cachefile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_remotes&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_remotes_ng&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_branch&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_ssl_verify&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_insecure_auth&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_privkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_pubkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;winrepo_passphrase&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_dir_ng&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_cachefile&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_remotes&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_remotes_ng&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_branch&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_ssl_verify&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_insecure_auth&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_privkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_pubkey&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;winrepo_passphrase&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Set a hard limit for the amount of memory modules can consume on a minion.</span>
-    <span class="s1">&#39;modules_max_memory&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Set a hard limit for the amount of memory modules can consume on a minion.</span>
+    <span class="s">&#39;modules_max_memory&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The number of minutes between the minion refreshing its cache of grains</span>
-    <span class="s1">&#39;grains_refresh_every&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of minutes between the minion refreshing its cache of grains</span>
+    <span class="s">&#39;grains_refresh_every&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Use lspci to gather system data for grains on a minion</span>
-    <span class="s1">&#39;enable_lspci&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Use lspci to gather system data for grains on a minion</span>
+    <span class="s">&#39;enable_lspci&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The number of seconds for the salt client to wait for additional syndics to</span>
-    <span class="c1"># check in with their lists of expected minions before giving up</span>
-    <span class="s1">&#39;syndic_wait&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of seconds for the salt client to wait for additional syndics to</span>
+    <span class="c"># check in with their lists of expected minions before giving up</span>
+    <span class="s">&#39;syndic_wait&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># If this is set to True leading spaces and tabs are stripped from the start</span>
-    <span class="c1"># of a line to a block.</span>
-    <span class="s1">&#39;jinja_lstrip_blocks&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># If this is set to True leading spaces and tabs are stripped from the start</span>
+    <span class="c"># of a line to a block.</span>
+    <span class="s">&#39;jinja_lstrip_blocks&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># If this is set to True the first newline after a Jinja block is removed</span>
-    <span class="s1">&#39;jinja_trim_blocks&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># If this is set to True the first newline after a Jinja block is removed</span>
+    <span class="s">&#39;jinja_trim_blocks&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Cache minion ID to file</span>
-    <span class="s1">&#39;minion_id_caching&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Cache minion ID to file</span>
+    <span class="s">&#39;minion_id_caching&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># If set, the master will sign all publications before they are sent out</span>
-    <span class="s1">&#39;sign_pub_messages&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># If set, the master will sign all publications before they are sent out</span>
+    <span class="s">&#39;sign_pub_messages&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The size of key that should be generated when creating new keys</span>
-    <span class="s1">&#39;keysize&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The size of key that should be generated when creating new keys</span>
+    <span class="s">&#39;keysize&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The transport system for this daemon. (i.e. zeromq, raet, etc)</span>
-    <span class="s1">&#39;transport&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The transport system for this daemon. (i.e. zeromq, raet, etc)</span>
+    <span class="s">&#39;transport&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The number of seconds to wait when the client is requesting information about running jobs</span>
-    <span class="s1">&#39;gather_job_timeout&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of seconds to wait when the client is requesting information about running jobs</span>
+    <span class="s">&#39;gather_job_timeout&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The number of seconds to wait before timing out an authentication request</span>
-    <span class="s1">&#39;auth_timeout&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of seconds to wait before timing out an authentication request</span>
+    <span class="s">&#39;auth_timeout&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The number of attempts to authenticate to a master before giving up</span>
-    <span class="s1">&#39;auth_tries&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of attempts to authenticate to a master before giving up</span>
+    <span class="s">&#39;auth_tries&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The number of attempts to connect to a master before giving up.</span>
-    <span class="c1"># Set this to -1 for unlimited attempts. This allows for a master to have</span>
-    <span class="c1"># downtime and the minion to reconnect to it later when it comes back up.</span>
-    <span class="c1"># In &#39;failover&#39; mode, it is the number of attempts for each set of masters.</span>
-    <span class="c1"># In this mode, it will cycle through the list of masters for each attempt.</span>
-    <span class="s1">&#39;master_tries&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The number of attempts to connect to a master before giving up.</span>
+    <span class="c"># Set this to -1 for unlimited attempts. This allows for a master to have</span>
+    <span class="c"># downtime and the minion to reconnect to it later when it comes back up.</span>
+    <span class="c"># In &#39;failover&#39; mode, it is the number of attempts for each set of masters.</span>
+    <span class="c"># In this mode, it will cycle through the list of masters for each attempt.</span>
+    <span class="s">&#39;master_tries&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Never give up when trying to authenticate to a master</span>
-    <span class="s1">&#39;auth_safemode&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Never give up when trying to authenticate to a master</span>
+    <span class="s">&#39;auth_safemode&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="s1">&#39;random_master&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;random_master&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># An upper bound for the amount of time for a minion to sleep before attempting to</span>
-    <span class="c1"># reauth after a restart.</span>
-    <span class="s1">&#39;random_reauth_delay&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># An upper bound for the amount of time for a minion to sleep before attempting to</span>
+    <span class="c"># reauth after a restart.</span>
+    <span class="s">&#39;random_reauth_delay&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># The number of seconds for a syndic to poll for new messages that need to be forwarded</span>
-    <span class="s1">&#39;syndic_event_forward_timeout&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># The number of seconds for a syndic to poll for new messages that need to be forwarded</span>
+    <span class="s">&#39;syndic_event_forward_timeout&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># The length that the syndic event queue must hit before events are popped off and forwarded</span>
-    <span class="s1">&#39;syndic_jid_forward_cache_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The length that the syndic event queue must hit before events are popped off and forwarded</span>
+    <span class="s">&#39;syndic_jid_forward_cache_hwm&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="s1">&#39;ssh_passwd&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;ssh_port&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;ssh_sudo&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;ssh_timeout&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="s1">&#39;ssh_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;ssh_scan_ports&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;ssh_scan_timeout&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="s1">&#39;ssh_identities_only&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;ssh_passwd&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;ssh_port&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;ssh_sudo&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;ssh_timeout&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="s">&#39;ssh_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;ssh_scan_ports&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;ssh_scan_timeout&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="s">&#39;ssh_identities_only&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Enable ioflo verbose logging. Warning! Very verbose!</span>
-    <span class="s1">&#39;ioflo_verbose&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Enable ioflo verbose logging. Warning! Very verbose!</span>
+    <span class="s">&#39;ioflo_verbose&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="s1">&#39;ioflo_period&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="s">&#39;ioflo_period&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># Set ioflo to realtime. Useful only for testing/debugging to simulate many ioflo periods very quickly.</span>
-    <span class="s1">&#39;ioflo_realtime&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Set ioflo to realtime. Useful only for testing/debugging to simulate many ioflo periods very quickly.</span>
+    <span class="s">&#39;ioflo_realtime&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Location for ioflo logs</span>
-    <span class="s1">&#39;ioflo_console_logdir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># Location for ioflo logs</span>
+    <span class="s">&#39;ioflo_console_logdir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># The port to bind to when bringing up a RAET daemon</span>
-    <span class="s1">&#39;raet_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="s1">&#39;raet_alt_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="s1">&#39;raet_mutable&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;raet_main&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;raet_clear_remotes&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;raet_clear_remote_masters&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;raet_road_bufcnt&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="s1">&#39;raet_lane_bufcnt&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="s1">&#39;cluster_mode&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;cluster_masters&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-    <span class="s1">&#39;sqlite_queue_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># The port to bind to when bringing up a RAET daemon</span>
+    <span class="s">&#39;raet_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s">&#39;raet_alt_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s">&#39;raet_mutable&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;raet_main&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;raet_clear_remotes&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;raet_clear_remote_masters&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;raet_road_bufcnt&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s">&#39;raet_lane_bufcnt&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s">&#39;cluster_mode&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;cluster_masters&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;sqlite_queue_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="s1">&#39;queue_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="s">&#39;queue_dirs&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># Instructs the minion to ping its master(s) ever n number of seconds. Used</span>
-    <span class="c1"># primarily as a mitigation technique against minion disconnects.</span>
-    <span class="s1">&#39;ping_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Instructs the minion to ping its master(s) ever n number of seconds. Used</span>
+    <span class="c"># primarily as a mitigation technique against minion disconnects.</span>
+    <span class="s">&#39;ping_interval&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Instructs the salt CLI to print a summary of a minion responses before returning</span>
-    <span class="s1">&#39;cli_summary&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Instructs the salt CLI to print a summary of a minion responses before returning</span>
+    <span class="s">&#39;cli_summary&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># The maximum number of minion connections allowed by the master. Can have performance</span>
-    <span class="c1"># implications in large setups.</span>
-    <span class="s1">&#39;max_minions&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># The maximum number of minion connections allowed by the master. Can have performance</span>
+    <span class="c"># implications in large setups.</span>
+    <span class="s">&#39;max_minions&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
 
-    <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;username&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># Use zmq.SUSCRIBE to limit listening sockets to only process messages bound for them</span>
-    <span class="s1">&#39;zmq_filtering&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Use zmq.SUSCRIBE to limit listening sockets to only process messages bound for them</span>
+    <span class="s">&#39;zmq_filtering&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Connection caching. Can greatly speed up salt performance.</span>
-    <span class="s1">&#39;con_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="s1">&#39;rotate_aes_key&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Connection caching. Can greatly speed up salt performance.</span>
+    <span class="s">&#39;con_cache&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s">&#39;rotate_aes_key&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Cache ZeroMQ connections. Can greatly improve salt performance.</span>
-    <span class="s1">&#39;cache_sreqs&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Cache ZeroMQ connections. Can greatly improve salt performance.</span>
+    <span class="s">&#39;cache_sreqs&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Can be set to override the python_shell=False default in the cmd module</span>
-    <span class="s1">&#39;cmd_safe&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Can be set to override the python_shell=False default in the cmd module</span>
+    <span class="s">&#39;cmd_safe&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Used strictly for performance testing in RAET.</span>
-    <span class="s1">&#39;dummy_publisher&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Used strictly for performance testing in RAET.</span>
+    <span class="s">&#39;dummy_publisher&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Used by salt-api for master requests timeout</span>
-    <span class="s1">&#39;rest_timeout&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Used by salt-api for master requests timeout</span>
+    <span class="s">&#39;rest_timeout&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># If set, all minion exec module actions will be rerouted through sudo as this user</span>
-    <span class="s1">&#39;sudo_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c"># If set, all minion exec module actions will be rerouted through sudo as this user</span>
+    <span class="s">&#39;sudo_user&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 
-    <span class="c1"># HTTP request timeout in seconds. Applied for tornado http fetch functions like cp.get_url should be greater than</span>
-    <span class="c1"># overall download time.</span>
-    <span class="s1">&#39;http_request_timeout&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="c"># HTTP request timeout in seconds. Applied for tornado http fetch functions like cp.get_url should be greater than</span>
+    <span class="c"># overall download time.</span>
+    <span class="s">&#39;http_request_timeout&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 
-    <span class="c1"># HTTP request max file content size.</span>
-    <span class="s1">&#39;http_max_body&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># HTTP request max file content size.</span>
+    <span class="s">&#39;http_max_body&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># Delay in seconds before executing bootstrap (salt cloud)</span>
-    <span class="s1">&#39;bootstrap_delay&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># Delay in seconds before executing bootstrap (salt cloud)</span>
+    <span class="s">&#39;bootstrap_delay&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-    <span class="c1"># If a proxymodule has a function called &#39;grains&#39;, then call it during</span>
-    <span class="c1"># regular grains loading and merge the results with the proxy&#39;s grains</span>
-    <span class="c1"># dictionary.  Otherwise it is assumed that the module calls the grains</span>
-    <span class="c1"># function in a custom way and returns the data elsewhere</span>
-    <span class="c1">#</span>
-    <span class="c1"># Default to False for 2016.3 and Carbon.  Switch to True for Nitrogen</span>
-    <span class="s1">&#39;proxy_merge_grains_in_module&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># If a proxymodule has a function called &#39;grains&#39;, then call it during</span>
+    <span class="c"># regular grains loading and merge the results with the proxy&#39;s grains</span>
+    <span class="c"># dictionary.  Otherwise it is assumed that the module calls the grains</span>
+    <span class="c"># function in a custom way and returns the data elsewhere</span>
+    <span class="c">#</span>
+    <span class="c"># Default to False for 2016.3 and Carbon.  Switch to True for Nitrogen</span>
+    <span class="s">&#39;proxy_merge_grains_in_module&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># Command to use to restart salt-minion</span>
-    <span class="s1">&#39;minion_restart_command&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="c"># Command to use to restart salt-minion</span>
+    <span class="s">&#39;minion_restart_command&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
 
-    <span class="c1"># Whether or not a minion should send the results of a command back to the master</span>
-    <span class="c1"># Useful when a returner is the source of truth for a job result</span>
-    <span class="s1">&#39;pub_ret&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="c"># Whether or not a minion should send the results of a command back to the master</span>
+    <span class="c"># Useful when a returner is the source of truth for a job result</span>
+    <span class="s">&#39;pub_ret&#39;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 
-    <span class="c1"># HTTP proxy settings. Used in tornado fetch functions, apt-key etc</span>
-    <span class="s1">&#39;proxy_host&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;proxy_username&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;proxy_password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s1">&#39;proxy_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="c"># HTTP proxy settings. Used in tornado fetch functions, apt-key etc</span>
+    <span class="s">&#39;proxy_host&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;proxy_username&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;proxy_password&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s">&#39;proxy_port&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
 <span class="p">}</span>
 </pre></div></div>
@@ -883,6 +883,12 @@
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -890,12 +896,6 @@
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -917,7 +917,7 @@
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

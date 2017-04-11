@@ -83,7 +83,7 @@
 <a href="http://udn.yyuap.com/doc/logstash-best-practice-cn/">Logstash 最佳实践</a>
 <a href="http://grokdebug.herokuapp.com/">grok debug</a></p>
 <h2>Elasticsearch 类比传统关系型数据库</h2>
-<div class="highlight"><pre><span></span>Relational DB -&gt; Databases -&gt; Tables -&gt; Rows -&gt; Columns
+<div class="highlight"><pre>Relational DB -&gt; Databases -&gt; Tables -&gt; Rows -&gt; Columns
 Elasticsearch -&gt; Indices   -&gt; Types  -&gt; Documents -&gt; Fields
 </pre></div>
 
@@ -92,12 +92,12 @@ Elasticsearch -&gt; Indices   -&gt; Types  -&gt; Documents -&gt; Fields
 <p>Elasticsearch 推荐使用redis进行日志中转。所以大体流程如下<br />
 <strong>logfile --&gt; logstash收集 --&gt; redis --&gt; logstash转换,核心为grok进行日志解析 --&gt; Elasticsearch --&gt; kibana展示</strong></p>
 <h2>logstash 收集日志文件配置</h2>
-<div class="highlight"><pre><span></span>
+<div class="highlight"><pre>
 </pre></div>
 
 
 <h2>logstash 收集redis配置</h2>
-<div class="highlight"><pre><span></span>
+<div class="highlight"><pre>
 </pre></div>
 
 
@@ -105,7 +105,7 @@ Elasticsearch -&gt; Indices   -&gt; Types  -&gt; Documents -&gt; Fields
 <p>对于Elasticsearch其中很重要的一个配置在于template, 而里头最常用的是mapping  </p>
 <h3>新增template</h3>
 <p>下面是给nginx access log 使用的template, 其中需要注意的是order, Elasticsearch 会根据order 按顺序匹配多个template</p>
-<div class="highlight"><pre><span></span>curl -XPUT localhost:9200/_template/template-logstash-nginx-access -d&#39;
+<div class="highlight"><pre>curl -XPUT localhost:9200/_template/template-logstash-nginx-access -d&#39;
 {
     &quot;order&quot;: 1,
     &quot;template&quot;: &quot;logstash-nginx-access-*&quot;,
@@ -151,13 +151,13 @@ Elasticsearch -&gt; Indices   -&gt; Types  -&gt; Documents -&gt; Fields
 
 
 <h3>获取现有template</h3>
-<div class="highlight"><pre><span></span>curl -XGET localhost:9200/_template | python -m json.tool
+<div class="highlight"><pre>curl -XGET localhost:9200/_template | python -m json.tool
 </pre></div>
 
 
 <h2>中文分词</h2>
 <p>比较好的有smartcn和ik,这里用自带的smartcn</p>
-<div class="highlight"><pre><span></span># /usr/share/elasticsearch/bin/plugin install analysis-smartcn
+<div class="highlight"><pre># /usr/share/elasticsearch/bin/plugin install analysis-smartcn
 # service elasticsearch restart
 # curl http://127.0.0.1:9200/_analyze/ -d &#39;
 {
@@ -191,6 +191,12 @@ Elasticsearch -&gt; Indices   -&gt; Types  -&gt; Documents -&gt; Fields
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -198,12 +204,6 @@ Elasticsearch -&gt; Indices   -&gt; Types  -&gt; Documents -&gt; Fields
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -225,7 +225,7 @@ Elasticsearch -&gt; Indices   -&gt; Types  -&gt; Documents -&gt; Fields
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

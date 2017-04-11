@@ -4,8 +4,10 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Tag: queue &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <title>pypi &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
   <meta name="author" content="YiHan">
+
+
 
 
 
@@ -53,7 +55,7 @@
       <li >
         <a href="http://www.yilaguan.cc/category/mysql.html">Mysql</a>
       </li>
-      <li >
+      <li class="active">
         <a href="http://www.yilaguan.cc/category/python.html">Python</a>
       </li>
       <li >
@@ -66,35 +68,64 @@
   <div id="main">
     <div id="content">
 <div>
-	<article role="article">
-    	<header>
-    		<h1 class="entry-title">Tag: queue</h1>
-    	</header>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">pypi</h1>
+    <p class="meta">
+<time datetime="2016-11-08T00:00:00+08:00" pubdate>二 08 十一月 2016</time>    </p>
+</header>
 
-    	<div id="blog-archives">
-            <h2>2015</h2>
-                    <article>
-                        <h1><a href="http://www.yilaguan.cc/posts/2015/11/16/priority_queue.html">优先队列Python实现</a></h1>
-                        <time datetime="2015-11-16 00:00:00+08:00" pubdate>
-                            <span class="month">十一月</span>
-                            <span class="day">16</span>
-                            <span class="year">2015</span>
-                        </time>
-                        <footer>
-                            <span class="categories">posted in
-                                <a class='category' href='http://www.yilaguan.cc/category/algorithms.html'>Algorithms</a>
-                            </span>
-                        </footer>
-                    </article>
-	    </div>
-    </article>
+  <div class="entry-content"><h2>安装</h2>
+<p>pip install pip2pi</p>
+<h2>生成</h2>
+<div class="highlight"><pre>mkdir /data/pypi
+# requirements.txt
+pip2tgz /data/pypi -r ./requirements.txt -i http://pypi.douban.com/simple/
+# 启动服务
+dir2pi -N pypi/
+
+# 使用
+pip install pip --upgrade -i http://x.x.x.x:xxxx/pypi/simple --trusted-host x.x.x.x
+</pre></div></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">
+        YiHan
+    </span>
+  </span>
+<time datetime="2016-11-08T00:00:00+08:00" pubdate>二 08 十一月 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/python.html'>python</a>
+  </span>
+  <span class="categories">
+    <a class="category" href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a class="category" href="http://www.yilaguan.cc/tag/pip.html">pip</a>  </span>
+</p><div class="sharing">
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
 </div>
 <aside class="sidebar">
   <section>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2015/11/16/priority_queue.html">优先队列Python实现</a>
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html">Elasticsearch Logstash 小结</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
       </li>
     </ul>
   </section>
@@ -165,7 +196,7 @@
 </aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-    Copyright &copy;  2015  YiHan &mdash;
+    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
   <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
 </p></footer>
   <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>
@@ -173,6 +204,9 @@
   <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
     var disqus_shortname = 'yilaguan';
+    var disqus_identifier = '/posts/2016/11/08/pypi.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/11/08/pypi.html';
+    var disqus_title = 'pypi';
     (function() {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';

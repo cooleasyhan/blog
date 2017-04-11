@@ -76,7 +76,7 @@
 </header>
 
   <div class="entry-content"><h2>安装php</h2>
-<div class="highlight"><pre><span></span>yum install libxml2-devel bzip2-devel libcurl-devel libjpeg-devel libpng-devel freetype-devel openssl-devel  
+<div class="highlight"><pre>yum install libxml2-devel bzip2-devel libcurl-devel libjpeg-devel libpng-devel freetype-devel openssl-devel  
 ./configure --prefix=/usr/local/php-5.6 --with-config-file-path=/usr/local/php-5.6/etc --with-bz2 --with-curl --enable-ftp --enable-sockets --disable-ipv6 --with-gd --with-freetype-dir=/usr/local --enable-gd-native-ttf --with-iconv-dir=/usr/local --enable-mbstring --enable-calendar --with-gettext --with-libxml-dir=/usr/local --with-zlib --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql=mysqlnd --enable-dom --enable-xml --with-libdir=lib64 --with-openssl --enable-pdo --enable-fpm --enable-bcmath  
 
 make
@@ -86,7 +86,7 @@ make install
 
 <h2>安装Nginx</h2>
 <p>下载pcre, nginx</p>
-<div class="highlight"><pre><span></span>wget http://jaist.dl.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.bz2
+<div class="highlight"><pre>wget http://jaist.dl.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.bz2
 wget http://nginx.org/download/nginx-1.8.0.tar.gz
 
 tar -xvf ......
@@ -99,12 +99,12 @@ make install
 
 
 <h2>配置php-fpm</h2>
-<div class="highlight"><pre><span></span>cp /usr/local/php-5.6/etc/php-fpm.conf.default /usr/local/php-5.6/et/php-fpm.conf
+<div class="highlight"><pre>cp /usr/local/php-5.6/etc/php-fpm.conf.default /usr/local/php-5.6/et/php-fpm.conf
 </pre></div>
 
 
 <h3>例子1</h3>
-<div class="highlight"><pre><span></span><span class="k">[global]</span>
+<div class="highlight"><pre><span class="k">[global]</span>
 <span class="na">pid</span> <span class="o">=</span> <span class="s">/var/run/php-fpm.pid</span>
 <span class="na">error_log</span> <span class="o">=</span> <span class="s">/data/php/log/php-fpm.log</span>
 <span class="na">log_level</span> <span class="o">=</span> <span class="s">warning</span>
@@ -143,13 +143,13 @@ make install
 
 
 <h2>启动php-fpm</h2>
-<div class="highlight"><pre><span></span>/usr/local/php-5-6/sbin/php-fpm
+<div class="highlight"><pre>/usr/local/php-5-6/sbin/php-fpm
 </pre></div>
 
 
 <h2>配置nginx</h2>
 <h3>简单配置</h3>
-<div class="highlight"><pre><span></span><span class="nt">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="nt">server</span> <span class="p">{</span>
     <span class="n">listen</span>       <span class="m">80</span><span class="p">;</span>
     <span class="n">server_name</span>  <span class="n">localhost</span><span class="p">;</span> 
     <span class="n">location</span> <span class="o">/</span> <span class="err">{</span>
@@ -169,7 +169,7 @@ make install
 
 
 <h3>ThinkPhp 框架配置,兼容4种url模式</h3>
-<div class="highlight"><pre><span></span><span class="nt">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="nt">server</span> <span class="p">{</span>
     <span class="n">listen</span>       <span class="m">81</span><span class="p">;</span>
     <span class="n">server_name</span>  <span class="n">localhost</span><span class="p">;</span>
     <span class="n">root</span> <span class="o">/</span><span class="n">u01</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">opsfnd</span><span class="o">/</span><span class="p">;</span>
@@ -188,7 +188,7 @@ make install
     <span class="nt">location</span> <span class="k">@rewrite</span> <span class="p">{</span>
         <span class="nt">set</span> <span class="o">$</span><span class="nt">static</span> <span class="nt">0</span><span class="o">;</span>
         <span class="nt">if</span>  <span class="o">($</span><span class="nt">uri</span> <span class="o">~</span> <span class="err">\</span><span class="o">.(</span><span class="nt">css</span><span class="o">|</span><span class="nt">js</span><span class="o">|</span><span class="nt">jpg</span><span class="o">|</span><span class="nt">jpeg</span><span class="o">|</span><span class="nt">png</span><span class="o">|</span><span class="nt">gif</span><span class="o">|</span><span class="nt">ico</span><span class="o">|</span><span class="nt">woff</span><span class="o">|</span><span class="nt">eot</span><span class="o">|</span><span class="nt">svg</span><span class="o">|</span><span class="nt">css</span><span class="err">\</span><span class="nc">.map</span><span class="o">|</span><span class="nt">min</span><span class="err">\</span><span class="nc">.map</span><span class="o">)$)</span> <span class="p">{</span>
-            <span class="n">set</span> <span class="err">$</span><span class="nb">static</span> <span class="m">1</span><span class="p">;</span>
+            <span class="n">set</span> <span class="err">$</span><span class="k">static</span> <span class="m">1</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="nt">if</span> <span class="o">($</span><span class="nt">static</span> <span class="o">=</span> <span class="nt">0</span><span class="o">)</span> <span class="p">{</span>
             <span class="n">rewrite</span> <span class="o">^/</span><span class="p">(</span><span class="o">.*</span><span class="p">)</span><span class="err">$</span> <span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">php</span><span class="o">?</span><span class="n">s</span><span class="o">=/</span><span class="err">$</span><span class="m">1</span><span class="p">;</span>
@@ -243,6 +243,12 @@ make install
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -250,12 +256,6 @@ make install
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -277,7 +277,7 @@ make install
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

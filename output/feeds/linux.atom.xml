@@ -7,7 +7,7 @@
 &lt;a href="http://udn.yyuap.com/doc/logstash-best-practice-cn/"&gt;Logstash 最佳实践&lt;/a&gt;
 &lt;a href="http://grokdebug.herokuapp.com/"&gt;grok debug&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Elasticsearch 类比传统关系型数据库&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Relational DB -&amp;gt; Databases -&amp;gt; Tables -&amp;gt; Rows -&amp;gt; Columns
+&lt;div class="highlight"&gt;&lt;pre&gt;Relational DB -&amp;gt; Databases -&amp;gt; Tables -&amp;gt; Rows -&amp;gt; Columns
 Elasticsearch -&amp;gt; Indices   -&amp;gt; Types  -&amp;gt; Documents -&amp;gt; Fields
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -16,12 +16,12 @@ Elasticsearch -&amp;gt; Indices   -&amp;gt; Types  -&amp;gt; Documents -&amp;gt;
 &lt;p&gt;Elasticsearch 推荐使用redis进行日志中转。所以大体流程如下&lt;br /&gt;
 &lt;strong&gt;logfile --&amp;gt; logstash收集 --&amp;gt; redis --&amp;gt; logstash转换,核心为grok进行日志解析 --&amp;gt; Elasticsearch --&amp;gt; kibana展示&lt;/strong&gt;&lt;/p&gt;
 &lt;h2&gt;logstash 收集日志文件配置&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;logstash 收集redis配置&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -29,7 +29,7 @@ Elasticsearch -&amp;gt; Indices   -&amp;gt; Types  -&amp;gt; Documents -&amp;gt;
 &lt;p&gt;对于Elasticsearch其中很重要的一个配置在于template, 而里头最常用的是mapping  &lt;/p&gt;
 &lt;h3&gt;新增template&lt;/h3&gt;
 &lt;p&gt;下面是给nginx access log 使用的template, 其中需要注意的是order, Elasticsearch 会根据order 按顺序匹配多个template&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPUT localhost:9200/_template/template-logstash-nginx-access -d&amp;#39;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPUT localhost:9200/_template/template-logstash-nginx-access -d&amp;#39;
 {
     &amp;quot;order&amp;quot;: 1,
     &amp;quot;template&amp;quot;: &amp;quot;logstash-nginx-access-*&amp;quot;,
@@ -75,13 +75,13 @@ Elasticsearch -&amp;gt; Indices   -&amp;gt; Types  -&amp;gt; Documents -&amp;gt;
 
 
 &lt;h3&gt;获取现有template&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XGET localhost:9200/_template | python -m json.tool
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XGET localhost:9200/_template | python -m json.tool
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;中文分词&lt;/h2&gt;
 &lt;p&gt;比较好的有smartcn和ik,这里用自带的smartcn&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# /usr/share/elasticsearch/bin/plugin install analysis-smartcn
+&lt;div class="highlight"&gt;&lt;pre&gt;# /usr/share/elasticsearch/bin/plugin install analysis-smartcn
 # service elasticsearch restart
 # curl http://127.0.0.1:9200/_analyze/ -d &amp;#39;
 {
@@ -89,7 +89,7 @@ Elasticsearch -&amp;gt; Indices   -&amp;gt; Types  -&amp;gt; Documents -&amp;gt;
   &amp;quot;text&amp;quot;: &amp;quot;联想是全球最大的笔记本厂商&amp;quot;
 }&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category><category term="Kibana"></category><category term="elasticsearch"></category><category term="logstash"></category><category term="Log"></category></entry><entry><title>工具</title><link href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html" rel="alternate"></link><published>2016-02-04T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-02-04:posts/2016/02/04/gong-ju.html</id><summary type="html">&lt;h2&gt;安装mysql clint tora&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#sudo apt-get install tora
+&lt;div class="highlight"&gt;&lt;pre&gt;#sudo apt-get install tora
 #tora
 
 
@@ -99,12 +99,12 @@ error: no avaliable connection provider
 会问要不要覆盖坏准文件，选择n
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="shell"></category></entry><entry><title>redhat6 sftp 设置</title><link href="http://www.yilaguan.cc/posts/2015/12/03/redhat6-sftp-setup.html" rel="alternate"></link><published>2015-12-03T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-03:posts/2015/12/03/redhat6-sftp-setup.html</id><summary type="html">&lt;h2&gt;创建用户组&lt;/h2&gt;
 &lt;p&gt;用于与sftp设置进行匹配&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;groupadd  sftp_users
+&lt;div class="highlight"&gt;&lt;pre&gt;groupadd  sftp_users
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;设置sftp&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# Subsystem sftp    /usr/libexec/openssh/sftp-server
+&lt;div class="highlight"&gt;&lt;pre&gt;# Subsystem sftp    /usr/libexec/openssh/sftp-server
 Subsystem       sftp    internal-sftp
 Match Group sftp_users
         X11Forwarding no
@@ -141,7 +141,7 @@ Match Group sftp_users
 15
 16
 17
-18&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+18&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="nb"&gt;read&lt;/span&gt; -p &lt;span class="s2"&gt;&amp;quot;enter the user name: &amp;quot;&lt;/span&gt; USER_NAME
 
 &lt;span class="nv"&gt;BASE_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/sftp
@@ -291,22 +291,22 @@ passwd &lt;span class="nv"&gt;$USER_NAME&lt;/span&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;</summary><category term="linux"></category><category term="shell"></category></entry><entry><title>shell脚本片段</title><link href="http://www.yilaguan.cc/posts/2015/11/30/shelljiao-ben-pian-duan.html" rel="alternate"></link><published>2015-11-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-30:posts/2015/11/30/shelljiao-ben-pian-duan.html</id><summary type="html">&lt;h2&gt;read user enter&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;read -p &amp;quot;Read rows CNT[W]: &amp;quot; ROWS_CNT
+&lt;div class="highlight"&gt;&lt;pre&gt;read -p &amp;quot;Read rows CNT[W]: &amp;quot; ROWS_CNT
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;获取文件行数&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;ROW=`wc -l &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;DATA_FILE&lt;/span&gt;&lt;span class="x"&gt; | awk &amp;#39;&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;print &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="x"&gt;1}&amp;#39;`&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;ROW=`wc -l &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;DATA_FILE&lt;/span&gt;&lt;span class="x"&gt; | awk &amp;#39;&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;print &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="x"&gt;1}&amp;#39;`&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;浮点数计算&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;per=`awk &amp;#39;BEGIN&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;printf &amp;quot;%.2f\n&amp;quot;,&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;wcnt&lt;/span&gt;&lt;span class="x"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;scnt&lt;/span&gt;&lt;span class="x"&gt;&amp;#39;}&amp;#39;`&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;per=`awk &amp;#39;BEGIN&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;printf &amp;quot;%.2f\n&amp;quot;,&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;wcnt&lt;/span&gt;&lt;span class="x"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;scnt&lt;/span&gt;&lt;span class="x"&gt;&amp;#39;}&amp;#39;`&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;string=&amp;gt;list&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;list=&amp;quot;a,
+&lt;div class="highlight"&gt;&lt;pre&gt;list=&amp;quot;a,
 b,
 c,
 d
@@ -325,9 +325,9 @@ done
 
 
 &lt;h2&gt;ubuntu命令行多线程断点续传下载工具-axel&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;axel -n 10 xxxx.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;axel -n 10 xxxx.tar.gz
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category><category term="Shell"></category></entry><entry><title>Nginx, Php-fpm</title><link href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html" rel="alternate"></link><published>2015-11-26T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-26:posts/2015/11/26/nginx-php-fpm.html</id><summary type="html">&lt;h2&gt;安装php&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum install libxml2-devel bzip2-devel libcurl-devel libjpeg-devel libpng-devel freetype-devel openssl-devel  
+&lt;div class="highlight"&gt;&lt;pre&gt;yum install libxml2-devel bzip2-devel libcurl-devel libjpeg-devel libpng-devel freetype-devel openssl-devel  
 ./configure --prefix=/usr/local/php-5.6 --with-config-file-path=/usr/local/php-5.6/etc --with-bz2 --with-curl --enable-ftp --enable-sockets --disable-ipv6 --with-gd --with-freetype-dir=/usr/local --enable-gd-native-ttf --with-iconv-dir=/usr/local --enable-mbstring --enable-calendar --with-gettext --with-libxml-dir=/usr/local --with-zlib --with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql=mysqlnd --enable-dom --enable-xml --with-libdir=lib64 --with-openssl --enable-pdo --enable-fpm --enable-bcmath  
 
 make
@@ -337,7 +337,7 @@ make install
 
 &lt;h2&gt;安装Nginx&lt;/h2&gt;
 &lt;p&gt;下载pcre, nginx&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget http://jaist.dl.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.bz2
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://jaist.dl.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.bz2
 wget http://nginx.org/download/nginx-1.8.0.tar.gz
 
 tar -xvf ......
@@ -350,12 +350,12 @@ make install
 
 
 &lt;h2&gt;配置php-fpm&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cp /usr/local/php-5.6/etc/php-fpm.conf.default /usr/local/php-5.6/et/php-fpm.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;cp /usr/local/php-5.6/etc/php-fpm.conf.default /usr/local/php-5.6/et/php-fpm.conf
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;例子1&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[global]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[global]&lt;/span&gt;
 &lt;span class="na"&gt;pid&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/var/run/php-fpm.pid&lt;/span&gt;
 &lt;span class="na"&gt;error_log&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;/data/php/log/php-fpm.log&lt;/span&gt;
 &lt;span class="na"&gt;log_level&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;warning&lt;/span&gt;
@@ -394,13 +394,13 @@ make install
 
 
 &lt;h2&gt;启动php-fpm&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/usr/local/php-5-6/sbin/php-fpm
+&lt;div class="highlight"&gt;&lt;pre&gt;/usr/local/php-5-6/sbin/php-fpm
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;配置nginx&lt;/h2&gt;
 &lt;h3&gt;简单配置&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="n"&gt;listen&lt;/span&gt;       &lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;server_name&lt;/span&gt;  &lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; 
     &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
@@ -420,7 +420,7 @@ make install
 
 
 &lt;h3&gt;ThinkPhp 框架配置,兼容4种url模式&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="n"&gt;listen&lt;/span&gt;       &lt;span class="m"&gt;81&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;server_name&lt;/span&gt;  &lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;u01&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opsfnd&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -439,7 +439,7 @@ make install
     &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="k"&gt;@rewrite&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="nt"&gt;set&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;static&lt;/span&gt; &lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
         &lt;span class="nt"&gt;if&lt;/span&gt;  &lt;span class="o"&gt;($&lt;/span&gt;&lt;span class="nt"&gt;uri&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;.(&lt;/span&gt;&lt;span class="nt"&gt;css&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;js&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;jpg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;jpeg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;png&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;gif&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;ico&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;woff&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;eot&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;svg&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;css&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nc"&gt;.map&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="nt"&gt;min&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nc"&gt;.map&lt;/span&gt;&lt;span class="o"&gt;)$)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="nb"&gt;static&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
         &lt;span class="nt"&gt;if&lt;/span&gt; &lt;span class="o"&gt;($&lt;/span&gt;&lt;span class="nt"&gt;static&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
             &lt;span class="n"&gt;rewrite&lt;/span&gt; &lt;span class="o"&gt;^/&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;.*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;?&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -482,20 +482,20 @@ nat&lt;br /&gt;
 一般控制本机资源的访问，只要设置 filter中的INPUT 和 OUTPUT 就可以了&lt;br /&gt;
 &lt;img alt="链路图" src="/images/iptables_chain.gif" /&gt;&lt;/p&gt;
 &lt;h2&gt;查看设置&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -L -n -v -t tables
+&lt;div class="highlight"&gt;&lt;pre&gt;iptables -L -n -v -t tables
 -t 默认为filter
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;使用iptables-save 可以看到更有价值的信息，这部分内容也可以直接作为/etc/sysconfig/iptables 的配置文件内容&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables-save
+&lt;div class="highlight"&gt;&lt;pre&gt;iptables-save
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;清除设置&lt;/h2&gt;
 &lt;p&gt;先清除设置后加入需要设置是推荐做法&lt;br /&gt;
 下面操作不会更改policy， 如果policy为DROP，要非常小心，远程登陆的话自己就进不去了&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables [-t tables] [-FXZ]
+&lt;div class="highlight"&gt;&lt;pre&gt;iptables [-t tables] [-FXZ]
 iptables -F #默认清除filter 删除所有规则
 iptables -X #清除所有自定义的chain，tables
 iptables -Z # 计数清零
@@ -503,7 +503,7 @@ iptables -Z # 计数清零
 
 
 &lt;h2&gt;设置预设政策&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables [-t nat] -P [INPUT, OUTPUT, FORWARD] [ACCEPT, DROP]
+&lt;div class="highlight"&gt;&lt;pre&gt;iptables [-t nat] -P [INPUT, OUTPUT, FORWARD] [ACCEPT, DROP]
 
 iptables -P INPUT DROP
 iptables -P OUTPUT ACCEPT
@@ -512,7 +512,7 @@ iptables -p FORWARD ACCEPT
 
 
 &lt;h2&gt;IP, 网域， 借口装置【网卡】&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#接受所有本地lo网卡的所有封包
+&lt;div class="highlight"&gt;&lt;pre&gt;#接受所有本地lo网卡的所有封包
 iptables -A INPUT -i lo -j ACCEPT
 
 #接受所有来自特定ip和网段的封包,-i 可指定网卡
@@ -522,7 +522,7 @@ iptables -A INPUT -s 123.12.1.12/32 -j ACCEPT
 
 
 &lt;h2&gt;tcp， udp 端口&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#-i 网卡 -p tcp udp --dport 目标端口 --sport 来源端口 -s 来源ip
+&lt;div class="highlight"&gt;&lt;pre&gt;#-i 网卡 -p tcp udp --dport 目标端口 --sport 来源端口 -s 来源ip
 # -d 目标ip【本机不常用】
 # 上面参数可以各种组合使用
 # --syn tcp 建立tcpip连接时握手信号，经常利用防火墙防御syn攻击，DDos攻击的一种
@@ -534,13 +534,13 @@ iptables -A INPUT -p tcp --sport 1:1022 --dport 1:1023 --syn -j DROP
 
 &lt;h2&gt;封包状态&lt;/h2&gt;
 &lt;p&gt;如果状态为响应状态，则接受&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+&lt;div class="highlight"&gt;&lt;pre&gt;iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;例子&lt;/h2&gt;
 &lt;p&gt;clint 端常用，开放22端口用于ssh&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;iptables -F
+&lt;div class="highlight"&gt;&lt;pre&gt;iptables -F
 iptables -X
 iptables -Z
 iptables -P INPUT DROP
@@ -553,7 +553,7 @@ iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
 
 &lt;h2&gt;语法&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[root@www ~]# iptables [-t tables] [-L] [-nv]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[root@www ~]# iptables [-t tables] [-L] [-nv]&lt;/span&gt;
 &lt;span class="err"&gt;选项与参数：&lt;/span&gt;
 &lt;span class="err"&gt;-t&lt;/span&gt; &lt;span class="err"&gt;：后面接&lt;/span&gt; &lt;span class="err"&gt;table&lt;/span&gt; &lt;span class="err"&gt;，例如&lt;/span&gt; &lt;span class="err"&gt;nat&lt;/span&gt; &lt;span class="err"&gt;或&lt;/span&gt; &lt;span class="err"&gt;filter&lt;/span&gt; &lt;span class="err"&gt;，若省略此项目，则使用默认的&lt;/span&gt; &lt;span class="err"&gt;filter&lt;/span&gt;
 &lt;span class="err"&gt;-L&lt;/span&gt; &lt;span class="err"&gt;：列出目前的&lt;/span&gt; &lt;span class="err"&gt;table&lt;/span&gt; &lt;span class="err"&gt;的规则&lt;/span&gt;
@@ -647,7 +647,7 @@ iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;生成logstash 测试配置文件 stdin.conf&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;input {
+&lt;div class="highlight"&gt;&lt;pre&gt;input {
 stdin {}
 }
 
@@ -663,7 +663,7 @@ output {
 &lt;p&gt;/path_to_logstash/bin/logstash -f stdin.conf
 http://logstashhost:9200
 显示下面结果则为正常&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{
+&lt;div class="highlight"&gt;&lt;pre&gt;{
 
     status: 200,
     name: &amp;quot;Blue Marvel&amp;quot;,
@@ -688,7 +688,7 @@ http://logstashhost:9200
 &lt;h2&gt;logstash 配置文件&lt;/h2&gt;
 &lt;h3&gt;Use Case 1&lt;/h3&gt;
 &lt;p&gt;使用外部elasticsearch需要默认logstash模板，可以通过下面方式设置，也可以在logstash上设置&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPUT localhost:9200/_template/logstash -d &amp;#39;{
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPUT localhost:9200/_template/logstash -d &amp;#39;{
 
         &amp;quot;order&amp;quot;:0,
         &amp;quot;template&amp;quot;:&amp;quot;logstash-*&amp;quot;,
@@ -759,7 +759,7 @@ http://logstashhost:9200
 &lt;li&gt;错误日志通过 redis 中转
 收集所有非INFO的日志，发送至&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;input { 
+&lt;div class="highlight"&gt;&lt;pre&gt;input { 
     file { 
     path =&amp;gt; &amp;quot;/home/yihan/access.log&amp;quot; 
     } 
@@ -780,7 +780,7 @@ output {
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{
+&lt;div class="highlight"&gt;&lt;pre&gt;{
 &amp;quot;logstash&amp;quot;: {
 &amp;quot;order&amp;quot;: 0,
 &amp;quot;template&amp;quot;: &amp;quot;logstash-*&amp;quot;,
@@ -966,7 +966,7 @@ output {
 &lt;ul&gt;
 &lt;li&gt;从redis获取日志发送到elasticsearch&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;input {
+&lt;div class="highlight"&gt;&lt;pre&gt;input {
 redis {
                         host =&amp;gt; &amp;quot;localhost&amp;quot;
                         type =&amp;gt; &amp;quot;redis-input&amp;quot;
@@ -984,28 +984,28 @@ output {
 
 }
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category><category term="Kibana"></category><category term="elasticsearch"></category><category term="logstash"></category><category term="Log"></category></entry><entry><title>命令-赶紧的</title><link href="http://www.yilaguan.cc/posts/2015/10/29/Linux.html" rel="alternate"></link><published>2015-10-29T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-29:posts/2015/10/29/Linux.html</id><summary type="html">&lt;h2&gt;查看端口的占用情况&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;netstat -tln
+&lt;div class="highlight"&gt;&lt;pre&gt;netstat -tln
 lsof -i:80  
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;查看32,64位系统&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;getconf LONG_BIT
+&lt;div class="highlight"&gt;&lt;pre&gt;getconf LONG_BIT
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;去除注释，空行&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;more php-fpm.conf | grep -v ^\; | grep -v ^$;
+&lt;div class="highlight"&gt;&lt;pre&gt;more php-fpm.conf | grep -v ^\; | grep -v ^$;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;查看tcp连接情况&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;netstat -n|awk &amp;#39;/^tcp/&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;++S[&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;NF&lt;/span&gt;&lt;span class="x"&gt;]}END&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;for (key in S) print key,S[key]}&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;netstat -n|awk &amp;#39;/^tcp/&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;++S[&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;NF&lt;/span&gt;&lt;span class="x"&gt;]}END&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;for (key in S) print key,S[key]}&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;CPU使用率高&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# top 获取 pid
+&lt;div class="highlight"&gt;&lt;pre&gt;# top 获取 pid
 # gstack 获取stack trace
 # gstack 12594 &amp;gt;&amp;gt; /tmp/gstack.rst
 # top 查看最大消耗的线程号

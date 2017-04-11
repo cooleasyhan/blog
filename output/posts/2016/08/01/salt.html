@@ -77,10 +77,11 @@
 
   <div class="entry-content"><p>最近研究salt装我那小一百台服务器, 之前一直是fabric安装的, 感觉salt还是挺好用的, 下面是一些使用到的小脚本</p>
 <h2>salt 常用命令</h2>
-<div class="highlight"><pre><span></span>salt <span class="s1">&#39;xxx*&#39;</span> state.show_lowstate
+<div class="highlight"><pre>salt <span class="s1">&#39;xxx*&#39;</span> state.show_lowstate
 salt <span class="s1">&#39;xxx*&#39;</span> state.show_highstate
 salt <span class="s1">&#39;*&#39;</span> sys.doc state
 salt <span class="s1">&#39;*&#39;</span> state.highstate
+salt <span class="s1">&#39;*&#39;</span> saltutil.refresh_pillar
 </pre></div>
 
 
@@ -92,7 +93,7 @@ https://github.com/saltstack-formulas  </p>
 <li>尽量使用name, 对每个小模块添加一个别名</li>
 </ol>
 <h2>top.sls</h2>
-<div class="highlight"><pre><span></span>base:
+<div class="highlight"><pre>base:
     &#39;*&#39;:
         - init.env_init
 prod:
@@ -106,12 +107,12 @@ prod:
 
 <h2>应用入口文件demo</h2>
 <p>init/env_init.sls</p>
-<div class="highlight"><pre><span></span>include:
+<div class="highlight"><pre>include:
     - init.test_file_append
 </pre></div>
 
 
-<div class="highlight"><pre><span></span># 文件目录 
+<div class="highlight"><pre># 文件目录 
 ├── init
 │   ├── env_init.sls
 │   └── test_file_append.sls
@@ -120,7 +121,7 @@ prod:
 
 
 <h2>file.append</h2>
-<div class="highlight"><pre><span></span>/tmp/abc:
+<div class="highlight"><pre>/tmp/abc:
     file.append:
         - text:
             - export ABC=abc
@@ -140,7 +141,7 @@ prod:
      - backup: minion <br />
      - include_enpty: True </p>
 <h2>file.managed</h2>
-<div class="highlight"><pre><span></span><span class="x">    file.managed:</span>
+<div class="highlight"><pre><span class="x">    file.managed:</span>
 <span class="x">        - name: /usr/local/src/pcre-8.39.tar.gz</span>
 <span class="x">        - source: salt://pcre/files/pcre-8.39.tar.gz</span>
 <span class="x">        - source_hash: </span><span class="cp">{{</span> <span class="nv">checksum</span> <span class="cp">}}</span><span class="x"></span>
@@ -151,7 +152,7 @@ prod:
 
 
 <h2 jinja="jinja">file.managed</h2>
-<div class="highlight"><pre><span></span><span class="x">redis-init-script:</span>
+<div class="highlight"><pre><span class="x">redis-init-script:</span>
 <span class="x">  file.managed:</span>
 <span class="x">    - name: /etc/init.d/redis-server</span>
 <span class="x">    - template: jinja</span>
@@ -170,7 +171,7 @@ prod:
 
 
 <h2>cmd.run</h2>
-<div class="highlight"><pre><span></span>    cmd.run:
+<div class="highlight"><pre>    cmd.run:
         - name: cd /usr/local/src &amp;&amp; tar zxf pcre-8.39.tar.gz &amp;&amp; cd pcre-8.39 &amp;&amp; ./configure --prefix=/usr/local/pcre &amp;&amp; make &amp;&amp; make install
         - unless: test -d /usr/local/pcre
         - require:
@@ -179,7 +180,7 @@ prod:
 
 
 <h2>cmd.wait</h2>
-<div class="highlight"><pre><span></span><span class="x">make-and-install-redis:</span>
+<div class="highlight"><pre><span class="x">make-and-install-redis:</span>
 <span class="x">  cmd.wait:</span>
 <span class="x">    - cwd: </span><span class="cp">{{</span> <span class="nv">root</span> <span class="cp">}}</span><span class="x">/redis-</span><span class="cp">{{</span> <span class="nv">version</span> <span class="cp">}}</span><span class="x"></span>
 <span class="x">    - names:</span>
@@ -193,7 +194,7 @@ prod:
 
 
 <h2>file.directoy</h2>
-<div class="highlight"><pre><span></span>    file.directory:
+<div class="highlight"><pre>    file.directory:
         - name: /tmp/abc/
         - user: root
         - group: root
@@ -205,7 +206,7 @@ prod:
 
 
 <h2>service.running</h2>
-<div class="highlight"><pre><span></span>    service.running:
+<div class="highlight"><pre>    service.running:
         - name: nginx
         - enable: True
         - reload: True
@@ -217,7 +218,7 @@ prod:
 
 
 <h2>pkg.installed</h2>
-<div class="highlight"><pre><span></span>    pkg.installed:
+<div class="highlight"><pre>    pkg.installed:
         - names:
             - openssl-devel
             - swig
@@ -237,7 +238,7 @@ prod:
 
 
 <h2>user.present, group.present</h2>
-<div class="highlight"><pre><span></span>nobody-user-group:
+<div class="highlight"><pre>nobody-user-group:
     group.present:
         - name: nobody
         - gid: 99
@@ -250,7 +251,7 @@ prod:
 
 
 <h2>file.symlink</h2>
-<div class="highlight"><pre><span></span><span class="n">rabbitmq_binary_tool_plugins</span><span class="o">:</span>
+<div class="highlight"><pre><span class="n">rabbitmq_binary_tool_plugins</span><span class="o">:</span>
   <span class="n">file</span><span class="o">.</span><span class="na">symlink</span><span class="o">:</span>
     <span class="o">-</span> <span class="n">makedirs</span><span class="o">:</span> <span class="n">True</span>
     <span class="o">-</span> <span class="n">name</span><span class="o">:</span> <span class="sr">/usr/local/bin/</span><span class="n">rabbitmq</span><span class="o">-</span><span class="n">plugins</span>
@@ -262,7 +263,7 @@ prod:
 
 
 <h2>pkgrepo.managed</h2>
-<div class="highlight"><pre><span></span><span class="n">rabbitmq_repo</span><span class="o">:</span>
+<div class="highlight"><pre><span class="n">rabbitmq_repo</span><span class="o">:</span>
   <span class="n">pkgrepo</span><span class="o">.</span><span class="na">managed</span><span class="o">:</span>
     <span class="o">-</span> <span class="n">humanname</span><span class="o">:</span> <span class="n">RabbitMQ</span> <span class="n">Packagecloud</span> <span class="n">Repository</span>
     <span class="o">-</span> <span class="n">baseurl</span><span class="o">:</span> <span class="n">https</span><span class="o">://</span><span class="n">packagecloud</span><span class="o">.</span><span class="na">io</span><span class="sr">/rabbitmq/rabbitmq-server/el/6/</span><span class="n">$basearch</span>
@@ -277,7 +278,7 @@ prod:
 
 
 <h2>module.run</h2>
-<div class="highlight"><pre><span></span><span class="x">nginx_user_</span><span class="cp">{{</span><span class="nv">name</span><span class="cp">}}</span><span class="x">:</span>
+<div class="highlight"><pre><span class="x">nginx_user_</span><span class="cp">{{</span><span class="nv">name</span><span class="cp">}}</span><span class="x">:</span>
 <span class="x">  module.run:</span>
 <span class="x">    - name: basicauth.adduser</span>
 <span class="x">    - user: </span><span class="cp">{{</span> <span class="nv">name</span> <span class="cp">}}</span><span class="x"></span>
@@ -289,7 +290,7 @@ prod:
 
 
 <h2>test.check_pillar</h2>
-<div class="highlight"><pre><span></span>git-sls-is-pillar-present:
+<div class="highlight"><pre>git-sls-is-pillar-present:
   test.check_pillar:
     - present:
         - git_url
@@ -301,7 +302,7 @@ prod:
 
 
 <h2>state.orchestrate_high</h2>
-<div class="highlight"><pre><span></span>salt-run state.orchestrate_high &#39;{
+<div class="highlight"><pre>salt-run state.orchestrate_high &#39;{
     stage_one:
         {salt.state: [{tgt: &quot;db*&quot;}, {sls: postgres_setup}]},
     stage_two:
@@ -336,6 +337,12 @@ prod:
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -343,12 +350,6 @@ prod:
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -370,7 +371,7 @@ prod:
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

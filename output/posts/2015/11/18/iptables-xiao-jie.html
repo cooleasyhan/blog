@@ -88,20 +88,20 @@ nat<br />
 一般控制本机资源的访问，只要设置 filter中的INPUT 和 OUTPUT 就可以了<br />
 <img alt="链路图" src="/images/iptables_chain.gif" /></p>
 <h2>查看设置</h2>
-<div class="highlight"><pre><span></span>iptables -L -n -v -t tables
+<div class="highlight"><pre>iptables -L -n -v -t tables
 -t 默认为filter
 </pre></div>
 
 
 <p>使用iptables-save 可以看到更有价值的信息，这部分内容也可以直接作为/etc/sysconfig/iptables 的配置文件内容</p>
-<div class="highlight"><pre><span></span>iptables-save
+<div class="highlight"><pre>iptables-save
 </pre></div>
 
 
 <h2>清除设置</h2>
 <p>先清除设置后加入需要设置是推荐做法<br />
 下面操作不会更改policy， 如果policy为DROP，要非常小心，远程登陆的话自己就进不去了</p>
-<div class="highlight"><pre><span></span>iptables [-t tables] [-FXZ]
+<div class="highlight"><pre>iptables [-t tables] [-FXZ]
 iptables -F #默认清除filter 删除所有规则
 iptables -X #清除所有自定义的chain，tables
 iptables -Z # 计数清零
@@ -109,7 +109,7 @@ iptables -Z # 计数清零
 
 
 <h2>设置预设政策</h2>
-<div class="highlight"><pre><span></span>iptables [-t nat] -P [INPUT, OUTPUT, FORWARD] [ACCEPT, DROP]
+<div class="highlight"><pre>iptables [-t nat] -P [INPUT, OUTPUT, FORWARD] [ACCEPT, DROP]
 
 iptables -P INPUT DROP
 iptables -P OUTPUT ACCEPT
@@ -118,7 +118,7 @@ iptables -p FORWARD ACCEPT
 
 
 <h2>IP, 网域， 借口装置【网卡】</h2>
-<div class="highlight"><pre><span></span>#接受所有本地lo网卡的所有封包
+<div class="highlight"><pre>#接受所有本地lo网卡的所有封包
 iptables -A INPUT -i lo -j ACCEPT
 
 #接受所有来自特定ip和网段的封包,-i 可指定网卡
@@ -128,7 +128,7 @@ iptables -A INPUT -s 123.12.1.12/32 -j ACCEPT
 
 
 <h2>tcp， udp 端口</h2>
-<div class="highlight"><pre><span></span>#-i 网卡 -p tcp udp --dport 目标端口 --sport 来源端口 -s 来源ip
+<div class="highlight"><pre>#-i 网卡 -p tcp udp --dport 目标端口 --sport 来源端口 -s 来源ip
 # -d 目标ip【本机不常用】
 # 上面参数可以各种组合使用
 # --syn tcp 建立tcpip连接时握手信号，经常利用防火墙防御syn攻击，DDos攻击的一种
@@ -140,13 +140,13 @@ iptables -A INPUT -p tcp --sport 1:1022 --dport 1:1023 --syn -j DROP
 
 <h2>封包状态</h2>
 <p>如果状态为响应状态，则接受</p>
-<div class="highlight"><pre><span></span>iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+<div class="highlight"><pre>iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 </pre></div>
 
 
 <h2>例子</h2>
 <p>clint 端常用，开放22端口用于ssh</p>
-<div class="highlight"><pre><span></span>iptables -F
+<div class="highlight"><pre>iptables -F
 iptables -X
 iptables -Z
 iptables -P INPUT DROP
@@ -159,7 +159,7 @@ iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
 
 <h2>语法</h2>
-<div class="highlight"><pre><span></span><span class="k">[root@www ~]# iptables [-t tables] [-L] [-nv]</span>
+<div class="highlight"><pre><span class="k">[root@www ~]# iptables [-t tables] [-L] [-nv]</span>
 <span class="err">选项与参数：</span>
 <span class="err">-t</span> <span class="err">：后面接</span> <span class="err">table</span> <span class="err">，例如</span> <span class="err">nat</span> <span class="err">或</span> <span class="err">filter</span> <span class="err">，若省略此项目，则使用默认的</span> <span class="err">filter</span>
 <span class="err">-L</span> <span class="err">：列出目前的</span> <span class="err">table</span> <span class="err">的规则</span>
@@ -264,6 +264,12 @@ iptables -A INPUT -p tcp --dport 22 -j ACCEPT
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -271,12 +277,6 @@ iptables -A INPUT -p tcp --dport 22 -j ACCEPT
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -298,7 +298,7 @@ iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

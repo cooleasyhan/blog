@@ -4,7 +4,7 @@
 1. 从库开发修改,有同学上从库改表造成不同步。 &lt;br /&gt;
     处理: 从库设置为只读 &lt;br /&gt;
 2. 主从同步hung住, 显示如下, 线程状态显示OK, 但是Seconds Behind Master 值非常大。  &lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Slave_IO_Running&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Yes&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Slave_IO_Running&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Yes&lt;/span&gt;
 &lt;span class="n"&gt;Slave_SQL_Running&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Yes&lt;/span&gt;
 &lt;span class="n"&gt;Seconds_Behind_Master&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;9999&lt;/span&gt;
 
@@ -18,21 +18,21 @@
 &lt;li&gt;启用了gtid的主从同步,skip操作&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;获取当前 处理到的Executed_Gtid_Set, 下面最后处理的gtid 为: dcbfbf7e-e05a-11e5-8160-6c92bf225ad1:129985921&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Retrieved_Gtid_Set&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dcbfbf7e&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;e05a&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="n"&gt;e5&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;8160&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="n"&gt;c92bf225ad1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;16700783&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;129985931&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Retrieved_Gtid_Set&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dcbfbf7e&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;e05a&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="n"&gt;e5&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;8160&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="n"&gt;c92bf225ad1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;16700783&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;129985931&lt;/span&gt;
 &lt;span class="n"&gt;Executed_Gtid_Set&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dc24de6f&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2969&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="n"&gt;e6&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="n"&gt;ae8&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="n"&gt;c92bf2c1069&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
 &lt;span class="n"&gt;dcbfbf7e&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;e05a&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="n"&gt;e5&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;8160&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="n"&gt;c92bf225ad1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;16132149&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;16700783&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;129985921&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;通过创建空的gtid,跳过该gitd。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;STOP&lt;/span&gt; &lt;span class="nt"&gt;SLAVE&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;STOP&lt;/span&gt; &lt;span class="nt"&gt;SLAVE&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="nt"&gt;SET&lt;/span&gt; &lt;span class="nt"&gt;GTID_NEXT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;dcbfbf7e-e05a-11e5-8160-6c92bf225ad1:129985921&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="nt"&gt;BEGIN&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;COMMIT&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="nt"&gt;SET&lt;/span&gt; &lt;span class="nt"&gt;GTID_NEXT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;AUTOMATIC&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="nt"&gt;START&lt;/span&gt; &lt;span class="nt"&gt;SLAVE&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="nt"&gt;show&lt;/span&gt; &lt;span class="nt"&gt;slave&lt;/span&gt; &lt;span class="nt"&gt;status&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nt"&gt;G&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>批量修改sql</title><link href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html" rel="alternate"></link><published>2016-04-22T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-04-22:posts/2016/04/22/mass_update.html</id><summary type="html">&lt;h2&gt;Mysql 批量修改view 的definer&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;select concat(&amp;quot;alter DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW &amp;quot;,
+&lt;div class="highlight"&gt;&lt;pre&gt;select concat(&amp;quot;alter DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW &amp;quot;,
     TABLE_SCHEMA,
     &amp;quot;.&amp;quot;,
     TABLE_NAME,
@@ -45,7 +45,7 @@ where table_schema &amp;lt;&amp;gt; &amp;#39;sys&amp;#39;  ORDER BY 1 ASC;
 
 
 &lt;h2&gt;批量修改table engine&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;SELECT  CONCAT(&amp;#39;ALTER TABLE `&amp;#39;,table_schema,
+&lt;div class="highlight"&gt;&lt;pre&gt;SELECT  CONCAT(&amp;#39;ALTER TABLE `&amp;#39;,table_schema,
     &amp;#39;`.`&amp;#39;,
     table_name,
     &amp;#39;` ENGINE=InnoDB;&amp;#39;) AS sql_statements
@@ -56,14 +56,59 @@ WHERE   `ENGINE` = &amp;#39;MyISAM&amp;#39;
 ORDER BY table_name DESC;
 &lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>xtrabackup 小结</title><link href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html" rel="alternate"></link><published>2015-12-13T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-13:posts/2015/12/13/xtrabackup.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
 &lt;p&gt;官网下载相关rpm 包, 此处为 percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm， 其中5.1版本的mysql只能使用 2.0版本的xtrabackup&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;rpm -ivh xxx.rpm
+&lt;div class="highlight"&gt;&lt;pre&gt;rpm -ivh xxx.rpm
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;使用要点&lt;/h2&gt;
+&lt;h2&gt;单表备份&lt;/h2&gt;
+&lt;p&gt;/usr/bin/innobackupex --defaults-file=/etc/my.cnf \
+--slave-info --safe-slave-backup --no-lock \
+--no-timestamp --user=xxx --password=xxxx \
+--host=xxxx --port=3306 --stream=xbstream --compress \
+--include='^database.table_name' /tmp \&lt;/p&gt;
+&lt;h2&gt;单表恢复&lt;/h2&gt;
+&lt;p&gt;1.安装qpress
+wget http://www.quicklz.com/qpress-11-linux-x64.tar
+2. xbstream解压
+xbstream -x &amp;lt; xxx.xxx.xbstream -C ./test
+3. qpress 解压&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;for f in `find ./ -iname &amp;quot;*\.qp&amp;quot;`; do qpress -dT2 &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;f&lt;/span&gt;&lt;span class="x"&gt;  &lt;/span&gt;&lt;span class="p"&gt;$(&lt;/span&gt;&lt;span class="err"&gt;dirname&lt;/span&gt; &lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;f&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="x"&gt; &amp;amp;&amp;amp; rm -f &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;f&lt;/span&gt;&lt;span class="x"&gt;; done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;ol&gt;
-&lt;li&gt;正常备份会锁表，可以使用 &lt;/li&gt;
+&lt;li&gt;apply log&lt;/li&gt;
 &lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;innobackupex --apply-log --export /home/yihan/test/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;拿掉tablespace &lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ALTER TABLE xxx.xxx DISCARD TABLESPACE;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;cp data 至 mysql data 目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cp xxx.ibd /data/mysql/xxx/xxx.ibd
+cp xxx.exp /data/mysql/xxx/xxx.exp
+# 5.6 需要copy
+cp xxx.cfg /data/mysql/xxx/xxx.cfg
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;chown to mysql
+chown mysql:mysql /data/mysql/xxx/xxx.*
+8 导入tablesapce &lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ALTER TABLE xxx.xxx IMPORT TABLESPACE;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;备份脚本&lt;/h2&gt;
 &lt;p&gt;写了一个脚本，用于每周日全备，其他时候增量备份&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;  1
@@ -169,16 +214,16 @@ ORDER BY table_name DESC;
 101
 102
 103
-104&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
-&lt;span class="c1"&gt;#author: yihan&lt;/span&gt;
-&lt;span class="c1"&gt;#date: 2015-12-13&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="c1"&gt;#创建用户&lt;/span&gt;
-&lt;span class="c1"&gt;#mysql&amp;gt; CREATE USER &amp;#39;bkpuser&amp;#39;@&amp;#39;localhost&amp;#39; IDENTIFIED BY &amp;#39;xxx&amp;#39;;&lt;/span&gt;
-&lt;span class="c1"&gt;#mysql&amp;gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT, REPLICATION SLAVE,SUPER ON *.* TO &amp;#39;bkpuser&amp;#39;@&amp;#39;localhost&amp;#39;;&lt;/span&gt;
-&lt;span class="c1"&gt;#mysql&amp;gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO &amp;#39;bkpuser&amp;#39;@&amp;#39;localhost&amp;#39;;&lt;/span&gt;
-&lt;span class="c1"&gt;#mysql&amp;gt; FLUSH PRIVILEGES;&lt;/span&gt;
+104&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c"&gt;#author: yihan&lt;/span&gt;
+&lt;span class="c"&gt;#date: 2015-12-13&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;#创建用户&lt;/span&gt;
+&lt;span class="c"&gt;#mysql&amp;gt; CREATE USER &amp;#39;bkpuser&amp;#39;@&amp;#39;localhost&amp;#39; IDENTIFIED BY &amp;#39;xxx&amp;#39;;&lt;/span&gt;
+&lt;span class="c"&gt;#mysql&amp;gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT, REPLICATION SLAVE,SUPER ON *.* TO &amp;#39;bkpuser&amp;#39;@&amp;#39;localhost&amp;#39;;&lt;/span&gt;
+&lt;span class="c"&gt;#mysql&amp;gt; GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO &amp;#39;bkpuser&amp;#39;@&amp;#39;localhost&amp;#39;;&lt;/span&gt;
+&lt;span class="c"&gt;#mysql&amp;gt; FLUSH PRIVILEGES;&lt;/span&gt;
 
 
 &lt;span class="nv"&gt;weekday&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;date +%w&lt;span class="sb"&gt;`&lt;/span&gt;
@@ -213,8 +258,8 @@ ORDER BY table_name DESC;
       --user&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$user_name&lt;/span&gt; --password&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$password&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
       --host&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$ip&lt;/span&gt; --port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$port&lt;/span&gt; --stream&lt;span class="o"&gt;=&lt;/span&gt;xbstream --compress --extra-lsndir&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$lsn_dir&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; /tmp 2&amp;gt;&lt;span class="nv"&gt;$Xtrabackup_log&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
       &amp;gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;back_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;target_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;_&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;timestamp&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.xbstream
-      &lt;span class="c1"&gt;#| $ssh_tool \ &amp;quot;cat - &amp;gt; ${back_dir}/${target_dir}_${timestamp}.xbstream&amp;quot;&lt;/span&gt;
-      &lt;span class="c1"&gt;#| gzip &amp;gt; $back_dir/$target_dir.xbstream&lt;/span&gt;
+      &lt;span class="c"&gt;#| $ssh_tool \ &amp;quot;cat - &amp;gt; ${back_dir}/${target_dir}_${timestamp}.xbstream&amp;quot;&lt;/span&gt;
+      &lt;span class="c"&gt;#| gzip &amp;gt; $back_dir/$target_dir.xbstream&lt;/span&gt;
     log &lt;span class="s2"&gt;&amp;quot;full_backup end&amp;quot;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
@@ -228,8 +273,8 @@ ORDER BY table_name DESC;
     --port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$port&lt;/span&gt; --incremental --incremental-basedir&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$lsn_dir&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; --extra-lsndir&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$lsn_dir&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
     --stream&lt;span class="o"&gt;=&lt;/span&gt;xbstream --compress /tmp 2&amp;gt;&lt;span class="nv"&gt;$Xtrabackup_log&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
     &amp;gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;back_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;xtra_target_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;_&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;timestamp&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.xbstream
-    &lt;span class="c1"&gt;# | $ssh_tool \ &amp;quot;cat - &amp;gt; ${back_dir}/${xtra_target_dir}_${timestamp}.xbstream&amp;quot;&lt;/span&gt;
-    &lt;span class="c1"&gt;# &amp;gt; $back_dir/$xtra_target_dir.xbstream&lt;/span&gt;
+    &lt;span class="c"&gt;# | $ssh_tool \ &amp;quot;cat - &amp;gt; ${back_dir}/${xtra_target_dir}_${timestamp}.xbstream&amp;quot;&lt;/span&gt;
+    &lt;span class="c"&gt;# &amp;gt; $back_dir/$xtra_target_dir.xbstream&lt;/span&gt;
     log &lt;span class="s2"&gt;&amp;quot;incremental_bakup end&amp;quot;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
@@ -247,7 +292,7 @@ ORDER BY table_name DESC;
     &lt;span class="k"&gt;fi&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="c1"&gt;####################main###############&lt;/span&gt;
+&lt;span class="c"&gt;####################main###############&lt;/span&gt;
 mkdir -p &lt;span class="nv"&gt;$back_dir&lt;/span&gt;
 &lt;span class="nv"&gt;$ssh_tool&lt;/span&gt; &lt;span class="se"&gt;\ &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mkdir -p &lt;/span&gt;&lt;span class="nv"&gt;$back_dir&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 
@@ -255,12 +300,12 @@ mkdir -p &lt;span class="nv"&gt;$lsn_dir&lt;/span&gt;
 log &lt;span class="s2"&gt;&amp;quot;++++++++++++++++++++++++++++++++++++++++++++++++++&amp;quot;&lt;/span&gt;
 log &lt;span class="s2"&gt;&amp;quot;weekday:&lt;/span&gt;&lt;span class="nv"&gt;$weekday&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; -eq &lt;span class="nv"&gt;$weekday&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
-    &lt;span class="c1"&gt;# 备份目录,从而删除lsn文件或者全备目录,当前启用的增备方式为lsn文件&lt;/span&gt;
+    &lt;span class="c"&gt;# 备份目录,从而删除lsn文件或者全备目录,当前启用的增备方式为lsn文件&lt;/span&gt;
     back_up_dir
     mkdir -p &lt;span class="nv"&gt;$back_dir&lt;/span&gt;
     full_backup backup0_full_backup
 &lt;span class="k"&gt;else&lt;/span&gt;
-    &lt;span class="c1"&gt;# xtrabackup lsn文件存在则增备,不存在则全备.&lt;/span&gt;
+    &lt;span class="c"&gt;# xtrabackup lsn文件存在则增备,不存在则全备.&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -f &lt;span class="nv"&gt;$lsn_dir&lt;/span&gt;/xtrabackup_checkpoints &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
       incremental_bakup backup&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;weekday&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;_incremental_bakup
     &lt;span class="k"&gt;else&lt;/span&gt;
@@ -360,7 +405,7 @@ log &lt;span class="s2"&gt;&amp;quot;-------------------------------------------
 81
 82
 83
-84&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+84&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 
 &lt;span class="nv"&gt;SCRIPT_BASE_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/u01/scripts
 &lt;span class="nv"&gt;BACK_BASH_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/master_backup
@@ -368,7 +413,7 @@ log &lt;span class="s2"&gt;&amp;quot;-------------------------------------------
 &lt;span class="nv"&gt;FULL_DB_BACK_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;full_db_backup_from_master
 &lt;span class="nv"&gt;MYSQL_DATA_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/mysql
 
-&lt;span class="c1"&gt;#db config&lt;/span&gt;
+&lt;span class="c"&gt;#db config&lt;/span&gt;
 &lt;span class="nv"&gt;file_cnf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/etc/my.cnf
 &lt;span class="nv"&gt;user_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;bkpuser
 &lt;span class="nv"&gt;password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;xxx
@@ -386,29 +431,29 @@ log &lt;span class="s2"&gt;&amp;quot;-------------------------------------------
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;$((&lt;/span&gt;&lt;span class="nv"&gt;$2&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="k"&gt;))&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="c1"&gt;#从主库备份数据到本地&lt;/span&gt;
+&lt;span class="c"&gt;#从主库备份数据到本地&lt;/span&gt;
 &lt;span class="k"&gt;function&lt;/span&gt; full_backdb_from_master
 &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nv"&gt;startTime&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;date +%s&lt;span class="sb"&gt;`&lt;/span&gt;
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;full backupdb process starting ....................&amp;quot;&lt;/span&gt;
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;back dir: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;back_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-    &lt;span class="c1"&gt;#rm -rf ${back_dir}/${FULL_DB_BACK_NAME}.xbstream&lt;/span&gt;
-    &lt;span class="c1"&gt;#rm -rf $Xtrabackup_log&lt;/span&gt;
+    &lt;span class="c"&gt;#rm -rf ${back_dir}/${FULL_DB_BACK_NAME}.xbstream&lt;/span&gt;
+    &lt;span class="c"&gt;#rm -rf $Xtrabackup_log&lt;/span&gt;
     innobackupex --defaults-file&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$file_cnf&lt;/span&gt; --slave-info --safe-slave-backup --no-lock --no-timestamp&lt;span class="se"&gt;\&lt;/span&gt;
       --user&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$user_name&lt;/span&gt; --password&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$password&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
       --host&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$ip&lt;/span&gt; --port&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$port&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
       &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;back_dir&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
       1&amp;gt; &lt;span class="nv"&gt;$Xtrabackup_log&lt;/span&gt; 2&amp;gt;&lt;span class="nv"&gt;$Xtrabackup_log&lt;/span&gt;
-      &lt;span class="c1"&gt;#--stream=xbstream --compress --extra-lsndir=&amp;quot;$lsn_dir&amp;quot; \&lt;/span&gt;
-      &lt;span class="c1"&gt;# /tmp 2&amp;gt;$Xtrabackup_log \&lt;/span&gt;
-      &lt;span class="c1"&gt;#&amp;gt; ${back_dir}/${FULL_DB_BACK_NAME}.xbstream&lt;/span&gt;
+      &lt;span class="c"&gt;#--stream=xbstream --compress --extra-lsndir=&amp;quot;$lsn_dir&amp;quot; \&lt;/span&gt;
+      &lt;span class="c"&gt;# /tmp 2&amp;gt;$Xtrabackup_log \&lt;/span&gt;
+      &lt;span class="c"&gt;#&amp;gt; ${back_dir}/${FULL_DB_BACK_NAME}.xbstream&lt;/span&gt;
      &lt;span class="nv"&gt;endTime&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;date +%s&lt;span class="sb"&gt;`&lt;/span&gt;
      &lt;span class="nv"&gt;diffTime&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;getDiffTime &lt;span class="nv"&gt;$startTime&lt;/span&gt; &lt;span class="nv"&gt;$endTime&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
      &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;full backupdb complate and total time(second) is &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;diffTime&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
     innobackupex --defaults-file&lt;span class="o"&gt;=&lt;/span&gt;/etc/my.cnf --user&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$user_name&lt;/span&gt; --password&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$password&lt;/span&gt; --apply-log &lt;span class="nv"&gt;$back_dir&lt;/span&gt;/  1&amp;gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;Xtrabackup_log&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.applylog 2&amp;gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;Xtrabackup_log&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.applylog
 &lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="c1"&gt;#还原数据&lt;/span&gt;
+&lt;span class="c"&gt;#还原数据&lt;/span&gt;
 &lt;span class="k"&gt;function&lt;/span&gt; restore_backdb
 &lt;span class="o"&gt;{&lt;/span&gt;
      &lt;span class="nv"&gt;startTime&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;date +%s&lt;span class="sb"&gt;`&lt;/span&gt;
@@ -426,7 +471,7 @@ log &lt;span class="s2"&gt;&amp;quot;-------------------------------------------
      &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;restore process complete and total time(second) is : &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;diffTime&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="c1"&gt;#启动slave&lt;/span&gt;
+&lt;span class="c"&gt;#启动slave&lt;/span&gt;
 &lt;span class="k"&gt;function&lt;/span&gt; start_slave
 &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nv"&gt;startTime&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;date +%s&lt;span class="sb"&gt;`&lt;/span&gt;
@@ -441,7 +486,7 @@ log &lt;span class="s2"&gt;&amp;quot;-------------------------------------------
 
 &lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="c1"&gt;#full_backdb_from_master&lt;/span&gt;
+&lt;span class="c"&gt;#full_backdb_from_master&lt;/span&gt;
 restore_backdb
 start_slave
 &lt;/pre&gt;&lt;/div&gt;

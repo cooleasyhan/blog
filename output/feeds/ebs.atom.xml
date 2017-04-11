@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/ebs.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-10-25T00:00:00+08:00</updated><entry><title>EBS服务启动失败处理一粒</title><link href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html" rel="alternate"></link><published>2016-10-25T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-10-25:posts/2016/10/25/oracle_start.html</id><summary type="html">&lt;p&gt;先stop然后做以下操作再启动应该就好，里面有一些不知道是啥缓存的文件吧，其中后缀是.lock的就是报错的原因，只要把这些lock的删掉就行，都删了也没问题&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/oacore/persistence/*&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/oacore/persistence/*&lt;/span&gt;
 &lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/oafm/persistence/*&lt;/span&gt;
 &lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/forms/persistence/*&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>代码dependence</title><link href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html" rel="alternate"></link><published>2016-09-07T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-09-07:posts/2016/09/07/oracle_dependence.html</id><summary type="html">&lt;h1&gt;收集dependence信息&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- Created on 2016/9/7 by YIHAN 
+&lt;div class="highlight"&gt;&lt;pre&gt;-- Created on 2016/9/7 by YIHAN 
 DECLARE
   -- Local variables here
   i INTEGER;
@@ -72,7 +72,7 @@ END;
 
 
 &lt;p&gt;获取需要导入的数据&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;SELECT &amp;#39;REQUESTGROUP AR.QIHU_AR_ACCOUNT_REPORTS&amp;#39;
+&lt;div class="highlight"&gt;&lt;pre&gt;SELECT &amp;#39;REQUESTGROUP AR.QIHU_AR_ACCOUNT_REPORTS&amp;#39;
   FROM Dual
 UNION ALL
 
@@ -117,7 +117,7 @@ SELECT Decode(TYPE, &amp;#39;PACKAGE&amp;#39;, &amp;#39;PACKAGE_SPECIAL&amp;#39;
           FROM Cux_Yh_Dependencies d)
  WHERE TYPE != &amp;#39;SYNONYM&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>请求使用sql</title><link href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html" rel="alternate"></link><published>2016-09-07T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-09-07:posts/2016/09/07/oracle_request.html</id><summary type="html">&lt;h1&gt;查询ap 批次号, ar&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;SELECT Listagg(Ap_Batch_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1)
+&lt;div class="highlight"&gt;&lt;pre&gt;SELECT Listagg(Ap_Batch_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1)
   FROM (SELECT v.Argument_Text, TRIM(Regexp_Substr(Argument_Text, &amp;#39;[^,]+&amp;#39;, 1, 2)) Ap_Batch_Id
           FROM Fnd_Conc_Req_Summary_v v
          WHERE v.Requestor = &amp;#39;YIHAN&amp;#39;
@@ -132,7 +132,7 @@ SELECT Listagg(Ar_Interface_Run_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1
            AND v.Program = &amp;#39;S_AR211_TRX (CUX:Interface Process)&amp;#39;
            AND v.Argument_Text LIKE &amp;#39;%DATA_IMPORT%&amp;#39;);
 &lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>oracle 锁</title><link href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html" rel="alternate"></link><published>2016-04-22T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-04-22:posts/2016/04/22/oracle_lock.html</id><summary type="html">&lt;h2&gt;oracle查询锁&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;SELECT Obj.Owner,&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;SELECT Obj.Owner,&lt;/span&gt;
 &lt;span class="x"&gt;       Obj.Object_Id,&lt;/span&gt;
 &lt;span class="x"&gt;       Obj.Object_Name,&lt;/span&gt;
 &lt;span class="x"&gt;       Lo.Locked_Mode,&lt;/span&gt;
@@ -233,14 +233,14 @@ SELECT Listagg(Ar_Interface_Run_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1
 实现： EBS 设置单一网络入口点，  外网服务器上配置nginx 转发至内网服务器。&lt;/p&gt;
 &lt;h2&gt;配置EBS&lt;/h2&gt;
 &lt;h3&gt;修改host文件， 在EBS app 服务器上添加相关host&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;110.10.10.10 prod.xxx.xxx.xxx prod
+&lt;div class="highlight"&gt;&lt;pre&gt;110.10.10.10 prod.xxx.xxx.xxx prod
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;修改 $CONTEXT_FILE , 配置EBS单一网络入口&lt;/h3&gt;
 &lt;p&gt;http://app01.domain.name:8000  ===&amp;gt;   http://prod.domain.name:80&lt;br /&gt;
 修改前后比对&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[applprod@app01 admin]$ diff PROD_app01.xml PROD_app01.xml.bak 
+&lt;div class="highlight"&gt;&lt;pre&gt;[applprod@app01 admin]$ diff PROD_app01.xml PROD_app01.xml.bak 
 123c123
 &lt;span class="err"&gt;&amp;lt;&lt;/span&gt;          &lt;span class="nt"&gt;&amp;lt;chronosURL&lt;/span&gt; &lt;span class="na"&gt;oa_var=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s_chronosURL&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;customized=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;http://prod.domain.name:80/oracle_smp_chronos/oracle_smp_chronos_sdk.gif&lt;span class="nt"&gt;&amp;lt;/chronosURL&amp;gt;&lt;/span&gt;
 ---
@@ -281,7 +281,7 @@ SELECT Listagg(Ar_Interface_Run_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1
 &lt;p&gt;&lt;a href="http://www.yilaguan.cc/posts/2015/11/26/nginx-php-fpm.html"&gt;Nginx, Php-fpm 安装&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;配置nginx&lt;/h3&gt;
 &lt;p&gt;nginx.conf&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;#user&lt;/span&gt;  &lt;span class="nt"&gt;nobody&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nf"&gt;#user&lt;/span&gt;  &lt;span class="nt"&gt;nobody&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="nt"&gt;worker_processes&lt;/span&gt;  &lt;span class="nt"&gt;6&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 
 &lt;span class="nt"&gt;error_log&lt;/span&gt;  &lt;span class="nt"&gt;logs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;error&lt;/span&gt;&lt;span class="nc"&gt;.log&lt;/span&gt;  &lt;span class="nt"&gt;info&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
@@ -325,7 +325,7 @@ SELECT Listagg(Ar_Interface_Run_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1
     &lt;span class="n"&gt;gzip_http_version&lt;/span&gt;   &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;gzip_comp_level&lt;/span&gt;     &lt;span class="m"&gt;9&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;gzip_vary&lt;/span&gt;           &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;gzip_types&lt;/span&gt;          &lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;plain&lt;/span&gt; &lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;javascript&lt;/span&gt; &lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;css&lt;/span&gt; &lt;span class="nb"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;gzip_types&lt;/span&gt;          &lt;span class="k"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;plain&lt;/span&gt; &lt;span class="k"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;javascript&lt;/span&gt; &lt;span class="k"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;css&lt;/span&gt; &lt;span class="k"&gt;text&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt; &lt;span class="n"&gt;application&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="err"&gt;##&lt;/span&gt; &lt;span class="n"&gt;gzip&lt;/span&gt; &lt;span class="n"&gt;setting&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 
     &lt;span class="n"&gt;output_buffers&lt;/span&gt;      &lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="m"&gt;32&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -342,7 +342,7 @@ SELECT Listagg(Ar_Interface_Run_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1
 
 
 &lt;p&gt;vhost.conf&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="n"&gt;listen&lt;/span&gt;       &lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;server_name&lt;/span&gt;  &lt;span class="n"&gt;prod&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
@@ -395,7 +395,7 @@ SELECT Listagg(Ar_Interface_Run_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1
 &lt;h2&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.nginx.com/wp-content/uploads/2015/11/oracle-ebusiness-suite-deployment-guide-v1.pdf"&gt;https://www.nginx.com/wp-content/uploads/2015/11/oracle-ebusiness-suite-deployment-guide-v1.pdf&lt;/a&gt;&lt;br /&gt;
 &lt;a href="https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=351925156011594&amp;amp;id=387859.1&amp;amp;_afrWindowMode=0&amp;amp;_adf.ctrl-state=j2tyjckww_63"&gt;Doc ID 387859.1&lt;/a&gt;&lt;/p&gt;</summary><category term="ebs"></category><category term="nginx"></category></entry><entry><title>AR 数据data fix</title><link href="http://www.yilaguan.cc/posts/2015/12/01/ar-shu-ju-data-fix.html" rel="alternate"></link><published>2015-12-01T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-01:posts/2015/12/01/ar-shu-ju-data-fix.html</id><summary type="html">&lt;h2&gt;通知单行：&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;--1.备份数据
+&lt;div class="highlight"&gt;&lt;pre&gt;--1.备份数据
 CREATE TABLE Ar_Memo_Lines_All_Tl_0529 AS
   SELECT * FROM Ar_Memo_Lines_All_Tl;
 
@@ -433,7 +433,7 @@ WHERE t.Memo_Line_Id = d.Memo_Line_Id
 
 
 &lt;h2&gt;事务处理类型:&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;--1.备份数据
+&lt;div class="highlight"&gt;&lt;pre&gt;--1.备份数据
 CREATE TABLE Ra_Cust_Trx_Types_All_0528 AS
   SELECT * FROM Ra_Cust_Trx_Types_All;
 --2. 创建临时表
@@ -475,7 +475,7 @@ WHERE a.Cust_Trx_Type_Id = d.Cust_Trx_Type_Id
 
 
 &lt;h2&gt;事务处理信息创建人更新&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;DECLARE
+&lt;div class="highlight"&gt;&lt;pre&gt;DECLARE
   Ln_Old_User_Id NUMBER := 1366;
   Ln_New_User_Id NUMBER := 1141;
 BEGIN
@@ -583,7 +583,7 @@ $AD_TOP/bin/adconfig.sh contextfile=$CONTEXT_FILE&lt;/p&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# Records 定义
+&lt;div class="highlight"&gt;&lt;pre&gt;# Records 定义
 g_Type_Batch_Source_Rec
 g_Type_Trx_Header_Feilds_Rec
 g_Type_Trx_Type_Rec
@@ -618,7 +618,7 @@ TYPE g_Type_Line_Rec IS RECORD(
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# build 方法
+&lt;div class="highlight"&gt;&lt;pre&gt;# build 方法
 Build_Batch_Source_Rec
 Build_Trx_Header_Feilds_Rec
 Build_Trx_Type_Rec
@@ -634,7 +634,7 @@ Trx_Number为空时根据Trx_Group_Identify进行分组
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# Add Header, Add Line
+&lt;div class="highlight"&gt;&lt;pre&gt;# Add Header, Add Line
 PROCEDURE Add_Trx_Header(Pir_Batch_Source_Rec          IN g_Type_Batch_Source_Rec,
                            Pir_Trx_Header_Feilds_Rec     IN g_Type_Trx_Header_Feilds_Rec,
                            Pir_Trx_Type_Rec              IN g_Type_Trx_Type_Rec,
@@ -655,7 +655,7 @@ PROCEDURE Add_Trx_Line(Pir_Trx_Line_Feids_Rec      IN g_Type_Trx_Line_Feilds_Rec
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="c1"&gt;# validate, import , get_msg&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="c"&gt;# validate, import , get_msg&lt;/span&gt;
   &lt;span class="n"&gt;PROCEDURE&lt;/span&gt; &lt;span class="n"&gt;Run_Validate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pov_Return_Status&lt;/span&gt; &lt;span class="n"&gt;OUT&lt;/span&gt; &lt;span class="n"&gt;NOCOPY&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                          &lt;span class="n"&gt;Pov_Msg_Data&lt;/span&gt;      &lt;span class="n"&gt;OUT&lt;/span&gt; &lt;span class="n"&gt;NOCOPY&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                          &lt;span class="n"&gt;Piv_Commit&lt;/span&gt;        &lt;span class="n"&gt;IN&lt;/span&gt; &lt;span class="n"&gt;VARCHAR2&lt;/span&gt; &lt;span class="n"&gt;DEFAULT&lt;/span&gt; &lt;span class="n"&gt;Fnd_Api&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;g_False&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
@@ -667,7 +667,7 @@ PROCEDURE Add_Trx_Line(Pir_Trx_Line_Feids_Rec      IN g_Type_Trx_Line_Feilds_Rec
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- Created on 2015/11/13 by YIHAN 
+&lt;div class="highlight"&gt;&lt;pre&gt;-- Created on 2015/11/13 by YIHAN 
 DECLARE
   -- Local variables here
 
@@ -772,7 +772,7 @@ END;
 &lt;li&gt;Understanding Data Auditing in Oracle Applications Tables using Audit Trail (AuditTrail) (文档 ID 69660.1)&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Profile&lt;/h2&gt;
-&lt;p&gt;审计线索：激活 设置为YES&lt;/p&gt;</summary><category term="Oracle"></category><category term="EBS"></category><category term="Audit"></category></entry><entry><title>启用session级别的trace</title><link href="http://www.yilaguan.cc/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html" rel="alternate"></link><published>2015-11-09T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-09:posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;DECLARE&lt;/span&gt;
+&lt;p&gt;审计线索：激活 设置为YES&lt;/p&gt;</summary><category term="Oracle"></category><category term="EBS"></category><category term="Audit"></category></entry><entry><title>启用session级别的trace</title><link href="http://www.yilaguan.cc/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html" rel="alternate"></link><published>2015-11-09T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-09:posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;DECLARE&lt;/span&gt;
 &lt;span class="x"&gt;  Session_Id binary_integer;&lt;/span&gt;
 &lt;span class="x"&gt;  Serial_Num binary_integer;&lt;/span&gt;
 
@@ -952,7 +952,7 @@ $IAS_ORACLE_HOME/Apache/JServ/logs&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</summary><category term="Oracle"></category><category term="EBS"></category></entry><entry><title>发布ADF Essentials 至Glassfish</title><link href="http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html" rel="alternate"></link><published>2015-10-29T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-29:posts/2015/10/29/adf_to_glassfish.html</id><summary type="html">&lt;h2&gt;软件安装&lt;/h2&gt;
 &lt;h3&gt;JAVA&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;JAVA_HOME=/home/yihan/glassfish/jdk1.8.0_65&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;JAVA_HOME=/home/yihan/glassfish/jdk1.8.0_65&lt;/span&gt;
 &lt;span class="x"&gt;export PATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;JAVA_HOME&lt;/span&gt;&lt;span class="x"&gt;/bin:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -980,7 +980,7 @@ Below is V4  &lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;/home/yihan/glassfish/glassfish4/glassfish/domains/domain1/config/domain.xml&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;network-listener&lt;/span&gt; &lt;span class="na"&gt;protocol=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;port=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;8080&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;thread-pool=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-thread-pool&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;transport=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tcp&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/network-listener&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;network-listener&lt;/span&gt; &lt;span class="na"&gt;protocol=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;port=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;8080&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-1&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;thread-pool=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-thread-pool&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;transport=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tcp&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/network-listener&amp;gt;&lt;/span&gt;
           &lt;span class="nt"&gt;&amp;lt;network-listener&lt;/span&gt; &lt;span class="na"&gt;protocol=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-2&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;port=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;8181&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-listener-2&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;thread-pool=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http-thread-pool&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;transport=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tcp&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/network-listener&amp;gt;&lt;/span&gt;
           &lt;span class="nt"&gt;&amp;lt;network-listener&lt;/span&gt; &lt;span class="na"&gt;protocol=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pu-protocol&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;port=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;4848&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;name=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;admin-listener&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;thread-pool=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;admin-thread-pool&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;transport=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tcp&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;/network-listener&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1005,12 +1005,12 @@ Below is V4  &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;配置数据库&lt;/h2&gt;
 &lt;h3&gt;添加连接池&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;./&lt;/span&gt;&lt;span class="nt"&gt;asadmin&lt;/span&gt; &lt;span class="nt"&gt;--host&lt;/span&gt; &lt;span class="nt"&gt;localhost&lt;/span&gt; &lt;span class="nt"&gt;--port&lt;/span&gt; &lt;span class="nt"&gt;54848&lt;/span&gt; &lt;span class="nt"&gt;create-jdbc-connection-pool&lt;/span&gt; &lt;span class="nt"&gt;--datasourceclassname&lt;/span&gt; &lt;span class="nt"&gt;oracle&lt;/span&gt;&lt;span class="nc"&gt;.jdbc.xa.client.OracleXADataSource&lt;/span&gt; &lt;span class="nt"&gt;--restype&lt;/span&gt; &lt;span class="nt"&gt;javax&lt;/span&gt;&lt;span class="nc"&gt;.sql.XADataSource&lt;/span&gt; &lt;span class="nt"&gt;--property&lt;/span&gt; &lt;span class="nt"&gt;portNumber&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;1530&lt;/span&gt;&lt;span class="nd"&gt;:password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;APPS&lt;/span&gt;&lt;span class="nd"&gt;:user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;APPS&lt;/span&gt;&lt;span class="nd"&gt;:serverName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;localhost&lt;/span&gt;&lt;span class="nd"&gt;:databaseName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;DEMO&lt;/span&gt;&lt;span class="nd"&gt;:connectionAttributes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;adf_pool&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;./&lt;/span&gt;&lt;span class="nt"&gt;asadmin&lt;/span&gt; &lt;span class="nt"&gt;--host&lt;/span&gt; &lt;span class="nt"&gt;localhost&lt;/span&gt; &lt;span class="nt"&gt;--port&lt;/span&gt; &lt;span class="nt"&gt;54848&lt;/span&gt; &lt;span class="nt"&gt;create-jdbc-connection-pool&lt;/span&gt; &lt;span class="nt"&gt;--datasourceclassname&lt;/span&gt; &lt;span class="nt"&gt;oracle&lt;/span&gt;&lt;span class="nc"&gt;.jdbc.xa.client.OracleXADataSource&lt;/span&gt; &lt;span class="nt"&gt;--restype&lt;/span&gt; &lt;span class="nt"&gt;javax&lt;/span&gt;&lt;span class="nc"&gt;.sql.XADataSource&lt;/span&gt; &lt;span class="nt"&gt;--property&lt;/span&gt; &lt;span class="nt"&gt;portNumber&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;1530&lt;/span&gt;&lt;span class="nd"&gt;:password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;APPS&lt;/span&gt;&lt;span class="nd"&gt;:user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;APPS&lt;/span&gt;&lt;span class="nd"&gt;:serverName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;localhost&lt;/span&gt;&lt;span class="nd"&gt;:databaseName&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nt"&gt;DEMO&lt;/span&gt;&lt;span class="nd"&gt;:connectionAttributes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="nt"&gt;adf_pool&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;添加连接&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;./asadmin --host localhost --port 54848 create-jdbc-resource --connectionpoolid adf_pool jdbc/HRDS
+&lt;div class="highlight"&gt;&lt;pre&gt;./asadmin --host localhost --port 54848 create-jdbc-resource --connectionpoolid adf_pool jdbc/HRDS
 &lt;/pre&gt;&lt;/div&gt;
 
 

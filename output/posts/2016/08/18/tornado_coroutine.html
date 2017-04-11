@@ -77,17 +77,17 @@
 
   <div class="entry-content"><p>要想理解tornado coroutine, 就需要先了解什么是yield。下面做了一个简单介绍和demo。
 yield 返回函数,但是记录函数上下文,等待调用next后接着执行。  使用yield的函数自动变成一个生成器。也就是可以通过 for i in xxx 执行。  </p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s1">&#39;enter&#39;</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;enter&#39;</span>
     <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">b</span> <span class="o">=</span> <span class="k">yield</span>
         <span class="k">yield</span> <span class="n">b</span>
 
 
 
-<span class="c1"># f.next() 与 f.send(None) 等价。</span>
+<span class="c"># f.next() 与 f.send(None) 等价。</span>
 <span class="n">f</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
-<span class="n">f</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span> <span class="c1"># f.next()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span> <span class="c"># f.next()</span>
 <span class="k">print</span> <span class="n">f</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 <span class="k">print</span> <span class="n">f</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -96,7 +96,7 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 <span class="n">f</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 
 
-<span class="c1">#### rst:</span>
+<span class="c">#### rst:</span>
 <span class="n">enter</span>
 <span class="mi">1</span>
 <span class="mi">2</span>
@@ -115,15 +115,15 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 <li>start ioloop, ioloop 会循环调用callback方法, 并检测Future对象是否已经完成,如果完成则将控制权返回至相应协程。</li>
 </ul>
 <h3>ioloop</h3>
-<div class="highlight"><pre><span></span><span class="c1"># 一般情况下,只有一个ioloop存在于应用的主线程中,使用instance获取。</span>
+<div class="highlight"><pre><span class="c"># 一般情况下,只有一个ioloop存在于应用的主线程中,使用instance获取。</span>
 <span class="n">ioloop</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
-<span class="c1"># 而其他情况,可以通过current获取当前线程中的ioloop</span>
+<span class="c"># 而其他情况,可以通过current获取当前线程中的ioloop</span>
 <span class="n">ioloop</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
 </pre></div>
 
 
 <h3>code</h3>
-<div class="highlight"><pre><span></span><span class="c1"># coding=utf-8</span>
+<div class="highlight"><pre><span class="c"># coding=utf-8</span>
 <span class="kn">import</span> <span class="nn">tornado.concurrent</span>
 <span class="kn">import</span> <span class="nn">tornado.ioloop</span>
 <span class="kn">from</span> <span class="nn">tornado.gen</span> <span class="kn">import</span> <span class="n">coroutine</span><span class="p">,</span> <span class="n">sleep</span>
@@ -133,22 +133,22 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">io_loop</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span> <span class="o">=</span> <span class="n">io_loop</span>
 
-    <span class="c1"># 为简化源码分析,直接返回回结果</span>
+    <span class="c"># 为简化源码分析,直接返回回结果</span>
     <span class="k">def</span> <span class="nf">do_something_long</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_future</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
 
-    <span class="c1"># @coroutine</span>
-    <span class="c1"># def do_something_long(self, a, b):</span>
-    <span class="c1">#     import random</span>
-    <span class="c1">#     s = random.randint(5, 5)</span>
-    <span class="c1">#     yield sleep(s)</span>
-    <span class="c1">#     self._future.set_result(a + b)</span>
-    <span class="c1">#</span>
+    <span class="c"># @coroutine</span>
+    <span class="c"># def do_something_long(self, a, b):</span>
+    <span class="c">#     import random</span>
+    <span class="c">#     s = random.randint(5, 5)</span>
+    <span class="c">#     yield sleep(s)</span>
+    <span class="c">#     self._future.set_result(a + b)</span>
+    <span class="c">#</span>
 
     <span class="nd">@coroutine</span>
     <span class="k">def</span> <span class="nf">asyn_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s2">&quot; asyn_sum&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_future&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_future</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>  
+        <span class="k">print</span> <span class="s">&quot; asyn_sum&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;_future&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_future</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>  
             <span class="n">future</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_future</span>  
         <span class="k">else</span><span class="p">:</span>
             <span class="n">future</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">concurrent</span><span class="o">.</span><span class="n">Future</span><span class="p">()</span>
@@ -157,7 +157,7 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 
         <span class="n">result</span> <span class="o">=</span> <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_future</span>
 
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;after yielded&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;after yielded&quot;</span><span class="p">)</span>
         <span class="k">print</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">result</span>
 
 
@@ -169,11 +169,11 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
     <span class="n">t2</span> <span class="o">=</span> <span class="n">Demo</span><span class="p">(</span><span class="n">ioloop</span><span class="p">)</span>
     <span class="k">print</span> <span class="n">t2</span><span class="o">.</span><span class="n">asyn_sum</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
-    <span class="k">print</span> <span class="s1">&#39;start &#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">20</span>
+    <span class="k">print</span> <span class="s">&#39;start &#39;</span><span class="p">,</span> <span class="s">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">20</span>
     <span class="n">ioloop</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
@@ -186,7 +186,7 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 <p><strong>一句话就是,我们定义一个function,yield 一个future,给其添加一个callback,设置future的result, 而coroutine帮我们添加了一个callback,在future完成时,能够接着执行我们的funciton,
 总共2个callback搞定</strong></p>
 <h3>coroutine</h3>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_make_coroutine_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">replace_callback</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">_make_coroutine_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">replace_callback</span><span class="p">):</span>
 
     <span class="o">...</span>
 
@@ -206,10 +206,10 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
             <span class="k">return</span> <span class="n">future</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">GeneratorType</span><span class="p">):</span>
-                <span class="c1"># 是迭代器,并进行第一次执行</span>
+                <span class="c"># 是迭代器,并进行第一次执行</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="o">...</span>
-                    <span class="n">yielded</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="c1"># 这里yielded 也是一个future对象,由我们asyn_sum方法yield返回</span>
+                    <span class="n">yielded</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="c"># 这里yielded 也是一个future对象,由我们asyn_sum方法yield返回</span>
                     <span class="o">...</span>
                 <span class="k">except</span> <span class="p">(</span><span class="ne">StopIteration</span><span class="p">,</span> <span class="n">Return</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">future</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">_value_from_stopiteration</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
@@ -217,13 +217,13 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
                     <span class="n">future</span><span class="o">.</span><span class="n">set_exc_info</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">())</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">Runner</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">future</span><span class="p">,</span> <span class="n">yielded</span><span class="p">)</span> 
-                    <span class="c1"># 将迭代器:result, coroutine的future, 自定义方法的future 组装,</span>
-                    <span class="c1"># 当自定义的future设置了result后会执行其run方法</span>
+                    <span class="c"># 将迭代器:result, coroutine的future, 自定义方法的future 组装,</span>
+                    <span class="c"># 当自定义的future设置了result后会执行其run方法</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">future</span>
                 <span class="k">finally</span><span class="p">:</span>
                     <span class="n">future</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="c1"># 如果不是迭代器,则直接将设置result并返回</span>
+        <span class="c"># 如果不是迭代器,则直接将设置result并返回</span>
         <span class="n">future</span><span class="o">.</span><span class="n">set_result</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">future</span>
     <span class="k">return</span> <span class="n">wrapper</span>
@@ -232,7 +232,7 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 
 <h3>Runner(result, future, yielded)</h3>
 <p>Runner会将yielded加入到io_loop, 等待future完成调用run方法</p>
-<div class="highlight"><pre><span></span><span class="o">....</span>
+<div class="highlight"><pre><span class="o">....</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">future</span> <span class="o">=</span> <span class="n">convert_yielded</span><span class="p">(</span><span class="n">yielded</span><span class="p">)</span>
@@ -249,7 +249,7 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 
 
 <h3>io_loop.add_future</h3>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_future</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">add_future</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">future</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Schedules a callback on the ``IOLoop`` when the given</span>
 <span class="sd">    `.Future` is finished.</span>
 
@@ -265,7 +265,7 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 
 <h3>Runner.run()</h3>
 <p>这里会通过self.gen.send(value)方法,接着执行剩下的代码。</p>
-<div class="highlight"><pre><span></span><span class="c1">#这里的future为自定义future</span>
+<div class="highlight"><pre><span class="c">#这里的future为自定义future</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -283,13 +283,13 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 <h2>IOLoop</h2>
 <p>IOLoop 主要利用select + pipe 实现了一个高效的事件机制的死循环,用来不停的执行回调函数。 我们完全可以利用while true + time.sleep 实现类似功能,但效果可以脑补,自然很差。 
 而tonado的ioloop 根据不同服务器使用了不同的实现方式。</p>
-<div class="highlight"><pre><span></span><span class="nd">@classmethod</span>
+<div class="highlight"><pre><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">configurable_default</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="s2">&quot;epoll&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="s">&quot;epoll&quot;</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">tornado.platform.epoll</span> <span class="kn">import</span> <span class="n">EPollIOLoop</span>
         <span class="k">return</span> <span class="n">EPollIOLoop</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="s2">&quot;kqueue&quot;</span><span class="p">):</span>
-        <span class="c1"># Python 2.6+ on BSD or Mac</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">select</span><span class="p">,</span> <span class="s">&quot;kqueue&quot;</span><span class="p">):</span>
+        <span class="c"># Python 2.6+ on BSD or Mac</span>
         <span class="kn">from</span> <span class="nn">tornado.platform.kqueue</span> <span class="kn">import</span> <span class="n">KQueueIOLoop</span>
         <span class="k">return</span> <span class="n">KQueueIOLoop</span>
     <span class="kn">from</span> <span class="nn">tornado.platform.select</span> <span class="kn">import</span> <span class="n">SelectIOLoop</span>
@@ -312,7 +312,7 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 <p>一个子线程不停往ioloop添加回调函数</p>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><span class="c1"># coding=utf-8</span>
+<div class="highlight"><pre><span class="c"># coding=utf-8</span>
 
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">fcntl</span>
@@ -331,11 +331,11 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 <span class="k">class</span> <span class="nc">Waker</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">r</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">pipe</span><span class="p">()</span>
-        <span class="c1"># 启用非阻塞模式,方便消费完成后退出</span>
+        <span class="c"># 启用非阻塞模式,方便消费完成后退出</span>
         <span class="n">_set_nonblocking</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
         <span class="n">_set_nonblocking</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reader</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">fileno</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
@@ -345,14 +345,14 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 
     <span class="k">def</span> <span class="nf">wake</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s1">&#39;wake.....up, send out a b&quot;x&quot;!&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">b</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&#39;wake.....up, send out a b&quot;x&quot;!&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">b</span><span class="s">&quot;x&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
             <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">consume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s1">&#39;consume all wake up signal, it is b&quot;x&quot;&#39;</span>
+            <span class="k">print</span> <span class="s">&#39;consume all wake up signal, it is b&quot;x&quot;&#39;</span>
             <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reader</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
@@ -377,7 +377,7 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
     <span class="n">_EPOLLONESHOT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">30</span><span class="p">)</span>
     <span class="n">_EPOLLET</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">31</span><span class="p">)</span>
 
-    <span class="c1"># Our events map exactly to the epoll events</span>
+    <span class="c"># Our events map exactly to the epoll events</span>
     <span class="n">NONE</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">READ</span> <span class="o">=</span> <span class="n">_EPOLLIN</span>
     <span class="n">WRITE</span> <span class="o">=</span> <span class="n">_EPOLLOUT</span>
@@ -389,11 +389,11 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">epoll</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">fd</span><span class="p">,</span> <span class="n">events</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waker</span><span class="o">.</span><span class="n">consume</span><span class="p">()</span>
 
-        <span class="c1"># 将warker 的读文件描述符注册至select,监听 READ 和 ERROR 事件</span>
+        <span class="c"># 将warker 的读文件描述符注册至select,监听 READ 和 ERROR 事件</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_waker</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">READ</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">add_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="c1"># 利用functools.partial添加回调函数, 在毁掉函数为空的情况下唤醒ioloop</span>
+        <span class="c"># 利用functools.partial添加回调函数, 在毁掉函数为空的情况下唤醒ioloop</span>
         <span class="n">list_empty</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
             <span class="n">callback</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
@@ -403,32 +403,32 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
     <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-            <span class="c1"># 执行毁掉函数</span>
+            <span class="c"># 执行毁掉函数</span>
             <span class="n">callbacks</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">print</span> <span class="s1">&#39;run callback: &#39;</span><span class="p">,</span> <span class="n">callbacks</span>
+            <span class="k">print</span> <span class="s">&#39;run callback: &#39;</span><span class="p">,</span> <span class="n">callbacks</span>
             <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">:</span>
                 <span class="n">callback</span><span class="p">()</span>
 
-            <span class="c1"># 回调函数运行结束, 继续监听pipe</span>
-            <span class="k">print</span> <span class="s1">&#39;waiting new callback&#39;</span>
+            <span class="c"># 回调函数运行结束, 继续监听pipe</span>
+            <span class="k">print</span> <span class="s">&#39;waiting new callback&#39;</span>
             <span class="n">event_pairs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="mi">3600</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">event_pair</span> <span class="ow">in</span> <span class="n">event_pairs</span><span class="p">:</span>
                 <span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">=</span> <span class="n">event_pair</span>
                 <span class="k">print</span> <span class="n">fd</span><span class="p">,</span> <span class="n">events</span>
 
-                <span class="c1"># 接收到任何消息, 调用consume,消费所有消息, 这时候,下次循环时会开始执行回调函数</span>
+                <span class="c"># 接收到任何消息, 调用consume,消费所有消息, 这时候,下次循环时会开始执行回调函数</span>
                 <span class="n">handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span>
                 <span class="n">handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">print</span> <span class="s1">&#39;run callback function test, args:&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+    <span class="k">print</span> <span class="s">&#39;run callback function test, args:&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
 
 
 <span class="k">def</span> <span class="nf">test_add_callback</span><span class="p">(</span><span class="n">ioloop</span><span class="p">):</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s1">&#39;add callback&#39;</span>
+        <span class="k">print</span> <span class="s">&#39;add callback&#39;</span>
         <span class="n">ioloop</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="mi">888</span><span class="p">,</span> <span class="mi">999</span><span class="p">)</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
@@ -436,19 +436,19 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 <span class="k">def</span> <span class="nf">test_ioloop</span><span class="p">():</span>
     <span class="n">ioloop</span> <span class="o">=</span> <span class="n">IoLoop</span><span class="p">()</span>
 
-    <span class="k">print</span> <span class="s1">&#39;add a callback function&#39;</span>
+    <span class="k">print</span> <span class="s">&#39;add a callback function&#39;</span>
     <span class="n">ioloop</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="n">test</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-    <span class="k">print</span> <span class="s1">&#39;start a thread to add callback function&#39;</span>
-    <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">test_add_callback</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;test_add_callback&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ioloop</span><span class="p">,))</span>
+    <span class="k">print</span> <span class="s">&#39;start a thread to add callback function&#39;</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">test_add_callback</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;test_add_callback&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">ioloop</span><span class="p">,))</span>
     <span class="n">thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
     <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-    <span class="k">print</span> <span class="s1">&#39;start ioloop&#39;</span>
+    <span class="k">print</span> <span class="s">&#39;start ioloop&#39;</span>
     <span class="n">ioloop</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">test_ioloop</span><span class="p">()</span>
 </pre></div></div>
     <footer>
@@ -477,6 +477,12 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -484,12 +490,6 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -511,7 +511,7 @@ yield 返回函数,但是记录函数上下文,等待调用next后接着执行�
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

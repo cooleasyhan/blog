@@ -79,44 +79,44 @@
 <h2>最简单的操作LocalClient</h2>
 <p>想看看salt的源码, 从最简单的操作开始。 其实restful api, 命令行,还是python api,都殊途同归,最后也会到达salt.client, 只是入口不一样, restful API入口是 salt.netapi,
 而命令行的入口是 salt.cli。 </p>
-<div class="highlight"><pre><span></span># 变更虚拟环境
+<div class="highlight"><pre># 变更虚拟环境
 source /u01/virtualenv/salt/bin/activate
 </pre></div>
 
 
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">salt.client</span>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">salt.client</span>
 
 <span class="n">local</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">LocalClient</span><span class="p">()</span>
-<span class="n">local</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;test.fib&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">local</span><span class="o">.</span><span class="n">cmd</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span> <span class="s">&#39;test.fib&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">])</span>
 </pre></div>
 
 
 <h2>/u01/github/salt-develop/salt/client/<strong>init</strong>.py : class LocalClient</h2>
 <h3><strong>init</strong>()</h3>
 <p>主要初始化了上下文, 然后啥也没干,细节先TODO,后续再补</p>
-<div class="highlight"><pre><span></span><span class="c1"># c_path: 主要是master配置文件所在,一般是/etc/salt/master ,一般不填</span>
-<span class="c1"># mopts: 如果有值,则忽略c_path ,这两个参数主要是搞定 self.opts</span>
-<span class="c1"># skip_perm_errors: 权限校验 TODO</span>
-<span class="c1"># io_loop: TODO</span>
+<div class="highlight"><pre><span class="c"># c_path: 主要是master配置文件所在,一般是/etc/salt/master ,一般不填</span>
+<span class="c"># mopts: 如果有值,则忽略c_path ,这两个参数主要是搞定 self.opts</span>
+<span class="c"># skip_perm_errors: 权限校验 TODO</span>
+<span class="c"># io_loop: TODO</span>
 <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">c_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">syspaths</span><span class="o">.</span><span class="n">CONFIG_DIR</span><span class="p">,</span> <span class="s1">&#39;master&#39;</span><span class="p">),</span>
+                 <span class="n">c_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">syspaths</span><span class="o">.</span><span class="n">CONFIG_DIR</span><span class="p">,</span> <span class="s">&#39;master&#39;</span><span class="p">),</span>
                  <span class="n">mopts</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">skip_perm_errors</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                  <span class="n">io_loop</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 
-        <span class="c1"># self.opts 所有的配置项</span>
+        <span class="c"># self.opts 所有的配置项</span>
         <span class="k">if</span> <span class="n">mopts</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">opts</span> <span class="o">=</span> <span class="n">mopts</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">c_path</span><span class="p">):</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                    <span class="s1">&#39;{0} expects a file path not a directory path({1}) to &#39;</span>
-                    <span class="s1">&#39;it</span><span class="se">\&#39;</span><span class="s1">s </span><span class="se">\&#39;</span><span class="s1">c_path</span><span class="se">\&#39;</span><span class="s1"> keyword argument&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="s">&#39;{0} expects a file path not a directory path({1}) to &#39;</span>
+                    <span class="s">&#39;it</span><span class="se">\&#39;</span><span class="s">s </span><span class="se">\&#39;</span><span class="s">c_path</span><span class="se">\&#39;</span><span class="s"> keyword argument&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">c_path</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">opts</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">client_config</span><span class="p">(</span><span class="n">c_path</span><span class="p">)</span>
 
-        <span class="c1"># 其他细节 TODO</span>
+        <span class="c"># 其他细节 TODO</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">serial</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">salt_user</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_specific_user</span><span class="p">()</span>
@@ -125,11 +125,11 @@ source /u01/virtualenv/salt/bin/activate
 
         <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__read_master_key</span><span class="p">()</span>
 
-        <span class="c1"># 用于获取返回</span>
+        <span class="c"># 用于获取返回</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get_event</span><span class="p">(</span>
-                <span class="s1">&#39;master&#39;</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;sock_dir&#39;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;transport&#39;</span><span class="p">],</span>
+                <span class="s">&#39;master&#39;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;sock_dir&#39;</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;transport&#39;</span><span class="p">],</span>
                 <span class="n">opts</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">,</span>
                 <span class="n">listen</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                 <span class="n">io_loop</span><span class="o">=</span><span class="n">io_loop</span><span class="p">)</span>
@@ -157,21 +157,21 @@ source /u01/virtualenv/salt/bin/activate
 <p>为了了解整个流程,而不是去纠结各种执行方式,比如批次执行,异步执行等等, 就看cmd吧。<br />
 cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pub_data, pub_data 中主要有job_id和minions, 用于从event中获取到返回结果,
 返回结果是一个minion_id 为key 的字典。 代码量很少,就粘贴在下面了。</p>
-<div class="highlight"><pre><span></span><span class="c1"># tgt, expr_form 确定minins</span>
-<span class="c1"># fun arg timeout 确定命令执行</span>
-<span class="c1"># ret 指定return</span>
-<span class="c1"># jid 指定jid</span>
-<span class="c1"># kwarg</span>
-<span class="c1"># kwargs 权限相关参数</span>
+<div class="highlight"><pre><span class="c"># tgt, expr_form 确定minins</span>
+<span class="c"># fun arg timeout 确定命令执行</span>
+<span class="c"># ret 指定return</span>
+<span class="c"># jid 指定jid</span>
+<span class="c"># kwarg</span>
+<span class="c"># kwargs 权限相关参数</span>
 <span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">tgt</span><span class="p">,</span>
         <span class="n">fun</span><span class="p">,</span>
         <span class="n">arg</span><span class="o">=</span><span class="p">(),</span>
         <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-        <span class="n">expr_form</span><span class="o">=</span><span class="s1">&#39;glob&#39;</span><span class="p">,</span>
-        <span class="n">ret</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="n">jid</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">expr_form</span><span class="o">=</span><span class="s">&#39;glob&#39;</span><span class="p">,</span>
+        <span class="n">ret</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">jid</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
         <span class="n">kwarg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">arg</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">condition_input</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">kwarg</span><span class="p">)</span>
@@ -189,8 +189,8 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
 
     <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">fn_ret</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cli_event_returns</span><span class="p">(</span>
-            <span class="n">pub_data</span><span class="p">[</span><span class="s1">&#39;jid&#39;</span><span class="p">],</span>
-            <span class="n">pub_data</span><span class="p">[</span><span class="s1">&#39;minions&#39;</span><span class="p">],</span>
+            <span class="n">pub_data</span><span class="p">[</span><span class="s">&#39;jid&#39;</span><span class="p">],</span>
+            <span class="n">pub_data</span><span class="p">[</span><span class="s">&#39;minions&#39;</span><span class="p">],</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_timeout</span><span class="p">(</span><span class="n">timeout</span><span class="p">),</span>
             <span class="n">tgt</span><span class="p">,</span>
             <span class="n">expr_form</span><span class="p">,</span>
@@ -198,22 +198,22 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
 
         <span class="k">if</span> <span class="n">fn_ret</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">mid</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">six</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(</span><span class="n">fn_ret</span><span class="p">):</span>
-                <span class="n">ret</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ret&#39;</span><span class="p">,</span> <span class="p">{})</span>
+                <span class="n">ret</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;ret&#39;</span><span class="p">,</span> <span class="p">{})</span>
 
     <span class="k">return</span> <span class="n">ret</span>
 </pre></div>
 
 
 <h3>run_job()</h3>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run_job</span><span class="p">(</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">run_job</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">tgt</span><span class="p">,</span>
             <span class="n">fun</span><span class="p">,</span>
             <span class="n">arg</span><span class="o">=</span><span class="p">(),</span>
-            <span class="n">expr_form</span><span class="o">=</span><span class="s1">&#39;glob&#39;</span><span class="p">,</span>
-            <span class="n">ret</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">expr_form</span><span class="o">=</span><span class="s">&#39;glob&#39;</span><span class="p">,</span>
+            <span class="n">ret</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
             <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-            <span class="n">jid</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">jid</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
             <span class="n">kwarg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">arg</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">condition_input</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">kwarg</span><span class="p">)</span>
@@ -229,12 +229,12 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
             <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_timeout</span><span class="p">(</span><span class="n">timeout</span><span class="p">),</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">SaltClientError</span><span class="p">:</span>
-        <span class="c1"># Re-raise error with specific message</span>
+        <span class="c"># Re-raise error with specific message</span>
         <span class="k">raise</span> <span class="n">SaltClientError</span><span class="p">(</span>
-            <span class="s1">&#39;The salt master could not be contacted. Is master running?&#39;</span>
+            <span class="s">&#39;The salt master could not be contacted. Is master running?&#39;</span>
         <span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">general_exception</span><span class="p">:</span>
-        <span class="c1"># Convert to generic client error and pass along message</span>
+        <span class="c"># Convert to generic client error and pass along message</span>
         <span class="k">raise</span> <span class="n">SaltClientError</span><span class="p">(</span><span class="n">general_exception</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_pub_data</span><span class="p">(</span><span class="n">pub_data</span><span class="p">)</span>
@@ -243,32 +243,32 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
 
 <h3>pub()</h3>
 <p>参数很好理解,跟之前的参数一样</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">pub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
         <span class="n">tgt</span><span class="p">,</span>
         <span class="n">fun</span><span class="p">,</span>
         <span class="n">arg</span><span class="o">=</span><span class="p">(),</span>
-        <span class="n">expr_form</span><span class="o">=</span><span class="s1">&#39;glob&#39;</span><span class="p">,</span>
-        <span class="n">ret</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="n">jid</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">expr_form</span><span class="o">=</span><span class="s">&#39;glob&#39;</span><span class="p">,</span>
+        <span class="n">ret</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+        <span class="n">jid</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
         <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 </pre></div>
 
 
 <p>根据ipc_mode选择了通讯方式,是tcp还是ipc, 一般windows 下是 tcp, 而linux 则是ipc</p>
-<div class="highlight"><pre><span></span>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ipc_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;tcp&#39;</span> <span class="ow">and</span>
-                <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;sock_dir&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;publish_pull.ipc&#39;</span><span class="p">))):</span>
+<div class="highlight"><pre>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;ipc_mode&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="s">&#39;tcp&#39;</span> <span class="ow">and</span>
+                <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;sock_dir&#39;</span><span class="p">],</span>
+                <span class="s">&#39;publish_pull.ipc&#39;</span><span class="p">))):</span>
             <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s1">&#39;Unable to connect to the salt master publisher at &#39;</span>
-                <span class="s1">&#39;{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;sock_dir&#39;</span><span class="p">])</span>
+                <span class="s">&#39;Unable to connect to the salt master publisher at &#39;</span>
+                <span class="s">&#39;{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;sock_dir&#39;</span><span class="p">])</span>
             <span class="p">)</span>
             <span class="k">raise</span> <span class="n">SaltClientError</span>
 </pre></div>
 
 
 <p>组装通讯用的data, 主要处理了tgt和expr_from,</p>
-<div class="highlight"><pre><span></span><span class="n">payload_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prep_pub</span><span class="p">(</span>
+<div class="highlight"><pre><span class="n">payload_kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prep_pub</span><span class="p">(</span>
                 <span class="n">tgt</span><span class="p">,</span>
                 <span class="n">fun</span><span class="p">,</span>
                 <span class="n">arg</span><span class="p">,</span>
@@ -278,29 +278,29 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
                 <span class="n">timeout</span><span class="p">,</span>
                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="c1"># 结果, 如果使用syndic模式, 需要将user和timeout传递下去</span>
-<span class="n">payload_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;publish&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;tgt&#39;</span><span class="p">:</span> <span class="n">tgt</span><span class="p">,</span>
-                          <span class="s1">&#39;fun&#39;</span><span class="p">:</span> <span class="n">fun</span><span class="p">,</span>
-                          <span class="s1">&#39;arg&#39;</span><span class="p">:</span> <span class="n">arg</span><span class="p">,</span>
-                          <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
-                          <span class="s1">&#39;tgt_type&#39;</span><span class="p">:</span> <span class="n">expr_form</span><span class="p">,</span>
-                          <span class="s1">&#39;ret&#39;</span><span class="p">:</span> <span class="n">ret</span><span class="p">,</span>
-                          <span class="s1">&#39;jid&#39;</span><span class="p">:</span> <span class="n">jid</span><span class="p">,</span>
-                          <span class="c1">####</span>
-                          <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span><span class="n">kwargs</span><span class="p">,</span>
-                          <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;syndic_master&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">salt_user</span><span class="p">,</span>
-                          <span class="s1">&#39;to&#39;</span><span class="p">:</span> <span class="n">timeout</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;order_masters&#39;</span><span class="p">]</span>
+<span class="c"># 结果, 如果使用syndic模式, 需要将user和timeout传递下去</span>
+<span class="n">payload_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;cmd&#39;</span><span class="p">:</span> <span class="s">&#39;publish&#39;</span><span class="p">,</span>
+                          <span class="s">&#39;tgt&#39;</span><span class="p">:</span> <span class="n">tgt</span><span class="p">,</span>
+                          <span class="s">&#39;fun&#39;</span><span class="p">:</span> <span class="n">fun</span><span class="p">,</span>
+                          <span class="s">&#39;arg&#39;</span><span class="p">:</span> <span class="n">arg</span><span class="p">,</span>
+                          <span class="s">&#39;key&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span>
+                          <span class="s">&#39;tgt_type&#39;</span><span class="p">:</span> <span class="n">expr_form</span><span class="p">,</span>
+                          <span class="s">&#39;ret&#39;</span><span class="p">:</span> <span class="n">ret</span><span class="p">,</span>
+                          <span class="s">&#39;jid&#39;</span><span class="p">:</span> <span class="n">jid</span><span class="p">,</span>
+                          <span class="c">####</span>
+                          <span class="s">&#39;kwargs&#39;</span><span class="p">:</span><span class="n">kwargs</span><span class="p">,</span>
+                          <span class="s">&#39;user&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;user&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;syndic_master&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">salt_user</span><span class="p">,</span>
+                          <span class="s">&#39;to&#39;</span><span class="p">:</span> <span class="n">timeout</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;order_masters&#39;</span><span class="p">]</span>
                           <span class="p">}</span>
 </pre></div>
 
 
 <p>获取channel, 这里使用了warp,做了一些封装, 上述例子最终使用的是 AsyncZeroMQReqChannel, </p>
-<div class="highlight"><pre><span></span><span class="c1"># master url, 此处的ip 为master 本机ip: 0.0.0.0 , 端口为4506, 这个端口是用来minions 返回结果用的</span>
-<span class="n">master_uri</span> <span class="o">=</span> <span class="s1">&#39;tcp://&#39;</span> <span class="o">+</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">ip_bracket</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;interface&#39;</span><span class="p">])</span> <span class="o">+</span> \
-                     <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s1">&#39;ret_port&#39;</span><span class="p">])</span>
+<div class="highlight"><pre><span class="c"># master url, 此处的ip 为master 本机ip: 0.0.0.0 , 端口为4506, 这个端口是用来minions 返回结果用的</span>
+<span class="n">master_uri</span> <span class="o">=</span> <span class="s">&#39;tcp://&#39;</span> <span class="o">+</span> <span class="n">salt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">ip_bracket</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;interface&#39;</span><span class="p">])</span> <span class="o">+</span> \
+                     <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;ret_port&#39;</span><span class="p">])</span>
 <span class="n">channel</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">Channel</span><span class="o">.</span><span class="n">factory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opts</span><span class="p">,</span>
-                                                 <span class="n">crypt</span><span class="o">=</span><span class="s1">&#39;clear&#39;</span><span class="p">,</span>
+                                                 <span class="n">crypt</span><span class="o">=</span><span class="s">&#39;clear&#39;</span><span class="p">,</span>
                                                  <span class="n">master_uri</span><span class="o">=</span><span class="n">master_uri</span><span class="p">)</span>
 </pre></div>
 
@@ -311,29 +311,29 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
 <h3>get_cli_event_returns()</h3>
 <p>通过event获取结果, 主要通过event_tag 筛选消息。程序会连接到 zmq pub socket上, 通过tag解析不同类型的event。</p>
 <p>job tag 类似 salt/job/jid, 如果是syndic, 则类似于 syndic/.*/jid</p>
-<div class="highlight"><pre><span></span><span class="n">TAGEND</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span>  <span class="c1"># long tag delimiter</span>
-<span class="n">TAGPARTER</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>  <span class="c1"># name spaced tag delimiter</span>
-<span class="n">SALT</span> <span class="o">=</span> <span class="s1">&#39;salt&#39;</span>  <span class="c1"># base prefix for all salt/ events</span>
-<span class="c1"># dict map of namespaced base tag prefixes for salt events</span>
+<div class="highlight"><pre><span class="n">TAGEND</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n\n</span><span class="s">&#39;</span>  <span class="c"># long tag delimiter</span>
+<span class="n">TAGPARTER</span> <span class="o">=</span> <span class="s">&#39;/&#39;</span>  <span class="c"># name spaced tag delimiter</span>
+<span class="n">SALT</span> <span class="o">=</span> <span class="s">&#39;salt&#39;</span>  <span class="c"># base prefix for all salt/ events</span>
+<span class="c"># dict map of namespaced base tag prefixes for salt events</span>
 <span class="n">TAGS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;auth&#39;</span><span class="p">:</span> <span class="s1">&#39;auth&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/auth events</span>
-    <span class="s1">&#39;job&#39;</span><span class="p">:</span> <span class="s1">&#39;job&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/job events (minion jobs)</span>
-    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;key&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/key events</span>
-    <span class="s1">&#39;minion&#39;</span><span class="p">:</span> <span class="s1">&#39;minion&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/minion events</span>
-                         <span class="c1"># (minion sourced events)</span>
-    <span class="s1">&#39;syndic&#39;</span><span class="p">:</span> <span class="s1">&#39;syndic&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/syndic events</span>
-                         <span class="c1"># (syndic minion sourced events)</span>
-    <span class="s1">&#39;run&#39;</span><span class="p">:</span> <span class="s1">&#39;run&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/run events (salt runners)</span>
-    <span class="s1">&#39;wheel&#39;</span><span class="p">:</span> <span class="s1">&#39;wheel&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/wheel events</span>
-    <span class="s1">&#39;cloud&#39;</span><span class="p">:</span> <span class="s1">&#39;cloud&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/cloud events</span>
-    <span class="s1">&#39;fileserver&#39;</span><span class="p">:</span> <span class="s1">&#39;fileserver&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/fileserver events</span>
-    <span class="s1">&#39;queue&#39;</span><span class="p">:</span> <span class="s1">&#39;queue&#39;</span><span class="p">,</span>  <span class="c1"># prefix for all salt/queue events</span>
+    <span class="s">&#39;auth&#39;</span><span class="p">:</span> <span class="s">&#39;auth&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/auth events</span>
+    <span class="s">&#39;job&#39;</span><span class="p">:</span> <span class="s">&#39;job&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/job events (minion jobs)</span>
+    <span class="s">&#39;key&#39;</span><span class="p">:</span> <span class="s">&#39;key&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/key events</span>
+    <span class="s">&#39;minion&#39;</span><span class="p">:</span> <span class="s">&#39;minion&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/minion events</span>
+                         <span class="c"># (minion sourced events)</span>
+    <span class="s">&#39;syndic&#39;</span><span class="p">:</span> <span class="s">&#39;syndic&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/syndic events</span>
+                         <span class="c"># (syndic minion sourced events)</span>
+    <span class="s">&#39;run&#39;</span><span class="p">:</span> <span class="s">&#39;run&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/run events (salt runners)</span>
+    <span class="s">&#39;wheel&#39;</span><span class="p">:</span> <span class="s">&#39;wheel&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/wheel events</span>
+    <span class="s">&#39;cloud&#39;</span><span class="p">:</span> <span class="s">&#39;cloud&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/cloud events</span>
+    <span class="s">&#39;fileserver&#39;</span><span class="p">:</span> <span class="s">&#39;fileserver&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/fileserver events</span>
+    <span class="s">&#39;queue&#39;</span><span class="p">:</span> <span class="s">&#39;queue&#39;</span><span class="p">,</span>  <span class="c"># prefix for all salt/queue events</span>
 <span class="p">}</span>
 </pre></div>
 
 
 <p>subscribe 主要是添加一个tag 名称, 和match 用的fuction</p>
-<div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">match_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="highlight"><pre>    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">match_type</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Subscribe to events matching the passed tag.</span>
 
@@ -352,14 +352,14 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
 
 <p>get_event 优先通过 _check_pending 检查pending_events, 如果存在则放回,如果不存在,则调用_get_event 获取消息,<br />
 如果直接match上了,则返回,那些没有match上当前tag,但是match上其他tag的,放置到 pending_events 列表中,什么也没match上的直接丢弃。处理过程中,也会将 unsubscribe的event移除。</p>
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_get_event</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">_get_event</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
 <span class="o">...</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">match_func</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">],</span> <span class="n">tag</span><span class="p">):</span>
-                <span class="c1"># tag not match</span>
-                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">pmatch_func</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">],</span> <span class="n">ptag</span><span class="p">)</span> <span class="k">for</span> <span class="n">ptag</span><span class="p">,</span> <span class="n">pmatch_func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pending_tags</span><span class="p">):</span>
-                    <span class="n">log</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;get_event() caching unwanted event = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">match_func</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s">&#39;tag&#39;</span><span class="p">],</span> <span class="n">tag</span><span class="p">):</span>
+                <span class="c"># tag not match</span>
+                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">pmatch_func</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s">&#39;tag&#39;</span><span class="p">],</span> <span class="n">ptag</span><span class="p">)</span> <span class="k">for</span> <span class="n">ptag</span><span class="p">,</span> <span class="n">pmatch_func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pending_tags</span><span class="p">):</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s">&#39;get_event() caching unwanted event = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">pending_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">wait</span><span class="p">:</span>  <span class="c1"># only update the wait timeout if we had one</span>
+                <span class="k">if</span> <span class="n">wait</span><span class="p">:</span>  <span class="c"># only update the wait timeout if we had one</span>
                     <span class="n">wait</span> <span class="o">=</span> <span class="n">timeout_at</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
                 <span class="k">continue</span>
 </pre></div>
@@ -392,6 +392,12 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -399,12 +405,6 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -426,7 +426,7 @@ cmd 参数很好理解, 主要做了两个事情, 执行任务run_job, 返回 pu
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

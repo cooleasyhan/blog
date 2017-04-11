@@ -69,6 +69,79 @@
   		<article>
 <header>
       <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html">批量修改sql</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-04-22T00:00:00+08:00" pubdate>五 22 四月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>Mysql 批量修改view 的definer</h2>
+<div class="highlight"><pre>select concat(&quot;alter DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW &quot;,
+    TABLE_SCHEMA,
+    &quot;.&quot;,
+    TABLE_NAME,
+    &quot; as &quot;
+    ,VIEW_DEFINITION,
+    &quot;;&quot;) 
+ from information_schema.VIEWS 
+where table_schema &lt;&gt; &#39;sys&#39;  ORDER BY 1 ASC;
+</pre></div>
+
+
+<h2>批量修改table engine</h2>
+<div class="highlight"><pre>SELECT  CONCAT(&#39;ALTER TABLE `&#39;,table_schema,
+    &#39;`.`&#39;,
+    table_name,
+    &#39;` ENGINE=InnoDB;&#39;) AS sql_statements
+ FROM    information_schema.tables AS tb
+WHERE   `ENGINE` = &#39;MyISAM&#39;
+  AND     `TABLE_TYPE` = &#39;BASE ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/04/22/mass_update.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html">oracle 锁</a>
+      </h1>
+    <p class="meta">
+<time datetime="2016-04-22T00:00:00+08:00" pubdate>五 22 四月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>oracle查询锁</h2>
+<div class="highlight"><pre><span class="x">SELECT Obj.Owner,</span>
+<span class="x">       Obj.Object_Id,</span>
+<span class="x">       Obj.Object_Name,</span>
+<span class="x">       Lo.Locked_Mode,</span>
+<span class="x">       s.Sid,</span>
+<span class="x">       s.Serial</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Username,</span>
+<span class="x">       s.Machine,</span>
+<span class="x">       s.Terminal,</span>
+<span class="x">       s.Program,</span>
+<span class="x">       s.Client_Identifier,</span>
+<span class="x">       s.Module,</span>
+<span class="x">       s.Action,</span>
+<span class="x">       s.Row_Wait_Obj</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Row_Wait_File</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Row_Wait_Block</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       s.Row_Wait_Row</span><span class="err">#</span><span class="x">,</span>
+<span class="x">       CASE</span>
+<span class="x">         WHEN l.Request &lt;&gt; 0 THEN</span>
+<span class="x">          Dbms_Rowid.Rowid_Create(1,</span>
+<span class="x">                                  Row_Wait_Obj</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_File</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_Block</span><span class="err">#</span><span class="x">,</span>
+<span class="x">                                  Row_Wait_Row</span><span class="err">#</span><span class="x">)</span>
+<span class="x">         ELSE ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
         <a href="http://www.yilaguan.cc/posts/2016/03/20/pandas.html">Pandas</a>
       </h1>
     <p class="meta">
@@ -76,7 +149,7 @@
 </header>
 
   <div class="entry-content"><h2>简单操作</h2>
-<div class="highlight"><pre><span></span># 设置索引
+<div class="highlight"><pre># 设置索引
 basic = basic.set_index(&#39;code&#39;)
 
 #左连接
@@ -112,7 +185,7 @@ rst = rst.sort_values(&#39;grow&#39;)
 </header>
 
   <div class="entry-content"><h2>安装mysql clint tora</h2>
-<div class="highlight"><pre><span></span>#sudo apt-get install tora
+<div class="highlight"><pre>#sudo apt-get install tora
 #tora
 
 
@@ -133,41 +206,19 @@ error: no avaliable connection provider
 
   <div class="entry-content"><h2>安装</h2>
 <p>官网下载相关rpm 包, 此处为 percona-xtrabackup-20-2.0.8-587.rhel6.x86_64.rpm， 其中5.1版本的mysql只能使用 2.0版本的xtrabackup</p>
-<div class="highlight"><pre><span></span>rpm -ivh xxx.rpm
+<div class="highlight"><pre>rpm -ivh xxx.rpm
 </pre></div>
 
 
-<h2>使用要点</h2>
-<ol>
-<li>正常备份会锁表，可以使用 </li>
-</ol>
-<h2>备份脚本</h2>
-<p>写了一个脚本，用于每周日全备，其他时候增量备份</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25 ...</pre></div></td></tr></table></div>
+<h2>单表备份</h2>
+<p>/usr/bin/innobackupex --defaults-file=/etc/my.cnf \
+--slave-info --safe-slave-backup --no-lock \
+--no-timestamp --user=xxx --password=xxxx \
+--host=xxxx --port=3306 --stream=xbstream --compress \
+--include='^database.table_name' /tmp \</p>
+<h2>单表恢复</h2>
+<p>1.安装qpress
+wget http ...</p></div>
   <footer>
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/13/xtrabackup.html">Read On &crarr;</a>
   </footer>
@@ -205,12 +256,12 @@ error: no avaliable connection provider
 
   <div class="entry-content"><h2>创建用户组</h2>
 <p>用于与sftp设置进行匹配</p>
-<div class="highlight"><pre><span></span>groupadd  sftp_users
+<div class="highlight"><pre>groupadd  sftp_users
 </pre></div>
 
 
 <h2>设置sftp</h2>
-<div class="highlight"><pre><span></span># Subsystem sftp    /usr/libexec/openssh/sftp-server
+<div class="highlight"><pre># Subsystem sftp    /usr/libexec/openssh/sftp-server
 Subsystem       sftp    internal-sftp
 Match Group sftp_users
         X11Forwarding no
@@ -339,7 +390,7 @@ Match Group sftp_users
 </table>
 <h3>一颗树条件</h3>
 <p>一幅含有V个节点的图G满足下列5个条件之一，它就是一棵树  </p>
-<div class="highlight"><pre><span></span>- G 有V-1条边且不含有环
+<div class="highlight"><pre>- G 有V-1条边且不含有环
 - G 有V-1条边且是连通的
 - G 是连通的， 但删除任意一条边度会使它不再联通
 - G ...</pre></div></div>
@@ -361,14 +412,14 @@ Match Group sftp_users
 实现： EBS 设置单一网络入口点，  外网服务器上配置nginx 转发至内网服务器。</p>
 <h2>配置EBS</h2>
 <h3>修改host文件， 在EBS app 服务器上添加相关host</h3>
-<div class="highlight"><pre><span></span>110.10.10.10 prod.xxx.xxx.xxx prod
+<div class="highlight"><pre>110.10.10.10 prod.xxx.xxx.xxx prod
 </pre></div>
 
 
 <h3>修改 $CONTEXT_FILE , 配置EBS单一网络入口</h3>
 <p>http://app01.domain.name:8000  ===&gt;   http://prod.domain.name:80<br />
 修改前后比对</p>
-<div class="highlight"><pre><span></span>[applprod@app01 admin]$ diff PROD_app01.xml PROD_app01.xml.bak 
+<div class="highlight"><pre>[applprod@app01 admin]$ diff PROD_app01.xml PROD_app01.xml.bak 
 123c123
 <span class="err">&lt;</span>          <span class="nt">&lt;chronosURL</span> <span class="na">oa_var=</span><span class="s">&quot;s_chronosURL ...</span></pre></div></div>
   <footer>
@@ -385,7 +436,7 @@ Match Group sftp_users
 </header>
 
   <div class="entry-content"><h2>通知单行：</h2>
-<div class="highlight"><pre><span></span>--1.备份数据
+<div class="highlight"><pre>--1.备份数据
 CREATE TABLE Ar_Memo_Lines_All_Tl_0529 AS
   SELECT * FROM Ar_Memo_Lines_All_Tl;
 
@@ -399,82 +450,6 @@ UPDATE Cux_Ar_Memo_Lines_Df_0529 d SET(Memo_Line_Id, New_Name, New_Description) 
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/01/ar-shu-ju-data-fix.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">定位autoconfig模板文件</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><p>1、定位模版文件<br />
-$AD_TOP/bin/adtmplreport.sh contextfile=$CONTEXT_FILE target=$FORMS_WEB_CONFIG_FILE
-以上命令，通过查看报表日志，可分别得到如下模版结果：
-$FND_TOP/admin/template/forms_web_1012_cfg.tmp</p>
-<p>2、创建custom目录<br />
-mkdir $FND_TOP/admin/template/custom</p>
-<p>3、把上述文件拷贝到custom目录<br />
-cp -i $FND_TOP/admin/template/forms_web_1012_cfg.tmp $FND_TOP/admin/template/custom/forms_web_1012_cfg.tmp</p>
-<p>4、编辑custom目录下的模版文件<br />
-forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
-<p>添加金税的jar包<br />
-  archive2=,/OA_JAVA/hand/hand ...</p></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html">Read On &crarr;</a>
-  </footer>
-  		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/30/shell-bi-jiao.html">shell 比较</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-30T00:00:00+08:00" pubdate>一 30 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>描述</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>文件比较运算符</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>-e filename</td>
-<td>如果 filename 存在，则为真</td>
-<td>[ -e /var/log/syslog ]</td>
-</tr>
-<tr>
-<td>-d filename</td>
-<td>如果 filename 为目录，则为真</td>
-<td>[ -d /tmp/mydir ]</td>
-</tr>
-<tr>
-<td>-f filename</td>
-<td>如果 filename 为常规文件，则为真</td>
-<td>[ -f /usr/bin/grep ]</td>
-</tr>
-<tr>
-<td>-L filename</td>
-<td>如果 filename 为符号链接，则为真</td>
-<td>[ -L /usr/bin/grep ]</td>
-</tr>
-<tr>
-<td>-r filename</td>
-<td>如果 filename 可读，则为真</td>
-<td>[ -r ...</td></tr></tbody></table></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/30/shell-bi-jiao.html">Read On &crarr;</a>
-  </footer>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index4.html">&larr; Older</a>
 
@@ -486,6 +461,12 @@ forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -493,12 +474,6 @@ forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -520,7 +495,7 @@ forms_web_1012_cfg.tmp文件中的archive2=修改为下面的行：</p>
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

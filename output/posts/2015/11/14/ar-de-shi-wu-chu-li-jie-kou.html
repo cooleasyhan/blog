@@ -107,7 +107,7 @@
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre><span></span># Records 定义
+<div class="highlight"><pre># Records 定义
 g_Type_Batch_Source_Rec
 g_Type_Trx_Header_Feilds_Rec
 g_Type_Trx_Type_Rec
@@ -142,7 +142,7 @@ TYPE g_Type_Line_Rec IS RECORD(
 </pre></div>
 
 
-<div class="highlight"><pre><span></span># build 方法
+<div class="highlight"><pre># build 方法
 Build_Batch_Source_Rec
 Build_Trx_Header_Feilds_Rec
 Build_Trx_Type_Rec
@@ -158,7 +158,7 @@ Trx_Number为空时根据Trx_Group_Identify进行分组
 </pre></div>
 
 
-<div class="highlight"><pre><span></span># Add Header, Add Line
+<div class="highlight"><pre># Add Header, Add Line
 PROCEDURE Add_Trx_Header(Pir_Batch_Source_Rec          IN g_Type_Batch_Source_Rec,
                            Pir_Trx_Header_Feilds_Rec     IN g_Type_Trx_Header_Feilds_Rec,
                            Pir_Trx_Type_Rec              IN g_Type_Trx_Type_Rec,
@@ -179,7 +179,7 @@ PROCEDURE Add_Trx_Line(Pir_Trx_Line_Feids_Rec      IN g_Type_Trx_Line_Feilds_Rec
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>  <span class="c1"># validate, import , get_msg</span>
+<div class="highlight"><pre>  <span class="c"># validate, import , get_msg</span>
   <span class="n">PROCEDURE</span> <span class="n">Run_Validate</span><span class="p">(</span><span class="n">Pov_Return_Status</span> <span class="n">OUT</span> <span class="n">NOCOPY</span> <span class="n">VARCHAR2</span><span class="p">,</span>
                          <span class="n">Pov_Msg_Data</span>      <span class="n">OUT</span> <span class="n">NOCOPY</span> <span class="n">VARCHAR2</span><span class="p">,</span>
                          <span class="n">Piv_Commit</span>        <span class="n">IN</span> <span class="n">VARCHAR2</span> <span class="n">DEFAULT</span> <span class="n">Fnd_Api</span><span class="o">.</span><span class="n">g_False</span><span class="p">);</span>
@@ -191,7 +191,7 @@ PROCEDURE Add_Trx_Line(Pir_Trx_Line_Feids_Rec      IN g_Type_Trx_Line_Feilds_Rec
 </pre></div>
 
 
-<div class="highlight"><pre><span></span>-- Created on 2015/11/13 by YIHAN 
+<div class="highlight"><pre>-- Created on 2015/11/13 by YIHAN 
 DECLARE
   -- Local variables here
 
@@ -314,6 +314,12 @@ END;
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/11/08/pypi.html">pypi</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/26/vim.html">vim</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
       </li>
       <li class="post">
@@ -321,12 +327,6 @@ END;
       </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
       </li>
     </ul>
   </section>
@@ -348,7 +348,7 @@ END;
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 
