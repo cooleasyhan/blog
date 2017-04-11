@@ -1,5 +1,5 @@
 date: 2015-12-01
-title: AR 设置数据data fix
+title: AR 数据data fix
 tags: ebs
 sulg: ar_setup_df
 
@@ -85,4 +85,70 @@ WHERE a.Cust_Trx_Type_Id = d.Cust_Trx_Type_Id
 
 
 
+```
+
+
+## 事务处理信息创建人更新
+```plsql
+
+DECLARE
+  Ln_Old_User_Id NUMBER := 1366;
+  Ln_New_User_Id NUMBER := 1141;
+BEGIN
+
+  UPDATE Ra_Customer_Trx_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date > SYSDATE - 1;
+
+  Dbms_Output.Put_Line('更新 ra_customer_trx_all， 生效记录');
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ra_Customer_Trx_Lines_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date > SYSDATE - 1;
+
+  Dbms_Output.Put_Line('更新 ra_customer_trx_lines_all， 生效记录');
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ra_Cust_Trx_Line_Gl_Dist_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date > SYSDATE - 1;
+
+  Dbms_Output.Put_Line('更新 ra_cust_trx_line_gl_dist_all， 生效记录');
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Xla_Events t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date > SYSDATE - 1;
+
+  Dbms_Output.Put_Line('更新 xla_events， 生效记录');
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Xla_Transaction_Entities_Upg t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date > SYSDATE - 1;
+
+  Dbms_Output.Put_Line('更新 Xla_Transaction_Entities_Upg， 生效记录');
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ar_Payment_Schedules_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date > SYSDATE - 1;
+
+  Dbms_Output.Put_Line('更新 ar_payment_schedules_all， 生效记录');
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+END;
 ```

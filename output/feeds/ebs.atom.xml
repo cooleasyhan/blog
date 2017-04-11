@@ -1,5 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/ebs.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-04-22T00:00:00+08:00</updated><entry><title>oracle 锁</title><link href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html" rel="alternate"></link><published>2016-04-22T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-04-22:posts/2016/04/22/oracle_lock.html</id><summary type="html">&lt;h2&gt;oracle查询锁&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/ebs.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-10-25T00:00:00+08:00</updated><entry><title>EBS服务启动失败处理一粒</title><link href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html" rel="alternate"></link><published>2016-10-25T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-10-25:posts/2016/10/25/oracle_start.html</id><summary type="html">&lt;p&gt;先stop然后做以下操作再启动应该就好，里面有一些不知道是啥缓存的文件吧，其中后缀是.lock的就是报错的原因，只要把这些lock的删掉就行，都删了也没问题&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/oacore/persistence/*&lt;/span&gt;
+&lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/oafm/persistence/*&lt;/span&gt;
+&lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/forms/persistence/*&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>代码dependence</title><link href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html" rel="alternate"></link><published>2016-09-07T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-09-07:posts/2016/09/07/oracle_dependence.html</id><summary type="html">&lt;h1&gt;收集dependence信息&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- Created on 2016/9/7 by YIHAN 
+DECLARE
+  -- Local variables here
+  i INTEGER;
+BEGIN
+  -- Test statements here
+  DELETE Cux_Yh_Dependencies;
+  INSERT INTO Cux_Yh_Dependencies
+    SELECT *
+      FROM Dba_Dependencies d
+     WHERE d.Name IN
+           (SELECT Upper(Substr(e.Execution_File_Name, 1, Instr(e.Execution_File_Name, &amp;#39;.&amp;#39;, -1) - 1))
+              FROM Fnd_Executables_Vl e
+             WHERE e.Execution_Method_Code = &amp;#39;I&amp;#39;
+               AND e.Executable_Id IN (SELECT Vl.Executable_Id
+                                         FROM Fnd_Request_Groups         g,
+                                              Fnd_Request_Group_Units    u,
+                                              Fnd_Concurrent_Programs_Vl Vl,
+                                              Fnd_Application            a
+                                        WHERE g.Request_Group_Name = &amp;#39;QIHU_AR_ACCOUNT_REPORTS&amp;#39;
+                                          AND g.Request_Group_Id = u.Request_Group_Id
+                                          AND u.Request_Unit_Id = Vl.Concurrent_Program_Id
+                                          AND u.Request_Unit_Type = &amp;#39;P&amp;#39;
+                                          AND Vl.User_Concurrent_Program_Name LIKE &amp;#39;CUX%&amp;#39;
+                                          AND Vl.Enabled_Flag = &amp;#39;Y&amp;#39;
+                                          AND Vl.Application_Id = a.Application_Id
+
+                                       )
+            UNION
+
+            SELECT DISTINCT Upper(Substr(Req.Exec_Program, 1, Instr(Req.Exec_Program, &amp;#39;.&amp;#39;, -1) - 1))
+              FROM Cux_Unify_Import_Prf_Req Req, Cux_Unify_Import_Profile p
+             WHERE p.Interface_Profile_Id = Req.Interface_Profile_Id
+               AND p.Interface_Key IN
+                   (SELECT REPLACE(TRIM(Substr(f.Parameters, Instr(f.Parameters, &amp;#39;&amp;quot;&amp;#39;, 1))), &amp;#39;&amp;quot;&amp;#39;, &amp;#39;&amp;#39;)
+                      FROM Fnd_Menus_Vl m, Fnd_Menu_Entries_Vl e, Fnd_Form_Functions_Vl f
+                     WHERE Menu_Name IN (&amp;#39;CUX_RECE_IMP&amp;#39;, &amp;#39;CUX_REC_IMP&amp;#39;)
+                       AND m.Menu_Id = e.Menu_Id
+                       AND f.Function_Id = e.Function_Id
+                       AND Form_Id IS NOT NULL
+                       AND PARAMETERS LIKE &amp;#39;INTERFACE_KEY%&amp;#39;))
+       AND d.Referenced_Name LIKE &amp;#39;CUX%&amp;#39;;
+
+  FOR i IN 1 .. 10 LOOP
+
+    INSERT INTO Cux_Yh_Dependencies
+      SELECT *
+        FROM Dba_Dependencies d
+       WHERE d.Name IN (SELECT Cd.Referenced_Name FROM Cux_Yh_Dependencies Cd)
+         AND d.Referenced_Name LIKE &amp;#39;CUX%&amp;#39;
+         AND NOT EXISTS
+       (SELECT 1
+                FROM Cux_Yh_Dependencies Cd1
+               WHERE Cd1.Owner = d.Owner
+                 AND Cd1.Name = d.Name
+                 AND Cd1.Type = d.Type
+                 AND Cd1.Referenced_Owner = d.Referenced_Owner
+                 AND Cd1.Referenced_Name = d.Referenced_Name
+                 AND Cd1.Referenced_Type = d.Referenced_Type
+                 AND Nvl(Cd1.Referenced_Link_Name, &amp;#39;dummy&amp;#39;) = Nvl(d.Referenced_Link_Name, &amp;#39;dummy&amp;#39;)
+                 AND Cd1.Dependency_Type = d.Dependency_Type);
+
+  END LOOP;
+END;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;获取需要导入的数据&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;SELECT &amp;#39;REQUESTGROUP AR.QIHU_AR_ACCOUNT_REPORTS&amp;#39;
+  FROM Dual
+UNION ALL
+
+SELECT &amp;#39;MENU CUX.CUX_RECE_IMP&amp;#39;
+  FROM Dual
+UNION ALL
+SELECT &amp;#39;MENU CUX.CUX_REC_IMP&amp;#39;
+  FROM Dual
+UNION ALL
+SELECT DISTINCT &amp;#39;CUSTOMRULE FND.&amp;#39; || Function_Name
+  FROM Fnd_Form_Custom_Rules
+ WHERE Function_Name LIKE &amp;#39;AR%&amp;#39;
+   AND (Form_Name LIKE &amp;#39;AR%&amp;#39; OR Form_Name LIKE &amp;#39;RA%&amp;#39;)
+UNION ALL
+
+--CUSTOMRULE
+-- 有请求集还要加上
+SELECT --g.Request_Group_Name,
+--g.Application_Id,
+--Vl.User_Concurrent_Program_Name,
+ &amp;#39;REQUEST &amp;#39; || a.Application_Short_Name || &amp;#39;.&amp;#39; || Vl.Concurrent_Program_Name Download_Str --,
+--Vl.Application_Id
+  FROM Fnd_Request_Groups         g,
+       Fnd_Request_Group_Units    u,
+       Fnd_Concurrent_Programs_Vl Vl,
+       Fnd_Application            a
+ WHERE g.Request_Group_Name = &amp;#39;QIHU_AR_ACCOUNT_REPORTS&amp;#39;
+   AND g.Request_Group_Id = u.Request_Group_Id
+   AND u.Request_Unit_Id = Vl.Concurrent_Program_Id
+   AND u.Request_Unit_Type = &amp;#39;P&amp;#39;
+   AND Vl.User_Concurrent_Program_Name LIKE &amp;#39;CUX%&amp;#39;
+   AND Vl.Enabled_Flag = &amp;#39;Y&amp;#39;
+   AND Vl.Application_Id = a.Application_Id
+UNION ALL
+
+SELECT Decode(TYPE, &amp;#39;PACKAGE&amp;#39;, &amp;#39;PACKAGE_SPECIAL&amp;#39;, &amp;#39;PACKAGE BODY&amp;#39;, &amp;#39;PACKAGE_BODY&amp;#39;, TYPE) || &amp;#39; &amp;#39; ||
+       Owner || &amp;#39;.&amp;#39; || NAME
+  FROM (SELECT DISTINCT Owner, NAME, TYPE
+          FROM Cux_Yh_Dependencies d
+        UNION
+        SELECT DISTINCT d.Referenced_Owner, d.Referenced_Name, d.Referenced_Type
+          FROM Cux_Yh_Dependencies d)
+ WHERE TYPE != &amp;#39;SYNONYM&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>请求使用sql</title><link href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html" rel="alternate"></link><published>2016-09-07T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-09-07:posts/2016/09/07/oracle_request.html</id><summary type="html">&lt;h1&gt;查询ap 批次号, ar&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;SELECT Listagg(Ap_Batch_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1)
+  FROM (SELECT v.Argument_Text, TRIM(Regexp_Substr(Argument_Text, &amp;#39;[^,]+&amp;#39;, 1, 2)) Ap_Batch_Id
+          FROM Fnd_Conc_Req_Summary_v v
+         WHERE v.Requestor = &amp;#39;YIHAN&amp;#39;
+           AND v.Request_Date &amp;gt; SYSDATE - 1
+           AND v.User_Concurrent_Program_Name = &amp;#39;Invoice Validation&amp;#39;);
+
+SELECT Listagg(Ar_Interface_Run_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1)
+  FROM (SELECT TRIM(Regexp_Substr(Argument_Text, &amp;#39;[^,]+&amp;#39;, 1, 1)) Ar_Interface_Run_Id
+          FROM Fnd_Conc_Req_Summary_v v
+         WHERE v.Requestor = &amp;#39;YIHAN&amp;#39;
+           AND v.Request_Date &amp;gt; SYSDATE - 1
+           AND v.Program = &amp;#39;S_AR211_TRX (CUX:Interface Process)&amp;#39;
+           AND v.Argument_Text LIKE &amp;#39;%DATA_IMPORT%&amp;#39;);
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>oracle 锁</title><link href="http://www.yilaguan.cc/posts/2016/04/22/oracle_lock.html" rel="alternate"></link><published>2016-04-22T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-04-22:posts/2016/04/22/oracle_lock.html</id><summary type="html">&lt;h2&gt;oracle查询锁&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;SELECT Obj.Owner,&lt;/span&gt;
 &lt;span class="x"&gt;       Obj.Object_Id,&lt;/span&gt;
 &lt;span class="x"&gt;       Obj.Object_Name,&lt;/span&gt;
@@ -262,7 +394,7 @@
 
 &lt;h2&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.nginx.com/wp-content/uploads/2015/11/oracle-ebusiness-suite-deployment-guide-v1.pdf"&gt;https://www.nginx.com/wp-content/uploads/2015/11/oracle-ebusiness-suite-deployment-guide-v1.pdf&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=351925156011594&amp;amp;id=387859.1&amp;amp;_afrWindowMode=0&amp;amp;_adf.ctrl-state=j2tyjckww_63"&gt;Doc ID 387859.1&lt;/a&gt;&lt;/p&gt;</summary><category term="ebs"></category><category term="nginx"></category></entry><entry><title>AR 设置数据data fix</title><link href="http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html" rel="alternate"></link><published>2015-12-01T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-01:posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html</id><summary type="html">&lt;h2&gt;通知单行：&lt;/h2&gt;
+&lt;a href="https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=351925156011594&amp;amp;id=387859.1&amp;amp;_afrWindowMode=0&amp;amp;_adf.ctrl-state=j2tyjckww_63"&gt;Doc ID 387859.1&lt;/a&gt;&lt;/p&gt;</summary><category term="ebs"></category><category term="nginx"></category></entry><entry><title>AR 数据data fix</title><link href="http://www.yilaguan.cc/posts/2015/12/01/ar-shu-ju-data-fix.html" rel="alternate"></link><published>2015-12-01T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-01:posts/2015/12/01/ar-shu-ju-data-fix.html</id><summary type="html">&lt;h2&gt;通知单行：&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;--1.备份数据
 CREATE TABLE Ar_Memo_Lines_All_Tl_0529 AS
   SELECT * FROM Ar_Memo_Lines_All_Tl;
@@ -339,6 +471,70 @@ SELECT a.Name, a.Description, d.New_Name, d.New_Description
   FROM Ra_Cust_Trx_Types_All a, Cux_Ra_Cust_Trx_Df_0528 d
 WHERE a.Cust_Trx_Type_Id = d.Cust_Trx_Type_Id
    AND (a.Name &amp;lt;&amp;gt; d.New_Name OR a.Description &amp;lt;&amp;gt; d.New_Description)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;事务处理信息创建人更新&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;DECLARE
+  Ln_Old_User_Id NUMBER := 1366;
+  Ln_New_User_Id NUMBER := 1141;
+BEGIN
+
+  UPDATE Ra_Customer_Trx_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 ra_customer_trx_all， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ra_Customer_Trx_Lines_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 ra_customer_trx_lines_all， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ra_Cust_Trx_Line_Gl_Dist_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 ra_cust_trx_line_gl_dist_all， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Xla_Events t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 xla_events， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Xla_Transaction_Entities_Upg t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 Xla_Transaction_Entities_Upg， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ar_Payment_Schedules_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 ar_payment_schedules_all， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+END;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="ebs"></category></entry><entry><title>定位autoconfig模板文件</title><link href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html" rel="alternate"></link><published>2015-11-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-30:posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html</id><summary type="html">&lt;p&gt;1、定位模版文件&lt;br /&gt;
 $AD_TOP/bin/adtmplreport.sh contextfile=$CONTEXT_FILE target=$FORMS_WEB_CONFIG_FILE
 以上命令，通过查看报表日志，可分别得到如下模版结果：

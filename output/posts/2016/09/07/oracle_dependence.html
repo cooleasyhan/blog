@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>代码dependence &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <meta name="author" content="YiHan">
+
+
+
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="http://www.yilaguan.cc/favicon.png" rel="icon">
+
+  <link href="http://www.yilaguan.cc/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://www.yilaguan.cc/">Yi's Blog  -  Do. Or do not. There is no try</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+</ul>
+
+
+<ul class="main-navigation">
+    <li><a href="/">Home</a></li>
+    <li><a href="/archives.html">Archives</a></li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
+      </li>
+      <li class="active">
+        <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/java.html">Java</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/linux.html">Linux</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/mysql.html">Mysql</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/python.html">Python</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/reading.html">Reading</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/salt.html">Salt</a>
+      </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">代码dependence</h1>
+    <p class="meta">
+<time datetime="2016-09-07T00:00:00+08:00" pubdate>三 07 九月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h1>收集dependence信息</h1>
+<div class="highlight"><pre><span></span>-- Created on 2016/9/7 by YIHAN 
+DECLARE
+  -- Local variables here
+  i INTEGER;
+BEGIN
+  -- Test statements here
+  DELETE Cux_Yh_Dependencies;
+  INSERT INTO Cux_Yh_Dependencies
+    SELECT *
+      FROM Dba_Dependencies d
+     WHERE d.Name IN
+           (SELECT Upper(Substr(e.Execution_File_Name, 1, Instr(e.Execution_File_Name, &#39;.&#39;, -1) - 1))
+              FROM Fnd_Executables_Vl e
+             WHERE e.Execution_Method_Code = &#39;I&#39;
+               AND e.Executable_Id IN (SELECT Vl.Executable_Id
+                                         FROM Fnd_Request_Groups         g,
+                                              Fnd_Request_Group_Units    u,
+                                              Fnd_Concurrent_Programs_Vl Vl,
+                                              Fnd_Application            a
+                                        WHERE g.Request_Group_Name = &#39;QIHU_AR_ACCOUNT_REPORTS&#39;
+                                          AND g.Request_Group_Id = u.Request_Group_Id
+                                          AND u.Request_Unit_Id = Vl.Concurrent_Program_Id
+                                          AND u.Request_Unit_Type = &#39;P&#39;
+                                          AND Vl.User_Concurrent_Program_Name LIKE &#39;CUX%&#39;
+                                          AND Vl.Enabled_Flag = &#39;Y&#39;
+                                          AND Vl.Application_Id = a.Application_Id
+
+                                       )
+            UNION
+
+            SELECT DISTINCT Upper(Substr(Req.Exec_Program, 1, Instr(Req.Exec_Program, &#39;.&#39;, -1) - 1))
+              FROM Cux_Unify_Import_Prf_Req Req, Cux_Unify_Import_Profile p
+             WHERE p.Interface_Profile_Id = Req.Interface_Profile_Id
+               AND p.Interface_Key IN
+                   (SELECT REPLACE(TRIM(Substr(f.Parameters, Instr(f.Parameters, &#39;&quot;&#39;, 1))), &#39;&quot;&#39;, &#39;&#39;)
+                      FROM Fnd_Menus_Vl m, Fnd_Menu_Entries_Vl e, Fnd_Form_Functions_Vl f
+                     WHERE Menu_Name IN (&#39;CUX_RECE_IMP&#39;, &#39;CUX_REC_IMP&#39;)
+                       AND m.Menu_Id = e.Menu_Id
+                       AND f.Function_Id = e.Function_Id
+                       AND Form_Id IS NOT NULL
+                       AND PARAMETERS LIKE &#39;INTERFACE_KEY%&#39;))
+       AND d.Referenced_Name LIKE &#39;CUX%&#39;;
+
+  FOR i IN 1 .. 10 LOOP
+
+    INSERT INTO Cux_Yh_Dependencies
+      SELECT *
+        FROM Dba_Dependencies d
+       WHERE d.Name IN (SELECT Cd.Referenced_Name FROM Cux_Yh_Dependencies Cd)
+         AND d.Referenced_Name LIKE &#39;CUX%&#39;
+         AND NOT EXISTS
+       (SELECT 1
+                FROM Cux_Yh_Dependencies Cd1
+               WHERE Cd1.Owner = d.Owner
+                 AND Cd1.Name = d.Name
+                 AND Cd1.Type = d.Type
+                 AND Cd1.Referenced_Owner = d.Referenced_Owner
+                 AND Cd1.Referenced_Name = d.Referenced_Name
+                 AND Cd1.Referenced_Type = d.Referenced_Type
+                 AND Nvl(Cd1.Referenced_Link_Name, &#39;dummy&#39;) = Nvl(d.Referenced_Link_Name, &#39;dummy&#39;)
+                 AND Cd1.Dependency_Type = d.Dependency_Type);
+
+  END LOOP;
+END;
+</pre></div>
+
+
+<p>获取需要导入的数据</p>
+<div class="highlight"><pre><span></span>SELECT &#39;REQUESTGROUP AR.QIHU_AR_ACCOUNT_REPORTS&#39;
+  FROM Dual
+UNION ALL
+
+SELECT &#39;MENU CUX.CUX_RECE_IMP&#39;
+  FROM Dual
+UNION ALL
+SELECT &#39;MENU CUX.CUX_REC_IMP&#39;
+  FROM Dual
+UNION ALL
+SELECT DISTINCT &#39;CUSTOMRULE FND.&#39; || Function_Name
+  FROM Fnd_Form_Custom_Rules
+ WHERE Function_Name LIKE &#39;AR%&#39;
+   AND (Form_Name LIKE &#39;AR%&#39; OR Form_Name LIKE &#39;RA%&#39;)
+UNION ALL
+
+--CUSTOMRULE
+-- 有请求集还要加上
+SELECT --g.Request_Group_Name,
+--g.Application_Id,
+--Vl.User_Concurrent_Program_Name,
+ &#39;REQUEST &#39; || a.Application_Short_Name || &#39;.&#39; || Vl.Concurrent_Program_Name Download_Str --,
+--Vl.Application_Id
+  FROM Fnd_Request_Groups         g,
+       Fnd_Request_Group_Units    u,
+       Fnd_Concurrent_Programs_Vl Vl,
+       Fnd_Application            a
+ WHERE g.Request_Group_Name = &#39;QIHU_AR_ACCOUNT_REPORTS&#39;
+   AND g.Request_Group_Id = u.Request_Group_Id
+   AND u.Request_Unit_Id = Vl.Concurrent_Program_Id
+   AND u.Request_Unit_Type = &#39;P&#39;
+   AND Vl.User_Concurrent_Program_Name LIKE &#39;CUX%&#39;
+   AND Vl.Enabled_Flag = &#39;Y&#39;
+   AND Vl.Application_Id = a.Application_Id
+UNION ALL
+
+SELECT Decode(TYPE, &#39;PACKAGE&#39;, &#39;PACKAGE_SPECIAL&#39;, &#39;PACKAGE BODY&#39;, &#39;PACKAGE_BODY&#39;, TYPE) || &#39; &#39; ||
+       Owner || &#39;.&#39; || NAME
+  FROM (SELECT DISTINCT Owner, NAME, TYPE
+          FROM Cux_Yh_Dependencies d
+        UNION
+        SELECT DISTINCT d.Referenced_Owner, d.Referenced_Name, d.Referenced_Type
+          FROM Cux_Yh_Dependencies d)
+ WHERE TYPE != &#39;SYNONYM&#39;
+</pre></div></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">
+        YiHan
+    </span>
+  </span>
+<time datetime="2016-09-07T00:00:00+08:00" pubdate>三 07 九月 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/ebs.html'>ebs</a>
+  </span>
+</p><div class="sharing">
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html">Elasticsearch Logstash 小结</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
+        <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
+        <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
+        <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
+        <li><a href="http://www.yilaguan.cc/category/mysql.html">mysql</a></li>
+        <li><a href="http://www.yilaguan.cc/category/python.html">python</a></li>
+        <li><a href="http://www.yilaguan.cc/category/reading.html">Reading</a></li>
+        <li><a href="http://www.yilaguan.cc/category/salt.html">salt</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://www.yilaguan.cc/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'cooleasyhan',
+              count: 5,
+              skip_forks: false,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://www.yilaguan.cc/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="http://cooleasyhan.github.io" target="_blank">github 个人页</a></li>
+        </ul>
+    </section>
+    <section>
+        <h1>Blogroll</h1>
+        <ul>
+            <li><a href="https://rhettinger.wordpress.com/" target="_blank">rhettinger</a></li>
+            <li><a href="http://www.dongwm.com/" target="_blank">小明明</a></li>
+            <li><a href="http://www.keakon.net/" target="_blank">keakon的涂鸦馆</a></li>
+            <li><a href="http://zheng-ji.info/" target="_blank">织网</a></li>
+        </ul>
+    </section>
+
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+  <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/ender.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var disqus_shortname = 'yilaguan';
+    var disqus_identifier = '/posts/2016/09/07/oracle_dependence.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html';
+    var disqus_title = '代码dependence';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+  </script>
+</body>
+</html>

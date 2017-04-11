@@ -1970,6 +1970,18 @@ prod:
         - git_resp_base_dir
         - git_tag_name
         - dir_name
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;state.orchestrate_high&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;salt-run state.orchestrate_high &amp;#39;{
+    stage_one:
+        {salt.state: [{tgt: &amp;quot;db*&amp;quot;}, {sls: postgres_setup}]},
+    stage_two:
+        {salt.state: [{tgt: &amp;quot;web*&amp;quot;}, {sls: apache_setup}, {
+            require: [{salt: stage_one}],
+        }]},
+    }&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Salt"></category></entry><entry><title>salt安装</title><link href="http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html" rel="alternate"></link><published>2016-08-01T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-08-01:posts/2016/08/01/saltan-zhuang.html</id><summary type="html">&lt;p&gt;最近研究salt装我那小一百台服务器, 之前一直是fabric安装的, 感觉salt还是挺好用的。python 安装还是习惯使用pip安装。 &lt;/p&gt;
 &lt;h2&gt;PIP 配置,指向豆瓣源&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat ~/.pip/pip.conf

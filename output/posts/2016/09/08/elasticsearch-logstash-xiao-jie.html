@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Elasticsearch Logstash 小结 &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <meta name="author" content="YiHan">
+
+
+
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="http://www.yilaguan.cc/favicon.png" rel="icon">
+
+  <link href="http://www.yilaguan.cc/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="http://www.yilaguan.cc/">Yi's Blog  -  Do. Or do not. There is no try</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+</ul>
+
+
+<ul class="main-navigation">
+    <li><a href="/">Home</a></li>
+    <li><a href="/archives.html">Archives</a></li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/java.html">Java</a>
+      </li>
+      <li class="active">
+        <a href="http://www.yilaguan.cc/category/linux.html">Linux</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/mysql.html">Mysql</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/python.html">Python</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/reading.html">Reading</a>
+      </li>
+      <li >
+        <a href="http://www.yilaguan.cc/category/salt.html">Salt</a>
+      </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">Elasticsearch Logstash 小结</h1>
+    <p class="meta">
+<time datetime="2016-09-08T00:00:00+08:00" pubdate>四 08 九月 2016</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>安装</h2>
+<p>见之前的文章
+建议下载rpm直接安装,一般需要安装jdk, rube</p>
+<h2>参考</h2>
+<p><a href="http://es.xiaoleilu.com/">Elasticsearch 权威指南</a> <br />
+<a href="http://udn.yyuap.com/doc/logstash-best-practice-cn/">Logstash 最佳实践</a>
+<a href="http://grokdebug.herokuapp.com/">grok debug</a></p>
+<h2>Elasticsearch 类比传统关系型数据库</h2>
+<div class="highlight"><pre><span></span>Relational DB -&gt; Databases -&gt; Tables -&gt; Rows -&gt; Columns
+Elasticsearch -&gt; Indices   -&gt; Types  -&gt; Documents -&gt; Fields
+</pre></div>
+
+
+<h2>整体流程</h2>
+<p>Elasticsearch 推荐使用redis进行日志中转。所以大体流程如下<br />
+<strong>logfile --&gt; logstash收集 --&gt; redis --&gt; logstash转换,核心为grok进行日志解析 --&gt; Elasticsearch --&gt; kibana展示</strong></p>
+<h2>logstash 收集日志文件配置</h2>
+<div class="highlight"><pre><span></span>
+</pre></div>
+
+
+<h2>logstash 收集redis配置</h2>
+<div class="highlight"><pre><span></span>
+</pre></div>
+
+
+<h2>Elasticsearch template</h2>
+<p>对于Elasticsearch其中很重要的一个配置在于template, 而里头最常用的是mapping  </p>
+<h3>新增template</h3>
+<p>下面是给nginx access log 使用的template, 其中需要注意的是order, Elasticsearch 会根据order 按顺序匹配多个template</p>
+<div class="highlight"><pre><span></span>curl -XPUT localhost:9200/_template/template-logstash-nginx-access -d&#39;
+{
+    &quot;order&quot;: 1,
+    &quot;template&quot;: &quot;logstash-nginx-access-*&quot;,
+    &quot;mappings&quot;: {
+        &quot;nginx-access-log-*&quot;: {
+            &quot;properties&quot;: {
+                &quot;remote_addr&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;remote_user&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;time_local&quot;: {
+                    &quot;type&quot;: &quot;date&quot;,
+                    &quot;format&quot;: &quot;dd/MMM/yyyy:HH:mm:ss Z&quot;
+                },
+                &quot;request&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;status&quot;: {
+                    &quot;type&quot;: &quot;long&quot;
+                },
+                &quot;body_bytes_sent&quot;: {
+                    &quot;type&quot;: &quot;long&quot;
+                },
+                &quot;http_user_agent&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;http_x_forwarded_for&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;request_time&quot;: {
+                    &quot;type&quot;: &quot;double&quot;
+                },
+                &quot;upstream_response_time&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                }
+            }
+        }
+    }
+}&#39;
+</pre></div>
+
+
+<h3>获取现有template</h3>
+<div class="highlight"><pre><span></span>curl -XGET localhost:9200/_template | python -m json.tool
+</pre></div>
+
+
+<h2>中文分词</h2>
+<p>比较好的有smartcn和ik,这里用自带的smartcn</p>
+<div class="highlight"><pre><span></span># /usr/share/elasticsearch/bin/plugin install analysis-smartcn
+# service elasticsearch restart
+# curl http://127.0.0.1:9200/_analyze/ -d &#39;
+{
+  &quot;analyzer&quot;: &quot;smartcn&quot;,
+  &quot;text&quot;: &quot;联想是全球最大的笔记本厂商&quot;
+}&#39;
+</pre></div></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">
+        YiHan
+    </span>
+  </span>
+<time datetime="2016-09-08T00:00:00+08:00" pubdate>四 08 九月 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/linux.html'>linux</a>
+  </span>
+  <span class="categories">
+    <a class="category" href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a class="category" href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a class="category" href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a class="category" href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a class="category" href="http://www.yilaguan.cc/tag/log.html">Log</a>  </span>
+</p><div class="sharing">
+</div>    </footer>
+  </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div>
+  </section>
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html">Elasticsearch Logstash 小结</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
+        <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
+        <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
+        <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
+        <li><a href="http://www.yilaguan.cc/category/mysql.html">mysql</a></li>
+        <li><a href="http://www.yilaguan.cc/category/python.html">python</a></li>
+        <li><a href="http://www.yilaguan.cc/category/reading.html">Reading</a></li>
+        <li><a href="http://www.yilaguan.cc/category/salt.html">salt</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+
+
+
+  <section>
+    <h1>GitHub Repos</h1>
+    <ul id="gh_repos">
+      <li class="loading">Status updating...</li>
+    </ul>
+    <script type="text/javascript">
+      $.domReady(function(){
+          if (!window.jXHR){
+              var jxhr = document.createElement('script');
+              jxhr.type = 'text/javascript';
+              jxhr.src = 'http://www.yilaguan.cc/theme/js/jXHR.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(jxhr, s);
+          }
+
+          github.showRepos({
+              user: 'cooleasyhan',
+              count: 5,
+              skip_forks: false,
+              target: '#gh_repos'
+          });
+      });
+    </script>
+    <script src="http://www.yilaguan.cc/theme/js/github.js" type="text/javascript"> </script>
+  </section>
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="http://cooleasyhan.github.io" target="_blank">github 个人页</a></li>
+        </ul>
+    </section>
+    <section>
+        <h1>Blogroll</h1>
+        <ul>
+            <li><a href="https://rhettinger.wordpress.com/" target="_blank">rhettinger</a></li>
+            <li><a href="http://www.dongwm.com/" target="_blank">小明明</a></li>
+            <li><a href="http://www.keakon.net/" target="_blank">keakon的涂鸦馆</a></li>
+            <li><a href="http://zheng-ji.info/" target="_blank">织网</a></li>
+        </ul>
+    </section>
+
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+  <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/ender.js"></script>
+  <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var disqus_shortname = 'yilaguan';
+    var disqus_identifier = '/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html';
+    var disqus_title = 'Elasticsearch Logstash 小结';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+  </script>
+</body>
+</html>

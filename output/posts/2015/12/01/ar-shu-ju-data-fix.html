@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>AR 设置数据data fix &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <title>AR 数据data fix &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
   <meta name="author" content="YiHan">
 
 
@@ -70,7 +70,7 @@
 <div>
   <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">AR 设置数据data fix</h1>
+      <h1 class="entry-title">AR 数据data fix</h1>
     <p class="meta">
 <time datetime="2015-12-01T00:00:00+08:00" pubdate>二 01 十二月 2015</time>    </p>
 </header>
@@ -152,6 +152,70 @@ SELECT a.Name, a.Description, d.New_Name, d.New_Description
   FROM Ra_Cust_Trx_Types_All a, Cux_Ra_Cust_Trx_Df_0528 d
 WHERE a.Cust_Trx_Type_Id = d.Cust_Trx_Type_Id
    AND (a.Name &lt;&gt; d.New_Name OR a.Description &lt;&gt; d.New_Description)
+</pre></div>
+
+
+<h2>事务处理信息创建人更新</h2>
+<div class="highlight"><pre><span></span>DECLARE
+  Ln_Old_User_Id NUMBER := 1366;
+  Ln_New_User_Id NUMBER := 1141;
+BEGIN
+
+  UPDATE Ra_Customer_Trx_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&#39;更新 ra_customer_trx_all， 生效记录&#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ra_Customer_Trx_Lines_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&#39;更新 ra_customer_trx_lines_all， 生效记录&#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ra_Cust_Trx_Line_Gl_Dist_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&#39;更新 ra_cust_trx_line_gl_dist_all， 生效记录&#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Xla_Events t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&#39;更新 xla_events， 生效记录&#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Xla_Transaction_Entities_Upg t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&#39;更新 Xla_Transaction_Entities_Upg， 生效记录&#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ar_Payment_Schedules_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&#39;更新 ar_payment_schedules_all， 生效记录&#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+END;
 </pre></div></div>
     <footer>
 <p class="meta">
@@ -179,19 +243,19 @@ WHERE a.Cust_Trx_Type_Id = d.Cust_Trx_Type_Id
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html">Elasticsearch Logstash 小结</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html">单例模式</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
       </li>
     </ul>
   </section>
@@ -213,7 +277,7 @@ WHERE a.Cust_Trx_Type_Id = d.Cust_Trx_Type_Id
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 
@@ -270,9 +334,9 @@ WHERE a.Cust_Trx_Type_Id = d.Cust_Trx_Type_Id
   <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
     var disqus_shortname = 'yilaguan';
-    var disqus_identifier = '/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html';
-    var disqus_url = 'http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html';
-    var disqus_title = 'AR 设置数据data fix';
+    var disqus_identifier = '/posts/2015/12/01/ar-shu-ju-data-fix.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2015/12/01/ar-shu-ju-data-fix.html';
+    var disqus_title = 'AR 数据data fix';
     (function() {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';

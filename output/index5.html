@@ -69,15 +69,125 @@
   		<article>
 <header>
       <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-dai-ma.html">有用的代码</a>
+        <a href="http://www.yilaguan.cc/posts/2015/11/09/kibana-elasticsearch-logstash.html">Kibana elasticsearch logstash</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-09T00:00:00+08:00" pubdate>一 09 十一月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>Kibana elasticsearch logstash 日志系统搭建</h2>
+<h3>安装</h3>
+<ul>
+<li>yum install ruby rubygems</li>
+<li>/usr/bin/gem install bundler </li>
+<li>yum install java-1.7.0-openjdk</li>
+<li>yum install redis.x86_64   （存储日志信息）</li>
+<li>启动redis: redis-server /etc/redis.conf</li>
+<li>Kibana elasticsearch logstash 下载<ul>
+<li>https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.3.zip</li>
+<li>https://download.elastic.co/kibana/kibana/kibana-4 ...</li></ul></li></ul></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/09/kibana-elasticsearch-logstash.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html">启用session级别的trace</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-09T00:00:00+08:00" pubdate>一 09 十一月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><div class="highlight"><pre><span></span><span class="x">DECLARE</span>
+<span class="x">  Session_Id binary_integer;</span>
+<span class="x">  Serial_Num binary_integer;</span>
+
+<span class="x">BEGIN</span>
+<span class="x">  SELECT Sid, Serial</span><span class="err">#</span><span class="x"></span>
+<span class="x">    INTO Session_Id, Serial_Num</span>
+<span class="x">    FROM V</span><span class="p">$</span><span class="nv">session</span><span class="x"> s</span>
+<span class="x">   WHERE s.Sid = Userenv(&#39;SID&#39;);</span>
+<span class="x">  Dbms_Monitor.session_trace_enable(Session_Id =&gt; Session_Id,</span>
+<span class="x">                                    Serial_Num =&gt; Serial_Num,</span>
+<span class="x">                                    Waits      =&gt; TRUE,</span>
+<span class="x">                                    Binds      =&gt; false);</span>
+<span class="x">  EXECUTE IMMEDIATE (&#39;ALTER Session SET Tracefile_Identifier = &#39;&#39;yihan&#39;&#39;&#39;);</span>
+
+<span class="x">  FOR Rec IN (SELECT * FROM Cux_Gl_Code_Combinations_b_v Gcc) LOOP</span>
+<span class="x">    NULL;</span>
+<span class="x">  END LOOP;</span>
+<span class="x">  Dbms_Monitor ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/04/forms-runtime-diagnostics-frd.html">Forms Runtime Diagnostics (FRD)</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-04T00:00:00+08:00" pubdate>三 04 十一月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><p>The Forms Runtime Diagnostic (FRD) is a method for capturing all events that occur in a form session and writing a file with the details of those events. There is overhead in writing this file, so you should only use this for the purposes of development and debugging</p>
+<p>When a ...</p></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/04/forms-runtime-diagnostics-frd.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html">Log file location for Oracle E-Business Suite</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-10-30T00:00:00+08:00" pubdate>五 30 十月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>Log file location for Oracle E-Business Suite R12</h2>
+<ul>
+<li>Apache, OC4J and OPMN:<blockquote>
+<p>$LOG_HOME/ora/10.1.3/Apache
+$LOG_HOME/ora/10.1.3/j2ee
+$LOG_HOME/ora/10.1.3/opmn</p>
+</blockquote>
+</li>
+<li>Startup/Shutdown Log files:<blockquote>
+<p>$INST_TOP/apps/$CONTEXT_NAME/logs/appl/admin/log</p>
+</blockquote>
+</li>
+<li>Patch log:<blockquote>
+<p>$APPL_TOP/admin/$SID/log/</p>
+</blockquote>
+</li>
+<li>Autoconfig log file ...</li></ul></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html">Read On &crarr;</a>
+  </footer>
+  		</article>
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-xiao-wan-yi.html">有用的小玩意</a>
       </h1>
     <p class="meta">
 <time datetime="2015-10-30T00:00:00+08:00" pubdate>五 30 十月 2015</time>    </p>
 </header>
 
   <div class="entry-content"><ol>
-<li><a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/eventusermodel/XLSX2CSV.java">turn an big excel file into a CSV</a></li>
-</ol></div>
+<li>
+<p><a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/eventusermodel/XLSX2CSV.java">turn an big excel file into a CSV</a></p>
+</li>
+<li>
+<p>安装mvn</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span>wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+
+yum -y install apache-maven
+</pre></div></div>
   		</article>
   		<article>
 <header>
@@ -89,13 +199,35 @@
 </header>
 
   <div class="entry-content"><h2>查看端口的占用情况</h2>
-<p>netstat -tln</p>
+<div class="highlight"><pre><span></span>netstat -tln
+lsof -i:80  
+</pre></div>
+
+
 <h2>查看32,64位系统</h2>
-<p>getconf LONG_BIT</p>
+<div class="highlight"><pre><span></span>getconf LONG_BIT
+</pre></div>
+
+
 <h2>去除注释，空行</h2>
-<p>more php-fpm.conf | grep -v ^\; | grep -v ^$;</p>
+<div class="highlight"><pre><span></span>more php-fpm.conf | grep -v ^\; | grep -v ^$;
+</pre></div>
+
+
 <h2>查看tcp连接情况</h2>
-<p>netstat -n|awk '/^tcp/{++S[$NF]}END{for (key in S) print key,S[key]}'</p></div>
+<div class="highlight"><pre><span></span><span class="x">netstat -n|awk &#39;/^tcp/</span><span class="err">{</span><span class="x">++S[</span><span class="p">$</span><span class="nv">NF</span><span class="x">]}END</span><span class="err">{</span><span class="x">for (key in S) print key,S[key]}&#39;</span>
+</pre></div>
+
+
+<h2>CPU使用率高</h2>
+<div class="highlight"><pre><span></span># top 获取 pid
+# gstack 获取stack trace
+# gstack 12594 &gt;&gt; /tmp/gstack.rst
+# top 查看最大消耗的线程号
+# top ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/10/29/Linux.html">Read On &crarr;</a>
+  </footer>
   		</article>
   		<article>
 <header>
@@ -170,19 +302,19 @@ Below is V4  </li>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html">Elasticsearch Logstash 小结</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html">单例模式</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
       </li>
     </ul>
   </section>
@@ -204,7 +336,7 @@ Below is V4  </li>
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 

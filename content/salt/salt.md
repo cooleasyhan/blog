@@ -11,6 +11,7 @@ salt 'xxx*' state.show_lowstate
 salt 'xxx*' state.show_highstate
 salt '*' sys.doc state
 salt '*' state.highstate
+salt '*' saltutil.refresh_pillar
 ```
 
 ## salt formula
@@ -243,4 +244,18 @@ git-sls-is-pillar-present:
         - git_resp_base_dir
         - git_tag_name
         - dir_name
+```
+
+
+
+## state.orchestrate_high
+```
+salt-run state.orchestrate_high '{
+    stage_one:
+        {salt.state: [{tgt: "db*"}, {sls: postgres_setup}]},
+    stage_two:
+        {salt.state: [{tgt: "web*"}, {sls: apache_setup}, {
+            require: [{salt: stage_one}],
+        }]},
+    }'
 ```

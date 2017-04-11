@@ -10,10 +10,43 @@ rpm -ivh xxx.rpm
 ```
 
 
-## 使用要点
-1. 正常备份会锁表，可以使用 
+## 单表备份
+/usr/bin/innobackupex --defaults-file=/etc/my.cnf \
+--slave-info --safe-slave-backup --no-lock \
+--no-timestamp --user=xxx --password=xxxx \
+--host=xxxx --port=3306 --stream=xbstream --compress \
+--include='^database.table_name' /tmp \
 
-
+## 单表恢复
+1.安装qpress
+wget http://www.quicklz.com/qpress-11-linux-x64.tar
+2. xbstream解压
+xbstream -x < xxx.xxx.xbstream -C ./test
+3. qpress 解压
+```
+for f in `find ./ -iname "*\.qp"`; do qpress -dT2 $f  $(dirname $f) && rm -f $f; done
+```
+4. apply log
+```
+innobackupex --apply-log --export /home/yihan/test/
+```
+5. 拿掉tablespace 
+```
+ALTER TABLE xxx.xxx DISCARD TABLESPACE;
+```
+6. cp data 至 mysql data 目录
+```
+cp xxx.ibd /data/mysql/xxx/xxx.ibd
+cp xxx.exp /data/mysql/xxx/xxx.exp
+# 5.6 需要copy
+cp xxx.cfg /data/mysql/xxx/xxx.cfg
+```
+7. chown to mysql
+chown mysql:mysql /data/mysql/xxx/xxx.*
+8 导入tablesapce 
+```
+ALTER TABLE xxx.xxx IMPORT TABLESPACE;
+```
 
 
 ## 备份脚本

@@ -6,6 +6,10 @@ http://www.yilaguan.cc/
 http://www.yilaguan.cc/archives.html
 http://www.yilaguan.cc/tags.html
 http://www.yilaguan.cc/categories.html
+http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html
+http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html
+http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html
+http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html
 http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html
 http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html
 http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html
@@ -29,7 +33,7 @@ http://www.yilaguan.cc/posts/2015/12/07/mysql_ibdata.html
 http://www.yilaguan.cc/posts/2015/12/03/redhat6-sftp-setup.html
 http://www.yilaguan.cc/posts/2015/12/02/graph.html
 http://www.yilaguan.cc/posts/2015/12/02/li-yong-nginx-zhuan-fa-ebs.html
-http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html
+http://www.yilaguan.cc/posts/2015/12/01/ar-shu-ju-data-fix.html
 http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html
 http://www.yilaguan.cc/posts/2015/11/30/shell-bi-jiao.html
 http://www.yilaguan.cc/posts/2015/11/30/shelljiao-ben-pian-duan.html
@@ -46,7 +50,7 @@ http://www.yilaguan.cc/posts/2015/11/09/kibana-elasticsearch-logstash.html
 http://www.yilaguan.cc/posts/2015/11/09/qi-yong-sessionji-bie-de-trace.html
 http://www.yilaguan.cc/posts/2015/11/04/forms-runtime-diagnostics-frd.html
 http://www.yilaguan.cc/posts/2015/10/30/log-file-location-for-oracle-e-business-suite.html
-http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-dai-ma.html
+http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-xiao-wan-yi.html
 http://www.yilaguan.cc/posts/2015/10/29/Linux.html
 http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html
 http://www.yilaguan.cc/posts/2015/10/28/python-zhu-zhuang-dong-tu.html
@@ -72,7 +76,7 @@ http://www.yilaguan.cc/tag/single_instance.html
 http://www.yilaguan.cc/tag/adf.html
 http://www.yilaguan.cc/tag/tornado.html
 http://www.yilaguan.cc/tag/glassfish.html
-http://www.yilaguan.cc/tag/elasticsearch.html
+http://www.yilaguan.cc/tag/algorithms.html
 http://www.yilaguan.cc/tag/reading.html
 http://www.yilaguan.cc/tag/pandas.html
 http://www.yilaguan.cc/tag/iptables.html
@@ -86,7 +90,7 @@ http://www.yilaguan.cc/tag/audit.html
 http://www.yilaguan.cc/tag/refactoring.html
 http://www.yilaguan.cc/tag/sftp.html
 http://www.yilaguan.cc/tag/queue.html
-http://www.yilaguan.cc/tag/algorithms.html
+http://www.yilaguan.cc/tag/elasticsearch.html
 http://www.yilaguan.cc/tag/oracle.html
 http://www.yilaguan.cc/tag/cookbook.html
 http://www.yilaguan.cc/tag/salt.html

@@ -4,7 +4,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>有用的代码 &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
+  <title>请求使用sql &mdash; Yi's Blog  -  Do. Or do not. There is no try</title>
   <meta name="author" content="YiHan">
 
 
@@ -43,10 +43,10 @@
       <li >
         <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
       </li>
-      <li >
+      <li class="active">
         <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
       </li>
-      <li class="active">
+      <li >
         <a href="http://www.yilaguan.cc/category/java.html">Java</a>
       </li>
       <li >
@@ -70,14 +70,27 @@
 <div>
   <article class="hentry" role="article">
 <header>
-      <h1 class="entry-title">有用的代码</h1>
+      <h1 class="entry-title">请求使用sql</h1>
     <p class="meta">
-<time datetime="2015-10-30T00:00:00+08:00" pubdate>五 30 十月 2015</time>    </p>
+<time datetime="2016-09-07T00:00:00+08:00" pubdate>三 07 九月 2016</time>    </p>
 </header>
 
-  <div class="entry-content"><ol>
-<li><a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/eventusermodel/XLSX2CSV.java">turn an big excel file into a CSV</a></li>
-</ol></div>
+  <div class="entry-content"><h1>查询ap 批次号, ar</h1>
+<div class="highlight"><pre><span></span>SELECT Listagg(Ap_Batch_Id, &#39;,&#39;) Within GROUP(ORDER BY 1)
+  FROM (SELECT v.Argument_Text, TRIM(Regexp_Substr(Argument_Text, &#39;[^,]+&#39;, 1, 2)) Ap_Batch_Id
+          FROM Fnd_Conc_Req_Summary_v v
+         WHERE v.Requestor = &#39;YIHAN&#39;
+           AND v.Request_Date &gt; SYSDATE - 1
+           AND v.User_Concurrent_Program_Name = &#39;Invoice Validation&#39;);
+
+SELECT Listagg(Ar_Interface_Run_Id, &#39;,&#39;) Within GROUP(ORDER BY 1)
+  FROM (SELECT TRIM(Regexp_Substr(Argument_Text, &#39;[^,]+&#39;, 1, 1)) Ar_Interface_Run_Id
+          FROM Fnd_Conc_Req_Summary_v v
+         WHERE v.Requestor = &#39;YIHAN&#39;
+           AND v.Request_Date &gt; SYSDATE - 1
+           AND v.Program = &#39;S_AR211_TRX (CUX:Interface Process)&#39;
+           AND v.Argument_Text LIKE &#39;%DATA_IMPORT%&#39;);
+</pre></div></div>
     <footer>
 <p class="meta">
   <span class="byline author vcard">
@@ -85,11 +98,9 @@
         YiHan
     </span>
   </span>
-<time datetime="2015-10-30T00:00:00+08:00" pubdate>五 30 十月 2015</time>  <span class="categories">
-    <a class='category' href='http://www.yilaguan.cc/category/java.html'>java</a>
+<time datetime="2016-09-07T00:00:00+08:00" pubdate>三 07 九月 2016</time>  <span class="categories">
+    <a class='category' href='http://www.yilaguan.cc/category/ebs.html'>ebs</a>
   </span>
-  <span class="categories">
-    <a class="category" href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a class="category" href="http://www.yilaguan.cc/tag/excel.html">Excel</a>  </span>
 </p><div class="sharing">
 </div>    </footer>
   </article>
@@ -104,19 +115,19 @@
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
       <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html">EBS服务启动失败处理一粒</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html">Elasticsearch Logstash 小结</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
+      </li>
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html">请求使用sql</a>
+      </li>
+      <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html">tornado coroutine 协程源码分析</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/12/salt-req-shu-ju-chuan-shu.html">salt REQ 数据传输</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/dan-li-mo-shi.html">单例模式</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-default-opts.html">salt default opts</a>
-      </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/08/10/salt-localclient-yuan-ma-jie-xi.html">salt - LocalClient 源码解析</a>
       </li>
     </ul>
   </section>
@@ -138,7 +149,7 @@
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 
@@ -195,9 +206,9 @@
   <script src="http://www.yilaguan.cc/theme/js/octopress.js" type="text/javascript"></script>
   <script type="text/javascript">
     var disqus_shortname = 'yilaguan';
-    var disqus_identifier = '/posts/2015/10/30/you-yong-de-dai-ma.html';
-    var disqus_url = 'http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-dai-ma.html';
-    var disqus_title = '有用的代码';
+    var disqus_identifier = '/posts/2016/09/07/oracle_request.html';
+    var disqus_url = 'http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html';
+    var disqus_title = '请求使用sql';
     (function() {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = "//" + disqus_shortname + '.disqus.com/embed.js';

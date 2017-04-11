@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/linux.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-02-04T00:00:00+08:00</updated><entry><title>工具</title><link href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html" rel="alternate"></link><published>2016-02-04T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-02-04:posts/2016/02/04/gong-ju.html</id><summary type="html">&lt;h2&gt;安装mysql clint tora&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/linux.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-09-08T00:00:00+08:00</updated><entry><title>Elasticsearch Logstash 小结</title><link href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html" rel="alternate"></link><published>2016-09-08T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-09-08:posts/2016/09/08/elasticsearch-logstash-xiao-jie.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;见之前的文章
+建议下载rpm直接安装,一般需要安装jdk, rube&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://es.xiaoleilu.com/"&gt;Elasticsearch 权威指南&lt;/a&gt; &lt;br /&gt;
+&lt;a href="http://udn.yyuap.com/doc/logstash-best-practice-cn/"&gt;Logstash 最佳实践&lt;/a&gt;
+&lt;a href="http://grokdebug.herokuapp.com/"&gt;grok debug&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Elasticsearch 类比传统关系型数据库&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Relational DB -&amp;gt; Databases -&amp;gt; Tables -&amp;gt; Rows -&amp;gt; Columns
+Elasticsearch -&amp;gt; Indices   -&amp;gt; Types  -&amp;gt; Documents -&amp;gt; Fields
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;整体流程&lt;/h2&gt;
+&lt;p&gt;Elasticsearch 推荐使用redis进行日志中转。所以大体流程如下&lt;br /&gt;
+&lt;strong&gt;logfile --&amp;gt; logstash收集 --&amp;gt; redis --&amp;gt; logstash转换,核心为grok进行日志解析 --&amp;gt; Elasticsearch --&amp;gt; kibana展示&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;logstash 收集日志文件配置&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;logstash 收集redis配置&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Elasticsearch template&lt;/h2&gt;
+&lt;p&gt;对于Elasticsearch其中很重要的一个配置在于template, 而里头最常用的是mapping  &lt;/p&gt;
+&lt;h3&gt;新增template&lt;/h3&gt;
+&lt;p&gt;下面是给nginx access log 使用的template, 其中需要注意的是order, Elasticsearch 会根据order 按顺序匹配多个template&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPUT localhost:9200/_template/template-logstash-nginx-access -d&amp;#39;
+{
+    &amp;quot;order&amp;quot;: 1,
+    &amp;quot;template&amp;quot;: &amp;quot;logstash-nginx-access-*&amp;quot;,
+    &amp;quot;mappings&amp;quot;: {
+        &amp;quot;nginx-access-log-*&amp;quot;: {
+            &amp;quot;properties&amp;quot;: {
+                &amp;quot;remote_addr&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;remote_user&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;time_local&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;date&amp;quot;,
+                    &amp;quot;format&amp;quot;: &amp;quot;dd/MMM/yyyy:HH:mm:ss Z&amp;quot;
+                },
+                &amp;quot;request&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;status&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;long&amp;quot;
+                },
+                &amp;quot;body_bytes_sent&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;long&amp;quot;
+                },
+                &amp;quot;http_user_agent&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;http_x_forwarded_for&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;request_time&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;double&amp;quot;
+                },
+                &amp;quot;upstream_response_time&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                }
+            }
+        }
+    }
+}&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;获取现有template&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XGET localhost:9200/_template | python -m json.tool
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;中文分词&lt;/h2&gt;
+&lt;p&gt;比较好的有smartcn和ik,这里用自带的smartcn&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# /usr/share/elasticsearch/bin/plugin install analysis-smartcn
+# service elasticsearch restart
+# curl http://127.0.0.1:9200/_analyze/ -d &amp;#39;
+{
+  &amp;quot;analyzer&amp;quot;: &amp;quot;smartcn&amp;quot;,
+  &amp;quot;text&amp;quot;: &amp;quot;联想是全球最大的笔记本厂商&amp;quot;
+}&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category><category term="Kibana"></category><category term="elasticsearch"></category><category term="logstash"></category><category term="Log"></category></entry><entry><title>工具</title><link href="http://www.yilaguan.cc/posts/2016/02/04/gong-ju.html" rel="alternate"></link><published>2016-02-04T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-02-04:posts/2016/02/04/gong-ju.html</id><summary type="html">&lt;h2&gt;安装mysql clint tora&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#sudo apt-get install tora
 #tora
 
@@ -691,6 +780,189 @@ output {
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{
+&amp;quot;logstash&amp;quot;: {
+&amp;quot;order&amp;quot;: 0,
+&amp;quot;template&amp;quot;: &amp;quot;logstash-*&amp;quot;,
+&amp;quot;settings&amp;quot;: {
+&amp;quot;index&amp;quot;: {
+&amp;quot;refresh_interval&amp;quot;: &amp;quot;5s&amp;quot;
+}
+},
+&amp;quot;mappings&amp;quot;: {
+&amp;quot;_default_&amp;quot;: {
+&amp;quot;dynamic_templates&amp;quot;: [
+{
+&amp;quot;message_field&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;fielddata&amp;quot;: {
+&amp;quot;format&amp;quot;: &amp;quot;disabled&amp;quot;
+},
+&amp;quot;index&amp;quot;: &amp;quot;analyzed&amp;quot;,
+&amp;quot;omit_norms&amp;quot;: true,
+&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;message&amp;quot;
+}
+}
+,
+{
+&amp;quot;string_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;fielddata&amp;quot;: {
+&amp;quot;format&amp;quot;: &amp;quot;disabled&amp;quot;
+},
+&amp;quot;index&amp;quot;: &amp;quot;analyzed&amp;quot;,
+&amp;quot;omit_norms&amp;quot;: true,
+&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;fields&amp;quot;: {
+&amp;quot;raw&amp;quot;: {
+&amp;quot;ignore_above&amp;quot;: 256,
+&amp;quot;index&amp;quot;: &amp;quot;not_analyzed&amp;quot;,
+&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+}
+}
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;float_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;float&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;float&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;double_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;double&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;double&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;byte_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;byte&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;byte&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;short_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;short&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;short&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;integer_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;integer&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;long_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;long&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;long&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;date_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;date&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;date&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;geo_point_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;geo_point&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;geo_point&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+],
+&amp;quot;_all&amp;quot;: {
+&amp;quot;omit_norms&amp;quot;: true,
+&amp;quot;enabled&amp;quot;: true
+},
+&amp;quot;properties&amp;quot;: {
+&amp;quot;@timestamp&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;date&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;geoip&amp;quot;: {
+&amp;quot;dynamic&amp;quot;: true,
+&amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+&amp;quot;properties&amp;quot;: {
+&amp;quot;ip&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;ip&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;latitude&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;float&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;location&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;geo_point&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;longitude&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;float&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+}
+}
+},
+&amp;quot;@version&amp;quot;: {
+&amp;quot;index&amp;quot;: &amp;quot;not_analyzed&amp;quot;,
+&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+}
+}
+}
+},
+&amp;quot;aliases&amp;quot;: { }
+}
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;ul&gt;
 &lt;li&gt;从redis获取日志发送到elasticsearch&lt;/li&gt;
 &lt;/ul&gt;
@@ -712,10 +984,31 @@ output {
 
 }
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category><category term="Kibana"></category><category term="elasticsearch"></category><category term="logstash"></category><category term="Log"></category></entry><entry><title>命令-赶紧的</title><link href="http://www.yilaguan.cc/posts/2015/10/29/Linux.html" rel="alternate"></link><published>2015-10-29T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-29:posts/2015/10/29/Linux.html</id><summary type="html">&lt;h2&gt;查看端口的占用情况&lt;/h2&gt;
-&lt;p&gt;netstat -tln&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;netstat -tln
+lsof -i:80  
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;查看32,64位系统&lt;/h2&gt;
-&lt;p&gt;getconf LONG_BIT&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;getconf LONG_BIT
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;去除注释，空行&lt;/h2&gt;
-&lt;p&gt;more php-fpm.conf | grep -v ^\; | grep -v ^$;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;more php-fpm.conf | grep -v ^\; | grep -v ^$;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;查看tcp连接情况&lt;/h2&gt;
-&lt;p&gt;netstat -n|awk '/^tcp/{++S[$NF]}END{for (key in S) print key,S[key]}'&lt;/p&gt;</summary><category term="Linux"></category></entry></feed>
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;netstat -n|awk &amp;#39;/^tcp/&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;++S[&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;NF&lt;/span&gt;&lt;span class="x"&gt;]}END&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;for (key in S) print key,S[key]}&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;CPU使用率高&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# top 获取 pid
+# gstack 获取stack trace
+# gstack 12594 &amp;gt;&amp;gt; /tmp/gstack.rst
+# top 查看最大消耗的线程号
+# top -H -p 12594 
+# /tmp/gstack.rst 文件中查看线程号
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category></entry></feed>

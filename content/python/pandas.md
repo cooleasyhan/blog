@@ -62,3 +62,11 @@ df.loc[i, ['industry']]
 industry = str(base_info[0])
 ```
 
+
+# 删除操作
+```
+df2.drop(df.index)
+df2 = df2.drop(df.index)
+df.drop(df.index[[1,3]], inplace=True)
+
+```

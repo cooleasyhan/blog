@@ -1,5 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/all.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-08-18T00:00:00+08:00</updated><entry><title>tornado coroutine 协程源码分析</title><link href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html" rel="alternate"></link><published>2016-08-18T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-08-18:posts/2016/08/18/tornado_coroutine.html</id><summary type="html">&lt;p&gt;要想理解tornado coroutine, 就需要先了解什么是yield。下面做了一个简单介绍和demo。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Yi's Blog - Do. Or do not. There is no try</title><link href="http://www.yilaguan.cc/" rel="alternate"></link><link href="http://www.yilaguan.cc/feeds/all.atom.xml" rel="self"></link><id>http://www.yilaguan.cc/</id><updated>2016-10-25T00:00:00+08:00</updated><entry><title>EBS服务启动失败处理一粒</title><link href="http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html" rel="alternate"></link><published>2016-10-25T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-10-25:posts/2016/10/25/oracle_start.html</id><summary type="html">&lt;p&gt;先stop然后做以下操作再启动应该就好，里面有一些不知道是啥缓存的文件吧，其中后缀是.lock的就是报错的原因，只要把这些lock的删掉就行，都删了也没问题&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/oacore/persistence/*&lt;/span&gt;
+&lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/oafm/persistence/*&lt;/span&gt;
+&lt;span class="x"&gt;rm -rf &lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;ORA_CONFIG_HOME&lt;/span&gt;&lt;span class="x"&gt;/10.1.3/j2ee/forms/persistence/*&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>Elasticsearch Logstash 小结</title><link href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html" rel="alternate"></link><published>2016-09-08T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-09-08:posts/2016/09/08/elasticsearch-logstash-xiao-jie.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;见之前的文章
+建议下载rpm直接安装,一般需要安装jdk, rube&lt;/p&gt;
+&lt;h2&gt;参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://es.xiaoleilu.com/"&gt;Elasticsearch 权威指南&lt;/a&gt; &lt;br /&gt;
+&lt;a href="http://udn.yyuap.com/doc/logstash-best-practice-cn/"&gt;Logstash 最佳实践&lt;/a&gt;
+&lt;a href="http://grokdebug.herokuapp.com/"&gt;grok debug&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Elasticsearch 类比传统关系型数据库&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;Relational DB -&amp;gt; Databases -&amp;gt; Tables -&amp;gt; Rows -&amp;gt; Columns
+Elasticsearch -&amp;gt; Indices   -&amp;gt; Types  -&amp;gt; Documents -&amp;gt; Fields
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;整体流程&lt;/h2&gt;
+&lt;p&gt;Elasticsearch 推荐使用redis进行日志中转。所以大体流程如下&lt;br /&gt;
+&lt;strong&gt;logfile --&amp;gt; logstash收集 --&amp;gt; redis --&amp;gt; logstash转换,核心为grok进行日志解析 --&amp;gt; Elasticsearch --&amp;gt; kibana展示&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;logstash 收集日志文件配置&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;logstash 收集redis配置&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Elasticsearch template&lt;/h2&gt;
+&lt;p&gt;对于Elasticsearch其中很重要的一个配置在于template, 而里头最常用的是mapping  &lt;/p&gt;
+&lt;h3&gt;新增template&lt;/h3&gt;
+&lt;p&gt;下面是给nginx access log 使用的template, 其中需要注意的是order, Elasticsearch 会根据order 按顺序匹配多个template&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPUT localhost:9200/_template/template-logstash-nginx-access -d&amp;#39;
+{
+    &amp;quot;order&amp;quot;: 1,
+    &amp;quot;template&amp;quot;: &amp;quot;logstash-nginx-access-*&amp;quot;,
+    &amp;quot;mappings&amp;quot;: {
+        &amp;quot;nginx-access-log-*&amp;quot;: {
+            &amp;quot;properties&amp;quot;: {
+                &amp;quot;remote_addr&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;remote_user&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;time_local&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;date&amp;quot;,
+                    &amp;quot;format&amp;quot;: &amp;quot;dd/MMM/yyyy:HH:mm:ss Z&amp;quot;
+                },
+                &amp;quot;request&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;status&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;long&amp;quot;
+                },
+                &amp;quot;body_bytes_sent&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;long&amp;quot;
+                },
+                &amp;quot;http_user_agent&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;http_x_forwarded_for&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                },
+                &amp;quot;request_time&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;double&amp;quot;
+                },
+                &amp;quot;upstream_response_time&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+                }
+            }
+        }
+    }
+}&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;获取现有template&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XGET localhost:9200/_template | python -m json.tool
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;中文分词&lt;/h2&gt;
+&lt;p&gt;比较好的有smartcn和ik,这里用自带的smartcn&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# /usr/share/elasticsearch/bin/plugin install analysis-smartcn
+# service elasticsearch restart
+# curl http://127.0.0.1:9200/_analyze/ -d &amp;#39;
+{
+  &amp;quot;analyzer&amp;quot;: &amp;quot;smartcn&amp;quot;,
+  &amp;quot;text&amp;quot;: &amp;quot;联想是全球最大的笔记本厂商&amp;quot;
+}&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category><category term="Kibana"></category><category term="elasticsearch"></category><category term="logstash"></category><category term="Log"></category></entry><entry><title>代码dependence</title><link href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html" rel="alternate"></link><published>2016-09-07T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-09-07:posts/2016/09/07/oracle_dependence.html</id><summary type="html">&lt;h1&gt;收集dependence信息&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;-- Created on 2016/9/7 by YIHAN 
+DECLARE
+  -- Local variables here
+  i INTEGER;
+BEGIN
+  -- Test statements here
+  DELETE Cux_Yh_Dependencies;
+  INSERT INTO Cux_Yh_Dependencies
+    SELECT *
+      FROM Dba_Dependencies d
+     WHERE d.Name IN
+           (SELECT Upper(Substr(e.Execution_File_Name, 1, Instr(e.Execution_File_Name, &amp;#39;.&amp;#39;, -1) - 1))
+              FROM Fnd_Executables_Vl e
+             WHERE e.Execution_Method_Code = &amp;#39;I&amp;#39;
+               AND e.Executable_Id IN (SELECT Vl.Executable_Id
+                                         FROM Fnd_Request_Groups         g,
+                                              Fnd_Request_Group_Units    u,
+                                              Fnd_Concurrent_Programs_Vl Vl,
+                                              Fnd_Application            a
+                                        WHERE g.Request_Group_Name = &amp;#39;QIHU_AR_ACCOUNT_REPORTS&amp;#39;
+                                          AND g.Request_Group_Id = u.Request_Group_Id
+                                          AND u.Request_Unit_Id = Vl.Concurrent_Program_Id
+                                          AND u.Request_Unit_Type = &amp;#39;P&amp;#39;
+                                          AND Vl.User_Concurrent_Program_Name LIKE &amp;#39;CUX%&amp;#39;
+                                          AND Vl.Enabled_Flag = &amp;#39;Y&amp;#39;
+                                          AND Vl.Application_Id = a.Application_Id
+
+                                       )
+            UNION
+
+            SELECT DISTINCT Upper(Substr(Req.Exec_Program, 1, Instr(Req.Exec_Program, &amp;#39;.&amp;#39;, -1) - 1))
+              FROM Cux_Unify_Import_Prf_Req Req, Cux_Unify_Import_Profile p
+             WHERE p.Interface_Profile_Id = Req.Interface_Profile_Id
+               AND p.Interface_Key IN
+                   (SELECT REPLACE(TRIM(Substr(f.Parameters, Instr(f.Parameters, &amp;#39;&amp;quot;&amp;#39;, 1))), &amp;#39;&amp;quot;&amp;#39;, &amp;#39;&amp;#39;)
+                      FROM Fnd_Menus_Vl m, Fnd_Menu_Entries_Vl e, Fnd_Form_Functions_Vl f
+                     WHERE Menu_Name IN (&amp;#39;CUX_RECE_IMP&amp;#39;, &amp;#39;CUX_REC_IMP&amp;#39;)
+                       AND m.Menu_Id = e.Menu_Id
+                       AND f.Function_Id = e.Function_Id
+                       AND Form_Id IS NOT NULL
+                       AND PARAMETERS LIKE &amp;#39;INTERFACE_KEY%&amp;#39;))
+       AND d.Referenced_Name LIKE &amp;#39;CUX%&amp;#39;;
+
+  FOR i IN 1 .. 10 LOOP
+
+    INSERT INTO Cux_Yh_Dependencies
+      SELECT *
+        FROM Dba_Dependencies d
+       WHERE d.Name IN (SELECT Cd.Referenced_Name FROM Cux_Yh_Dependencies Cd)
+         AND d.Referenced_Name LIKE &amp;#39;CUX%&amp;#39;
+         AND NOT EXISTS
+       (SELECT 1
+                FROM Cux_Yh_Dependencies Cd1
+               WHERE Cd1.Owner = d.Owner
+                 AND Cd1.Name = d.Name
+                 AND Cd1.Type = d.Type
+                 AND Cd1.Referenced_Owner = d.Referenced_Owner
+                 AND Cd1.Referenced_Name = d.Referenced_Name
+                 AND Cd1.Referenced_Type = d.Referenced_Type
+                 AND Nvl(Cd1.Referenced_Link_Name, &amp;#39;dummy&amp;#39;) = Nvl(d.Referenced_Link_Name, &amp;#39;dummy&amp;#39;)
+                 AND Cd1.Dependency_Type = d.Dependency_Type);
+
+  END LOOP;
+END;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;获取需要导入的数据&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;SELECT &amp;#39;REQUESTGROUP AR.QIHU_AR_ACCOUNT_REPORTS&amp;#39;
+  FROM Dual
+UNION ALL
+
+SELECT &amp;#39;MENU CUX.CUX_RECE_IMP&amp;#39;
+  FROM Dual
+UNION ALL
+SELECT &amp;#39;MENU CUX.CUX_REC_IMP&amp;#39;
+  FROM Dual
+UNION ALL
+SELECT DISTINCT &amp;#39;CUSTOMRULE FND.&amp;#39; || Function_Name
+  FROM Fnd_Form_Custom_Rules
+ WHERE Function_Name LIKE &amp;#39;AR%&amp;#39;
+   AND (Form_Name LIKE &amp;#39;AR%&amp;#39; OR Form_Name LIKE &amp;#39;RA%&amp;#39;)
+UNION ALL
+
+--CUSTOMRULE
+-- 有请求集还要加上
+SELECT --g.Request_Group_Name,
+--g.Application_Id,
+--Vl.User_Concurrent_Program_Name,
+ &amp;#39;REQUEST &amp;#39; || a.Application_Short_Name || &amp;#39;.&amp;#39; || Vl.Concurrent_Program_Name Download_Str --,
+--Vl.Application_Id
+  FROM Fnd_Request_Groups         g,
+       Fnd_Request_Group_Units    u,
+       Fnd_Concurrent_Programs_Vl Vl,
+       Fnd_Application            a
+ WHERE g.Request_Group_Name = &amp;#39;QIHU_AR_ACCOUNT_REPORTS&amp;#39;
+   AND g.Request_Group_Id = u.Request_Group_Id
+   AND u.Request_Unit_Id = Vl.Concurrent_Program_Id
+   AND u.Request_Unit_Type = &amp;#39;P&amp;#39;
+   AND Vl.User_Concurrent_Program_Name LIKE &amp;#39;CUX%&amp;#39;
+   AND Vl.Enabled_Flag = &amp;#39;Y&amp;#39;
+   AND Vl.Application_Id = a.Application_Id
+UNION ALL
+
+SELECT Decode(TYPE, &amp;#39;PACKAGE&amp;#39;, &amp;#39;PACKAGE_SPECIAL&amp;#39;, &amp;#39;PACKAGE BODY&amp;#39;, &amp;#39;PACKAGE_BODY&amp;#39;, TYPE) || &amp;#39; &amp;#39; ||
+       Owner || &amp;#39;.&amp;#39; || NAME
+  FROM (SELECT DISTINCT Owner, NAME, TYPE
+          FROM Cux_Yh_Dependencies d
+        UNION
+        SELECT DISTINCT d.Referenced_Owner, d.Referenced_Name, d.Referenced_Type
+          FROM Cux_Yh_Dependencies d)
+ WHERE TYPE != &amp;#39;SYNONYM&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>请求使用sql</title><link href="http://www.yilaguan.cc/posts/2016/09/07/oracle_request.html" rel="alternate"></link><published>2016-09-07T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-09-07:posts/2016/09/07/oracle_request.html</id><summary type="html">&lt;h1&gt;查询ap 批次号, ar&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;SELECT Listagg(Ap_Batch_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1)
+  FROM (SELECT v.Argument_Text, TRIM(Regexp_Substr(Argument_Text, &amp;#39;[^,]+&amp;#39;, 1, 2)) Ap_Batch_Id
+          FROM Fnd_Conc_Req_Summary_v v
+         WHERE v.Requestor = &amp;#39;YIHAN&amp;#39;
+           AND v.Request_Date &amp;gt; SYSDATE - 1
+           AND v.User_Concurrent_Program_Name = &amp;#39;Invoice Validation&amp;#39;);
+
+SELECT Listagg(Ar_Interface_Run_Id, &amp;#39;,&amp;#39;) Within GROUP(ORDER BY 1)
+  FROM (SELECT TRIM(Regexp_Substr(Argument_Text, &amp;#39;[^,]+&amp;#39;, 1, 1)) Ar_Interface_Run_Id
+          FROM Fnd_Conc_Req_Summary_v v
+         WHERE v.Requestor = &amp;#39;YIHAN&amp;#39;
+           AND v.Request_Date &amp;gt; SYSDATE - 1
+           AND v.Program = &amp;#39;S_AR211_TRX (CUX:Interface Process)&amp;#39;
+           AND v.Argument_Text LIKE &amp;#39;%DATA_IMPORT%&amp;#39;);
+&lt;/pre&gt;&lt;/div&gt;</summary></entry><entry><title>tornado coroutine 协程源码分析</title><link href="http://www.yilaguan.cc/posts/2016/08/18/tornado_coroutine.html" rel="alternate"></link><published>2016-08-18T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-08-18:posts/2016/08/18/tornado_coroutine.html</id><summary type="html">&lt;p&gt;要想理解tornado coroutine, 就需要先了解什么是yield。下面做了一个简单介绍和demo。
 yield 返回函数,但是记录函数上下文,等待调用next后接着执行。  使用yield的函数自动变成一个生成器。也就是可以通过 for i in xxx 执行。  &lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;enter&amp;#39;&lt;/span&gt;
@@ -2515,6 +2736,18 @@ prod:
         - git_resp_base_dir
         - git_tag_name
         - dir_name
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;state.orchestrate_high&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;salt-run state.orchestrate_high &amp;#39;{
+    stage_one:
+        {salt.state: [{tgt: &amp;quot;db*&amp;quot;}, {sls: postgres_setup}]},
+    stage_two:
+        {salt.state: [{tgt: &amp;quot;web*&amp;quot;}, {sls: apache_setup}, {
+            require: [{salt: stage_one}],
+        }]},
+    }&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Salt"></category></entry><entry><title>salt安装</title><link href="http://www.yilaguan.cc/posts/2016/08/01/saltan-zhuang.html" rel="alternate"></link><published>2016-08-01T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2016-08-01:posts/2016/08/01/saltan-zhuang.html</id><summary type="html">&lt;p&gt;最近研究salt装我那小一百台服务器, 之前一直是fabric安装的, 感觉salt还是挺好用的。python 安装还是习惯使用pip安装。 &lt;/p&gt;
 &lt;h2&gt;PIP 配置,指向豆瓣源&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cat ~/.pip/pip.conf
@@ -4842,7 +5075,7 @@ V*V 的布尔矩阵&lt;/li&gt;
 
 &lt;h2&gt;Reference&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://www.nginx.com/wp-content/uploads/2015/11/oracle-ebusiness-suite-deployment-guide-v1.pdf"&gt;https://www.nginx.com/wp-content/uploads/2015/11/oracle-ebusiness-suite-deployment-guide-v1.pdf&lt;/a&gt;&lt;br /&gt;
-&lt;a href="https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=351925156011594&amp;amp;id=387859.1&amp;amp;_afrWindowMode=0&amp;amp;_adf.ctrl-state=j2tyjckww_63"&gt;Doc ID 387859.1&lt;/a&gt;&lt;/p&gt;</summary><category term="ebs"></category><category term="nginx"></category></entry><entry><title>AR 设置数据data fix</title><link href="http://www.yilaguan.cc/posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html" rel="alternate"></link><published>2015-12-01T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-01:posts/2015/12/01/ar-she-zhi-shu-ju-data-fix.html</id><summary type="html">&lt;h2&gt;通知单行：&lt;/h2&gt;
+&lt;a href="https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=351925156011594&amp;amp;id=387859.1&amp;amp;_afrWindowMode=0&amp;amp;_adf.ctrl-state=j2tyjckww_63"&gt;Doc ID 387859.1&lt;/a&gt;&lt;/p&gt;</summary><category term="ebs"></category><category term="nginx"></category></entry><entry><title>AR 数据data fix</title><link href="http://www.yilaguan.cc/posts/2015/12/01/ar-shu-ju-data-fix.html" rel="alternate"></link><published>2015-12-01T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-12-01:posts/2015/12/01/ar-shu-ju-data-fix.html</id><summary type="html">&lt;h2&gt;通知单行：&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;--1.备份数据
 CREATE TABLE Ar_Memo_Lines_All_Tl_0529 AS
   SELECT * FROM Ar_Memo_Lines_All_Tl;
@@ -4919,6 +5152,70 @@ SELECT a.Name, a.Description, d.New_Name, d.New_Description
   FROM Ra_Cust_Trx_Types_All a, Cux_Ra_Cust_Trx_Df_0528 d
 WHERE a.Cust_Trx_Type_Id = d.Cust_Trx_Type_Id
    AND (a.Name &amp;lt;&amp;gt; d.New_Name OR a.Description &amp;lt;&amp;gt; d.New_Description)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;事务处理信息创建人更新&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;DECLARE
+  Ln_Old_User_Id NUMBER := 1366;
+  Ln_New_User_Id NUMBER := 1141;
+BEGIN
+
+  UPDATE Ra_Customer_Trx_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 ra_customer_trx_all， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ra_Customer_Trx_Lines_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 ra_customer_trx_lines_all， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ra_Cust_Trx_Line_Gl_Dist_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 ra_cust_trx_line_gl_dist_all， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Xla_Events t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 xla_events， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Xla_Transaction_Entities_Upg t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 Xla_Transaction_Entities_Upg， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+  UPDATE Ar_Payment_Schedules_All t
+     SET t.Created_By = Ln_New_User_Id, t.Last_Updated_By = Ln_New_User_Id
+   WHERE t.Created_By = Ln_Old_User_Id
+     AND t.Creation_Date &amp;gt; SYSDATE - 1;
+
+  Dbms_Output.Put_Line(&amp;#39;更新 ar_payment_schedules_all， 生效记录&amp;#39;);
+
+  Dbms_Output.Put_Line(SQL%ROWCOUNT);
+
+END;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="ebs"></category></entry><entry><title>定位autoconfig模板文件</title><link href="http://www.yilaguan.cc/posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html" rel="alternate"></link><published>2015-11-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-11-30:posts/2015/11/30/ding-wei-autoconfigmo-ban-wen-jian.html</id><summary type="html">&lt;p&gt;1、定位模版文件&lt;br /&gt;
 $AD_TOP/bin/adtmplreport.sh contextfile=$CONTEXT_FILE target=$FORMS_WEB_CONFIG_FILE
 以上命令，通过查看报表日志，可分别得到如下模版结果：
@@ -6845,6 +7142,189 @@ output {
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{
+&amp;quot;logstash&amp;quot;: {
+&amp;quot;order&amp;quot;: 0,
+&amp;quot;template&amp;quot;: &amp;quot;logstash-*&amp;quot;,
+&amp;quot;settings&amp;quot;: {
+&amp;quot;index&amp;quot;: {
+&amp;quot;refresh_interval&amp;quot;: &amp;quot;5s&amp;quot;
+}
+},
+&amp;quot;mappings&amp;quot;: {
+&amp;quot;_default_&amp;quot;: {
+&amp;quot;dynamic_templates&amp;quot;: [
+{
+&amp;quot;message_field&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;fielddata&amp;quot;: {
+&amp;quot;format&amp;quot;: &amp;quot;disabled&amp;quot;
+},
+&amp;quot;index&amp;quot;: &amp;quot;analyzed&amp;quot;,
+&amp;quot;omit_norms&amp;quot;: true,
+&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;message&amp;quot;
+}
+}
+,
+{
+&amp;quot;string_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;fielddata&amp;quot;: {
+&amp;quot;format&amp;quot;: &amp;quot;disabled&amp;quot;
+},
+&amp;quot;index&amp;quot;: &amp;quot;analyzed&amp;quot;,
+&amp;quot;omit_norms&amp;quot;: true,
+&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;fields&amp;quot;: {
+&amp;quot;raw&amp;quot;: {
+&amp;quot;ignore_above&amp;quot;: 256,
+&amp;quot;index&amp;quot;: &amp;quot;not_analyzed&amp;quot;,
+&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+}
+}
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;float_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;float&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;float&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;double_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;double&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;double&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;byte_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;byte&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;byte&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;short_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;short&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;short&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;integer_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;integer&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;integer&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;long_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;long&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;long&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;date_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;date&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;date&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+,
+{
+&amp;quot;geo_point_fields&amp;quot;: {
+&amp;quot;mapping&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;geo_point&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;match_mapping_type&amp;quot;: &amp;quot;geo_point&amp;quot;,
+&amp;quot;match&amp;quot;: &amp;quot;*&amp;quot;
+}
+}
+],
+&amp;quot;_all&amp;quot;: {
+&amp;quot;omit_norms&amp;quot;: true,
+&amp;quot;enabled&amp;quot;: true
+},
+&amp;quot;properties&amp;quot;: {
+&amp;quot;@timestamp&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;date&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;geoip&amp;quot;: {
+&amp;quot;dynamic&amp;quot;: true,
+&amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+&amp;quot;properties&amp;quot;: {
+&amp;quot;ip&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;ip&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;latitude&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;float&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;location&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;geo_point&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+},
+&amp;quot;longitude&amp;quot;: {
+&amp;quot;type&amp;quot;: &amp;quot;float&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+}
+}
+},
+&amp;quot;@version&amp;quot;: {
+&amp;quot;index&amp;quot;: &amp;quot;not_analyzed&amp;quot;,
+&amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+&amp;quot;doc_values&amp;quot;: true
+}
+}
+}
+},
+&amp;quot;aliases&amp;quot;: { }
+}
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;ul&gt;
 &lt;li&gt;从redis获取日志发送到elasticsearch&lt;/li&gt;
 &lt;/ul&gt;
@@ -7043,16 +7523,46 @@ $IAS_ORACLE_HOME/Apache/JServ/logs&lt;/p&gt;
 &lt;p&gt;$ORACLE_HOME/admin/SID_Hostname/udump&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</summary><category term="Oracle"></category><category term="EBS"></category></entry><entry><title>有用的代码</title><link href="http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-dai-ma.html" rel="alternate"></link><published>2015-10-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-30:posts/2015/10/30/you-yong-de-dai-ma.html</id><summary type="html">&lt;ol&gt;
-&lt;li&gt;&lt;a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/eventusermodel/XLSX2CSV.java"&gt;turn an big excel file into a CSV&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Java"></category><category term="Excel"></category></entry><entry><title>命令-赶紧的</title><link href="http://www.yilaguan.cc/posts/2015/10/29/Linux.html" rel="alternate"></link><published>2015-10-29T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-29:posts/2015/10/29/Linux.html</id><summary type="html">&lt;h2&gt;查看端口的占用情况&lt;/h2&gt;
-&lt;p&gt;netstat -tln&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="Oracle"></category><category term="EBS"></category></entry><entry><title>有用的小玩意</title><link href="http://www.yilaguan.cc/posts/2015/10/30/you-yong-de-xiao-wan-yi.html" rel="alternate"></link><published>2015-10-30T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-30:posts/2015/10/30/you-yong-de-xiao-wan-yi.html</id><summary type="html">&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/eventusermodel/XLSX2CSV.java"&gt;turn an big excel file into a CSV&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装mvn&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+
+yum -y install apache-maven
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Java"></category><category term="Excel"></category></entry><entry><title>命令-赶紧的</title><link href="http://www.yilaguan.cc/posts/2015/10/29/Linux.html" rel="alternate"></link><published>2015-10-29T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-29:posts/2015/10/29/Linux.html</id><summary type="html">&lt;h2&gt;查看端口的占用情况&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;netstat -tln
+lsof -i:80  
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;查看32,64位系统&lt;/h2&gt;
-&lt;p&gt;getconf LONG_BIT&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;getconf LONG_BIT
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;去除注释，空行&lt;/h2&gt;
-&lt;p&gt;more php-fpm.conf | grep -v ^\; | grep -v ^$;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;more php-fpm.conf | grep -v ^\; | grep -v ^$;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;查看tcp连接情况&lt;/h2&gt;
-&lt;p&gt;netstat -n|awk '/^tcp/{++S[$NF]}END{for (key in S) print key,S[key]}'&lt;/p&gt;</summary><category term="Linux"></category></entry><entry><title>发布ADF Essentials 至Glassfish</title><link href="http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html" rel="alternate"></link><published>2015-10-29T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-29:posts/2015/10/29/adf_to_glassfish.html</id><summary type="html">&lt;h2&gt;软件安装&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;netstat -n|awk &amp;#39;/^tcp/&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;++S[&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;NF&lt;/span&gt;&lt;span class="x"&gt;]}END&lt;/span&gt;&lt;span class="err"&gt;{&lt;/span&gt;&lt;span class="x"&gt;for (key in S) print key,S[key]}&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;CPU使用率高&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# top 获取 pid
+# gstack 获取stack trace
+# gstack 12594 &amp;gt;&amp;gt; /tmp/gstack.rst
+# top 查看最大消耗的线程号
+# top -H -p 12594 
+# /tmp/gstack.rst 文件中查看线程号
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Linux"></category></entry><entry><title>发布ADF Essentials 至Glassfish</title><link href="http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html" rel="alternate"></link><published>2015-10-29T00:00:00+08:00</published><author><name>YiHan</name></author><id>tag:www.yilaguan.cc,2015-10-29:posts/2015/10/29/adf_to_glassfish.html</id><summary type="html">&lt;h2&gt;软件安装&lt;/h2&gt;
 &lt;h3&gt;JAVA&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;JAVA_HOME=/home/yihan/glassfish/jdk1.8.0_65&lt;/span&gt;
 &lt;span class="x"&gt;export PATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;JAVA_HOME&lt;/span&gt;&lt;span class="x"&gt;/bin:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
