@@ -42,6 +42,9 @@
         <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
       </li>
       <li >
+        <a href="http://www.yilaguan.cc/category/djdemo.html">Djdemo</a>
+      </li>
+      <li >
         <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
       </li>
       <li >
@@ -66,6 +69,42 @@
   <div id="main">
     <div id="content">
 <div class="blog-index">
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/11/16/sort_code.html">排序算法python实现</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>Code</h2>
+<p>SelectSort 选择排序<br />
+InsertionSort, InsertionSort 插入排序<br />
+ShellSort, ShellSort2 希尔排序<br />
+HeapSort 堆排序  </p>
+<div class="highlight"><pre><span class="c"># -*- coding: UTF-8 -*-</span>
+<span class="sd">&#39;&#39;&#39;sort base class&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">LIST_A</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="n">LIST_A</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="kp">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">TimeIt</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">begin</span> <span class="o">=</span> <span class="n">time ...</span></pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/sort_code.html">Read On &crarr;</a>
+  </footer>
+  		</article>
   		<article>
 <header>
       <h1 class="entry-title">
@@ -307,43 +346,8 @@ Below is V4  </li>
     <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html">Read On &crarr;</a>
   </footer>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/10/28/python-zhu-zhuang-dong-tu.html">Python 柱状动图</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-10-28T00:00:00+08:00" pubdate>三 28 十月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>安装依赖</h2>
-<ul>
-<li>apt-get install python-numpy</li>
-<li>sudo apt-get install matplotlib</li>
-</ul>
-<h2>代码</h2>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">Bar</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">datas</span><span class="p">):</span>
-        <span class="kn">import</span> <span class="nn">matplotlib</span>
-        <span class="kn">import</span> <span class="nn">time</span>
-        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
-        <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="kp">array</span>
-
-        <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;TKAgg&#39;</span><span class="p">)</span>
-
-        <span class="k">def</span> <span class="nf">animated_barplot</span><span class="p">():</span>
-            <span class="c"># http://www.scipy.org/Cookbook/Matplotlib/Animations</span>
-
-            <span class="n">x</span> <span class="o">=</span> <span class="kp">array</span><span class="p">(</span><span class="n">datas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">print</span> <span class="n">x</span>
-            <span class="n">rects</span> <span class="o">=</span> <span class="n">plt ...</span></pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/10/28/python-zhu-zhuang-dong-tu.html">Read On &crarr;</a>
-  </footer>
-  		</article>
 <div class="pagination">
+    <a class="prev" href="http://www.yilaguan.cc/index6.html">&larr; Older</a>
 
     <a class="next" href="http://www.yilaguan.cc/index4.html">Newer &rarr;</a>
   <br />
@@ -352,6 +356,9 @@ Below is V4  </li>
   <section>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2017/04/11/django_celery.html">Django_Celery</a>
+      </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/11/08/pip2pi.html">pip2pi</a>
       </li>
@@ -364,9 +371,6 @@ Below is V4  </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html">Elasticsearch Logstash 小结</a>
       </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
     </ul>
   </section>
   <section>
@@ -374,6 +378,7 @@ Below is V4  </li>
     <h1>Categories</h1>
     <ul id="recent_posts">
         <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
+        <li><a href="http://www.yilaguan.cc/category/djdemo.html">djdemo</a></li>
         <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
         <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
         <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
@@ -387,7 +392,7 @@ Below is V4  </li>
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/django.html">django</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/celery.html">celery</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 
@@ -436,7 +441,7 @@ Below is V4  </li>
 </aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
+    Copyright &copy;  2015&ndash;2017  YiHan &mdash;
   <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
 </p></footer>
   <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>

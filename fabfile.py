@@ -78,6 +78,9 @@ def cf_upload():
 @hosts(production)
 def publish():
     """Publish to production via rsync"""
+    print('cp juyper files')
+    local('rsync -av --delete root@yilaguan.cc:/u01/virenv/jupyter/django /u01/blog/content/jupyter/')
+    local('rsync -av --delete root@yilaguan.cc:/u01/virenv/jupyter/data /u01/blog/content/jupyter/')
     local('pelican -s publishconf.py')
     project.rsync_project(
         remote_dir=dest_path,

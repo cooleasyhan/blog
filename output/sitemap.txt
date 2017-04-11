@@ -6,6 +6,7 @@ http://www.yilaguan.cc/
 http://www.yilaguan.cc/archives.html
 http://www.yilaguan.cc/tags.html
 http://www.yilaguan.cc/categories.html
+http://www.yilaguan.cc/posts/2017/04/11/django_celery.html
 http://www.yilaguan.cc/posts/2016/11/08/pip2pi.html
 http://www.yilaguan.cc/posts/2016/10/26/vim.html
 http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html
@@ -57,6 +58,7 @@ http://www.yilaguan.cc/posts/2015/10/29/Linux.html
 http://www.yilaguan.cc/posts/2015/10/29/adf_to_glassfish.html
 http://www.yilaguan.cc/posts/2015/10/28/python-zhu-zhuang-dong-tu.html
 http://www.yilaguan.cc/category/algorithms.html
+http://www.yilaguan.cc/category/djdemo.html
 http://www.yilaguan.cc/category/ebs.html
 http://www.yilaguan.cc/category/java.html
 http://www.yilaguan.cc/category/linux.html
@@ -71,13 +73,15 @@ http://www.yilaguan.cc/tag/kibana.html
 http://www.yilaguan.cc/tag/vim.html
 http://www.yilaguan.cc/tag/ebs.html
 http://www.yilaguan.cc/tag/pip.html
+http://www.yilaguan.cc/tag/django.html
+http://www.yilaguan.cc/tag/adf.html
 http://www.yilaguan.cc/tag/java.html
 http://www.yilaguan.cc/tag/log.html
 http://www.yilaguan.cc/tag/graph.html
 http://www.yilaguan.cc/tag/cache.html
 http://www.yilaguan.cc/tag/excel.html
 http://www.yilaguan.cc/tag/single_instance.html
-http://www.yilaguan.cc/tag/adf.html
+http://www.yilaguan.cc/tag/celery.html
 http://www.yilaguan.cc/tag/tornado.html
 http://www.yilaguan.cc/tag/glassfish.html
 http://www.yilaguan.cc/tag/algorithms.html

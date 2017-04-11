@@ -42,6 +42,9 @@
         <a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a>
       </li>
       <li >
+        <a href="http://www.yilaguan.cc/category/djdemo.html">Djdemo</a>
+      </li>
+      <li >
         <a href="http://www.yilaguan.cc/category/ebs.html">Ebs</a>
       </li>
       <li >
@@ -66,6 +69,30 @@
   <div id="main">
     <div id="content">
 <div class="blog-index">
+  		<article>
+<header>
+      <h1 class="entry-title">
+        <a href="http://www.yilaguan.cc/posts/2015/12/01/ar-shu-ju-data-fix.html">AR 数据data fix</a>
+      </h1>
+    <p class="meta">
+<time datetime="2015-12-01T00:00:00+08:00" pubdate>二 01 十二月 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><h2>通知单行：</h2>
+<div class="highlight"><pre>--1.备份数据
+CREATE TABLE Ar_Memo_Lines_All_Tl_0529 AS
+  SELECT * FROM Ar_Memo_Lines_All_Tl;
+
+--2. 创建临时表
+CREATE TABLE Cux_Ar_Memo_Lines_Df_0529(Memo_Line_Id NUMBER, Ou_Name VARCHAR2(240), NAME VARCHAR2(50), Description VARCHAR2(80), New_Name VARCHAR2(52), New_Description VARCHAR2(90))
+
+--3. 修正临时表中数据
+UPDATE Cux_Ar_Memo_Lines_Df_0529 d SET(Memo_Line_Id, New_Name, New_Description) = (
+  SELECT Tl.Memo_Line_Id, d.Name || &#39;_O&#39;, d.Description || &#39;-历史 ...</pre></div></div>
+  <footer>
+    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/12/01/ar-shu-ju-data-fix.html">Read On &crarr;</a>
+  </footer>
+  		</article>
   		<article>
 <header>
       <h1 class="entry-title">
@@ -382,42 +409,6 @@ nat<br />
 缺点在于不能很好利用缓冲，因为他的比较是跳跃的，而不是与周围的数据进行比较</p>
 <p>堆这种数据结构还是主要用于优先队列中，每次只需要加载部分数据进入内存，就可以完成大数据量的处理，比如TOP10， 只需要维护一个10元素的数组，然后增量的处理数据就可以了。</p></div>
   		</article>
-  		<article>
-<header>
-      <h1 class="entry-title">
-        <a href="http://www.yilaguan.cc/posts/2015/11/16/sort_code.html">排序算法python实现</a>
-      </h1>
-    <p class="meta">
-<time datetime="2015-11-16T00:00:00+08:00" pubdate>一 16 十一月 2015</time>    </p>
-</header>
-
-  <div class="entry-content"><h2>Code</h2>
-<p>SelectSort 选择排序<br />
-InsertionSort, InsertionSort 插入排序<br />
-ShellSort, ShellSort2 希尔排序<br />
-HeapSort 堆排序  </p>
-<div class="highlight"><pre><span class="c"># -*- coding: UTF-8 -*-</span>
-<span class="sd">&#39;&#39;&#39;sort base class&#39;&#39;&#39;</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="n">LIST_A</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
-    <span class="n">LIST_A</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="kp">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
-
-
-<span class="k">class</span> <span class="nc">TimeIt</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">begin</span> <span class="o">=</span> <span class="n">time ...</span></pre></div></div>
-  <footer>
-    <a rel="full-article" href="http://www.yilaguan.cc/posts/2015/11/16/sort_code.html">Read On &crarr;</a>
-  </footer>
-  		</article>
 <div class="pagination">
     <a class="prev" href="http://www.yilaguan.cc/index5.html">&larr; Older</a>
 
@@ -428,6 +419,9 @@ HeapSort 堆排序  </p>
   <section>
     <h1>Recent Posts</h1>
     <ul id="recent_posts">
+      <li class="post">
+          <a href="http://www.yilaguan.cc/posts/2017/04/11/django_celery.html">Django_Celery</a>
+      </li>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/11/08/pip2pi.html">pip2pi</a>
       </li>
@@ -440,9 +434,6 @@ HeapSort 堆排序  </p>
       <li class="post">
           <a href="http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html">Elasticsearch Logstash 小结</a>
       </li>
-      <li class="post">
-          <a href="http://www.yilaguan.cc/posts/2016/09/07/oracle_dependence.html">代码dependence</a>
-      </li>
     </ul>
   </section>
   <section>
@@ -450,6 +441,7 @@ HeapSort 堆排序  </p>
     <h1>Categories</h1>
     <ul id="recent_posts">
         <li><a href="http://www.yilaguan.cc/category/algorithms.html">Algorithms</a></li>
+        <li><a href="http://www.yilaguan.cc/category/djdemo.html">djdemo</a></li>
         <li><a href="http://www.yilaguan.cc/category/ebs.html">ebs</a></li>
         <li><a href="http://www.yilaguan.cc/category/java.html">java</a></li>
         <li><a href="http://www.yilaguan.cc/category/linux.html">linux</a></li>
@@ -463,7 +455,7 @@ HeapSort 堆排序  </p>
 
   <section>
   <h1>Tags</h1>
-    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
+    <a href="http://www.yilaguan.cc/tag/sort.html">sort</a>,    <a href="http://www.yilaguan.cc/tag/redhat.html">redhat</a>,    <a href="http://www.yilaguan.cc/tag/linux.html">Linux</a>,    <a href="http://www.yilaguan.cc/tag/kibana.html">Kibana</a>,    <a href="http://www.yilaguan.cc/tag/vim.html">vim</a>,    <a href="http://www.yilaguan.cc/tag/ebs.html">ebs</a>,    <a href="http://www.yilaguan.cc/tag/pip.html">pip</a>,    <a href="http://www.yilaguan.cc/tag/django.html">django</a>,    <a href="http://www.yilaguan.cc/tag/adf.html">ADF</a>,    <a href="http://www.yilaguan.cc/tag/java.html">Java</a>,    <a href="http://www.yilaguan.cc/tag/log.html">Log</a>,    <a href="http://www.yilaguan.cc/tag/graph.html">graph</a>,    <a href="http://www.yilaguan.cc/tag/cache.html">Cache</a>,    <a href="http://www.yilaguan.cc/tag/excel.html">Excel</a>,    <a href="http://www.yilaguan.cc/tag/single_instance.html">Single_Instance</a>,    <a href="http://www.yilaguan.cc/tag/celery.html">celery</a>,    <a href="http://www.yilaguan.cc/tag/tornado.html">Tornado</a>,    <a href="http://www.yilaguan.cc/tag/glassfish.html">glassfish</a>,    <a href="http://www.yilaguan.cc/tag/algorithms.html">Algorithms</a>,    <a href="http://www.yilaguan.cc/tag/reading.html">Reading</a>,    <a href="http://www.yilaguan.cc/tag/pandas.html">Pandas</a>,    <a href="http://www.yilaguan.cc/tag/iptables.html">iptables</a>,    <a href="http://www.yilaguan.cc/tag/shell.html">shell</a>,    <a href="http://www.yilaguan.cc/tag/plsql.html">PLSQL</a>,    <a href="http://www.yilaguan.cc/tag/python.html">Python</a>,    <a href="http://www.yilaguan.cc/tag/matplotlib.html">matplotlib</a>,    <a href="http://www.yilaguan.cc/tag/nginx.html">nginx</a>,    <a href="http://www.yilaguan.cc/tag/logstash.html">logstash</a>,    <a href="http://www.yilaguan.cc/tag/audit.html">Audit</a>,    <a href="http://www.yilaguan.cc/tag/refactoring.html">Refactoring</a>,    <a href="http://www.yilaguan.cc/tag/sftp.html">sftp</a>,    <a href="http://www.yilaguan.cc/tag/queue.html">queue</a>,    <a href="http://www.yilaguan.cc/tag/elasticsearch.html">elasticsearch</a>,    <a href="http://www.yilaguan.cc/tag/oracle.html">Oracle</a>,    <a href="http://www.yilaguan.cc/tag/cookbook.html">Cookbook</a>,    <a href="http://www.yilaguan.cc/tag/salt.html">Salt</a>  </section>
 
 
 
@@ -512,7 +504,7 @@ HeapSort 堆排序  </p>
 </aside>    </div>
   </div>
   <footer role="contentinfo"><p>
-    Copyright &copy;  2015&ndash;2016  YiHan &mdash;
+    Copyright &copy;  2015&ndash;2017  YiHan &mdash;
   <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
 </p></footer>
   <script src="http://www.yilaguan.cc/theme/js/modernizr-2.0.js"></script>

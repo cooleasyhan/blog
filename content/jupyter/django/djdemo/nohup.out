@@ -1,0 +1,293 @@
+[W 02:18:07.455 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
+[I 02:18:07.464 NotebookApp] Serving notebooks from local directory: /u01/virenv/jupyter/django/djdemo
+[I 02:18:07.464 NotebookApp] 0 active kernels 
+[I 02:18:07.465 NotebookApp] The Jupyter Notebook is running at: http://[all ip addresses on your system]:5001/?token=eab6579f61fa86827c3de1255b208427da76c9ef781d9474
+[I 02:18:07.465 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 02:18:07.465 NotebookApp] 
+    
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:5001/?token=eab6579f61fa86827c3de1255b208427da76c9ef781d9474
+[I 02:18:23.538 NotebookApp] 302 GET /?token=eab6579f61fa86827c3de1255b208427da76c9ef781d9474 (218.30.116.3) 0.66ms
+[I 02:18:31.470 NotebookApp] 302 POST /login?next=%2F (218.30.116.10) 3.17ms
+[I 02:18:31.490 NotebookApp] 302 GET / (218.30.116.10) 0.71ms
+[W 02:18:42.980 NotebookApp] delete /Admin.ipynb
+[W 02:18:42.998 NotebookApp] delete /Untitled.ipynb
+[W 02:18:43.000 NotebookApp] delete /Module.ipynb
+[W 02:18:43.002 NotebookApp] delete /init.ipynb
+[I 02:18:47.262 NotebookApp] Creating new notebook in 
+[I 02:18:47.904 NotebookApp] Kernel started: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:18:49.680 NotebookApp] Adapting to protocol v5.1 for kernel 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:20:47.906 NotebookApp] Saving file at /Untitled.ipynb
+[I 02:22:05.062 NotebookApp] Creating new file in /djdemo
+[I 02:36:47.884 NotebookApp] Saving file at /Untitled.ipynb
+[I 02:38:47.878 NotebookApp] Saving file at /Untitled.ipynb
+[I 02:40:47.877 NotebookApp] Saving file at /Untitled.ipynb
+[I 02:42:07.001 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:42:13.015 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:42:47.878 NotebookApp] Saving file at /Untitled.ipynb
+[I 02:44:47.870 NotebookApp] Saving file at /Untitled.ipynb
+[I 02:44:49.263 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:45:16.074 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:45:31.356 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:45:52.379 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:45:53.608 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:46:26.052 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:46:27.549 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:46:47.872 NotebookApp] Saving file at /Untitled.ipynb
+[I 02:48:22.542 NotebookApp] Kernel interrupted: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:48:47.872 NotebookApp] Saving file at /rabbitmq_test.ipynb
+[I 02:50:27.201 NotebookApp] Saving file at /rabbitmq_test.ipynb
+[I 02:50:32.427 NotebookApp] Kernel shutdown: 3e8243bc-1b38-45d0-b006-5e4f023af33b
+[I 02:50:44.482 NotebookApp] Kernel started: 875ea3e2-047e-4eca-a274-252138021276
+[IPKernelApp] WARNING | Error in loading extension: django_extensions.management.notebook_extension
+Check your config files in /root/.ipython/profile_default
+Traceback (most recent call last):
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/shellapp.py", line 246, in init_extensions
+    self.shell.extension_manager.load_extension(ext)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/extensions.py", line 85, in load_extension
+    if self._call_load_ipython_extension(mod):
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/extensions.py", line 132, in _call_load_ipython_extension
+    mod.load_ipython_extension(self.shell)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django_extensions/management/notebook_extension.py", line 6, in load_ipython_extension
+    style=no_style())
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django_extensions/management/shells.py", line 87, in import_objects
+    setup()
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/__init__.py", line 22, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 56, in __getattr__
+    self._setup(name)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 41, in _setup
+    self._wrapped = Settings(settings_module)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 110, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+  File "/u01/virenv/jupyter/lib64/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2212, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/u01/virenv/jupyter/django/djdemo/djdemo/__init__.py", line 3, in <module>
+    import pymysql
+ImportError: No module named 'pymysql'
+[I 02:50:50.814 NotebookApp] Adapting to protocol v5.1 for kernel 875ea3e2-047e-4eca-a274-252138021276
+[I 02:51:43.070 NotebookApp] Saving file at /rabbitmq_test.ipynb
+[I 02:53:39.004 NotebookApp] Saving file at /djdemo/settings.py
+[I 02:53:51.211 NotebookApp] Creating new notebook in 
+[I 02:53:51.716 NotebookApp] Kernel started: f5c6061b-962c-487e-b09b-31881e92e439
+[IPKernelApp] WARNING | Error in loading extension: django_extensions.management.notebook_extension
+Check your config files in /root/.ipython/profile_default
+Traceback (most recent call last):
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/shellapp.py", line 246, in init_extensions
+    self.shell.extension_manager.load_extension(ext)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/extensions.py", line 85, in load_extension
+    if self._call_load_ipython_extension(mod):
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/extensions.py", line 132, in _call_load_ipython_extension
+    mod.load_ipython_extension(self.shell)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django_extensions/management/notebook_extension.py", line 6, in load_ipython_extension
+    style=no_style())
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django_extensions/management/shells.py", line 87, in import_objects
+    setup()
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/__init__.py", line 22, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 56, in __getattr__
+    self._setup(name)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 41, in _setup
+    self._wrapped = Settings(settings_module)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 110, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+  File "/u01/virenv/jupyter/lib64/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2212, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/u01/virenv/jupyter/django/djdemo/djdemo/__init__.py", line 3, in <module>
+    import pymysql
+ImportError: No module named 'pymysql'
+[I 02:53:53.319 NotebookApp] Adapting to protocol v5.1 for kernel f5c6061b-962c-487e-b09b-31881e92e439
+[I 02:55:51.724 NotebookApp] Saving file at /Untitled.ipynb
+[I 02:56:06.937 NotebookApp] Saving file at /djdemo/settings.py
+[I 02:57:28.815 NotebookApp] Saving file at /djdemo/settings.py
+[I 02:58:56.976 NotebookApp] Kernel shutdown: f5c6061b-962c-487e-b09b-31881e92e439
+[I 02:59:04.781 NotebookApp] Creating new notebook in 
+[I 02:59:05.291 NotebookApp] Kernel started: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 02:59:07.230 NotebookApp] Adapting to protocol v5.1 for kernel 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:01:05.298 NotebookApp] Saving file at /Untitled1.ipynb
+[I 03:05:38.831 NotebookApp] Kernel interrupted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:05:55.682 NotebookApp] Kernel interrupted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:07:05.290 NotebookApp] Saving file at /Untitled1.ipynb
+[I 03:20:41.821 NotebookApp] New terminal with automatic name: 1
+[I 03:21:05.278 NotebookApp] Saving file at /Untitled1.ipynb
+[I 03:23:05.274 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:25:05.281 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:27:05.267 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:29:05.263 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:30:14.227 NotebookApp] Kernel interrupted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:31:05.265 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:33:05.266 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:34:59.916 NotebookApp] Kernel interrupted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:35:05.257 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:35:47.097 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:35:52.657 NotebookApp] Kernel restarted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[IPKernelApp] WARNING | Error in loading extension: django_extensions.management.notebook_extension
+Check your config files in /root/.ipython/profile_default
+Traceback (most recent call last):
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/shellapp.py", line 246, in init_extensions
+    self.shell.extension_manager.load_extension(ext)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/extensions.py", line 85, in load_extension
+    if self._call_load_ipython_extension(mod):
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/extensions.py", line 132, in _call_load_ipython_extension
+    mod.load_ipython_extension(self.shell)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django_extensions/management/notebook_extension.py", line 6, in load_ipython_extension
+    style=no_style())
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django_extensions/management/shells.py", line 87, in import_objects
+    setup()
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/__init__.py", line 22, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 56, in __getattr__
+    self._setup(name)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 41, in _setup
+    self._wrapped = Settings(settings_module)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 110, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+  File "/u01/virenv/jupyter/lib64/python3.4/importlib/__init__.py", line 109, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2212, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 2254, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 2237, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 2226, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1200, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1129, in _exec
+  File "<frozen importlib._bootstrap>", line 1471, in exec_module
+  File "<frozen importlib._bootstrap>", line 321, in _call_with_frames_removed
+  File "/u01/virenv/jupyter/django/djdemo/djdemo/__init__.py", line 9, in <module>
+    from .celery import app as celery_app
+  File "/u01/virenv/jupyter/django/djdemo/djdemo/celery.py", line 27
+    def debug_task2(self, user='World):
+                                      ^
+SyntaxError: EOL while scanning string literal
+[I 03:35:54.383 NotebookApp] Adapting to protocol v5.1 for kernel 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:37:05.263 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:37:38.917 NotebookApp] Kernel restarted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:37:40.820 NotebookApp] Adapting to protocol v5.1 for kernel 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:38:04.338 NotebookApp] Kernel interrupted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:39:05.258 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:42:21.130 NotebookApp] Kernel interrupted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:43:05.255 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:45:05.248 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:45:12.812 NotebookApp] Kernel restarted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:45:14.641 NotebookApp] Adapting to protocol v5.1 for kernel 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:49:05.247 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:51:05.246 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:51:46.418 NotebookApp] Kernel interrupted: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:52:09.516 NotebookApp] Saving file at /Django_Celery.ipynb
+[W 03:52:23.254 NotebookApp] 404 GET /nbconvert/html/custom.css (218.30.116.7): No such file or directory: custom.css
+[W 03:52:23.281 NotebookApp] 404 GET /nbconvert/html/custom.css (218.30.116.7) 37.53ms referer=http://yilaguan.cc:5001/nbconvert/html/Django_Celery.ipynb?download=false
+[W 03:52:23.484 NotebookApp] 404 GET /favicon.ico (218.30.116.7) 2.36ms referer=http://yilaguan.cc:5001/nbconvert/html/Django_Celery.ipynb?download=false
+[E 03:53:09.231 NotebookApp] nbconvert failed: Pandoc wasn't found.
+    Please check that pandoc is installed:
+    http://pandoc.org/installing.html
+    Traceback (most recent call last):
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/notebook/nbconvert/handlers.py", line 104, in get
+        "config_dir": self.application.settings['config_dir'],
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/pdf.py", line 162, in from_notebook_node
+        nb, resources=resources, **kw
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/latex.py", line 82, in from_notebook_node
+        return super(LatexExporter, self).from_notebook_node(nb, resources, **kw)
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/templateexporter.py", line 239, in from_notebook_node
+        output = self.template.render(nb=nb_copy, resources=resources)
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/jinja2/environment.py", line 1008, in render
+        return self.environment.handle_exception(exc_info, True)
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/jinja2/environment.py", line 780, in handle_exception
+        reraise(exc_type, exc_value, tb)
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/jinja2/_compat.py", line 37, in reraise
+        raise value.with_traceback(tb)
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/article.tplx", line 8, in top-level template code
+        ((* extends cell_style *))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/style_ipython.tplx", line 56, in top-level template code
+        ((( text | add_prompts(first='{\color{' ~ prompt_color ~ '}' ~ prompt ~ '[{\\color{' ~ prompt_color ~ '}' ~ execution_count ~ '}]:} ', cont=indention) )))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/base.tplx", line 6, in top-level template code
+        ((*- extends 'document_contents.tplx' -*))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/document_contents.tplx", line 50, in top-level template code
+        ((*- block figure scoped -*))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/skeleton/display_priority.tplx", line 5, in top-level template code
+        ((*- extends 'null.tplx' -*))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/skeleton/null.tplx", line 30, in top-level template code
+        ((*- block body -*))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/base.tplx", line 173, in block "body"
+        ((( super() )))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/skeleton/null.tplx", line 32, in block "body"
+        ((*- block any_cell scoped -*))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/skeleton/null.tplx", line 76, in block "any_cell"
+        ((*- block markdowncell scoped-*))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/exporters/../templates/latex/document_contents.tplx", line 67, in block "markdowncell"
+        ((( cell.source | citation2latex | strip_files_prefix | convert_pandoc('markdown', 'json',extra_args=[]) | resolve_references | convert_pandoc('json','latex'))))
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/filters/pandoc.py", line 26, in convert_pandoc
+        return pandoc(source, from_format, to_format, extra_args=extra_args)
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/utils/pandoc.py", line 51, in pandoc
+        check_pandoc_version()
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/utils/pandoc.py", line 97, in check_pandoc_version
+        v = get_pandoc_version()
+      File "/u01/virenv/jupyter/lib/python3.4/site-packages/nbconvert/utils/pandoc.py", line 76, in get_pandoc_version
+        raise PandocMissing()
+    nbconvert.utils.pandoc.PandocMissing: Pandoc wasn't found.
+    Please check that pandoc is installed:
+    http://pandoc.org/installing.html
+[W 03:53:09.291 NotebookApp] 500 GET /nbconvert/pdf/Django_Celery.ipynb?download=true (218.30.116.7): nbconvert failed: Pandoc wasn't found.
+    Please check that pandoc is installed:
+    http://pandoc.org/installing.html
+[E 03:53:09.293 NotebookApp] {
+      "Accept-Encoding": "gzip, deflate, sdch",
+      "Accept-Language": "en-US,en;q=0.8",
+      "Referer": "http://yilaguan.cc:5001/notebooks/Django_Celery.ipynb",
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+      "Upgrade-Insecure-Requests": "1",
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36",
+      "Host": "yilaguan.cc:5001",
+      "Connection": "keep-alive",
+      "Cookie": "csrftoken=KciZq2eSjmNvSne8HHarIYHBbcHAi9BCmMB8qWJxQRo6KLfu7KUvkEwLrd3DfiVR; _xsrf=2|5420c660|66925ebbb884d82d1448414d15e84651|1491300279; username-yilaguan-cc-5000=\"2|1:0|10:1491387568|25:username-yilaguan-cc-5000|44:NmU5NDIyNjExMGRiNDIyZTg3ZjQyN2MyZmNkZGUwNTY=|dbb96b9d4487b32198f80d39b04782e2bbb0d31d7256eeee41c70c1e6f998e67\"; username-yilaguan-cc-5001=\"2|1:0|10:1491877111|25:username-yilaguan-cc-5001|44:NGE5NmQ4MjlkYzM4NDExZDg1ODZlMjQyYmY1ODc2ZjI=|eeff0f670ef33425506554711fa2a9838e7b3e249997eb9a00d86fcf4c182e94\""
+    }
+[E 03:53:09.293 NotebookApp] 500 GET /nbconvert/pdf/Django_Celery.ipynb?download=true (218.30.116.7) 283.04ms referer=http://yilaguan.cc:5001/notebooks/Django_Celery.ipynb
+[I 03:54:17.111 NotebookApp] Saving file at /Django_Celery.ipynb
+[I 03:54:28.160 NotebookApp] EOF on FD 13; stopping reading
+[I 03:54:28.261 NotebookApp] Terminal 1 closed
+[I 03:54:29.331 NotebookApp] Kernel shutdown: 875ea3e2-047e-4eca-a274-252138021276
+[I 03:54:30.689 NotebookApp] Kernel shutdown: 89b6a7ca-608c-4641-b343-72c2bd1dca96
+[I 03:54:42.679 NotebookApp] Kernel started: b87cce16-c3b0-4e30-aa29-83d9c31c51c9
+[I 03:54:44.514 NotebookApp] Adapting to protocol v5.1 for kernel b87cce16-c3b0-4e30-aa29-83d9c31c51c9
+[I 03:54:50.223 NotebookApp] Kernel shutdown: b87cce16-c3b0-4e30-aa29-83d9c31c51c9
+[W 03:54:50.226 NotebookApp] delete /Untitled.ipynb
+[I 03:54:53.314 NotebookApp] Kernel started: 3b514b2c-fe30-44de-becd-fc65f6d5879a
+[I 03:54:55.158 NotebookApp] Adapting to protocol v5.1 for kernel 3b514b2c-fe30-44de-becd-fc65f6d5879a
+[I 03:55:02.896 NotebookApp] Adapting to protocol v5.1 for kernel 3b514b2c-fe30-44de-becd-fc65f6d5879a
+[I 03:55:16.015 NotebookApp] Kernel shutdown: 3b514b2c-fe30-44de-becd-fc65f6d5879a
+[W 03:56:20.088 NotebookApp] 404 GET /clusters?_=1491882751525 (218.30.116.3) 1.94ms referer=http://yilaguan.cc:5001/tree
+[W 03:56:21.016 NotebookApp] 404 GET /clusters?_=1491882752498 (218.30.116.9) 2.13ms referer=http://yilaguan.cc:5001/tree
+[W 03:56:26.732 NotebookApp] 404 GET /clusters?_=1491882752499 (218.30.116.9) 2.21ms referer=http://yilaguan.cc:5001/tree
+[I 03:58:30.306 NotebookApp] Kernel started: d024707a-0845-4db2-b5a3-10060e5cf314
+[I 03:58:32.214 NotebookApp] Adapting to protocol v5.1 for kernel d024707a-0845-4db2-b5a3-10060e5cf314
+[I 05:10:26.448 NotebookApp] 302 GET / (218.30.116.3) 0.57ms
+[W 05:10:26.689 NotebookApp] 404 GET /clusters?_=1491887198145 (218.30.116.8) 1.97ms referer=http://yilaguan.cc:5001/tree?
+[W 06:29:59.975 NotebookApp] 404 GET /clusters?_=1491891971363 (218.30.116.7) 1.87ms referer=http://yilaguan.cc:5001/tree?
+[W 06:30:06.392 NotebookApp] 404 GET /clusters?_=1491891977848 (218.30.116.3) 1.76ms referer=http://yilaguan.cc:5001/tree?
+[W 06:30:07.041 NotebookApp] 404 GET /clusters?_=1491891978505 (218.30.116.183) 1.89ms referer=http://yilaguan.cc:5001/tree?
+[I 06:30:29.204 NotebookApp] Creating new file in 
+[I 06:31:28.727 NotebookApp] Saving file at /Django_Celery.ipynb-meta

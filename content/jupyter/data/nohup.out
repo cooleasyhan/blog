@@ -1,0 +1,432 @@
+[W 18:08:43.734 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
+[I 18:08:43.741 NotebookApp] Serving notebooks from local directory: /u01/virenv/jupyter/data
+[I 18:08:43.741 NotebookApp] 0 active kernels 
+[I 18:08:43.741 NotebookApp] The Jupyter Notebook is running at: http://[all ip addresses on your system]:5000/?token=0cc59db0d61d6e9f3dc31f7f0fb016429b2f45f7c55dd171
+[I 18:08:43.742 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 18:08:43.742 NotebookApp] 
+    
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:5000/?token=0cc59db0d61d6e9f3dc31f7f0fb016429b2f45f7c55dd171
+[W 18:09:02.394 NotebookApp] 401 POST /login?next=%2F (218.30.116.9) 3.66ms referer=http://yilaguan.cc:5000/login
+[I 18:09:07.543 NotebookApp] 302 POST /login?next=%2F (218.30.116.9) 2.02ms
+[I 18:09:07.552 NotebookApp] 302 GET / (218.30.116.9) 0.49ms
+[I 18:09:31.842 NotebookApp] Kernel started: c8dfeaa3-97aa-49a0-930a-c30c918bfbae
+[I 18:09:32.797 NotebookApp] Adapting to protocol v5.1 for kernel c8dfeaa3-97aa-49a0-930a-c30c918bfbae
+[I 18:09:35.641 NotebookApp] Kernel started: 14961d6b-87cc-4442-b7cc-5575a4a176b4
+[I 18:09:36.548 NotebookApp] Adapting to protocol v5.1 for kernel 14961d6b-87cc-4442-b7cc-5575a4a176b4
+[I 18:09:48.639 NotebookApp] New terminal with automatic name: 1
+[I 18:11:31.377 NotebookApp] EOF on FD 30; stopping reading
+[I 18:11:31.478 NotebookApp] Terminal 1 closed
+[W 18:11:35.069 NotebookApp] 404 GET /notebooks/WeakRef.ipynb (218.30.116.7): No such file or directory: WeakRef.ipynb
+[W 18:11:35.080 NotebookApp] 404 GET /notebooks/WeakRef.ipynb (218.30.116.7) 11.78ms referer=http://yilaguan.cc:5000/tree?
+[W 18:11:36.177 NotebookApp] 404 GET /notebooks/WeakRef.ipynb (218.30.116.7): No such file or directory: WeakRef.ipynb
+[W 18:11:36.179 NotebookApp] 404 GET /notebooks/WeakRef.ipynb (218.30.116.7) 2.67ms referer=http://yilaguan.cc:5000/tree?
+[I 18:11:41.262 NotebookApp] Kernel shutdown: c8dfeaa3-97aa-49a0-930a-c30c918bfbae
+[I 18:11:41.973 NotebookApp] Kernel shutdown: 14961d6b-87cc-4442-b7cc-5575a4a176b4
+[I 18:11:59.055 NotebookApp] Creating new directory in 
+[W 18:16:03.067 NotebookApp] delete /djangotips
+[I 18:16:09.237 NotebookApp] Creating new directory in 
+[I 18:16:26.537 NotebookApp] New terminal with automatic name: 1
+[W 18:27:26.910 NotebookApp] WebSocket ping timeout after 120001 ms.
+[W 15:32:00.811 NotebookApp] WebSocket ping timeout after 90007 ms.
+[I 16:18:38.863 NotebookApp] Kernel started: e613a5f0-dcc3-479c-b178-53a5f5b4f856
+[I 16:18:43.787 NotebookApp] Adapting to protocol v5.1 for kernel e613a5f0-dcc3-479c-b178-53a5f5b4f856
+[I 18:12:52.697 NotebookApp] Creating new notebook in /Django
+[I 18:12:53.199 NotebookApp] Kernel started: 3d3690bf-1ef1-45f4-8484-74dcfaff103a
+[I 18:12:54.140 NotebookApp] Adapting to protocol v5.1 for kernel 3d3690bf-1ef1-45f4-8484-74dcfaff103a
+[I 18:12:58.053 NotebookApp] New terminal with automatic name: 2
+[W 18:17:44.440 NotebookApp] No such file or directory: Django/_myDjangoProject_/_myDjangoProject_
+[W 18:17:44.441 NotebookApp] 404 GET /api/contents/Django/_myDjangoProject_/_myDjangoProject_?type=directory&_=1491387082118 (218.30.116.7) 1.41ms referer=http://yilaguan.cc:5000/tree/Django/_myDjangoProject_/_myDjangoProject_
+[W 18:17:45.452 NotebookApp] 404 GET /tree/Django/_myDjangoProject_/_myDjangoProject_ (218.30.116.7) 2.48ms referer=http://yilaguan.cc:5000/tree/Django/_myDjangoProject_
+[W 18:17:48.080 NotebookApp] No such file or directory: Django/_myDjangoProject_
+[W 18:17:48.081 NotebookApp] 404 GET /api/contents/Django/_myDjangoProject_?type=directory&_=1491387248452 (218.30.116.3) 1.59ms referer=http://yilaguan.cc:5000/tree/Django/_myDjangoProject_
+[C 18:18:48.244 NotebookApp] received signal 15, stopping
+[I 18:18:48.244 NotebookApp] Shutting down kernels
+[I 18:18:48.750 NotebookApp] Kernel shutdown: 3d3690bf-1ef1-45f4-8484-74dcfaff103a
+[I 18:18:48.851 NotebookApp] Kernel shutdown: e613a5f0-dcc3-479c-b178-53a5f5b4f856
+[I 18:19:17.902 NotebookApp] Writing notebook server cookie secret to /run/user/0/jupyter/notebook_cookie_secret
+[W 18:19:18.450 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
+[I 18:19:18.531 NotebookApp] Serving notebooks from local directory: /u01/virenv/jupyter/data
+[I 18:19:18.531 NotebookApp] 0 active kernels 
+[I 18:19:18.531 NotebookApp] The Jupyter Notebook is running at: http://[all ip addresses on your system]:5000/?token=901684c035a6274dba252999258e4f5238a318502179b01e
+[I 18:19:18.531 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 18:19:18.532 NotebookApp] 
+    
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:5000/?token=901684c035a6274dba252999258e4f5238a318502179b01e
+[W 18:19:20.988 NotebookApp] Couldn't authenticate WebSocket connection
+[W 18:19:21.246 NotebookApp] 403 GET /api/kernels/e613a5f0-dcc3-479c-b178-53a5f5b4f856/channels?session_id=8D0B873A5F3D4F789F2453210767FCD8 (218.30.116.7) 260.52ms referer=None
+[I 18:19:25.787 NotebookApp] 302 GET /terminals/2 (218.30.116.186) 2.77ms
+[I 18:19:28.332 NotebookApp] 302 POST /login?next=%2Fterminals%2F2 (218.30.116.186) 2.10ms
+[I 18:19:28.612 NotebookApp] New terminal with specified name: 2
+[I 18:19:43.986 NotebookApp] Kernel started: 8fa31d46-7e12-4239-8a1d-736647306ff3
+[I 18:19:44.925 NotebookApp] Adapting to protocol v5.1 for kernel 8fa31d46-7e12-4239-8a1d-736647306ff3
+[W 18:19:54.990 NotebookApp] 404 GET /api/kernels/e613a5f0-dcc3-479c-b178-53a5f5b4f856/channels?session_id=8D0B873A5F3D4F789F2453210767FCD8 (218.30.116.9): Kernel does not exist: e613a5f0-dcc3-479c-b178-53a5f5b4f856
+[W 18:19:54.996 NotebookApp] 404 GET /api/kernels/e613a5f0-dcc3-479c-b178-53a5f5b4f856/channels?session_id=8D0B873A5F3D4F789F2453210767FCD8 (218.30.116.9) 9.32ms referer=None
+[W 18:20:59.987 NotebookApp] Replacing stale connection: e613a5f0-dcc3-479c-b178-53a5f5b4f856:8D0B873A5F3D4F789F2453210767FCD8
+[I 18:24:17.702 NotebookApp] Creating new notebook in /Django/djdemo
+[I 18:24:18.159 NotebookApp] Kernel started: ca5d8c08-0f56-4129-a879-0cb27196c3f9
+[I 18:24:36.268 NotebookApp] Saving file at /Django/djdemo/Untitled.ipynb
+[I 18:24:42.995 NotebookApp] Saving file at /Django/djdemo/init.ipynb
+[I 18:25:00.000 NotebookApp] Adapting to protocol v5.1 for kernel ca5d8c08-0f56-4129-a879-0cb27196c3f9
+[I 18:26:18.167 NotebookApp] Saving file at /Django/djdemo/init.ipynb
+[I 18:26:41.486 NotebookApp] Creating new notebook in /Django/djdemo
+[I 18:26:42.034 NotebookApp] Kernel started: 985d4df3-a37b-4c45-8e6f-69b2e17579d4
+[I 18:26:43.008 NotebookApp] Adapting to protocol v5.1 for kernel 985d4df3-a37b-4c45-8e6f-69b2e17579d4
+[I 18:28:42.043 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:30:02.458 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:30:42.036 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:32:42.037 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:34:42.030 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:36:42.030 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:37:08.461 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:44:42.107 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:46:42.022 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:48:06.352 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:48:42.016 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:50:10.859 NotebookApp] Saving file at /Django/djdemo/Django_Admin.ipynb
+[I 18:50:17.140 NotebookApp] Creating new notebook in /Django/djdemo
+[I 18:50:17.687 NotebookApp] Kernel started: e8bebb2f-25bf-4bfa-8146-4bb0ab342cee
+[I 18:50:18.703 NotebookApp] Adapting to protocol v5.1 for kernel e8bebb2f-25bf-4bfa-8146-4bb0ab342cee
+[I 18:50:19.457 NotebookApp] Saving file at /Django/djdemo/Untitled.ipynb
+[I 18:51:11.277 NotebookApp] Kernel started: cf7f48f0-829e-4c70-bd27-400a323cbe57
+[I 18:51:12.421 NotebookApp] Adapting to protocol v5.1 for kernel cf7f48f0-829e-4c70-bd27-400a323cbe57
+[I 18:51:42.185 NotebookApp] New terminal with automatic name: 1
+[W 18:52:47.460 NotebookApp] delete /PyTips/WeakRef.html
+[I 18:52:48.988 NotebookApp] Kernel started: 3ab60f44-a912-4cd8-8735-204765aea2c1
+[I 18:52:50.235 NotebookApp] Adapting to protocol v5.1 for kernel 3ab60f44-a912-4cd8-8735-204765aea2c1
+[I 18:53:12.167 NotebookApp] Adapting to protocol v5.1 for kernel 3ab60f44-a912-4cd8-8735-204765aea2c1
+[I 18:53:13.491 NotebookApp] Saving file at /Django/djdemo/Admin.ipynb
+[I 14:23:51.746 NotebookApp] 302 GET / (218.30.116.9) 0.64ms
+[I 14:27:40.004 NotebookApp] 302 GET / (195.3.144.82) 0.71ms
+[I 15:33:06.019 NotebookApp] EOF on FD 14; stopping reading
+[I 15:33:06.120 NotebookApp] Terminal 2 closed
+[I 15:33:06.659 NotebookApp] EOF on FD 61; stopping reading
+[I 15:33:06.760 NotebookApp] Terminal 1 closed
+[I 15:33:08.772 NotebookApp] Kernel shutdown: 8fa31d46-7e12-4239-8a1d-736647306ff3
+[W 15:33:08.775 NotebookApp] Session not found: session_id='c4b8002e-cb55-458e-bff7-df3483d81149'
+[W 15:33:08.775 NotebookApp] 404 DELETE /api/sessions/c4b8002e-cb55-458e-bff7-df3483d81149 (218.30.116.8) 1.62ms referer=http://yilaguan.cc:5000/tree/PyTips
+[I 15:33:09.427 NotebookApp] Kernel shutdown: ca5d8c08-0f56-4129-a879-0cb27196c3f9
+[W 15:33:09.430 NotebookApp] Session not found: session_id='dbb2258c-ebdf-4704-9151-1da8b6c5c0db'
+[W 15:33:09.430 NotebookApp] 404 DELETE /api/sessions/dbb2258c-ebdf-4704-9151-1da8b6c5c0db (218.30.116.7) 1.58ms referer=http://yilaguan.cc:5000/tree/PyTips
+[W 15:33:09.432 NotebookApp] Session not found: session_id='dbb2258c-ebdf-4704-9151-1da8b6c5c0db'
+[W 15:33:09.433 NotebookApp] 404 DELETE /api/sessions/dbb2258c-ebdf-4704-9151-1da8b6c5c0db (218.30.116.186) 1.67ms referer=http://yilaguan.cc:5000/tree/PyTips
+[I 15:33:10.125 NotebookApp] Kernel shutdown: 985d4df3-a37b-4c45-8e6f-69b2e17579d4
+[W 15:33:10.129 NotebookApp] Session not found: session_id='57534dfe-1345-4651-89f9-3e0cca62d0fd'
+[W 15:33:10.129 NotebookApp] 404 DELETE /api/sessions/57534dfe-1345-4651-89f9-3e0cca62d0fd (218.30.116.186) 2.03ms referer=http://yilaguan.cc:5000/tree/PyTips
+[W 15:33:10.131 NotebookApp] Session not found: session_id='57534dfe-1345-4651-89f9-3e0cca62d0fd'
+[W 15:33:10.131 NotebookApp] 404 DELETE /api/sessions/57534dfe-1345-4651-89f9-3e0cca62d0fd (218.30.116.8) 1.40ms referer=http://yilaguan.cc:5000/tree/PyTips
+[I 15:33:10.849 NotebookApp] Kernel shutdown: e8bebb2f-25bf-4bfa-8146-4bb0ab342cee
+[W 15:33:10.852 NotebookApp] Session not found: session_id='effbf395-27d1-459b-9ac6-b3047c7a520e'
+[W 15:33:10.852 NotebookApp] 404 DELETE /api/sessions/effbf395-27d1-459b-9ac6-b3047c7a520e (218.30.116.8) 1.56ms referer=http://yilaguan.cc:5000/tree/PyTips
+[W 15:33:10.853 NotebookApp] Session not found: session_id='effbf395-27d1-459b-9ac6-b3047c7a520e'
+[W 15:33:10.854 NotebookApp] 404 DELETE /api/sessions/effbf395-27d1-459b-9ac6-b3047c7a520e (218.30.116.7) 1.34ms referer=http://yilaguan.cc:5000/tree/PyTips
+[I 15:33:11.610 NotebookApp] Kernel shutdown: cf7f48f0-829e-4c70-bd27-400a323cbe57
+[W 15:33:11.613 NotebookApp] Session not found: session_id='580ae737-0139-44e1-b2bf-d28f011325b1'
+[W 15:33:11.613 NotebookApp] 404 DELETE /api/sessions/580ae737-0139-44e1-b2bf-d28f011325b1 (218.30.116.186) 1.58ms referer=http://yilaguan.cc:5000/tree/PyTips
+[W 15:33:11.614 NotebookApp] Session not found: session_id='580ae737-0139-44e1-b2bf-d28f011325b1'
+[W 15:33:11.615 NotebookApp] 404 DELETE /api/sessions/580ae737-0139-44e1-b2bf-d28f011325b1 (218.30.116.8) 1.28ms referer=http://yilaguan.cc:5000/tree/PyTips
+[I 15:33:12.361 NotebookApp] Kernel shutdown: 3ab60f44-a912-4cd8-8735-204765aea2c1
+[W 15:33:12.366 NotebookApp] Session not found: session_id='7dfaa157-dead-4df0-883a-f7ec9757071b'
+[W 15:33:12.367 NotebookApp] 404 DELETE /api/sessions/7dfaa157-dead-4df0-883a-f7ec9757071b (218.30.116.186) 2.67ms referer=http://yilaguan.cc:5000/tree/PyTips
+[I 17:15:55.429 NotebookApp] Creating new notebook in /PyTips
+[I 17:15:55.968 NotebookApp] Kernel started: 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 17:16:00.800 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 17:17:56.910 NotebookApp] Saving file at /PyTips/Untitled.ipynb
+[I 17:47:55.919 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 17:49:55.917 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 17:51:55.915 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 17:53:55.916 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 17:55:55.910 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 17:57:19.165 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:05:55.907 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:06:39.047 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:07:05.090 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:09:55.897 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:10:26.071 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:11:55.894 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:13:55.893 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:14:59.895 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:15:10.326 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:15:55.890 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:17:55.890 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:19:55.884 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:21:55.882 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:23:55.885 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:29:55.958 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:31:55.871 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:32:14.421 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:32:16.024 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 18:32:46.337 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 18:33:03.021 NotebookApp] Kernel restarted: 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 18:33:04.051 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 18:34:47.481 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:38:46.280 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:40:46.820 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:41:22.193 NotebookApp] Kernel restarted: 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 18:41:23.224 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 18:42:48.810 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:44:46.271 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:46:46.269 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:48:46.268 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:50:46.267 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:52:46.261 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 18:53:51.204 NotebookApp] Kernel interrupted: 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 18:53:59.887 NotebookApp] Kernel interrupted: 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 18:54:46.261 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 19:02:46.256 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[W 19:34:53.230 NotebookApp] WebSocket ping timeout after 119995 ms.
+[I 20:43:33.922 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 21:05:33.925 NotebookApp] WebSocket ping timeout after 119986 ms.
+[I 22:04:39.235 NotebookApp] 302 GET / (111.192.242.158) 17.58ms
+[I 22:04:39.243 NotebookApp] 302 GET /tree? (111.192.242.158) 0.94ms
+[I 22:05:45.479 NotebookApp] 302 POST /login?next=%2Ftree%3F (111.192.242.158) 2.62ms
+[I 22:06:10.548 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 22:07:12.879 NotebookApp] Kernel restarted: 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 22:07:15.674 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 22:08:11.000 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[I 22:14:19.138 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 22:29:08.626 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 22:31:08.610 NotebookApp] Saving file at /PyTips/concurrent_program.ipynb
+[W 22:35:49.139 NotebookApp] WebSocket ping timeout after 119969 ms.
+[I 23:44:33.940 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 00:06:33.941 NotebookApp] WebSocket ping timeout after 119995 ms.
+[W 00:24:08.635 NotebookApp] WebSocket ping timeout after 119994 ms.
+[W 00:24:15.685 NotebookApp] WebSocket ping timeout after 120003 ms.
+[I 01:15:18.221 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 01:37:18.232 NotebookApp] WebSocket ping timeout after 119994 ms.
+[I 02:46:01.971 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 03:07:31.987 NotebookApp] WebSocket ping timeout after 119990 ms.
+[I 04:16:15.888 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 04:38:15.892 NotebookApp] WebSocket ping timeout after 119984 ms.
+[I 05:47:01.079 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 06:08:31.082 NotebookApp] WebSocket ping timeout after 119995 ms.
+[I 07:17:14.686 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 07:39:14.696 NotebookApp] WebSocket ping timeout after 119997 ms.
+[I 08:47:59.290 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 09:09:59.292 NotebookApp] WebSocket ping timeout after 119991 ms.
+[I 10:18:43.808 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 10:40:13.813 NotebookApp] WebSocket ping timeout after 119994 ms.
+[I 11:48:59.576 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 13:50:00.339 NotebookApp] Adapting to protocol v5.1 for kernel 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 13:52:36.277 NotebookApp] Creating new directory in 
+[I 13:52:58.131 NotebookApp] Creating new notebook in /algorithms
+[I 13:52:58.700 NotebookApp] Kernel started: 1a39ffd6-e69c-418d-acc0-85f599b0084a
+[I 13:53:02.712 NotebookApp] Adapting to protocol v5.1 for kernel 1a39ffd6-e69c-418d-acc0-85f599b0084a
+[I 13:53:51.846 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 13:54:58.693 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 13:56:58.694 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 13:58:58.688 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 14:22:33.900 NotebookApp] Adapting to protocol v5.1 for kernel 1a39ffd6-e69c-418d-acc0-85f599b0084a
+[I 14:24:33.882 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 14:28:33.875 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 14:44:33.858 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 14:50:33.847 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 14:52:33.850 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 14:54:33.844 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 14:56:33.845 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:06:33.986 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:08:33.829 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:10:33.829 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:14:33.824 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:16:33.823 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:18:33.817 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:20:33.816 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:22:33.812 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:24:33.811 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:30:33.888 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:40:33.803 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:42:33.790 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:44:33.786 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 15:58:33.860 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 16:22:31.997 NotebookApp] 302 GET / (106.38.61.190) 0.65ms
+[I 16:22:32.011 NotebookApp] 302 GET /tree? (106.38.61.190) 1.01ms
+[I 16:22:40.798 NotebookApp] 302 GET / (140.207.185.107) 0.95ms
+[I 16:22:40.855 NotebookApp] 302 GET /tree? (140.207.185.107) 1.09ms
+[I 16:22:50.922 NotebookApp] 302 POST /login?next=%2Ftree%3F (106.38.61.190) 1.90ms
+[I 16:44:33.094 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[I 16:44:34.758 NotebookApp] Kernel interrupted: 1a39ffd6-e69c-418d-acc0-85f599b0084a
+[I 16:44:38.847 NotebookApp] Kernel interrupted: 1a39ffd6-e69c-418d-acc0-85f599b0084a
+[I 16:44:47.488 NotebookApp] Kernel shutdown: 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[I 16:44:48.567 NotebookApp] Kernel shutdown: 1a39ffd6-e69c-418d-acc0-85f599b0084a
+[I 16:44:57.110 NotebookApp] Kernel started: 6f9d2b47-a370-4194-93b6-36fbfd504969
+[I 16:44:58.143 NotebookApp] Adapting to protocol v5.1 for kernel 6f9d2b47-a370-4194-93b6-36fbfd504969
+[I 17:27:38.327 NotebookApp] Creating new notebook in /algorithms
+[I 17:27:38.865 NotebookApp] Kernel started: b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 17:27:39.884 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 17:29:38.871 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:53:38.921 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:55:38.841 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:57:38.839 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:59:38.835 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 18:01:38.836 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 18:03:38.835 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 18:05:38.830 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 18:07:38.830 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 18:49:32.224 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[W 18:53:32.235 NotebookApp] WebSocket ping timeout after 90005 ms.
+[W 18:53:58.149 NotebookApp] WebSocket ping timeout after 119996 ms.
+[W 18:54:09.889 NotebookApp] WebSocket ping timeout after 119996 ms.
+[W 21:01:13.418 NotebookApp] 404 GET /api/kernels/93bd2b7d-2888-488a-b189-532f3ed9b4a0/channels?session_id=66207816A9674BB3A3CAC4C62F54E836 (111.192.242.158): Kernel does not exist: 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 21:01:13.419 NotebookApp] 404 GET /api/kernels/93bd2b7d-2888-488a-b189-532f3ed9b4a0/channels?session_id=66207816A9674BB3A3CAC4C62F54E836 (111.192.242.158) 10.46ms referer=None
+[W 21:01:16.531 NotebookApp] 404 GET /api/kernels/93bd2b7d-2888-488a-b189-532f3ed9b4a0/channels?session_id=577B9836D876469D86DDD3889F6C4BC6 (111.192.242.158): Kernel does not exist: 93bd2b7d-2888-488a-b189-532f3ed9b4a0
+[W 21:01:16.537 NotebookApp] 404 GET /api/kernels/93bd2b7d-2888-488a-b189-532f3ed9b4a0/channels?session_id=577B9836D876469D86DDD3889F6C4BC6 (111.192.242.158) 16.52ms referer=None
+[W 21:01:29.460 NotebookApp] Replacing stale connection: 93bd2b7d-2888-488a-b189-532f3ed9b4a0:66207816A9674BB3A3CAC4C62F54E836
+[W 21:01:40.087 NotebookApp] Replacing stale connection: 93bd2b7d-2888-488a-b189-532f3ed9b4a0:577B9836D876469D86DDD3889F6C4BC6
+[I 21:03:00.756 NotebookApp] Adapting to protocol v5.1 for kernel 6f9d2b47-a370-4194-93b6-36fbfd504969
+[I 21:03:08.321 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 09:20:53.142 NotebookApp] Adapting to protocol v5.1 for kernel 6f9d2b47-a370-4194-93b6-36fbfd504969
+[I 09:20:56.438 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 09:21:03.948 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[W 10:03:56.476 NotebookApp] WebSocket ping timeout after 119934 ms.
+[W 10:04:03.972 NotebookApp] WebSocket ping timeout after 119985 ms.
+[W 10:04:23.151 NotebookApp] WebSocket ping timeout after 119991 ms.
+[I 18:23:32.974 NotebookApp] 302 GET / (80.82.77.139) 31.37ms
+[I 18:23:33.541 NotebookApp] 302 GET /tree (80.82.77.139) 0.99ms
+[I 21:47:30.901 NotebookApp] 302 GET / (159.203.161.159) 15.23ms
+[I 22:22:14.283 NotebookApp] 302 GET / (117.136.38.58) 0.62ms
+[I 22:22:14.349 NotebookApp] 302 GET /tree? (117.136.38.58) 0.83ms
+[I 22:22:22.395 NotebookApp] 302 POST /login?next=%2Ftree%3F (117.136.38.58) 41.05ms
+[I 22:22:58.342 NotebookApp] Kernel started: f0a8cfa4-d5fe-40bd-a676-cf99c8833284
+[I 22:23:02.624 NotebookApp] Adapting to protocol v5.1 for kernel f0a8cfa4-d5fe-40bd-a676-cf99c8833284
+[I 22:29:03.164 NotebookApp] Saving file at /algorithms/sorting.ipynb
+[W 22:31:09.439 NotebookApp] 403 POST /api/sessions (117.136.38.58): '_xsrf' argument missing from POST
+[W 22:31:09.441 NotebookApp] 403 POST /api/sessions (117.136.38.58) 3.02ms referer=http://yilaguan.cc:5000/notebooks/algorithms/sorting.ipynb
+[I 22:35:37.531 NotebookApp] Adapting to protocol v5.1 for kernel f0a8cfa4-d5fe-40bd-a676-cf99c8833284
+[W 22:36:04.632 NotebookApp] 404 GET /recordings/index.php (163.172.99.10) 2.11ms referer=None
+[I 22:43:00.328 NotebookApp] Adapting to protocol v5.1 for kernel f0a8cfa4-d5fe-40bd-a676-cf99c8833284
+[I 09:08:12.697 NotebookApp] 302 GET / (42.156.251.185) 0.69ms
+[I 10:06:24.818 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 10:06:32.423 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 10:06:52.053 NotebookApp] Adapting to protocol v5.1 for kernel 6f9d2b47-a370-4194-93b6-36fbfd504969
+[W 10:14:52.057 NotebookApp] WebSocket ping timeout after 119998 ms.
+[W 10:14:54.820 NotebookApp] WebSocket ping timeout after 119997 ms.
+[W 10:15:02.430 NotebookApp] WebSocket ping timeout after 119997 ms.
+[I 10:16:09.945 NotebookApp] Adapting to protocol v5.1 for kernel 6f9d2b47-a370-4194-93b6-36fbfd504969
+[I 10:16:12.659 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 10:16:20.334 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[W 12:17:09.950 NotebookApp] WebSocket ping timeout after 119999 ms.
+[W 12:17:12.662 NotebookApp] WebSocket ping timeout after 119996 ms.
+[W 12:17:20.340 NotebookApp] WebSocket ping timeout after 119999 ms.
+[I 12:45:52.606 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 12:45:59.791 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[W 14:24:22.607 NotebookApp] WebSocket ping timeout after 119996 ms.
+[W 14:24:29.799 NotebookApp] WebSocket ping timeout after 119997 ms.
+[I 14:25:19.170 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 14:26:27.178 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 14:28:50.198 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 14:28:52.219 NotebookApp] Adapting to protocol v5.1 for kernel b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[I 14:28:52.759 NotebookApp] Kernel shutdown: b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[W 14:28:53.266 NotebookApp] 404 GET /api/kernels/b5595ae2-55ce-47ad-8c41-a178f5911d4f/channels?session_id=1B95B550AE024ADB929BE094F67645B3 (218.30.116.4): Kernel does not exist: b5595ae2-55ce-47ad-8c41-a178f5911d4f
+[W 14:28:53.267 NotebookApp] 404 GET /api/kernels/b5595ae2-55ce-47ad-8c41-a178f5911d4f/channels?session_id=1B95B550AE024ADB929BE094F67645B3 (218.30.116.4) 5.09ms referer=None
+[W 14:28:55.285 NotebookApp] Replacing stale connection: b5595ae2-55ce-47ad-8c41-a178f5911d4f:1B95B550AE024ADB929BE094F67645B3
+[W 14:28:59.302 NotebookApp] Replacing stale connection: b5595ae2-55ce-47ad-8c41-a178f5911d4f:1B95B550AE024ADB929BE094F67645B3
+[W 14:29:07.317 NotebookApp] Replacing stale connection: b5595ae2-55ce-47ad-8c41-a178f5911d4f:1B95B550AE024ADB929BE094F67645B3
+[W 14:29:24.062 NotebookApp] Replacing stale connection: b5595ae2-55ce-47ad-8c41-a178f5911d4f:1B95B550AE024ADB929BE094F67645B3
+[W 14:29:57.065 NotebookApp] Replacing stale connection: b5595ae2-55ce-47ad-8c41-a178f5911d4f:1B95B550AE024ADB929BE094F67645B3
+[W 14:35:03.113 NotebookApp] Replacing stale connection: b5595ae2-55ce-47ad-8c41-a178f5911d4f:1B95B550AE024ADB929BE094F67645B3
+[W 14:49:23.677 NotebookApp] Session not found: session_id='adfd2b66-cc94-4544-a943-3702d3916260'
+[W 14:49:23.677 NotebookApp] 404 DELETE /api/sessions/adfd2b66-cc94-4544-a943-3702d3916260 (218.30.116.9) 1.81ms referer=http://yilaguan.cc:5000/notebooks/algorithms/KMP.ipynb
+[I 14:49:23.769 NotebookApp] Kernel started: 0c8e91bb-bace-4abf-9d32-a8bc3e717662
+[I 14:49:28.087 NotebookApp] Adapting to protocol v5.1 for kernel 0c8e91bb-bace-4abf-9d32-a8bc3e717662
+[I 14:59:33.264 NotebookApp] Adapting to protocol v5.1 for kernel 0c8e91bb-bace-4abf-9d32-a8bc3e717662
+[I 15:01:33.244 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 16:41:33.134 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 16:44:40.102 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 16:45:33.123 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 16:47:33.123 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 16:49:33.124 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 16:53:33.116 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 16:55:33.116 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 16:57:33.116 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 16:59:33.109 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:01:33.110 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:03:33.104 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:05:33.105 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:07:33.100 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:09:33.105 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:12:25.896 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:12:30.179 NotebookApp] Adapting to protocol v5.1 for kernel 0c8e91bb-bace-4abf-9d32-a8bc3e717662
+[I 17:13:01.460 NotebookApp] Kernel shutdown: 0c8e91bb-bace-4abf-9d32-a8bc3e717662
+[I 17:13:01.966 NotebookApp] Kernel shutdown: f0a8cfa4-d5fe-40bd-a676-cf99c8833284
+[W 17:13:01.969 NotebookApp] Session not found: session_id='9ed5c505-7b59-4127-9d4f-431098b73af1'
+[W 17:13:01.969 NotebookApp] 404 DELETE /api/sessions/9ed5c505-7b59-4127-9d4f-431098b73af1 (218.30.116.4) 1.55ms referer=http://yilaguan.cc:5000/tree/algorithms
+[W 17:13:01.971 NotebookApp] Session not found: session_id='ed04a3f7-0b2a-4a74-bb71-457f7534ecfe'
+[W 17:13:01.971 NotebookApp] 404 DELETE /api/sessions/ed04a3f7-0b2a-4a74-bb71-457f7534ecfe (218.30.116.7) 1.42ms referer=http://yilaguan.cc:5000/tree/algorithms
+[I 17:13:03.776 NotebookApp] Kernel started: 69b57907-9a60-461f-ad9b-db297ff0b479
+[I 17:13:04.743 NotebookApp] Adapting to protocol v5.1 for kernel 69b57907-9a60-461f-ad9b-db297ff0b479
+[I 17:14:00.397 NotebookApp] Kernel shutdown: 69b57907-9a60-461f-ad9b-db297ff0b479
+[I 17:15:03.789 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[I 17:23:03.773 NotebookApp] Saving file at /algorithms/KMP.ipynb
+[W 20:54:04.748 NotebookApp] WebSocket ping timeout after 119992 ms.
+[W 22:02:48.155 NotebookApp] 404 GET /api/kernels/69b57907-9a60-461f-ad9b-db297ff0b479/channels?session_id=2DBF538B71F948D687FCED09240AB5CA (218.30.116.3): Kernel does not exist: 69b57907-9a60-461f-ad9b-db297ff0b479
+[W 22:02:48.298 NotebookApp] 404 GET /api/kernels/69b57907-9a60-461f-ad9b-db297ff0b479/channels?session_id=2DBF538B71F948D687FCED09240AB5CA (218.30.116.3) 164.02ms referer=None
+[W 22:02:50.333 NotebookApp] Replacing stale connection: 69b57907-9a60-461f-ad9b-db297ff0b479:2DBF538B71F948D687FCED09240AB5CA
+[W 22:06:56.382 NotebookApp] Replacing stale connection: 69b57907-9a60-461f-ad9b-db297ff0b479:2DBF538B71F948D687FCED09240AB5CA
+[W 22:11:05.437 NotebookApp] Replacing stale connection: 69b57907-9a60-461f-ad9b-db297ff0b479:2DBF538B71F948D687FCED09240AB5CA
+[W 22:15:23.783 NotebookApp] Replacing stale connection: 69b57907-9a60-461f-ad9b-db297ff0b479:2DBF538B71F948D687FCED09240AB5CA
+[W 22:19:59.799 NotebookApp] Replacing stale connection: 69b57907-9a60-461f-ad9b-db297ff0b479:2DBF538B71F948D687FCED09240AB5CA
+[W 23:25:03.127 NotebookApp] Replacing stale connection: 69b57907-9a60-461f-ad9b-db297ff0b479:2DBF538B71F948D687FCED09240AB5CA
+[I 23:48:41.974 NotebookApp] 302 GET / (111.192.242.158) 0.72ms
+[I 23:48:47.712 NotebookApp] Kernel shutdown: 6f9d2b47-a370-4194-93b6-36fbfd504969
+[I 23:57:53.523 NotebookApp] 302 GET /v2/ (125.64.94.201) 0.65ms
+[I 10:00:47.961 NotebookApp] Kernel started: ec1e8cad-9763-4a2e-8282-87a51ae6d5c8
+[I 10:00:54.369 NotebookApp] Adapting to protocol v5.1 for kernel ec1e8cad-9763-4a2e-8282-87a51ae6d5c8
+[I 10:04:40.990 NotebookApp] 302 GET / (218.30.116.186) 0.67ms
+[W 11:56:39.360 NotebookApp] 404 GET /clusters?_=1491882770843 (218.30.116.10) 1.90ms referer=http://yilaguan.cc:5000/tree?
+[W 11:56:50.012 NotebookApp] 404 GET /clusters?_=1491882781517 (218.30.116.9) 1.80ms referer=http://yilaguan.cc:5000/tree?
+[W 11:57:06.014 NotebookApp] 404 GET /clusters?_=1491882797502 (218.30.116.9) 1.96ms referer=http://yilaguan.cc:5000/tree/PyTips
+[W 11:57:08.971 NotebookApp] 404 GET /clusters?_=1491882800550 (218.30.116.183) 1.77ms referer=http://yilaguan.cc:5000/tree
+[I 11:57:22.350 NotebookApp] Creating new notebook in 
+[I 11:57:22.840 NotebookApp] Kernel started: 5f9f6ae7-56f2-4806-bced-df75801f590b
+[I 11:57:23.830 NotebookApp] Adapting to protocol v5.1 for kernel 5f9f6ae7-56f2-4806-bced-df75801f590b
+[W 11:57:44.803 NotebookApp] 404 GET /clusters?_=1491882800554 (218.30.116.10) 2.95ms referer=http://yilaguan.cc:5000/tree
+[W 11:57:45.482 NotebookApp] 404 GET /clusters?_=1491882800555 (218.30.116.10) 2.17ms referer=http://yilaguan.cc:5000/tree
+[I 11:57:50.698 NotebookApp] Adapting to protocol v5.1 for kernel 5f9f6ae7-56f2-4806-bced-df75801f590b
+[I 11:59:02.817 NotebookApp] Saving file at /Untitled.ipynb
+[W 11:59:13.041 NotebookApp] 404 GET /clusters?_=1491882924531 (218.30.116.183) 3.25ms referer=http://yilaguan.cc:5000/tree
+[I 11:59:37.635 NotebookApp] Kernel shutdown: ec1e8cad-9763-4a2e-8282-87a51ae6d5c8
+[I 11:59:39.507 NotebookApp] Kernel shutdown: 5f9f6ae7-56f2-4806-bced-df75801f590b
+[W 11:59:45.513 NotebookApp] 404 GET /clusters?_=1491882957002 (218.30.116.4) 1.76ms referer=http://yilaguan.cc:5000/tree
+[I 12:00:01.329 NotebookApp] Creating new notebook in 
+[I 12:00:01.806 NotebookApp] Kernel started: 447fcee5-e678-4152-9d62-110f7fa36759
+[IPKernelApp] WARNING | Error in loading extension: django_extensions.management.notebook_extension
+Check your config files in /root/.ipython/profile_default
+Traceback (most recent call last):
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/shellapp.py", line 246, in init_extensions
+    self.shell.extension_manager.load_extension(ext)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/extensions.py", line 85, in load_extension
+    if self._call_load_ipython_extension(mod):
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/IPython/core/extensions.py", line 132, in _call_load_ipython_extension
+    mod.load_ipython_extension(self.shell)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django_extensions/management/notebook_extension.py", line 6, in load_ipython_extension
+    style=no_style())
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django_extensions/management/shells.py", line 87, in import_objects
+    setup()
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/__init__.py", line 22, in setup
+    configure_logging(settings.LOGGING_CONFIG, settings.LOGGING)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 56, in __getattr__
+    self._setup(name)
+  File "/u01/virenv/jupyter/lib/python3.4/site-packages/django/conf/__init__.py", line 39, in _setup
+    % (desc, ENVIRONMENT_VARIABLE))
+django.core.exceptions.ImproperlyConfigured: Requested setting LOGGING_CONFIG, but settings are not configured. You must either define the environment variable DJANGO_SETTINGS_MODULE or call settings.configure() before accessing settings.
+[I 12:00:03.526 NotebookApp] Adapting to protocol v5.1 for kernel 447fcee5-e678-4152-9d62-110f7fa36759
+[I 12:00:16.121 NotebookApp] Kernel shutdown: 447fcee5-e678-4152-9d62-110f7fa36759
+[W 12:00:16.124 NotebookApp] delete /Untitled.ipynb
+[W 12:00:25.476 NotebookApp] 404 GET /clusters?_=1491882957008 (218.30.116.7) 2.32ms referer=http://yilaguan.cc:5000/tree
+[W 12:00:35.005 NotebookApp] 404 GET /clusters?_=1491883006500 (218.30.116.8) 1.92ms referer=http://yilaguan.cc:5000/tree
+[W 12:00:37.130 NotebookApp] 404 GET /clusters?_=1491883008694 (218.30.116.7) 1.83ms referer=http://yilaguan.cc:5000/tree
+[W 12:00:42.127 NotebookApp] 404 GET /clusters?_=1491883013615 (218.30.116.8) 1.77ms referer=http://yilaguan.cc:5000/tree
+[W 12:00:43.831 NotebookApp] 404 GET /clusters?_=1491883015397 (218.30.116.7) 1.81ms referer=http://yilaguan.cc:5000/tree
+[W 12:01:08.479 NotebookApp] 404 GET /clusters?_=1491883040043 (218.30.116.10) 1.84ms referer=http://yilaguan.cc:5000/tree
+[I 13:07:50.859 NotebookApp] Kernel started: 0e972829-5e21-4ed9-b753-d5e1eec69b0d
+[I 13:07:51.856 NotebookApp] Adapting to protocol v5.1 for kernel 0e972829-5e21-4ed9-b753-d5e1eec69b0d
+[I 13:09:23.290 NotebookApp] Kernel interrupted: 0e972829-5e21-4ed9-b753-d5e1eec69b0d
+[I 13:09:25.862 NotebookApp] Saving file at /ipcluster.ipynb
+[I 13:09:39.564 NotebookApp] Kernel shutdown: 0e972829-5e21-4ed9-b753-d5e1eec69b0d
+[I 14:08:26.531 NotebookApp] 302 GET / (61.148.243.172) 99.47ms
+[W 14:08:31.348 NotebookApp] 404 GET /clusters?_=1491890665868 (61.148.243.172) 95.89ms referer=http://yilaguan.cc:5000/tree?
+[I 14:10:23.550 NotebookApp] New terminal with automatic name: 1
+[W 14:29:55.175 NotebookApp] 404 GET /clusters?_=1491891966465 (218.30.116.8) 2.05ms referer=http://yilaguan.cc:5000/tree
