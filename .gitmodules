@@ -4,3 +4,6 @@
 [submodule "plugins/pelican-plugins"]
 	path = plugins/pelican-plugins
 	url = https://github.com/getpelican/pelican-plugins
+[submodule "themes/pelican-octopress-theme"]
+	path = themes/pelican-octopress-theme
+	url = https://github.com/duilio/pelican-octopress-theme
