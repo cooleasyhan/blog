@@ -12,9 +12,9 @@ TIMEZONE = 'Asia/Shanghai'
 
 DEFAULT_LANG = u'en'
 
-PLUGIN_PATHS = ['/u01/blog/plugins/pelican-plugins']
+PLUGIN_PATHS = ['/u01/blog/plugins/pelican-plugins', '/u01/blog/plugins']
 #PLUGINS = ['sitemap','disqus_static']
-PLUGINS = ['sitemap']
+PLUGINS = ['sitemap','ipynb.markup']
 SITEMAP = {
     'format': 'txt',
     'priorities': {
@@ -23,6 +23,8 @@ SITEMAP = {
         'pages': 0.5
     }
 }
+
+MARKUP = ('md', 'ipynb')
 
 KEYWORD = 'EBS，运维，开发, 生活随想, Oracle, Python'
 
@@ -40,7 +42,7 @@ LINKS = (
 ('keakon的涂鸦馆','http://www.keakon.net/'),
 ('织网','http://zheng-ji.info/'),
 
-       
+
         )
 # Social widget
 SOCIAL = (('github 个人页','http://cooleasyhan.github.io'),
@@ -56,7 +58,7 @@ STATIC_PATHS = ['images', 'pdfs','robots.txt']
 THEME = 'pelican-octopress-theme'
 
 # Blogroll
-LINKS 
+LINKS
 
 # Social widget
 SOCIAL

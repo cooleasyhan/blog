@@ -6,7 +6,7 @@ http://www.yilaguan.cc/
 http://www.yilaguan.cc/archives.html
 http://www.yilaguan.cc/tags.html
 http://www.yilaguan.cc/categories.html
-http://www.yilaguan.cc/posts/2016/11/08/pypi.html
+http://www.yilaguan.cc/posts/2016/11/08/pip2pi.html
 http://www.yilaguan.cc/posts/2016/10/26/vim.html
 http://www.yilaguan.cc/posts/2016/10/25/oracle_start.html
 http://www.yilaguan.cc/posts/2016/09/08/elasticsearch-logstash-xiao-jie.html
